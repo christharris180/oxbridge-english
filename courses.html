@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Courses - Oxbridge English</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Background Video -->
+    <video autoplay muted loop playsinline class="background-video">
+        <source src="girl_working_001.mp4" type="video/mp4">
+    </video>
+
+    <!-- Language Toggle -->
+    <div class="lang-toggle">
+        <button class="lang-btn active" data-lang="en">EN</button>
+        <button class="lang-btn" data-lang="es">ES</button>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="main-nav">
+        <div class="nav-container">
+            <div class="logo">
+                <img src="ox-head-008.jpg" alt="Oxbridge English Logo">
+                <h1 data-en="Oxbridge English" data-es="Oxbridge English">Oxbridge English</h1>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html" data-en="Home" data-es="Inicio">Home</a></li>
+                <li><a href="courses.html" class="active" data-en="Courses" data-es="Cursos">Courses</a></li>
+                <li><a href="enroll.html" data-en="Enroll" data-es="Inscribirse">Enroll</a></li>
+                <li><a href="books.html" data-en="The World Speaks English" data-es="El Mundo Habla Inglés">The World Speaks English</a></li>
+                <li><a href="audio.html" data-en="Audio" data-es="Audio">Audio</a></li>
+                <li><a href="translator.html" data-en="Translator" data-es="Traductor">Translator</a></li>
+                <li><a href="contact.html" data-en="Contact" data-es="Contacto">Contact</a></li>
+            </ul>
+            <button class="mobile-menu-toggle">☰</button>
+        </div>
+    </nav>
+
+    <!-- Courses Section -->
+    <div class="courses-container">
+        <div class="section-header">
+            <h2 class="section-title" 
+                data-en="Our Courses" 
+                data-es="Nuestros Cursos">Our Courses</h2>
+            <p class="section-description" 
+               data-en="Start speaking and writing in English with confidence. This interactive beginner course is designed for Spanish speakers and guides you through the foundations of English grammar with clear explanations, real-life examples, and practical activities you can apply in everyday situations."
+               data-es="Comience a hablar y escribir en inglés con confianza. Este curso interactivo para principiantes está diseñado para hispanohablantes y lo guía a través de los fundamentos de la gramática inglesa con explicaciones claras, ejemplos de la vida real y actividades prácticas que puede aplicar en situaciones cotidianas.">
+                Start speaking and writing in English with confidence. This interactive beginner course is designed for Spanish speakers and guides you through the foundations of English grammar with clear explanations, real-life examples, and practical activities you can apply in everyday situations.
+            </p>
+        </div>
+
+        <!-- Video Introduction -->
+        <div class="fade-in-content" style="max-width: 900px; margin: 60px auto; padding: 0 40px;">
+            <div style="background: url('blue_background_001.jpg'); background-size: cover; background-position: center;  padding: 30px; box-shadow: 0 8px 30px rgba(0,0,0,0.12);">
+                <h3 style="font-family: 'Roboto', sans-serif; font-size: 28px; font-weight: 300; color: #D4AF37; text-align: center; margin-bottom: 20px;" 
+                    data-en="Course Introduction" 
+                    data-es="Introducción al Curso">
+                    Course Introduction
+                </h3>
+                <video controls preload="metadata" style="width: 100%;  display: block; background: #000;">
+                    <source src="course_intro_spanish_008.mp4" type="video/mp4">
+                    <p style="color: white; text-align: center; padding: 20px;">Your browser does not support the video tag. Please try a different browser or <a href="course_intro_spanish_008.mp4" download style="color: #D4AF37;">download the video</a>.</p>
+                </video>
+            </div>
+        </div>
+
+        <div class="courses-grid">
+            <!-- Course 1 -->
+            <div class="course-card">
+                <img src="course-1.jpg" alt="Course 1" class="course-image">
+                <div class="course-content">
+                    <h3 class="course-title" data-en="Course 1" data-es="Curso 1">Course 1</h3>
+                    <ul class="course-features">
+                        <li data-en="Form correct sentences in English from the very first lesson." 
+                            data-es="Forme oraciones correctas en inglés desde la primera lección.">
+                            Form correct sentences in English from the very first lesson.
+                        </li>
+                        <li data-en="Understand key A1-level grammar: present simple, articles, pronouns, and more." 
+                            data-es="Comprenda la gramática clave de nivel A1: presente simple, artículos, pronombres y más.">
+                            Understand key A1-level grammar: present simple, articles, pronouns, and more.
+                        </li>
+                        <li data-en="Gain confidence speaking and writing for travel, work, or study." 
+                            data-es="Gane confianza al hablar y escribir para viajar, trabajar o estudiar.">
+                            Gain confidence speaking and writing for travel, work, or study.
+                        </li>
+                        <li data-en="Practice with interactive exercises designed specifically for native Spanish speakers." 
+                            data-es="Practique con ejercicios interactivos diseñados específicamente para hispanohablantes nativos.">
+                            Practice with interactive exercises designed specifically for native Spanish speakers.
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Course 2 -->
+            <div class="course-card">
+                <img src="course-2.jpg" alt="Course 2" class="course-image">
+                <div class="course-content">
+                    <h3 class="course-title" data-en="Course 2" data-es="Curso 2">Course 2</h3>
+                    <ul class="course-features">
+                        <li data-en="Reinforce vocabulary and structures from the previous course." 
+                            data-es="Refuerce el vocabulario y las estructuras del curso anterior.">
+                            Reinforce vocabulary and structures from the previous course.
+                        </li>
+                        <li data-en="Use have/has got to express possession." 
+                            data-es="Use have/has got para expresar posesión.">
+                            Use have/has got to express possession.
+                        </li>
+                        <li data-en="Use object pronouns correctly." 
+                            data-es="Use pronombres de objeto correctamente.">
+                            Use object pronouns correctly.
+                        </li>
+                        <li data-en="Introduce and practice adverbs of frequency." 
+                            data-es="Introduzca y practique adverbios de frecuencia.">
+                            Introduce and practice adverbs of frequency.
+                        </li>
+                        <li data-en="Understand and use prepositions of place and time." 
+                            data-es="Comprenda y use preposiciones de lugar y tiempo.">
+                            Understand and use prepositions of place and time.
+                        </li>
+                        <li data-en="Describe environments using there is / there are." 
+                            data-es="Describa entornos usando there is / there are.">
+                            Describe environments using there is / there are.
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Course 3 -->
+            <div class="course-card">
+                <img src="course-3.jpg" alt="Course 3" class="course-image">
+                <div class="course-content">
+                    <h3 class="course-title" data-en="Course 3" data-es="Curso 3">Course 3</h3>
+                    <ul class="course-features">
+                        <li data-en="Use the present continuous correctly to describe actions happening now." 
+                            data-es="Use el presente continuo correctamente para describir acciones que ocurren ahora.">
+                            Use the present continuous correctly to describe actions happening now.
+                        </li>
+                        <li data-en="Express possibility or permission using can." 
+                            data-es="Exprese posibilidad o permiso usando can.">
+                            Express possibility or permission using can.
+                        </li>
+                        <li data-en="Talk about rules and responsibilities using have to." 
+                            data-es="Hable sobre reglas y responsabilidades usando have to.">
+                            Talk about rules and responsibilities using have to.
+                        </li>
+                        <li data-en="Avoid repetition using one and ones." 
+                            data-es="Evite la repetición usando one y ones.">
+                            Avoid repetition using one and ones.
+                        </li>
+                        <li data-en="Introduce the past simple to describe past events or experiences." 
+                            data-es="Introduzca el pasado simple para describir eventos o experiencias pasadas.">
+                            Introduce the past simple to describe past events or experiences.
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Course 4 -->
+            <div class="course-card">
+                <img src="course-4.jpg" alt="Course 4" class="course-image">
+                <div class="course-content">
+                    <h3 class="course-title" data-en="Course 4" data-es="Curso 4">Course 4</h3>
+                    <ul class="course-features">
+                        <li data-en="Understand and use future verb tenses correctly." 
+                            data-es="Comprenda y use los tiempos verbales futuros correctamente.">
+                            Understand and use future verb tenses correctly.
+                        </li>
+                        <li data-en="Identify and apply the different uses of like in context." 
+                            data-es="Identifique y aplique los diferentes usos de like en contexto.">
+                            Identify and apply the different uses of like in context.
+                        </li>
+                        <li data-en="Expand vocabulary to talk about plans, goals, and opinions." 
+                            data-es="Amplíe el vocabulario para hablar sobre planes, objetivos y opiniones.">
+                            Expand vocabulary to talk about plans, goals, and opinions.
+                        </li>
+                        <li data-en="Improve fluency in conversations about the present, past, and future." 
+                            data-es="Mejore la fluidez en conversaciones sobre el presente, pasado y futuro.">
+                            Improve fluency in conversations about the present, past, and future.
+                        </li>
+                        <li data-en="Prepare to successfully progress to the intermediate (B1) level." 
+                            data-es="Prepárese para progresar con éxito al nivel intermedio (B1).">
+                            Prepare to successfully progress to the intermediate (B1) level.
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sample Video and PDF Section -->
+        <div style="margin-top: 80px; padding: 0 40px;">
+            <h3 style="font-family: 'Roboto', sans-serif; font-size: 36px; font-weight: 300; text-align: center; color: var(--primary-navy); margin-bottom: 50px;"
+                data-en="Course Sample - Course 3, Page 6" 
+                data-es="Muestra del Curso - Curso 3, Página 6">
+                Course Sample - Course 3, Page 6
+            </h3>
+            
+            <div class="fade-in-content" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px; max-width: 1200px; margin: 0 auto;">
+                <!-- Video Sample -->
+                <div style="background: url('blue_background_001.jpg'); background-size: cover; background-position: center;  padding: 30px; box-shadow: 0 8px 30px rgba(0,0,0,0.12);">
+                    <h4 style="font-family: 'Roboto', sans-serif; font-size: 24px; font-weight: 300; color: #D4AF37; text-align: center; margin-bottom: 20px;" 
+                        data-en="Video Sample" 
+                        data-es="Muestra de Video">
+                        Video Sample
+                    </h4>
+                    <video controls preload="metadata" style="width: 100%;  display: block; background: #000;">
+                        <source src="course_3_page_6_spanish_001.mp4" type="video/mp4">
+                        <p style="color: white; text-align: center; padding: 20px;">Your browser does not support the video tag.</p>
+                    </video>
+                    <p style="color: rgba(255, 255, 255, 0.8); font-weight: 100; text-align: center; margin-top: 15px; font-size: 14px;"
+                       data-en="Watch a sample lesson from Course 3"
+                       data-es="Vea una lección de muestra del Curso 3">
+                        Watch a sample lesson from Course 3
+                    </p>
+                </div>
+
+                <!-- PDF Download -->
+                <div style="background: url('blue_background_001.jpg'); background-size: cover; background-position: center;  padding: 30px; box-shadow: 0 8px 30px rgba(0,0,0,0.12); display: flex; flex-direction: column; justify-content: center; align-items: center;">
+                    <div style="font-size: 80px; margin-bottom: 20px;">📄</div>
+                    <h4 style="font-family: 'Roboto', sans-serif; font-size: 24px; font-weight: 300; color: #D4AF37; text-align: center; margin-bottom: 20px;" 
+                        data-en="PDF Sample" 
+                        data-es="Muestra en PDF">
+                        PDF Sample
+                    </h4>
+                    <p style="color: rgba(255, 255, 255, 0.9); font-weight: 100; text-align: center; margin-bottom: 30px; line-height: 1.6;"
+                       data-en="Download the same lesson in PDF format to see our course materials and teaching approach."
+                       data-es="Descargue la misma lección en formato PDF para ver nuestros materiales del curso y enfoque de enseñanza.">
+                        Download the same lesson in PDF format to see our course materials and teaching approach.
+                    </p>
+                    <a href="https://d0be5188-0a8d-410b-aa64-eec5cddefa15.filesusr.com/ugd/440d86_4712ffd9f7dd4bc9ae7518f6a0e88717.pdf" 
+                       target="_blank" 
+                       class="cta-button"
+                       data-en="Download PDF Sample" 
+                       data-es="Descargar Muestra PDF">
+                        Download PDF Sample
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="main-footer">
+        <div class="footer-content">
+            <div class="footer-social">
+                <a href="https://www.instagram.com/cursosdeinglesoxbridge/" target="_blank" aria-label="Instagram">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                </a>
+                <a href="https://www.facebook.com/profile.php?id=61564608544805" target="_blank" aria-label="Facebook">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+                </a>
+                <a href="https://www.linkedin.com/in/christopher-harris-13b678153/" target="_blank" aria-label="LinkedIn">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+                </a>
+            </div>
+            <p class="footer-text" style="display: flex; align-items: center; justify-content: center; gap: 10px;">
+                <span data-en="© 2026 by Oxbridge English" data-es="© 2026 por Oxbridge English">© 2026 by Oxbridge English</span>
+                <img src="logo_jpg_003.jpg" alt="Great Fairy" style="height: 30px; width: auto; object-fit: contain;">
+            </p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

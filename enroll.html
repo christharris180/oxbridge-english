@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enroll - Oxbridge English</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Background Video -->
+    <video autoplay muted loop playsinline class="background-video">
+        <source src="girl_working_001.mp4" type="video/mp4">
+    </video>
+
+    <!-- Language Toggle -->
+    <div class="lang-toggle">
+        <button class="lang-btn active" data-lang="en">EN</button>
+        <button class="lang-btn" data-lang="es">ES</button>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="main-nav">
+        <div class="nav-container">
+            <div class="logo">
+                <img src="ox-head-008.jpg" alt="Oxbridge English Logo">
+                <h1 data-en="Oxbridge English" data-es="Oxbridge English">Oxbridge English</h1>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html" data-en="Home" data-es="Inicio">Home</a></li>
+                <li><a href="courses.html" data-en="Courses" data-es="Cursos">Courses</a></li>
+                <li><a href="enroll.html" class="active" data-en="Enroll" data-es="Inscribirse">Enroll</a></li>
+                <li><a href="books.html" data-en="The World Speaks English" data-es="El Mundo Habla Inglés">The World Speaks English</a></li>
+                <li><a href="audio.html" data-en="Audio" data-es="Audio">Audio</a></li>
+                <li><a href="translator.html" data-en="Translator" data-es="Traductor">Translator</a></li>
+                <li><a href="contact.html" data-en="Contact" data-es="Contacto">Contact</a></li>
+            </ul>
+            <button class="mobile-menu-toggle">☰</button>
+        </div>
+    </nav>
+
+    <!-- Enroll Section -->
+    <div class="courses-container">
+        <div class="section-header">
+            <h2 class="section-title" data-en="Enroll Now" data-es="Inscríbase Ahora">Enroll Now</h2>
+            <p class="section-description" 
+               data-en="Ready to begin your English learning journey? Enroll in our comprehensive courses through our secure online platform."
+               data-es="¿Listo para comenzar su viaje de aprendizaje de inglés? Inscríbase en nuestros cursos completos a través de nuestra plataforma en línea segura.">
+                Ready to begin your English learning journey? Enroll in our comprehensive courses through our secure online platform.
+            </p>
+        </div>
+
+        <div class="fade-in-content" style="text-align: center; margin: 80px auto; max-width: 700px; background: url('blue_background_001.jpg'); background-size: cover; background-position: center; padding: 60px 40px;  box-shadow: 0 8px 30px rgba(0,0,0,0.12);">
+            <img src="Coursifyme-Logo.png" alt="Coursify.me" style="max-width: 300px; height: auto; margin-bottom: 30px;">
+            <h3 style="font-family: 'Roboto', sans-serif; font-size: 32px; font-weight: 300; color: #D4AF37; margin-bottom: 20px;" 
+                data-en="Start Learning Today" 
+                data-es="Comience a Aprender Hoy">
+                Start Learning Today
+            </h3>
+            <p style="font-size: 18px; font-weight: 100; color: rgba(255, 255, 255, 0.9); margin-bottom: 40px; line-height: 1.8;"
+               data-en="Access our full curriculum, interactive video lessons, downloadable materials, and personalized support through our dedicated learning platform."
+               data-es="Acceda a nuestro plan de estudios completo, lecciones en video interactivas, materiales descargables y soporte personalizado a través de nuestra plataforma de aprendizaje dedicada.">
+                Access our full curriculum, interactive video lessons, downloadable materials, and personalized support through our dedicated learning platform.
+            </p>
+            
+            <a href="https://oxbridge-english-courses.coursify.me" 
+               target="_blank" 
+               class="cta-button" 
+               style="font-size: 18px; padding: 18px 50px;"
+               data-en="Go to Enrollment Platform" 
+               data-es="Ir a la Plataforma de Inscripción">
+                Go to Enrollment Platform
+            </a>
+            
+            <p style="margin-top: 30px; font-size: 14px; font-weight: 100; color: rgba(255, 255, 255, 0.7);"
+               data-en="You will be redirected to our secure Coursify platform"
+               data-es="Será redirigido a nuestra plataforma segura de Coursify">
+                You will be redirected to our secure Coursify platform
+            </p>
+        </div>
+
+        <!-- Benefits Section -->
+        <div style="margin-top: 80px;">
+            <h3 style="font-family: 'Roboto', sans-serif; font-weight: 300; font-size: 36px; text-align: center; color: #D4AF37; margin-bottom: 50px;"
+                data-en="What You'll Get" 
+                data-es="Lo Que Obtendrá">
+                What You'll Get
+            </h3>
+            
+            <div class="fade-in-content" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px;">
+                <!-- Box 1: Video Lessons -->
+                <div style="background: url('blue_background_001.jpg'); background-size: cover; background-position: center; padding: 30px;  text-align: center; box-shadow: 0 4px 20px rgba(0,0,0,0.08);">
+                    <div style="font-size: 48px; margin-bottom: 15px;">🎥</div>
+                    <h4 style="font-family: 'Roboto', sans-serif; font-weight: 300; font-size: 22px; color: #D4AF37; margin-bottom: 10px;"
+                        data-en="Video Lessons" 
+                        data-es="Lecciones en Video">
+                        Video Lessons
+                    </h4>
+                    <p style="color: rgba(255, 255, 255, 0.9); font-weight: 100; font-size: 15px;"
+                       data-en="Interactive virtual guide for each lesson"
+                       data-es="Guía virtual interactiva para cada lección">
+                        Interactive virtual guide for each lesson
+                    </p>
+                </div>
+                
+                <!-- Box 2: Downloadable PDFs -->
+                <div style="background: url('blue_background_001.jpg'); background-size: cover; background-position: center; padding: 30px;  text-align: center; box-shadow: 0 4px 20px rgba(0,0,0,0.08);">
+                    <div style="font-size: 48px; margin-bottom: 15px;">📄</div>
+                    <h4 style="font-family: 'Roboto', sans-serif; font-weight: 300; font-size: 22px; color: #D4AF37; margin-bottom: 10px;"
+                        data-en="Downloadable PDFs" 
+                        data-es="PDFs Descargables">
+                        Downloadable PDFs
+                    </h4>
+                    <p style="color: rgba(255, 255, 255, 0.9); font-weight: 100; font-size: 15px;"
+                       data-en="Complete course materials and exercises"
+                       data-es="Materiales y ejercicios completos del curso">
+                        Complete course materials and exercises
+                    </p>
+                </div>
+                
+                <!-- Box 3: Free Audio Content -->
+                <div style="background: url('blue_background_001.jpg'); background-size: cover; background-position: center; padding: 30px;  text-align: center; box-shadow: 0 4px 20px rgba(0,0,0,0.08);">
+                    <div style="font-size: 48px; margin-bottom: 15px;">🎧</div>
+                    <h4 style="font-family: 'Roboto', sans-serif; font-weight: 300; font-size: 22px; color: #D4AF37; margin-bottom: 10px;"
+                        data-en="Free Audio Content" 
+                        data-es="Contenido de Audio Gratuito">
+                        Free Audio Content
+                    </h4>
+                    <p style="color: rgba(255, 255, 255, 0.9); font-weight: 100; font-size: 15px;"
+                       data-en="Practice listening and pronunciation"
+                       data-es="Practique la escucha y la pronunciación">
+                        Practice listening and pronunciation
+                    </p>
+                </div>
+                
+                <!-- Box 4: Learn at Your Pace -->
+                <div style="background: url('blue_background_001.jpg'); background-size: cover; background-position: center; padding: 30px;  text-align: center; box-shadow: 0 4px 20px rgba(0,0,0,0.08);">
+                    <div style="font-size: 48px; margin-bottom: 15px;">⏰</div>
+                    <h4 style="font-family: 'Roboto', sans-serif; font-weight: 300; font-size: 22px; color: #D4AF37; margin-bottom: 10px;"
+                        data-en="Learn at Your Pace" 
+                        data-es="Aprenda a Su Ritmo">
+                        Learn at Your Pace
+                    </h4>
+                    <p style="color: rgba(255, 255, 255, 0.9); font-weight: 100; font-size: 15px;"
+                       data-en="Study alone or in groups, anytime"
+                       data-es="Estudie solo o en grupos, en cualquier momento">
+                        Study alone or in groups, anytime
+                    </p>
+                </div>
+                
+                <!-- Box 5: Proven Method -->
+                <div style="background: url('blue_background_001.jpg'); background-size: cover; background-position: center; padding: 30px;  text-align: center; box-shadow: 0 4px 20px rgba(0,0,0,0.08);">
+                    <div style="font-size: 48px; margin-bottom: 15px;">✓</div>
+                    <h4 style="font-family: 'Roboto', sans-serif; font-weight: 300; font-size: 22px; color: #D4AF37; margin-bottom: 10px;"
+                        data-en="Proven Method" 
+                        data-es="Método Comprobado">
+                        Proven Method
+                    </h4>
+                    <p style="color: rgba(255, 255, 255, 0.9); font-weight: 100; font-size: 15px;"
+                       data-en="Designed for Spanish speakers"
+                       data-es="Diseñado para hispanohablantes">
+                        Designed for Spanish speakers
+                    </p>
+                </div>
+                
+                <!-- Box 6: Platform Support -->
+                <div style="background: url('blue_background_001.jpg'); background-size: cover; background-position: center; padding: 30px;  text-align: center; box-shadow: 0 4px 20px rgba(0,0,0,0.08);">
+                    <div style="font-size: 48px; margin-bottom: 15px;">💬</div>
+                    <h4 style="font-family: 'Roboto', sans-serif; font-weight: 300; font-size: 22px; color: #D4AF37; margin-bottom: 10px;"
+                        data-en="Platform Support" 
+                        data-es="Soporte en la Plataforma">
+                        Platform Support
+                    </h4>
+                    <p style="color: rgba(255, 255, 255, 0.9); font-weight: 100; font-size: 15px;"
+                       data-en="Get help throughout your learning journey"
+                       data-es="Obtenga ayuda durante todo su viaje de aprendizaje">
+                        Get help throughout your learning journey
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="main-footer">
+        <div class="footer-content">
+            <div class="footer-social">
+                <a href="https://www.instagram.com/cursosdeinglesoxbridge/" target="_blank" aria-label="Instagram">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                </a>
+                <a href="https://www.facebook.com/profile.php?id=61564608544805" target="_blank" aria-label="Facebook">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+                </a>
+                <a href="https://www.linkedin.com/in/christopher-harris-13b678153/" target="_blank" aria-label="LinkedIn">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+                </a>
+            </div>
+            <p class="footer-text" style="display: flex; align-items: center; justify-content: center; gap: 10px;">
+                <span data-en="© 2026 by Oxbridge English" data-es="© 2026 por Oxbridge English">© 2026 by Oxbridge English</span>
+                <img src="logo_jpg_003.jpg" alt="Great Fairy" style="height: 30px; width: auto; object-fit: contain;">
+            </p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
