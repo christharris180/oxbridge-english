@@ -315,6 +315,11 @@ body {
     margin: 0;
 }
 
+/* Mobile Title - Hidden on Desktop */
+.hero-title-mobile {
+    display: none;
+}
+
 .hero-title {
     font-family: 'Roboto', sans-serif;
     font-size: 56px;
@@ -485,19 +490,20 @@ body {
         font-size: 14px;
     }
     
-    .lang-toggle {
+    .nav-container .lang-toggle {
         order: 1;
         justify-self: end;
         position: static !important;
         top: auto !important;
         right: auto !important;
-        background: transparent !important;
-        box-shadow: none !important;
-        padding: 0 !important;
+        background: white !important;
+        box-shadow: var(--shadow-soft) !important;
+        padding: 6px !important;
+        z-index: auto !important;
     }
     
     .courses-grid {
-        grid-template-columns: 1fr;
+        grid-template-columns: 1fr !important;
         gap: 30px;
     }
     
@@ -566,6 +572,32 @@ body {
         padding: 15px !important;
         min-height: auto !important;
         margin: 0 !important;
+    }
+    
+    /* Title Above Hero Box - Mobile Only */
+    .hero-title-mobile {
+        display: block !important;
+        text-align: center;
+        padding: 20px 20px 15px 20px;
+        background: rgba(247, 244, 229, 0.9);
+    }
+    
+    .hero-title-mobile h1 {
+        font-family: 'Roboto', sans-serif;
+        font-size: 32px;
+        font-weight: 300;
+        color: #1a1a3e;
+        margin: 0 0 8px 0;
+        letter-spacing: 1px;
+    }
+    
+    .hero-tagline {
+        font-family: 'Roboto', sans-serif;
+        font-size: 16px;
+        font-weight: 300;
+        color: #666;
+        margin: 0;
+        font-style: italic;
     }
     
     .hero-content {
@@ -682,8 +714,8 @@ body {
     }
     
     /* Enroll Page Mobile */
-    .enroll-container img[src="Coursifyme-Logo.png"] {
-        max-width: 200px !important;
+    img[src="Coursifyme-Logo.png"] {
+        max-width: 180px !important;
         height: auto !important;
     }
     
