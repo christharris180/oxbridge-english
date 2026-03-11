@@ -458,8 +458,23 @@ body {
 @media (max-width: 768px) {
     .nav-container {
         padding: 12px 20px;
-        padding-right: 40px; /* Reset on mobile since menu is hamburger */
+        padding-right: 20px;
         gap: 15px;
+        display: grid;
+        grid-template-columns: 50px 1fr 140px;
+        align-items: center;
+    }
+    
+    .mobile-menu-toggle {
+        display: block;
+        order: -1;
+        justify-self: start;
+    }
+    
+    .logo {
+        order: 0;
+        justify-self: center;
+        text-align: center;
     }
     
     .logo img {
@@ -470,8 +485,14 @@ body {
         font-size: 14px;
     }
     
+    .lang-toggle {
+        order: 1;
+        justify-self: end;
+        position: static;
+    }
+    
     .courses-grid {
-        grid-template-columns: 1fr; /* Stack cards on mobile */
+        grid-template-columns: 1fr;
         gap: 30px;
     }
     
@@ -495,13 +516,34 @@ body {
         display: none;
         position: absolute;
         top: 100%;
-        left: 0;
-        right: 0;
+        left: 20px;
+        right: auto;
+        width: auto;
+        min-width: 180px;
         background: #1a1a3e;
         flex-direction: column;
-        padding: 20px;
-        box-shadow: var(--shadow-medium);
-        gap: 15px;
+        padding: 15px;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+        gap: 0;
+        border-radius: 0;
+    }
+    
+    .nav-links li {
+        width: 100%;
+        text-align: left;
+        border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+    
+    .nav-links li:last-child {
+        border-bottom: none;
+    }
+    
+    .nav-links a {
+        display: block;
+        padding: 12px 10px;
+        width: 100%;
+        text-align: left;
+        font-size: 14px;
     }
     
     .nav-links.active {
@@ -703,15 +745,10 @@ body {
         margin-bottom: 0 !important;
     }
     
-    /* Language Toggle Mobile */
-    .lang-toggle {
-        top: 15px;
-        right: 15px;
-    }
-    
+    /* Language Toggle Mobile - positioned in grid */
     .lang-btn {
-        padding: 6px 15px;
-        font-size: 12px;
+        padding: 6px 12px;
+        font-size: 11px;
     }
 }
 
