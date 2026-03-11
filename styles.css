@@ -477,6 +477,18 @@ body {
     
     .courses-container {
         padding: 40px 20px !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        overflow-x: hidden !important;
+    }
+    
+    .course-card {
+        width: 100% !important;
+        max-width: 100% !important;
+    }
+    
+    .course-image {
+        width: 100% !important;
     }
     
     .nav-links {
@@ -515,10 +527,10 @@ body {
     .hero-content-home {
         background: url('blue_background_phone_004.jpg') !important;
         background-size: cover !important;
-        background-position: center top !important;
-        padding: 30px 20px 40px 20px !important;
-        min-height: 450px !important;
-        max-height: 450px !important;
+        background-position: center center !important;
+        padding: 20px !important;
+        min-height: 500px !important;
+        max-height: 500px !important;
         display: flex !important;
         align-items: flex-end !important;
         justify-content: center !important;
@@ -529,44 +541,43 @@ body {
     .hero-text-wrapper {
         margin-right: 0 !important;
         background: none !important;
-        padding: 0 !important;
-        padding-bottom: 20px !important;
+        padding: 0 10px 10px 10px !important;
         border-radius: 0 !important;
         width: 100%;
         max-width: 100%;
     }
     
     .hero-title {
-        font-size: 32px !important;
+        font-size: 28px !important;
     }
     
     .hero-content-home .hero-title {
-        font-size: 28px !important;
+        font-size: 24px !important;
         color: #FFFFFF !important;
-        text-shadow: 2px 2px 4px rgba(0,0,0,0.5) !important;
-        margin-bottom: 15px !important;
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.7) !important;
+        margin-bottom: 12px !important;
     }
     
     .hero-subtitle {
-        font-size: 18px;
+        font-size: 16px;
     }
     
     .hero-description {
-        font-size: 15px !important;
-        line-height: 1.7 !important;
+        font-size: 14px !important;
+        line-height: 1.6 !important;
     }
     
     .hero-content-home .hero-description {
-        font-size: 14px !important;
-        line-height: 1.6 !important;
+        font-size: 13px !important;
+        line-height: 1.5 !important;
         color: rgba(255, 255, 255, 0.95) !important;
-        text-shadow: 1px 1px 3px rgba(0,0,0,0.5) !important;
-        margin-bottom: 20px !important;
+        text-shadow: 1px 1px 3px rgba(0,0,0,0.7) !important;
+        margin-bottom: 15px !important;
     }
     
     .cta-button {
-        padding: 12px 24px !important;
-        font-size: 14px !important;
+        padding: 11px 22px !important;
+        font-size: 13px !important;
         margin-top: 0 !important;
     }
     
@@ -578,15 +589,27 @@ body {
     }
     
     body {
-        overflow-x: hidden;
+        overflow-x: hidden !important;
         background: rgba(247, 244, 229, 0.9) !important;
         min-height: 100vh;
         display: flex;
         flex-direction: column;
+        max-width: 100vw !important;
+    }
+    
+    html {
+        overflow-x: hidden !important;
+        max-width: 100vw !important;
     }
     
     .hero {
         flex: 0 0 auto;
+        width: 100% !important;
+        max-width: 100% !important;
+    }
+    
+    * {
+        max-width: 100vw !important;
     }
     
     /* Books Page Mobile */
