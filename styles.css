@@ -523,25 +523,27 @@ body {
         max-width: 100% !important;
     }
     
-    /* Homepage Hero - Mobile-Specific Image */
+    /* Homepage Hero - Mobile-Specific Image - FULL HEIGHT */
     .hero-content-home {
         background: url('blue_background_phone_004.jpg') !important;
-        background-size: cover !important;
+        background-size: contain !important;
+        background-repeat: no-repeat !important;
         background-position: center center !important;
         padding: 20px !important;
-        min-height: 500px !important;
-        max-height: 500px !important;
+        min-height: 600px !important;
+        height: auto !important;
         display: flex !important;
         align-items: flex-end !important;
         justify-content: center !important;
         text-align: center !important;
         margin: 0 20px !important;
+        aspect-ratio: 670 / 900 !important;
     }
     
     .hero-text-wrapper {
         margin-right: 0 !important;
         background: none !important;
-        padding: 0 10px 10px 10px !important;
+        padding: 0 10px 30px 10px !important;
         border-radius: 0 !important;
         width: 100%;
         max-width: 100%;
