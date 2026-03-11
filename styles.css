@@ -507,22 +507,34 @@ body {
         max-width: 100% !important;
     }
     
+    /* Homepage Hero - Remove Photo Background on Mobile, Use Solid Color */
     .hero-content-home {
-        padding: 30px 20px !important;
-        min-height: 400px !important;
-        background-position: center center !important;
+        background: linear-gradient(135deg, #1a1a3e 0%, #2d3561 100%) !important;
+        background-image: none !important;
+        padding: 50px 25px !important;
+        min-height: auto !important;
+        display: block !important;
+        text-align: center !important;
     }
     
     .hero-text-wrapper {
         margin-right: 0 !important;
+        background: none !important;
+        padding: 0 !important;
+        border-radius: 0 !important;
+        width: 100%;
+        max-width: 100%;
     }
     
     .hero-title {
-        font-size: 28px !important;
+        font-size: 32px !important;
     }
     
     .hero-content-home .hero-title {
-        font-size: 26px !important;
+        font-size: 32px !important;
+        color: #FFFFFF !important;
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.3) !important;
+        margin-bottom: 20px !important;
     }
     
     .hero-subtitle {
@@ -530,17 +542,32 @@ body {
     }
     
     .hero-description {
-        font-size: 14px !important;
+        font-size: 15px !important;
+        line-height: 1.7 !important;
     }
     
     .hero-content-home .hero-description {
-        font-size: 13px !important;
-        line-height: 1.5 !important;
+        font-size: 15px !important;
+        line-height: 1.7 !important;
+        color: rgba(255, 255, 255, 0.95) !important;
+        text-shadow: 1px 1px 2px rgba(0,0,0,0.3) !important;
+        margin-bottom: 25px !important;
     }
     
     .cta-button {
-        padding: 12px 24px !important;
-        font-size: 14px !important;
+        padding: 14px 28px !important;
+        font-size: 15px !important;
+        margin-top: 0 !important;
+    }
+    
+    /* Hide background video on mobile */
+    .background-video {
+        display: none !important;
+    }
+    
+    body {
+        overflow-x: hidden;
+        background: rgba(247, 244, 229, 1) !important;
     }
     
     /* Books Page Mobile */
@@ -596,7 +623,13 @@ body {
         font-size: 14px !important;
     }
     
-    /* Footer Mobile */
+    /* Footer Mobile - Fix Video Bleeding */
+    .main-footer {
+        position: relative;
+        z-index: 1000;
+        background: #1a1a3e !important;
+    }
+    
     .footer-social {
         gap: 20px;
     }
@@ -614,6 +647,16 @@ body {
     
     .footer-text img {
         height: 25px !important;
+    }
+    
+    /* Ensure proper spacing at bottom of all pages */
+    .courses-container,
+    .books-container,
+    .audio-container,
+    .translator-embed,
+    .contact-container {
+        padding-bottom: 80px !important;
+        margin-bottom: 0 !important;
     }
     
     /* Language Toggle Mobile */
