@@ -488,7 +488,12 @@ body {
     .lang-toggle {
         order: 1;
         justify-self: end;
-        position: static;
+        position: static !important;
+        top: auto !important;
+        right: auto !important;
+        background: transparent !important;
+        box-shadow: none !important;
+        padding: 0 !important;
     }
     
     .courses-grid {
@@ -506,10 +511,12 @@ body {
     .course-card {
         width: 100% !important;
         max-width: 100% !important;
+        margin: 0 auto !important;
     }
     
     .course-image {
         width: 100% !important;
+        height: auto !important;
     }
     
     .nav-links {
@@ -556,7 +563,7 @@ body {
     
     /* Hero Section Mobile */
     .hero {
-        padding: 0 !important;
+        padding: 15px !important;
         min-height: auto !important;
         margin: 0 !important;
     }
@@ -674,6 +681,12 @@ body {
         margin: 0 auto;
     }
     
+    /* Enroll Page Mobile */
+    .enroll-container img[src="Coursifyme-Logo.png"] {
+        max-width: 200px !important;
+        height: auto !important;
+    }
+    
     /* Audio Page Mobile */
     .audio-container {
         padding: 40px 20px !important;
@@ -687,14 +700,47 @@ body {
         padding: 15px !important;
     }
     
+    .jump-to-book2 {
+        display: block !important;
+        width: fit-content !important;
+        margin: 30px auto !important;
+        padding: 12px 24px !important;
+        background: #D4AF37 !important;
+        color: #1a1a3e !important;
+        text-decoration: none !important;
+        border-radius: 0 !important;
+        font-weight: 500 !important;
+        text-align: center !important;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15) !important;
+    }
+    
     /* Contact Page Mobile */
     .contact-container {
         padding: 40px 20px !important;
     }
     
     .contact-icons {
+        flex-direction: row !important;
+        gap: 25px !important;
+        justify-content: center !important;
+    }
+    
+    .contact-icon {
+        width: 50px !important;
+        height: 50px !important;
+    }
+    
+    .contact-details p {
+        display: flex;
         flex-direction: column;
-        gap: 20px;
+        align-items: center;
+        text-align: center;
+        margin: 20px 0 !important;
+    }
+    
+    .contact-details strong {
+        display: block;
+        margin-bottom: 5px;
     }
     
     /* Translator Page Mobile */
@@ -1060,6 +1106,11 @@ body {
 .download-link:hover {
     background: #c9a332;
     transform: translateY(-2px);
+}
+
+/* Jump to Book 2 Button - Hidden on Desktop */
+.jump-to-book2 {
+    display: none;
 }
 
 /* ==========================================
