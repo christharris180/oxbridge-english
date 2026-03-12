@@ -583,15 +583,15 @@ body {
         padding: 0 !important;
         min-height: auto !important;
         margin: 0 !important;
-        background: rgba(247, 244, 229, 1) !important;
+        background: transparent !important;
     }
     
     /* Title Above Hero Box - Mobile Only */
     .hero-title-mobile {
         display: block !important;
         text-align: center;
-        padding: 25px 20px;
-        background: rgba(247, 244, 229, 1);
+        padding: 20px 20px 15px 20px;
+        background: transparent;
     }
     
     .hero-title-mobile h1 {
@@ -599,7 +599,7 @@ body {
         font-size: 34px;
         font-weight: 300;
         color: #1a1a3e;
-        margin: 0 0 8px 0;
+        margin: 0 0 5px 0;
         letter-spacing: 1px;
     }
     
@@ -617,7 +617,7 @@ body {
         max-width: 100% !important;
     }
     
-    /* Homepage Hero - Mobile-Specific Image - FULL SIZE */
+    /* Homepage Hero - Mobile Layout - Centered with Side Gaps */
     .hero-content-home {
         background: url('blue_background_phone_004.jpg') !important;
         background-size: contain !important;
@@ -630,9 +630,25 @@ body {
         align-items: flex-end !important;
         justify-content: center !important;
         text-align: center !important;
-        margin: 0 15px !important;
+        margin: 0 15px 15px 15px !important;
         aspect-ratio: 670 / 900 !important;
         width: calc(100% - 30px) !important;
+    }
+    
+    /* Video visible through cream overlay on mobile homepage */
+    .background-video {
+        display: block !important;
+        position: fixed !important;
+        z-index: -1 !important;
+    }
+    
+    body {
+        overflow-x: hidden !important;
+        background: rgba(247, 244, 229, 0.9) !important;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        max-width: 100vw !important;
     }
     
     .hero-text-wrapper {
