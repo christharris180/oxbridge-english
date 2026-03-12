@@ -10,22 +10,33 @@
 <body>
     <!-- Background Video -->
     <video autoplay muted loop playsinline class="background-video">
-        <source src="girl_working_001.mp4" type="video/mp4">
-    </video>
-
-    <!-- Language Toggle -->
-    <div class="lang-toggle">
-        <button class="lang-btn active" data-lang="en">🇬🇧</button>
-        <button class="lang-btn" data-lang="es">🇪🇸</button>
-    </div>
-
-    <!-- Navigation -->
     <nav class="main-nav">
         <div class="nav-container">
+            <button class="mobile-menu-toggle">☰</button>
+            
             <div class="logo">
                 <img src="ox-head-008.jpg" alt="Oxbridge English Logo">
                 <h1 data-en="Oxbridge English" data-es="Oxbridge English">Oxbridge English</h1>
             </div>
+            
+            <!-- Language Toggle - Now inside nav-container -->
+            <div class="lang-toggle">
+                <button class="lang-dropdown-trigger">
+                    <span class="current-flag">🇬🇧</span>
+                    <span class="dropdown-arrow">▼</span>
+                </button>
+                <div class="lang-dropdown-menu">
+                    <button class="lang-option" data-lang="en">
+                        <span class="flag">🇬🇧</span>
+                        <span class="lang-name">ENGLISH</span>
+                    </button>
+                    <button class="lang-option" data-lang="es">
+                        <span class="flag">🇪🇸</span>
+                        <span class="lang-name">ESPAÑOL</span>
+                    </button>
+                </div>
+            </div>
+            
             <ul class="nav-links">
                 <li><a href="index.html" data-en="Home" data-es="Inicio">Home</a></li>
                 <li><a href="courses.html" class="active" data-en="Courses" data-es="Cursos">Courses</a></li>
@@ -35,9 +46,18 @@
                 <li><a href="translator.html" data-en="Translator" data-es="Traductor">Translator</a></li>
                 <li><a href="contact.html" data-en="Contact" data-es="Contacto">Contact</a></li>
             </ul>
-            <button class="mobile-menu-toggle">☰</button>
         </div>
     </nav>
+
+    <!-- Language Toggle -->
+
+    </div>
+        <source src="girl_working_001.mp4" type="video/mp4">
+    </video>
+
+    <!-- Language Toggle -->
+
+    <!-- Navigation -->
 
     <!-- Courses Section -->
     <div class="courses-container">
