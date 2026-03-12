@@ -16,8 +16,20 @@
 
     <!-- Language Toggle -->
     <div class="lang-toggle">
-        <button class="lang-btn active" data-lang="en">🇬🇧</button>
-        <button class="lang-btn" data-lang="es">🇪🇸</button>
+        <button class="lang-dropdown-trigger">
+            <span class="current-flag">🇬🇧</span>
+            <span class="dropdown-arrow">▼</span>
+        </button>
+        <div class="lang-dropdown-menu">
+            <button class="lang-option" data-lang="en">
+                <span class="flag">🇬🇧</span>
+                <span class="lang-name">ENGLISH</span>
+            </button>
+            <button class="lang-option" data-lang="es">
+                <span class="flag">🇪🇸</span>
+                <span class="lang-name">ESPAÑOL</span>
+            </button>
+        </div>
     </div>
 
     <!-- Navigation -->

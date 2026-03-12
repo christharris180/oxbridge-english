@@ -1,9 +1,12 @@
 // ==========================================
-// LANGUAGE SWITCHER
+// LANGUAGE SWITCHER (DROPDOWN)
 // ==========================================
 
 document.addEventListener('DOMContentLoaded', function() {
-    const langButtons = document.querySelectorAll('.lang-btn');
+    const langToggle = document.querySelector('.lang-toggle');
+    const langTrigger = document.querySelector('.lang-dropdown-trigger');
+    const langOptions = document.querySelectorAll('.lang-option');
+    const currentFlag = document.querySelector('.current-flag');
     const elementsToTranslate = document.querySelectorAll('[data-en][data-es]');
     
     // Get saved language or default to English
@@ -12,24 +15,46 @@ document.addEventListener('DOMContentLoaded', function() {
     // Apply saved language on page load
     setLanguage(currentLang);
     
-    // Language button click handlers
-    langButtons.forEach(btn => {
-        btn.addEventListener('click', function() {
+    // Toggle dropdown
+    if (langTrigger) {
+        langTrigger.addEventListener('click', function(e) {
+            e.stopPropagation();
+            langToggle.classList.toggle('open');
+        });
+    }
+    
+    // Close dropdown when clicking outside
+    document.addEventListener('click', function(e) {
+        if (langToggle && !langToggle.contains(e.target)) {
+            langToggle.classList.remove('open');
+        }
+    });
+    
+    // Language option click handlers
+    langOptions.forEach(option => {
+        option.addEventListener('click', function() {
             const lang = this.getAttribute('data-lang');
             setLanguage(lang);
             localStorage.setItem('preferredLanguage', lang);
+            langToggle.classList.remove('open');
         });
     });
     
     function setLanguage(lang) {
         currentLang = lang;
         
-        // Update button states
-        langButtons.forEach(btn => {
-            if (btn.getAttribute('data-lang') === lang) {
-                btn.classList.add('active');
+        // Update current flag in trigger
+        const flagEmoji = lang === 'en' ? '🇬🇧' : '🇪🇸';
+        if (currentFlag) {
+            currentFlag.textContent = flagEmoji;
+        }
+        
+        // Update active state on options
+        langOptions.forEach(option => {
+            if (option.getAttribute('data-lang') === lang) {
+                option.classList.add('active');
             } else {
-                btn.classList.remove('active');
+                option.classList.remove('active');
             }
         });
         

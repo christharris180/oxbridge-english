@@ -93,19 +93,97 @@ body {
    LANGUAGE TOGGLE
    ========================================== */
 
+/* Language Dropdown */
 .lang-toggle {
     position: fixed;
     top: 20px;
     right: 20px;
     z-index: 1000;
-    display: flex;
-    gap: 8px;
-    background: white;
-    padding: 6px;
-    border-radius: 0;
-    box-shadow: var(--shadow-soft);
 }
 
+.lang-dropdown-trigger {
+    background: #1a1a3e;
+    border: none;
+    padding: 8px 12px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    border-radius: 0;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}
+
+.current-flag {
+    font-size: 20px;
+    line-height: 1;
+}
+
+.dropdown-arrow {
+    color: white;
+    font-size: 10px;
+    transition: transform 0.2s;
+}
+
+.lang-toggle.open .dropdown-arrow {
+    transform: rotate(180deg);
+}
+
+.lang-dropdown-menu {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    margin-top: 4px;
+    background: #1a1a3e;
+    border-radius: 0;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    overflow: hidden;
+    display: none;
+    min-width: 150px;
+}
+
+.lang-toggle.open .lang-dropdown-menu {
+    display: block;
+}
+
+.lang-option {
+    width: 100%;
+    background: transparent;
+    border: none;
+    padding: 12px 16px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: background 0.2s;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+.lang-option:last-child {
+    border-bottom: none;
+}
+
+.lang-option:hover {
+    background: rgba(255,255,255,0.1);
+}
+
+.lang-option.active {
+    background: rgba(212,175,55,0.2);
+}
+
+.lang-option .flag {
+    font-size: 20px;
+    line-height: 1;
+}
+
+.lang-option .lang-name {
+    color: white;
+    font-family: 'Roboto', sans-serif;
+    font-size: 13px;
+    font-weight: 400;
+    letter-spacing: 0.5px;
+}
+
+/* Old styles - keeping for backwards compatibility */
 .lang-btn {
     padding: 6px 10px;
     border: none;
@@ -498,6 +576,7 @@ body {
         font-size: 14px;
     }
     
+    /* Language dropdown in mobile header */
     .nav-container .lang-toggle {
         order: 1;
         justify-self: center;
@@ -505,12 +584,27 @@ body {
         position: static !important;
         top: auto !important;
         right: auto !important;
+        z-index: auto !important;
+    }
+    
+    .nav-container .lang-dropdown-trigger {
         background: transparent !important;
         box-shadow: none !important;
-        padding: 0 !important;
-        z-index: auto !important;
-        display: flex !important;
-        gap: 8px;
+        padding: 4px 8px !important;
+    }
+    
+    .nav-container .current-flag {
+        font-size: 22px !important;
+    }
+    
+    .nav-container .dropdown-arrow {
+        font-size: 9px !important;
+    }
+    
+    .nav-container .lang-dropdown-menu {
+        right: auto !important;
+        left: 50% !important;
+        transform: translateX(-50%) !important;
     }
     
     .courses-grid {
@@ -679,17 +773,17 @@ body {
     
     /* Description text */
     .hero-content-home .hero-description {
-        font-size: 15px !important;
-        line-height: 1.6 !important;
+        font-size: 17px !important;
+        line-height: 1.7 !important;
         color: white !important;
         text-shadow: 1px 1px 3px rgba(0,0,0,0.7) !important;
-        margin: 0 0 20px 0 !important;
+        margin: 0 0 25px 0 !important;
     }
     
     /* Button */
     .hero-content-home .cta-button {
-        padding: 14px 28px !important;
-        font-size: 16px !important;
+        padding: 15px 32px !important;
+        font-size: 17px !important;
         display: inline-block !important;
     }
     
