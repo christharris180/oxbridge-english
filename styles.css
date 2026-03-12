@@ -1416,3 +1416,225 @@ body {
     font-size: 16px;
     color: var(--text-light);
 }
+
+/* ==========================================
+   TRANSLATOR PAGE - STYLED LIKE OTHER PAGES
+   ========================================== */
+
+.translator-embed {
+    max-width: 900px;
+    margin: 60px auto;
+    padding: 0 20px;
+}
+
+.translator-container-inner {
+    background: url('blue_background_001.jpg');
+    background-size: cover;
+    background-position: center;
+    padding: 60px 50px;
+    border-radius: 0;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+}
+
+/* Translator heading */
+.translator-container-inner h1 {
+    font-family: 'Roboto', sans-serif !important;
+    font-size: 48px !important;
+    font-weight: 300 !important;
+    color: #D4AF37 !important;
+    text-align: center !important;
+    margin-bottom: 40px !important;
+    letter-spacing: 1px !important;
+}
+
+/* Language selector - radio buttons in gold */
+.language-selector {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin-bottom: 30px;
+}
+
+.language-selector .lang-option {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    color: white;
+    font-size: 16px;
+    font-weight: 300;
+    padding: 10px 20px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 0;
+    transition: all 0.3s;
+}
+
+.language-selector .lang-option:hover {
+    border-color: #D4AF37;
+}
+
+.language-selector .lang-option.active {
+    border-color: #D4AF37;
+    background: rgba(212, 175, 55, 0.1);
+}
+
+.language-selector .radio-mark {
+    width: 20px;
+    height: 20px;
+    border: 2px solid #D4AF37;
+    border-radius: 50%;
+    position: relative;
+    background: transparent;
+}
+
+.language-selector .lang-option.active .radio-mark::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 10px;
+    height: 10px;
+    background: #D4AF37;
+    border-radius: 50%;
+}
+
+.language-selector input[type="radio"] {
+    display: none;
+}
+
+/* Input/Output cards - cream background */
+.translator-container-inner .card {
+    background: rgba(247, 244, 229, 1);
+    border: none;
+    border-radius: 0;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.trans-input,
+.trans-output {
+    background: transparent !important;
+    border: none !important;
+    color: #1a1a3e !important;
+    font-family: 'Roboto', sans-serif !important;
+    font-size: 16px !important;
+    font-weight: 300 !important;
+    width: 100% !important;
+    resize: vertical !important;
+    outline: none !important;
+}
+
+.trans-input::placeholder {
+    color: rgba(26, 26, 62, 0.5) !important;
+}
+
+.trans-output {
+    min-height: 120px;
+    padding: 10px 0;
+}
+
+.trans-output.empty {
+    color: rgba(26, 26, 62, 0.5);
+    font-style: italic;
+}
+
+/* Character count */
+.char-count {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 13px;
+    margin-top: 10px;
+}
+
+/* Action buttons */
+.trans-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.trans-btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 0;
+    cursor: pointer;
+    font-family: 'Roboto', sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.trans-btn-primary {
+    background: #D4AF37;
+    color: #1a1a3e;
+}
+
+.trans-btn-primary:hover {
+    background: #c9a332;
+    transform: translateY(-2px);
+}
+
+.trans-btn-secondary {
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.trans-btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+.trans-btn.hidden {
+    display: none;
+}
+
+/* Loading shimmer */
+.loading-shimmer {
+    width: 100%;
+    height: 100px;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+}
+
+.loading-shimmer.hidden {
+    display: none;
+}
+
+/* Promo banner */
+.translator-promo-banner:hover > div {
+    transform: scale(1.02);
+}
+
+/* Mobile adjustments */
+@media (max-width: 768px) {
+    .translator-container-inner {
+        padding: 40px 25px;
+    }
+    
+    .translator-container-inner h1 {
+        font-size: 36px !important;
+    }
+    
+    .language-selector {
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    .language-selector .lang-option {
+        justify-content: center;
+    }
+    
+    .trans-actions {
+        flex-wrap: wrap;
+    }
+}
