@@ -585,20 +585,31 @@ body {
         top: auto !important;
         right: auto !important;
         z-index: auto !important;
+        display: flex !important;
+        align-items: center !important;
     }
     
     .nav-container .lang-dropdown-trigger {
         background: transparent !important;
         box-shadow: none !important;
-        padding: 4px 8px !important;
+        padding: 6px 10px !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
     }
     
     .nav-container .current-flag {
-        font-size: 22px !important;
+        font-size: 24px !important;
+        line-height: 1 !important;
+        display: flex !important;
+        align-items: center !important;
     }
     
     .nav-container .dropdown-arrow {
         font-size: 9px !important;
+        line-height: 1 !important;
+        display: flex !important;
+        align-items: center !important;
     }
     
     .nav-container .lang-dropdown-menu {
@@ -773,17 +784,17 @@ body {
     
     /* Description text */
     .hero-content-home .hero-description {
-        font-size: 17px !important;
-        line-height: 1.7 !important;
+        font-size: 19px !important;
+        line-height: 1.8 !important;
         color: white !important;
         text-shadow: 1px 1px 3px rgba(0,0,0,0.7) !important;
-        margin: 0 0 25px 0 !important;
+        margin: 0 0 30px 0 !important;
     }
     
     /* Button */
     .hero-content-home .cta-button {
-        padding: 15px 32px !important;
-        font-size: 17px !important;
+        padding: 16px 36px !important;
+        font-size: 18px !important;
         display: inline-block !important;
     }
     
