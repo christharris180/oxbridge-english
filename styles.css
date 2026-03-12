@@ -95,9 +95,7 @@ body {
 
 /* Language Dropdown */
 .lang-toggle {
-    position: fixed;
-    top: 20px;
-    right: 20px;
+    position: relative;
     z-index: 1000;
 }
 
@@ -235,11 +233,15 @@ body {
     max-width: 1400px;
     margin: 0 auto;
     padding: 17px 40px;
-    padding-right: 180px; /* Make room for language toggle */
     display: flex;
     justify-content: flex-start;
     align-items: center;
     gap: 60px; /* Space between logo and nav links */
+}
+
+/* Desktop - language toggle at end */
+.nav-container .lang-toggle {
+    margin-left: auto;
 }
 
 .logo {
