@@ -410,20 +410,32 @@ body {
 .cta-button {
     display: inline-block;
     padding: 16px 40px;
-    background: var(--primary-gold);
-    color: white;
+    background: linear-gradient(to bottom, #e8c547 0%, #D4AF37 50%, #c9a332 100%);
+    color: #1a1a3e;
     text-decoration: none;
     font-size: 16px;
     font-weight: 500;
-    border-radius: 0;
-    transition: var(--transition);
-    box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
+    border-radius: 50px;
+    transition: all 0.3s;
+    box-shadow: 0 4px 8px rgba(212, 175, 55, 0.4), 
+                0 2px 4px rgba(0, 0, 0, 0.2),
+                inset 0 -2px 4px rgba(0, 0, 0, 0.2),
+                inset 0 2px 4px rgba(255, 255, 255, 0.3);
 }
 
 .cta-button:hover {
-    background: #c9a332;
+    background: linear-gradient(to bottom, #f0d055 0%, #e8c547 50%, #D4AF37 100%);
     transform: translateY(-2px);
-    box-shadow: 0 6px 25px rgba(212, 175, 55, 0.4);
+    box-shadow: 0 6px 12px rgba(212, 175, 55, 0.5), 
+                0 3px 6px rgba(0, 0, 0, 0.3),
+                inset 0 -2px 4px rgba(0, 0, 0, 0.2),
+                inset 0 2px 4px rgba(255, 255, 255, 0.4);
+}
+
+.cta-button:active {
+    transform: translateY(0px);
+    box-shadow: 0 2px 4px rgba(212, 175, 55, 0.3), 
+                inset 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 .hero-decoration {
