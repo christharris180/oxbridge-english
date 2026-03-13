@@ -417,8 +417,8 @@ body {
     font-weight: 500;
     border-radius: 50px;
     transition: all 0.3s;
-    box-shadow: 0 4px 8px rgba(212, 175, 55, 0.4), 
-                0 2px 4px rgba(0, 0, 0, 0.2),
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25), 
+                0 2px 4px rgba(0, 0, 0, 0.15),
                 inset 0 -2px 4px rgba(0, 0, 0, 0.2),
                 inset 0 2px 4px rgba(255, 255, 255, 0.3);
 }
@@ -426,15 +426,15 @@ body {
 .cta-button:hover {
     background: linear-gradient(to bottom, #f0d055 0%, #e8c547 50%, #D4AF37 100%);
     transform: translateY(-2px);
-    box-shadow: 0 6px 12px rgba(212, 175, 55, 0.5), 
-                0 3px 6px rgba(0, 0, 0, 0.3),
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3), 
+                0 3px 6px rgba(0, 0, 0, 0.2),
                 inset 0 -2px 4px rgba(0, 0, 0, 0.2),
                 inset 0 2px 4px rgba(255, 255, 255, 0.4);
 }
 
 .cta-button:active {
     transform: translateY(0px);
-    box-shadow: 0 2px 4px rgba(212, 175, 55, 0.3), 
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2), 
                 inset 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
@@ -1582,8 +1582,8 @@ body {
     display: flex;
     align-items: center;
     gap: 8px;
-    box-shadow: 0 4px 8px rgba(212, 175, 55, 0.4), 
-                0 2px 4px rgba(0, 0, 0, 0.2),
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25), 
+                0 2px 4px rgba(0, 0, 0, 0.15),
                 inset 0 -2px 4px rgba(0, 0, 0, 0.2),
                 inset 0 2px 4px rgba(255, 255, 255, 0.3);
 }
@@ -1596,15 +1596,15 @@ body {
 .trans-btn-primary:hover {
     background: linear-gradient(to bottom, #f0d055 0%, #e8c547 50%, #D4AF37 100%);
     transform: translateY(-2px);
-    box-shadow: 0 6px 12px rgba(212, 175, 55, 0.5), 
-                0 3px 6px rgba(0, 0, 0, 0.3),
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3), 
+                0 3px 6px rgba(0, 0, 0, 0.2),
                 inset 0 -2px 4px rgba(0, 0, 0, 0.2),
                 inset 0 2px 4px rgba(255, 255, 255, 0.4);
 }
 
 .trans-btn-primary:active {
     transform: translateY(0px);
-    box-shadow: 0 2px 4px rgba(212, 175, 55, 0.3), 
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2), 
                 inset 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
@@ -1616,15 +1616,15 @@ body {
 .trans-btn-secondary:hover {
     background: linear-gradient(to bottom, #f0d055 0%, #e8c547 50%, #D4AF37 100%);
     transform: translateY(-2px);
-    box-shadow: 0 6px 12px rgba(212, 175, 55, 0.5), 
-                0 3px 6px rgba(0, 0, 0, 0.3),
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3), 
+                0 3px 6px rgba(0, 0, 0, 0.2),
                 inset 0 -2px 4px rgba(0, 0, 0, 0.2),
                 inset 0 2px 4px rgba(255, 255, 255, 0.4);
 }
 
 .trans-btn-secondary:active {
     transform: translateY(0px);
-    box-shadow: 0 2px 4px rgba(212, 175, 55, 0.3), 
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2), 
                 inset 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
