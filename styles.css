@@ -858,13 +858,26 @@ body {
         width: fit-content !important;
         margin: 30px auto !important;
         padding: 12px 24px !important;
-        background: #D4AF37 !important;
+        background: linear-gradient(to bottom, #e8c547 0%, #D4AF37 50%, #c9a332 100%) !important;
         color: #1a1a3e !important;
         text-decoration: none !important;
-        border-radius: 0 !important;
+        border-radius: 50px !important;
         font-weight: 500 !important;
         text-align: center !important;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.15) !important;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25), 
+                    0 2px 4px rgba(0, 0, 0, 0.15),
+                    inset 0 -2px 4px rgba(0, 0, 0, 0.2),
+                    inset 0 2px 4px rgba(255, 255, 255, 0.3) !important;
+        transition: all 0.3s !important;
+    }
+    
+    .jump-to-book2:hover {
+        background: linear-gradient(to bottom, #f0d055 0%, #e8c547 50%, #D4AF37 100%) !important;
+        transform: translateY(-2px) !important;
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3), 
+                    0 3px 6px rgba(0, 0, 0, 0.2),
+                    inset 0 -2px 4px rgba(0, 0, 0, 0.2),
+                    inset 0 2px 4px rgba(255, 255, 255, 0.4) !important;
     }
     
     /* Contact Page Mobile */
@@ -1275,18 +1288,32 @@ body {
 .download-link {
     display: inline-block;
     padding: 12px 30px;
-    background: var(--primary-gold);
-    color: white;
+    background: linear-gradient(to bottom, #e8c547 0%, #D4AF37 50%, #c9a332 100%);
+    color: #1a1a3e;
     text-decoration: none;
-    border-radius: 0;
+    border-radius: 50px;
     font-weight: 500;
     margin-top: 15px;
-    transition: var(--transition);
+    transition: all 0.3s;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25), 
+                0 2px 4px rgba(0, 0, 0, 0.15),
+                inset 0 -2px 4px rgba(0, 0, 0, 0.2),
+                inset 0 2px 4px rgba(255, 255, 255, 0.3);
 }
 
 .download-link:hover {
-    background: #c9a332;
+    background: linear-gradient(to bottom, #f0d055 0%, #e8c547 50%, #D4AF37 100%);
     transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3), 
+                0 3px 6px rgba(0, 0, 0, 0.2),
+                inset 0 -2px 4px rgba(0, 0, 0, 0.2),
+                inset 0 2px 4px rgba(255, 255, 255, 0.4);
+}
+
+.download-link:active {
+    transform: translateY(0px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2), 
+                inset 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 /* Jump to Book 2 Button - Hidden on Desktop */
