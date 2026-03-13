@@ -1421,6 +1421,11 @@ body {
    TRANSLATOR PAGE - STYLED LIKE OTHER PAGES
    ========================================== */
 
+/* Ensure cream background over video on translator page */
+body {
+    background: rgba(247, 244, 229, 0.9) !important;
+}
+
 .translator-embed {
     max-width: 900px;
     margin: 60px auto;
