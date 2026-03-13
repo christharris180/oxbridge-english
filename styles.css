@@ -93,92 +93,37 @@ body {
    LANGUAGE TOGGLE
    ========================================== */
 
-/* Language Dropdown */
+/* Language Toggle - Two Flags Side by Side */
 .lang-toggle {
     position: relative;
     z-index: 1000;
-}
-
-.lang-dropdown-trigger {
-    background: transparent;
-    border: none;
-    padding: 4px 8px;
-    cursor: pointer;
     display: flex;
-    align-items: center;
-    gap: 6px;
-    border-radius: 0;
-    box-shadow: none;
-}
-
-.current-flag {
-    font-size: 24px;
-    line-height: 1;
-}
-
-.dropdown-arrow {
-    color: white;
-    font-size: 9px;
-    transition: transform 0.2s;
-}
-
-.lang-toggle.open .dropdown-arrow {
-    transform: rotate(180deg);
-}
-
-.lang-dropdown-menu {
-    position: absolute;
-    top: 100%;
-    right: 0;
-    margin-top: 4px;
-    background: #1a1a3e;
-    border-radius: 0;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-    overflow: hidden;
-    display: none;
-    min-width: 150px;
-}
-
-.lang-toggle.open .lang-dropdown-menu {
-    display: block;
+    gap: 8px;
 }
 
 .lang-option {
-    width: 100%;
+    width: auto;
     background: transparent;
     border: none;
-    padding: 12px 16px;
+    padding: 4px 6px;
     cursor: pointer;
     display: flex;
     align-items: center;
     gap: 10px;
-    transition: background 0.2s;
-    border-bottom: 1px solid rgba(255,255,255,0.1);
-}
-
-.lang-option:last-child {
-    border-bottom: none;
+    transition: transform 0.2s;
 }
 
 .lang-option:hover {
-    background: rgba(255,255,255,0.1);
+    transform: scale(1.15);
 }
 
 .lang-option.active {
-    background: rgba(212,175,55,0.2);
+    transform: scale(1.25);
 }
 
 .lang-option .flag {
-    font-size: 20px;
+    font-size: 24px;
     line-height: 1;
-}
-
-.lang-option .lang-name {
-    color: white;
-    font-family: 'Roboto', sans-serif;
-    font-size: 13px;
-    font-weight: 400;
-    letter-spacing: 0.5px;
 }
 
 /* Old styles - keeping for backwards compatibility */
@@ -820,6 +765,11 @@ body {
         background: none !important;
     }
     
+    /* Hide title inside hero box on mobile - shown above instead */
+    .hero-content-home .hero-title {
+        display: none !important;
+    }
+    
     /* Description text */
     .hero-content-home .hero-description {
         font-size: 21px !important;
@@ -1295,9 +1245,30 @@ body {
     margin-bottom: 10px;
 }
 
+.audio-file-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.audio-file-item {
+    margin-bottom: 25px;
+    width: 100%;
+}
+
+.audio-file-item audio {
+    width: 100%;
+    display: block;
+}
+
 .audio-player {
     width: 100%;
     margin: 20px 0;
+}
+
+.audio-player audio {
+    width: 100%;
+    display: block;
 }
 
 .download-link {

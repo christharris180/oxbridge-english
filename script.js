@@ -1,12 +1,9 @@
 // ==========================================
-// LANGUAGE SWITCHER (DROPDOWN)
+// LANGUAGE SWITCHER (TWO FLAGS)
 // ==========================================
 
 document.addEventListener('DOMContentLoaded', function() {
-    const langToggle = document.querySelector('.lang-toggle');
-    const langTrigger = document.querySelector('.lang-dropdown-trigger');
-    const langOptions = document.querySelectorAll('.lang-option');
-    const currentFlag = document.querySelector('.current-flag');
+    const langOptions = document.querySelectorAll('.lang-toggle .lang-option');
     const elementsToTranslate = document.querySelectorAll('[data-en][data-es]');
     
     // Get saved language or default to English
@@ -15,41 +12,19 @@ document.addEventListener('DOMContentLoaded', function() {
     // Apply saved language on page load
     setLanguage(currentLang);
     
-    // Toggle dropdown
-    if (langTrigger) {
-        langTrigger.addEventListener('click', function(e) {
-            e.stopPropagation();
-            langToggle.classList.toggle('open');
-        });
-    }
-    
-    // Close dropdown when clicking outside
-    document.addEventListener('click', function(e) {
-        if (langToggle && !langToggle.contains(e.target)) {
-            langToggle.classList.remove('open');
-        }
-    });
-    
     // Language option click handlers
     langOptions.forEach(option => {
         option.addEventListener('click', function() {
             const lang = this.getAttribute('data-lang');
             setLanguage(lang);
             localStorage.setItem('preferredLanguage', lang);
-            langToggle.classList.remove('open');
         });
     });
     
     function setLanguage(lang) {
         currentLang = lang;
         
-        // Update current flag in trigger
-        const flagEmoji = lang === 'en' ? '🇬🇧' : '🇪🇸';
-        if (currentFlag) {
-            currentFlag.textContent = flagEmoji;
-        }
-        
-        // Update active state on options
+        // Update active state on flag buttons
         langOptions.forEach(option => {
             if (option.getAttribute('data-lang') === lang) {
                 option.classList.add('active');
