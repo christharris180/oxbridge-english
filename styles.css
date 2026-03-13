@@ -1426,9 +1426,16 @@ body {
     background: rgba(247, 244, 229, 0.9) !important;
 }
 
+.translator-page-wrapper {
+    width: 100%;
+    background: rgba(247, 244, 229, 0.9);
+    min-height: calc(100vh - 80px);
+    padding: 60px 0;
+}
+
 .translator-embed {
     max-width: 900px;
-    margin: 60px auto;
+    margin: 0 auto;
     padding: 0 20px;
 }
 
