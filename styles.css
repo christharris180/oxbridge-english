@@ -1436,7 +1436,7 @@ body {
     background-size: cover;
     background-position: center;
     padding: 60px 50px;
-    border-radius: 0;
+    border-radius: 20px;
     box-shadow: 0 8px 24px rgba(0,0,0,0.15);
 }
 
@@ -1469,7 +1469,7 @@ body {
     font-weight: 300;
     padding: 10px 20px;
     border: 2px solid rgba(255, 255, 255, 0.3);
-    border-radius: 0;
+    border-radius: 12px;
     transition: all 0.3s;
 }
 
@@ -1511,7 +1511,7 @@ body {
 .translator-container-inner .card {
     background: rgba(247, 244, 229, 1);
     border: none;
-    border-radius: 0;
+    border-radius: 15px;
     padding: 20px;
     margin-bottom: 20px;
     box-shadow: 0 2px 8px rgba(0,0,0,0.1);
@@ -1551,7 +1551,7 @@ body {
     margin-top: 10px;
 }
 
-/* Action buttons */
+/* Action buttons - 3D Gold Ovals */
 .trans-actions {
     display: flex;
     gap: 10px;
@@ -1559,37 +1559,61 @@ body {
 }
 
 .trans-btn {
-    padding: 10px 20px;
+    padding: 12px 28px;
     border: none;
-    border-radius: 0;
+    border-radius: 50px;
     cursor: pointer;
     font-family: 'Roboto', sans-serif;
     font-size: 14px;
-    font-weight: 400;
+    font-weight: 500;
     transition: all 0.3s;
     display: flex;
     align-items: center;
     gap: 8px;
+    box-shadow: 0 4px 8px rgba(212, 175, 55, 0.4), 
+                0 2px 4px rgba(0, 0, 0, 0.2),
+                inset 0 -2px 4px rgba(0, 0, 0, 0.2),
+                inset 0 2px 4px rgba(255, 255, 255, 0.3);
 }
 
 .trans-btn-primary {
-    background: #D4AF37;
+    background: linear-gradient(to bottom, #e8c547 0%, #D4AF37 50%, #c9a332 100%);
     color: #1a1a3e;
 }
 
 .trans-btn-primary:hover {
-    background: #c9a332;
+    background: linear-gradient(to bottom, #f0d055 0%, #e8c547 50%, #D4AF37 100%);
     transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(212, 175, 55, 0.5), 
+                0 3px 6px rgba(0, 0, 0, 0.3),
+                inset 0 -2px 4px rgba(0, 0, 0, 0.2),
+                inset 0 2px 4px rgba(255, 255, 255, 0.4);
+}
+
+.trans-btn-primary:active {
+    transform: translateY(0px);
+    box-shadow: 0 2px 4px rgba(212, 175, 55, 0.3), 
+                inset 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 .trans-btn-secondary {
-    background: #D4AF37;
+    background: linear-gradient(to bottom, #e8c547 0%, #D4AF37 50%, #c9a332 100%);
     color: #1a1a3e;
 }
 
 .trans-btn-secondary:hover {
-    background: #c9a332;
+    background: linear-gradient(to bottom, #f0d055 0%, #e8c547 50%, #D4AF37 100%);
     transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(212, 175, 55, 0.5), 
+                0 3px 6px rgba(0, 0, 0, 0.3),
+                inset 0 -2px 4px rgba(0, 0, 0, 0.2),
+                inset 0 2px 4px rgba(255, 255, 255, 0.4);
+}
+
+.trans-btn-secondary:active {
+    transform: translateY(0px);
+    box-shadow: 0 2px 4px rgba(212, 175, 55, 0.3), 
+                inset 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 .trans-btn.hidden {
