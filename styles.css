@@ -97,20 +97,22 @@ body {
 .lang-toggle {
     position: relative;
     z-index: 1000;
-    display: flex;
+    display: flex !important;
     gap: 8px;
+    flex-direction: row !important;
 }
 
 .lang-option {
-    width: auto;
-    background: transparent;
-    border: none;
-    padding: 4px 6px;
+    width: auto !important;
+    background: transparent !important;
+    border: none !important;
+    padding: 4px 6px !important;
     cursor: pointer;
-    display: flex;
+    display: flex !important;
     align-items: center;
     gap: 10px;
     transition: transform 0.2s;
+    box-shadow: none !important;
 }
 
 .lang-option:hover {
@@ -122,8 +124,19 @@ body {
 }
 
 .lang-option .flag {
-    font-size: 24px;
+    font-size: 13px !important;
+    font-weight: 600 !important;
     line-height: 1;
+    color: rgba(255, 255, 255, 0.7) !important;
+    letter-spacing: 0.5px;
+}
+
+.lang-option.active .flag {
+    color: #D4AF37 !important;
+}
+
+.lang-option:hover .flag {
+    color: white !important;
 }
 
 /* Old styles - keeping for backwards compatibility */
@@ -187,31 +200,24 @@ body {
 /* Desktop - language toggle at right end */
 .nav-container .lang-toggle {
     margin-left: auto;
-    position: relative;
+    display: flex !important;
+    flex-direction: row !important;
+    gap: 8px !important;
 }
 
-.nav-container .lang-dropdown-trigger {
+.nav-container .lang-option {
     background: transparent !important;
-    padding: 4px 8px !important;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    box-shadow: none !important;
     border: none !important;
+    padding: 4px 6px !important;
+    width: auto !important;
+    display: flex !important;
+    box-shadow: none !important;
 }
 
-.nav-container .current-flag {
-    font-size: 24px !important;
-}
-
-.nav-container .dropdown-arrow {
-    font-size: 9px !important;
-    color: white;
-}
-
-.nav-container .lang-dropdown-menu {
-    right: 0;
-    left: auto;
+.nav-container .lang-option .flag {
+    font-size: 13px !important;
+    font-weight: 600 !important;
+    color: rgba(255, 255, 255, 0.7) !important;
 }
 
 .logo {
@@ -567,38 +573,21 @@ body {
         height: 32px !important;
         display: flex !important;
         align-items: center !important;
+        gap: 8px !important;
     }
     
-    .nav-container .lang-dropdown-trigger {
+    .nav-container .lang-option {
         background: transparent !important;
-        box-shadow: none !important;
-        padding: 0 !important;
-        margin: 0 !important;
-        height: 32px !important;
+        padding: 4px 6px !important;
+        height: auto !important;
         display: flex !important;
         align-items: center !important;
-        justify-content: center !important;
-        gap: 6px !important;
     }
     
-    .nav-container .current-flag {
-        font-size: 24px !important;
-        line-height: 1 !important;
-        margin: 0 !important;
-        padding: 0 !important;
-    }
-    
-    .nav-container .dropdown-arrow {
-        font-size: 9px !important;
-        line-height: 1 !important;
-        margin: 0 !important;
-        padding: 0 !important;
-    }
-    
-    .nav-container .lang-dropdown-menu {
-        right: auto !important;
-        left: 50% !important;
-        transform: translateX(-50%) !important;
+    .nav-container .lang-option .flag {
+        font-size: 13px !important;
+        font-weight: 600 !important;
+        color: rgba(255, 255, 255, 0.7) !important;
     }
     
     .courses-grid {
