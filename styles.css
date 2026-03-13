@@ -100,25 +100,25 @@ body {
 }
 
 .lang-dropdown-trigger {
-    background: #1a1a3e;
+    background: transparent;
     border: none;
-    padding: 8px 12px;
+    padding: 4px 8px;
     cursor: pointer;
     display: flex;
     align-items: center;
     gap: 6px;
     border-radius: 0;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    box-shadow: none;
 }
 
 .current-flag {
-    font-size: 20px;
+    font-size: 24px;
     line-height: 1;
 }
 
 .dropdown-arrow {
     color: white;
-    font-size: 10px;
+    font-size: 9px;
     transition: transform 0.2s;
 }
 
@@ -239,9 +239,34 @@ body {
     gap: 60px; /* Space between logo and nav links */
 }
 
-/* Desktop - language toggle at end */
+/* Desktop - language toggle at right end */
 .nav-container .lang-toggle {
     margin-left: auto;
+    position: relative;
+}
+
+.nav-container .lang-dropdown-trigger {
+    background: transparent !important;
+    padding: 4px 8px !important;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    box-shadow: none !important;
+    border: none !important;
+}
+
+.nav-container .current-flag {
+    font-size: 24px !important;
+}
+
+.nav-container .dropdown-arrow {
+    font-size: 9px !important;
+    color: white;
+}
+
+.nav-container .lang-dropdown-menu {
+    right: 0;
+    left: auto;
 }
 
 .logo {
