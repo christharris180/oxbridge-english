@@ -1467,7 +1467,7 @@ body {
     margin-bottom: 30px;
 }
 
-.language-selector .lang-option {
+.language-selector .trans-lang-option {
     display: flex;
     align-items: center;
     gap: 10px;
@@ -1481,11 +1481,11 @@ body {
     transition: all 0.3s;
 }
 
-.language-selector .lang-option:hover {
+.language-selector .trans-lang-option:hover {
     border-color: #D4AF37;
 }
 
-.language-selector .lang-option.active {
+.language-selector .trans-lang-option.active {
     border-color: #D4AF37;
     background: rgba(212, 175, 55, 0.1);
 }
@@ -1499,7 +1499,7 @@ body {
     background: transparent;
 }
 
-.language-selector .lang-option.active .radio-mark::after {
+.language-selector .trans-lang-option.active .radio-mark::after {
     content: '';
     position: absolute;
     top: 50%;
@@ -1642,7 +1642,7 @@ body {
         gap: 15px;
     }
     
-    .language-selector .lang-option {
+    .language-selector .trans-lang-option {
         justify-content: center;
     }
     
