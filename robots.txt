@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://oxbridge-english.com/sitemap.xml
+
+# Crawl-delay
+Crawl-delay: 1
