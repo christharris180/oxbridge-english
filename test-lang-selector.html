@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Language Selector Test</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            background: #1a1a3e;
+            font-family: Arial, sans-serif;
+        }
+        
+        .test-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #2a2a4e;
+        }
+        
+        h1 {
+            color: white;
+            margin-bottom: 30px;
+        }
+        
+        /* Language Toggle */
+        .lang-toggle {
+            display: flex !important;
+            gap: 8px;
+            flex-direction: row !important;
+        }
+        
+        .lang-option {
+            background: transparent !important;
+            border: none !important;
+            padding: 4px 6px !important;
+            cursor: pointer;
+            display: flex !important;
+            align-items: center;
+            transition: transform 0.2s;
+        }
+        
+        .lang-option:hover {
+            transform: scale(1.15);
+        }
+        
+        .lang-option.active {
+            transform: scale(1.25);
+        }
+        
+        .lang-option .flag {
+            font-size: 24px !important;
+            line-height: 1;
+        }
+        
+        .description {
+            color: white;
+            margin-top: 20px;
+            padding: 15px;
+            background: rgba(255,255,255,0.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>Language Selector Test</h1>
+        
+        <p style="color: white;">This should show TWO FLAGS side by side:</p>
+        
+        <div class="lang-toggle">
+            <button class="lang-option active" data-lang="en">
+                <span class="flag">🇬🇧</span>
+            </button>
+            <button class="lang-option" data-lang="es">
+                <span class="flag">🇪🇸</span>
+            </button>
+        </div>
+        
+        <div class="description">
+            <p><strong>Expected:</strong> 🇬🇧 🇪🇸 (both flags side by side)</p>
+            <p><strong>What you see:</strong> (describe what appears on your screen)</p>
+            <p>If you see both flags side by side here but NOT on the main site, then the issue is CSS conflict or caching on the main site.</p>
+        </div>
+    </div>
+</body>
+</html>

@@ -22,6 +22,8 @@ document.addEventListener('DOMContentLoaded', function() {
     let isSpanishToEnglish = true;
     let isRecording = false;
     let debounceTimer = null;
+    let saveToHistoryTimer = null;
+    let lastTranslation = { text: '', result: '', direction: '' };
 
     // ─── UI Strings ─────────────────────────
     const ui = {
@@ -32,13 +34,22 @@ document.addEventListener('DOMContentLoaded', function() {
         listening: "Escuchando...",
         errorTranslation: "Error en la traducción. Intente de nuevo.",
         errorMic: "Error con el micrófono: ",
-        errorNoMic: "Tu navegador no soporta reconocimiento de voz."
+        errorNoMic: "Tu navegador no soporta reconocimiento de voz.",
+        charactersES: "caracteres",
+        charactersEN: "characters"
     };
+    
+    // Get current language
+    function getCurrentLanguage() {
+        return localStorage.getItem('preferredLanguage') || 'en';
+    }
 
     // ─── Character Count ────────────────────
     inputText.addEventListener('input', () => {
         const len = inputText.value.length;
-        charCount.textContent = `${len} caracteres`;
+        const lang = getCurrentLanguage();
+        const charText = lang === 'es' ? ui.charactersES : ui.charactersEN;
+        charCount.textContent = `${len} ${charText}`;
 
         clearBtn.classList.toggle('hidden', len === 0);
         autoGrow();
@@ -63,8 +74,17 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // ─── Clear Button ───────────────────────
     clearBtn.addEventListener('click', () => {
+        // Save current translation before clearing (if exists and timer is active)
+        if (saveToHistoryTimer && lastTranslation.text && lastTranslation.result) {
+            clearTimeout(saveToHistoryTimer);
+            saveToHistory(lastTranslation.text, lastTranslation.result, lastTranslation.direction);
+            lastTranslation = { text: '', result: '', direction: '' };
+        }
+        
         inputText.value = '';
-        charCount.textContent = '0 caracteres';
+        const lang = getCurrentLanguage();
+        const charText = lang === 'es' ? ui.charactersES : ui.charactersEN;
+        charCount.textContent = `0 ${charText}`;
         clearBtn.classList.add('hidden');
         outputText.textContent = ui.resultPlaceholder;
         outputText.classList.add('empty');
@@ -109,6 +129,26 @@ document.addEventListener('DOMContentLoaded', function() {
             }
             outputText.textContent = result;
             outputText.classList.remove('empty');
+            
+            // Store the translation temporarily
+            lastTranslation = {
+                text: text,
+                result: result,
+                direction: isSpanishToEnglish ? 'es-en' : 'en-es'
+            };
+            
+            // Clear any existing save timer
+            if (saveToHistoryTimer) {
+                clearTimeout(saveToHistoryTimer);
+            }
+            
+            // Schedule save after 10 seconds of no typing
+            saveToHistoryTimer = setTimeout(() => {
+                if (lastTranslation.text && lastTranslation.result) {
+                    saveToHistory(lastTranslation.text, lastTranslation.result, lastTranslation.direction);
+                }
+            }, 10000); // 10 seconds
+            
         } catch (e) {
             console.error(e);
             outputText.textContent = ui.errorTranslation;
@@ -116,6 +156,93 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         setLoading(false);
+    }
+    
+    // ─── Save Translation to History ────────
+    function saveToHistory(original, translation, direction) {
+        try {
+            const originalTrimmed = original.trim();
+            const translationTrimmed = translation.trim();
+            
+            // Validation 1: Minimum length (at least 2 characters)
+            const hasMinLength = originalTrimmed.length >= 2 && translationTrimmed.length >= 2;
+            
+            // Validation 2: Must contain letters (not just symbols/numbers)
+            const hasLetters = /[a-zA-ZáéíóúñÁÉÍÓÚÑ]/.test(originalTrimmed) && /[a-zA-ZáéíóúñÁÉÍÓÚÑ]/.test(translationTrimmed);
+            
+            // Validation 3: Don't save if translation is identical to original
+            if (originalTrimmed.toLowerCase() === translationTrimmed.toLowerCase()) {
+                return;
+            }
+            
+            // Validation 4: Check for incomplete phrases (ends with ellipsis, trailing comma, etc.)
+            const incompletePatterns = /(\.\.\.|…|,$|;$|\s-$|\s–$)$/;
+            if (incompletePatterns.test(originalTrimmed) || incompletePatterns.test(translationTrimmed)) {
+                return;
+            }
+            
+            // Validation 5: Reject if too many consecutive dots or strange characters
+            const tooManyDots = /\.{2,}/;
+            if (tooManyDots.test(originalTrimmed) || tooManyDots.test(translationTrimmed)) {
+                return;
+            }
+            
+            // Validation 6: Reject if it's just a single character (unless it's a valid word like "I" or "a")
+            const validSingleChars = /^[iIaAyY]$/;
+            if (originalTrimmed.length === 1 && !validSingleChars.test(originalTrimmed)) {
+                return;
+            }
+            if (translationTrimmed.length === 1 && !validSingleChars.test(translationTrimmed)) {
+                return;
+            }
+            
+            // Validation 7: Reject error messages or incomplete translations
+            const errorPatterns = /(error|failed|could not|unable to|translating|loading)/i;
+            if (errorPatterns.test(translationTrimmed)) {
+                return;
+            }
+            
+            // Don't save if validation fails
+            if (!hasMinLength || !hasLetters) {
+                return;
+            }
+            
+            let history = JSON.parse(localStorage.getItem('translationHistory') || '[]');
+            
+            // Check if this exact translation already exists in recent history (last 20)
+            const isDuplicate = history.slice(0, 20).some(item => 
+                item.original.toLowerCase() === originalTrimmed.toLowerCase() &&
+                item.translation.toLowerCase() === translationTrimmed.toLowerCase()
+            );
+            
+            if (isDuplicate) {
+                return; // Don't save duplicates
+            }
+            
+            // Add new translation
+            history.unshift({
+                original: originalTrimmed,
+                translation: translationTrimmed,
+                direction: direction,
+                timestamp: new Date().toISOString(),
+                date: new Date().toLocaleDateString('es-ES', { 
+                    year: 'numeric', 
+                    month: 'long', 
+                    day: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit'
+                })
+            });
+            
+            // Keep only last 100 translations
+            if (history.length > 100) {
+                history = history.slice(0, 100);
+            }
+            
+            localStorage.setItem('translationHistory', JSON.stringify(history));
+        } catch (e) {
+            console.error('Error saving to history:', e);
+        }
     }
 
     // ─── MyMemory API ───────────────────────
@@ -241,6 +368,19 @@ document.addEventListener('DOMContentLoaded', function() {
             } catch (err) {
                 console.error("Error starting recognition:", err);
             }
+        }
+    });
+    
+    // ─── Initialize character count on load ─────
+    const lang = getCurrentLanguage();
+    const charText = lang === 'es' ? ui.charactersES : ui.charactersEN;
+    charCount.textContent = `0 ${charText}`;
+    
+    // ─── Save on page leave ─────────────────
+    window.addEventListener('beforeunload', () => {
+        if (saveToHistoryTimer && lastTranslation.text && lastTranslation.result) {
+            clearTimeout(saveToHistoryTimer);
+            saveToHistory(lastTranslation.text, lastTranslation.result, lastTranslation.direction);
         }
     });
 });
