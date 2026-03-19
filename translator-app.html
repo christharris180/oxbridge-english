@@ -12,21 +12,23 @@
   <link rel="apple-touch-icon" href="apple-touch-icon.png" />
   <title>Oxbridge Translator</title>
 
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700&family=Work+Sans:wght@600;700&display=swap" rel="stylesheet" />
 
   <style>
     :root {
-      --gold: #D4AF37;
-      --gold-light: #e8c412;
-      --gold-dim: rgba(212, 175, 55, 0.15);
-      --navy: #1a1a3e;
-      --navy-mid: #22225a;
-      --navy-light: #2d2d72;
+      --gold: #C9A227;
+      --gold-light: #D4AF37;
+      --gold-dim: rgba(201, 162, 39, 0.18);
+      --gold-shadow: rgba(180, 140, 10, 0.6);
+      --navy: #0d0d24;
+      --navy-mid: #111130;
+      --navy-light: #1a1a3e;
       --cream: #F7F4E5;
-      --cream-dim: rgba(247, 244, 229, 0.08);
-      --text-light: rgba(255,255,255,0.85);
-      --text-dim: rgba(255,255,255,0.45);
-      --radius: 18px;
+      --cream-solid: #F0EDD8;
+      --text-navy: #1a1a3e;
+      --text-light: rgba(255,255,255,0.88);
+      --text-dim: rgba(255,255,255,0.42);
+      --radius: 16px;
       --safe-top: env(safe-area-inset-top, 0px);
       --safe-bottom: env(safe-area-inset-bottom, 0px);
     }
@@ -37,7 +39,8 @@
       height: 100%;
       background: var(--navy);
       color: white;
-      font-family: 'DM Sans', sans-serif;
+      font-family: 'Roboto', sans-serif;
+      font-weight: 300;
       overflow: hidden;
     }
 
@@ -60,18 +63,16 @@
     }
 
     .topbar-logo {
-      font-family: 'Playfair Display', serif;
-      font-size: 15px;
-      color: var(--gold);
-      letter-spacing: 0.5px;
+      font-family: 'Roboto', sans-serif;
+      font-weight: 100;
+      font-size: 17px;
+      color: white;
+      letter-spacing: 1px;
     }
 
-    .topbar-logo span {
-      color: rgba(255,255,255,0.6);
-      font-family: 'DM Sans', sans-serif;
+    .topbar-logo strong {
+      color: var(--gold);
       font-weight: 300;
-      font-size: 13px;
-      margin-left: 4px;
     }
 
     .topbar-actions {
@@ -80,20 +81,22 @@
     }
 
     .icon-btn {
-      width: 38px;
-      height: 38px;
+      width: 40px;
+      height: 40px;
       border-radius: 50%;
-      border: 1px solid rgba(212,175,55,0.3);
+      border: 1px solid rgba(201,162,39,0.35);
       background: var(--gold-dim);
       color: var(--gold);
-      font-size: 16px;
+      font-size: 14px;
+      font-family: 'Roboto', sans-serif;
+      font-weight: 500;
       display: flex;
       align-items: center;
       justify-content: center;
       cursor: pointer;
       transition: all 0.2s;
     }
-    .icon-btn:active { transform: scale(0.92); background: rgba(212,175,55,0.25); }
+    .icon-btn:active { transform: scale(0.92); background: rgba(201,162,39,0.28); }
 
     /* ── DIRECTION BAR ── */
     .direction-bar {
@@ -101,11 +104,11 @@
       align-items: center;
       justify-content: center;
       gap: 0;
-      margin: 6px 20px;
-      background: var(--cream-dim);
-      border: 1px solid rgba(212,175,55,0.2);
+      margin: 6px 16px;
+      background: rgba(247,244,229,0.06);
+      border: 1px solid rgba(201,162,39,0.22);
       border-radius: 50px;
-      padding: 5px;
+      padding: 4px;
       flex-shrink: 0;
     }
 
@@ -114,8 +117,9 @@
       text-align: center;
       padding: 9px 0;
       border-radius: 40px;
-      font-size: 14px;
-      font-weight: 500;
+      font-size: 13px;
+      font-weight: 400;
+      font-family: 'Roboto', sans-serif;
       cursor: pointer;
       transition: all 0.25s ease;
       color: var(--text-dim);
@@ -123,9 +127,10 @@
     }
 
     .lang-pill.active {
-      background: var(--gold);
-      color: var(--navy);
+      background: linear-gradient(180deg, var(--gold-light) 0%, var(--gold) 60%, #a07c10 100%);
+      color: var(--text-navy);
       font-weight: 700;
+      box-shadow: 0 3px 8px var(--gold-shadow), inset 0 1px 0 rgba(255,255,255,0.3);
     }
 
     .swap-btn {
@@ -162,42 +167,44 @@
       flex: 1;
       display: flex;
       flex-direction: column;
-      background: var(--cream-dim);
-      border: 1px solid rgba(255,255,255,0.08);
+      background: var(--cream);
+      border: none;
       border-radius: var(--radius);
       padding: 14px 16px;
       position: relative;
       min-height: 0;
+      box-shadow: inset 0 2px 6px rgba(0,0,0,0.12);
     }
 
     .panel-label {
-      font-size: 11px;
+      font-size: 10px;
       font-weight: 500;
-      letter-spacing: 1.2px;
+      font-family: 'Roboto', sans-serif;
+      letter-spacing: 1.4px;
       text-transform: uppercase;
-      color: var(--text-dim);
-      margin-bottom: 10px;
+      color: rgba(26,26,62,0.45);
+      margin-bottom: 8px;
       flex-shrink: 0;
     }
 
-    .panel-label.source { color: var(--gold); }
+    .panel-label.source { color: var(--navy-light); }
 
     textarea {
       flex: 1;
       background: transparent;
       border: none;
       outline: none;
-      color: white;
-      font-family: 'DM Sans', sans-serif;
-      font-size: 20px;
+      color: var(--text-navy);
+      font-family: 'Roboto', sans-serif;
+      font-size: 19px;
       font-weight: 300;
-      line-height: 1.5;
+      line-height: 1.55;
       resize: none;
       width: 100%;
       min-height: 0;
     }
 
-    textarea::placeholder { color: rgba(255,255,255,0.2); }
+    textarea::placeholder { color: rgba(26,26,62,0.25); }
 
     .panel-bottom {
       display: flex;
@@ -207,49 +214,68 @@
       flex-shrink: 0;
     }
 
-    .char-count {
+    .char-count, #save-status {
       font-size: 11px;
-      color: var(--text-dim);
+      color: rgba(26,26,62,0.4);
+      font-family: 'Roboto', sans-serif;
     }
 
     .panel-actions {
       display: flex;
-      gap: 8px;
+      gap: 10px;
     }
 
+    /* 3D gold mini buttons */
     .mini-btn {
-      width: 34px;
-      height: 34px;
+      width: 44px;
+      height: 44px;
       border-radius: 50%;
-      border: 1px solid rgba(255,255,255,0.15);
-      background: rgba(255,255,255,0.05);
-      color: rgba(255,255,255,0.6);
-      font-size: 15px;
+      border: none;
+      background: linear-gradient(180deg, var(--gold-light) 0%, var(--gold) 55%, #9e7a0e 100%);
+      color: var(--text-navy);
+      font-size: 18px;
       display: flex;
       align-items: center;
       justify-content: center;
       cursor: pointer;
-      transition: all 0.2s;
+      box-shadow: 0 4px 8px var(--gold-shadow), inset 0 1px 0 rgba(255,255,255,0.35);
+      transition: all 0.15s;
     }
-    .mini-btn:active { transform: scale(0.88); }
-    .mini-btn.active { color: var(--gold); border-color: var(--gold); background: var(--gold-dim); }
+    .mini-btn:active {
+      transform: translateY(2px);
+      box-shadow: 0 2px 4px var(--gold-shadow), inset 0 1px 0 rgba(255,255,255,0.2);
+    }
+    .mini-btn.clear-btn {
+      background: linear-gradient(180deg, #8a8a9a 0%, #5a5a72 60%, #3a3a52 100%);
+      color: white;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.2);
+    }
+    .mini-btn.clear-btn:active {
+      transform: translateY(2px);
+      box-shadow: 0 2px 4px rgba(0,0,0,0.25);
+    }
+    .mini-btn.active { filter: brightness(1.15); }
 
     /* Output panel */
-    .output-panel { background: rgba(212,175,55,0.05); border-color: rgba(212,175,55,0.15); }
+    .output-panel {
+      background: var(--cream-solid);
+      box-shadow: inset 0 2px 8px rgba(0,0,0,0.1);
+    }
 
     .output-text {
       flex: 1;
-      font-size: 20px;
+      font-size: 19px;
       font-weight: 300;
-      line-height: 1.5;
-      color: var(--cream);
+      font-family: 'Roboto', sans-serif;
+      line-height: 1.55;
+      color: var(--text-navy);
       overflow-y: auto;
       word-break: break-word;
     }
 
     .output-placeholder {
-      color: rgba(255,255,255,0.2);
-      font-size: 20px;
+      color: rgba(26,26,62,0.25);
+      font-size: 19px;
       font-weight: 300;
     }
 
@@ -281,24 +307,28 @@
 
     .translate-btn {
       width: 100%;
-      padding: 16px;
+      padding: 17px;
       border-radius: 50px;
       border: none;
-      background: linear-gradient(135deg, var(--gold-light), var(--gold));
-      color: var(--navy);
-      font-family: 'DM Sans', sans-serif;
-      font-size: 16px;
+      background: linear-gradient(180deg, #e8c840 0%, var(--gold-light) 30%, var(--gold) 65%, #8a6808 100%);
+      color: var(--text-navy);
+      font-family: 'Roboto', sans-serif;
+      font-size: 17px;
       font-weight: 700;
-      letter-spacing: 0.5px;
+      letter-spacing: 0.8px;
       cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
       gap: 8px;
-      box-shadow: 0 4px 20px rgba(212,175,55,0.35);
-      transition: all 0.2s;
+      box-shadow: 0 5px 18px var(--gold-shadow), 0 2px 0 #6a4e00, inset 0 1px 0 rgba(255,255,255,0.4);
+      transition: all 0.15s;
+      text-transform: uppercase;
     }
-    .translate-btn:active { transform: scale(0.97); box-shadow: 0 2px 10px rgba(212,175,55,0.2); }
+    .translate-btn:active {
+      transform: translateY(3px);
+      box-shadow: 0 2px 8px var(--gold-shadow), 0 0px 0 #6a4e00, inset 0 1px 0 rgba(255,255,255,0.2);
+    }
     .translate-btn:disabled { opacity: 0.5; cursor: not-allowed; }
 
     /* ── BOTTOM NAV ── */
@@ -317,8 +347,10 @@
       padding: 10px 0 8px;
       cursor: pointer;
       color: var(--text-dim);
-      font-size: 11px;
-      font-weight: 500;
+      font-size: 10px;
+      font-weight: 400;
+      font-family: 'Roboto', sans-serif;
+      letter-spacing: 0.3px;
       transition: color 0.2s;
       text-decoration: none;
     }
@@ -332,12 +364,13 @@
       bottom: calc(80px + var(--safe-bottom));
       left: 50%;
       transform: translateX(-50%) translateY(20px);
-      background: rgba(30,30,70,0.95);
+      background: rgba(13,13,36,0.96);
       border: 1px solid var(--gold);
       color: white;
-      padding: 10px 20px;
+      padding: 10px 22px;
       border-radius: 30px;
       font-size: 13px;
+      font-family: 'Roboto', sans-serif;
       opacity: 0;
       transition: all 0.3s;
       pointer-events: none;
@@ -351,20 +384,20 @@
 
     /* ── MIC RECORDING STATE ── */
     .mini-btn.recording {
-      background: rgba(220,50,50,0.2);
-      border-color: #dc3232;
-      color: #dc3232;
+      background: linear-gradient(180deg, #ff6060 0%, #cc2020 60%, #8a0000 100%);
+      color: white;
+      box-shadow: 0 4px 8px rgba(200,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.2);
       animation: pulse-red 1s infinite;
     }
     @keyframes pulse-red {
-      0%, 100% { box-shadow: 0 0 0 0 rgba(220,50,50,0.4); }
-      50% { box-shadow: 0 0 0 6px rgba(220,50,50,0); }
+      0%, 100% { box-shadow: 0 0 0 0 rgba(220,50,50,0.5), 0 4px 8px rgba(200,0,0,0.4); }
+      50% { box-shadow: 0 0 0 8px rgba(220,50,50,0), 0 4px 8px rgba(200,0,0,0.4); }
     }
 
     /* ── HISTORY BADGE ── */
     .history-badge {
       background: var(--gold);
-      color: var(--navy);
+      color: var(--text-navy);
       font-size: 9px;
       font-weight: 700;
       border-radius: 10px;
@@ -376,13 +409,13 @@
     /* Scrollbar */
     ::-webkit-scrollbar { width: 4px; }
     ::-webkit-scrollbar-track { background: transparent; }
-    ::-webkit-scrollbar-thumb { background: rgba(212,175,55,0.3); border-radius: 4px; }
+    ::-webkit-scrollbar-thumb { background: rgba(201,162,39,0.3); border-radius: 4px; }
 
     /* Install banner */
     .install-banner {
       margin: 0 16px 8px;
       background: var(--gold-dim);
-      border: 1px solid rgba(212,175,55,0.3);
+      border: 1px solid rgba(201,162,39,0.3);
       border-radius: 12px;
       padding: 10px 14px;
       display: flex;
@@ -391,19 +424,21 @@
       gap: 10px;
       flex-shrink: 0;
     }
-    .install-banner p { font-size: 13px; color: var(--gold); line-height: 1.3; }
+    .install-banner p { font-size: 13px; color: var(--gold); line-height: 1.3; font-family: 'Roboto', sans-serif; }
     .install-banner p span { display: block; font-size: 11px; color: var(--text-dim); margin-top: 2px; }
     .install-btn {
-      background: var(--gold);
-      color: var(--navy);
+      background: linear-gradient(180deg, var(--gold-light) 0%, var(--gold) 60%, #8a6808 100%);
+      color: var(--text-navy);
       border: none;
       border-radius: 20px;
       padding: 7px 14px;
       font-size: 12px;
       font-weight: 700;
+      font-family: 'Roboto', sans-serif;
       cursor: pointer;
       white-space: nowrap;
       flex-shrink: 0;
+      box-shadow: 0 3px 8px var(--gold-shadow);
     }
     .close-banner {
       background: none;
@@ -414,6 +449,22 @@
       padding: 0 4px;
       flex-shrink: 0;
     }
+
+    /* ── HEADING ── */
+    .app-heading {
+      text-align: center;
+      font-family: 'Roboto', sans-serif;
+      font-weight: 300;
+      font-size: 16px;
+      letter-spacing: 0.5px;
+      color: rgba(255,255,255,0.55);
+      padding: 2px 0 8px;
+      flex-shrink: 0;
+    }
+    .app-heading strong {
+      color: var(--gold);
+      font-weight: 300;
+    }
   </style>
 </head>
 <body>
@@ -421,11 +472,14 @@
 
   <!-- TOP BAR -->
   <div class="topbar">
-    <div class="topbar-logo">Oxbridge<span>Translator</span></div>
+    <div class="topbar-logo"><strong>Oxbridge</strong> English</div>
     <div class="topbar-actions">
       <div class="icon-btn" onclick="toggleLanguage()" id="lang-toggle" title="EN/ES">ES</div>
     </div>
   </div>
+
+  <!-- HEADING -->
+  <div class="app-heading"><strong>Oxbridge English</strong> Translator</div>
 
   <!-- INSTALL BANNER (hidden by default, shown if installable) -->
   <div class="install-banner" id="install-banner" style="display:none;">
@@ -452,7 +506,7 @@
         <span class="char-count"><span id="char-count">0</span>/1000</span>
         <div class="panel-actions">
           <div class="mini-btn" id="mic-btn" onclick="toggleMic()" title="Voz">🎤</div>
-          <div class="mini-btn" onclick="clearInput()" title="Borrar">✕</div>
+          <div class="mini-btn clear-btn" onclick="clearInput()" title="Borrar">✕</div>
         </div>
       </div>
     </div>
