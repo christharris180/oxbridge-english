@@ -1,91 +1,74 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <!-- Title and Description -->
-    <title>Oxbridge English Courses - Learn English Online</title>
-    <meta name="description" content="Professional online English courses with 15+ years of experience. Learn English with native teachers, interactive lessons, and personalized guidance.">
-    
-    <!-- Favicon -->
-    <link rel="icon" type="image/png" sizes="192x192" href="favicon-192x192.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
-    <link rel="shortcut icon" href="favicon-192x192.png">
-    
-    <!-- Open Graph / Social Media -->
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://oxbridge-english.com/">
-    <meta property="og:title" content="Oxbridge English Courses - Learn English Online">
-    <meta property="og:description" content="Professional online English courses with 15+ years of experience. Learn English with native teachers.">
-    <meta property="og:image" content="https://oxbridge-english.com/ox-head-008.jpg">
-    
+    <title>Blog - Oxbridge English</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <!-- Background Video -->
     <video autoplay muted loop playsinline class="background-video">
         <source src="girl_working_001.mp4" type="video/mp4">
     </video>
 
-    <!-- Navigation -->
     <nav class="main-nav">
         <div class="nav-container">
             <button class="mobile-menu-toggle">☰</button>
-            
             <div class="logo">
                 <img src="ox-head-008.jpg" alt="Oxbridge English Logo">
-                <h1 data-en="Oxbridge English" data-es="Oxbridge English">Oxbridge English</h1>
+                <h1>Oxbridge English</h1>
             </div>
-            
             <ul class="nav-links">
-                <li><a href="index.html" class="active" data-en="Home" data-es="Inicio">Home</a></li>
+                <li><a href="index.html" data-en="Home" data-es="Inicio">Home</a></li>
                 <li><a href="courses.html" data-en="Courses" data-es="Cursos">Courses</a></li>
                 <li><a href="enroll.html" data-en="Enroll" data-es="Inscribirse">Enroll</a></li>
                 <li><a href="books.html" data-en="The World Speaks English" data-es="El Mundo Habla Inglés">The World Speaks English</a></li>
                 <li><a href="audio.html" data-en="Audio" data-es="Audio">Audio</a></li>
                 <li><a href="translator.html" data-en="Translator" data-es="Traductor">Translator</a></li>
                 <li><a href="recommendations.html" data-en="Recommendations" data-es="Recomendaciones">Recommendations</a></li>
-                <li><a href="blog.html" data-en="Blog" data-es="Blog">Blog</a></li>
+                <li><a href="blog.html" class="active" data-en="Blog" data-es="Blog">Blog</a></li>
                 <li><a href="contact.html" data-en="Contact" data-es="Contacto">Contact</a></li>
             </ul>
-            
-            <!-- Language Toggle - Both flags visible -->
             <div class="lang-toggle">
-                <button class="lang-option active" data-lang="en">
-                    <span class="flag">EN</span>
-                </button>
-                <button class="lang-option" data-lang="es">
-                    <span class="flag">ES</span>
-                </button>
+                <button class="lang-option active" data-lang="en"><span class="flag">EN</span></button>
+                <button class="lang-option" data-lang="es"><span class="flag">ES</span></button>
             </div>
         </div>
     </nav>
 
-    <!-- Hero Section -->
-    <section class="hero">
-        <!-- Mobile Only: Title Above Hero Box -->
-        <div class="hero-title-mobile">
-            <h1 data-en="Oxbridge English" data-es="Oxbridge English">Oxbridge English</h1>
-            <p class="hero-tagline" data-en="Independent English Learning" data-es="Aprendizaje de Inglés Independiente">Independent English Learning</p>
+    <div class="contact-container">
+        <div class="section-header">
+            <h2 class="section-title" data-en="Blog" data-es="Blog">Blog</h2>
+            <p class="section-description" data-en="Articles and tips for learning English" data-es="Artículos y consejos para aprender inglés">
+                Artículos y consejos para aprender inglés
+            </p>
         </div>
-        
-        <div class="hero-content hero-content-home">
-            <div class="hero-text-wrapper">
-                <h2 class="hero-title" data-en="Oxbridge English" data-es="Oxbridge English">Oxbridge English</h2>
-                <p class="hero-description" 
-                   data-en="Oxbridge English now offers an interactive, communicative process to learn English alone or in groups and at your own pace with the virtual video guide. All audio material is included on this site for free download."
-                   data-es="Oxbridge English ahora ofrece un proceso interactivo y comunicativo para aprender inglés solo o en grupos y a su propio ritmo con la guía de video virtual. Todo el material de audio está incluido en este sitio para descarga gratuita.">
-                    Oxbridge English now offers an interactive, communicative process to learn English alone or in groups and at your own pace with the virtual video guide. All audio material is included on this site for free download.
-                </p>
-                <a href="courses.html" class="cta-button" data-en="Explore Courses" data-es="Explorar Cursos">Explore Courses</a>
-            </div>
-        </div>
-        <div class="hero-decoration"></div>
-    </section>
 
-    <!-- Footer -->
+        <div class="recommendations-box" style="background: url('blue_background_001.jpg'); background-size: cover; background-position: center; padding: 60px 40px; border-radius: 20px; box-shadow: 0 8px 24px rgba(0,0,0,0.15); max-width: 1200px; margin: 0 auto;">
+            
+            <!-- Blog Post 1 -->
+            <a href="blog-post-001.html" style="text-decoration: none; display: block; margin-bottom: 30px;">
+                <div class="recommendation-item" style="background: rgba(247, 244, 229, 0.95); padding: 0; border-radius: 15px; overflow: hidden; transition: transform 0.3s ease, box-shadow 0.3s ease;" onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 12px 24px rgba(0,0,0,0.2)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'">
+                    <img src="blog-image-001.jpg" alt="Aprender inglés después de los 30" style="width: 100%; height: 250px; object-fit: cover;">
+                    <div style="padding: 30px;">
+                        <h3 style="color: #1a1a3e; margin: 0 0 15px 0; font-size: 26px; font-weight: 600;">¿De verdad se puede aprender inglés después de los 30?</h3>
+                        <p style="color: #666; line-height: 1.7; margin: 0 0 20px 0; font-size: 16px;">
+                            Si tienes más de 30 años y alguna vez has pensado "ya es muy tarde para aprender inglés", no estás solo. Es una idea muy común en Latinoamérica. Muchos adultos sienten que el inglés es algo que "se aprende de joven"...
+                        </p>
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <span class="trans-btn trans-btn-primary" style="display: inline-block; padding: 12px 30px; text-decoration: none;">
+                                <span data-en="Read More" data-es="Leer Más">Leer Más</span>
+                            </span>
+                            <span style="color: #999; font-size: 14px;">15 de marzo de 2026</span>
+                        </div>
+                    </div>
+                </div>
+            </a>
+
+        </div>
+    </div>
+
     <footer class="main-footer">
         <div class="footer-content">
             <div class="footer-social">
@@ -100,10 +83,10 @@
                 </a>
             </div>
             <p class="footer-text" style="display: flex; align-items: center; justify-content: center; gap: 10px; flex-wrap: wrap;">
-                <span data-en="© 2026 by Oxbridge English" data-es="© 2026 por Oxbridge English">© 2026 by Oxbridge English</span>
+                <span data-en="© 2026 by Oxbridge English" data-es="© 2026 por Oxbridge English">© 2026 por Oxbridge English</span>
                 <span style="color: #666;">|</span>
                 <a href="privacy.html" style="color: #F7F4E5; text-decoration: none; transition: color 0.3s;" onmouseover="this.style.color='#e8c412'" onmouseout="this.style.color='#F7F4E5'">
-                    <span data-en="Privacy" data-es="Privacidad">Privacy</span>
+                    <span data-en="Privacy" data-es="Privacidad">Privacidad</span>
                 </a>
                 <img src="logo_jpg_003.jpg" alt="Great Fairy" style="height: 30px; width: auto; object-fit: contain;">
             </p>
