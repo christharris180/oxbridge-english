@@ -1,0 +1,857 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="OE Translator" />
+  <meta name="theme-color" content="#1a1a3e" />
+  <meta name="description" content="Traductor Español ↔ Inglés gratuito por Oxbridge English" />
+  <link rel="manifest" href="manifest.json" />
+  <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+  <title>Oxbridge Translator</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --gold: #D4AF37;
+      --gold-light: #e8c412;
+      --gold-dim: rgba(212, 175, 55, 0.15);
+      --navy: #1a1a3e;
+      --navy-mid: #22225a;
+      --navy-light: #2d2d72;
+      --cream: #F7F4E5;
+      --cream-dim: rgba(247, 244, 229, 0.08);
+      --text-light: rgba(255,255,255,0.85);
+      --text-dim: rgba(255,255,255,0.45);
+      --radius: 18px;
+      --safe-top: env(safe-area-inset-top, 0px);
+      --safe-bottom: env(safe-area-inset-bottom, 0px);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+
+    html, body {
+      height: 100%;
+      background: var(--navy);
+      color: white;
+      font-family: 'DM Sans', sans-serif;
+      overflow: hidden;
+    }
+
+    .app {
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      height: 100dvh;
+      padding-top: var(--safe-top);
+      padding-bottom: var(--safe-bottom);
+    }
+
+    /* ── TOP BAR ── */
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 20px 10px;
+      flex-shrink: 0;
+    }
+
+    .topbar-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 15px;
+      color: var(--gold);
+      letter-spacing: 0.5px;
+    }
+
+    .topbar-logo span {
+      color: rgba(255,255,255,0.6);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+      font-size: 13px;
+      margin-left: 4px;
+    }
+
+    .topbar-actions {
+      display: flex;
+      gap: 10px;
+    }
+
+    .icon-btn {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      border: 1px solid rgba(212,175,55,0.3);
+      background: var(--gold-dim);
+      color: var(--gold);
+      font-size: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .icon-btn:active { transform: scale(0.92); background: rgba(212,175,55,0.25); }
+
+    /* ── DIRECTION BAR ── */
+    .direction-bar {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0;
+      margin: 6px 20px;
+      background: var(--cream-dim);
+      border: 1px solid rgba(212,175,55,0.2);
+      border-radius: 50px;
+      padding: 5px;
+      flex-shrink: 0;
+    }
+
+    .lang-pill {
+      flex: 1;
+      text-align: center;
+      padding: 9px 0;
+      border-radius: 40px;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      color: var(--text-dim);
+      user-select: none;
+    }
+
+    .lang-pill.active {
+      background: var(--gold);
+      color: var(--navy);
+      font-weight: 700;
+    }
+
+    .swap-btn {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: transparent;
+      border: none;
+      color: var(--gold);
+      font-size: 18px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.35s ease;
+      flex-shrink: 0;
+    }
+    .swap-btn:active { transform: rotate(180deg); }
+    .swap-btn.spinning { animation: spin 0.35s ease; }
+    @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(180deg); } }
+
+    /* ── MAIN PANELS ── */
+    .panels {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      padding: 0 16px;
+      overflow: hidden;
+      min-height: 0;
+    }
+
+    .panel {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      background: var(--cream-dim);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: var(--radius);
+      padding: 14px 16px;
+      position: relative;
+      min-height: 0;
+    }
+
+    .panel-label {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      margin-bottom: 10px;
+      flex-shrink: 0;
+    }
+
+    .panel-label.source { color: var(--gold); }
+
+    textarea {
+      flex: 1;
+      background: transparent;
+      border: none;
+      outline: none;
+      color: white;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 20px;
+      font-weight: 300;
+      line-height: 1.5;
+      resize: none;
+      width: 100%;
+      min-height: 0;
+    }
+
+    textarea::placeholder { color: rgba(255,255,255,0.2); }
+
+    .panel-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 10px;
+      flex-shrink: 0;
+    }
+
+    .char-count {
+      font-size: 11px;
+      color: var(--text-dim);
+    }
+
+    .panel-actions {
+      display: flex;
+      gap: 8px;
+    }
+
+    .mini-btn {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      border: 1px solid rgba(255,255,255,0.15);
+      background: rgba(255,255,255,0.05);
+      color: rgba(255,255,255,0.6);
+      font-size: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .mini-btn:active { transform: scale(0.88); }
+    .mini-btn.active { color: var(--gold); border-color: var(--gold); background: var(--gold-dim); }
+
+    /* Output panel */
+    .output-panel { background: rgba(212,175,55,0.05); border-color: rgba(212,175,55,0.15); }
+
+    .output-text {
+      flex: 1;
+      font-size: 20px;
+      font-weight: 300;
+      line-height: 1.5;
+      color: var(--cream);
+      overflow-y: auto;
+      word-break: break-word;
+    }
+
+    .output-placeholder {
+      color: rgba(255,255,255,0.2);
+      font-size: 20px;
+      font-weight: 300;
+    }
+
+    /* Loading dots */
+    .loading-dots {
+      display: inline-flex;
+      gap: 5px;
+      align-items: center;
+      padding-top: 4px;
+    }
+    .loading-dots span {
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: var(--gold);
+      animation: bounce 1s infinite;
+    }
+    .loading-dots span:nth-child(2) { animation-delay: 0.15s; }
+    .loading-dots span:nth-child(3) { animation-delay: 0.3s; }
+    @keyframes bounce {
+      0%, 60%, 100% { transform: translateY(0); opacity: 0.4; }
+      30% { transform: translateY(-6px); opacity: 1; }
+    }
+
+    /* ── TRANSLATE BUTTON ── */
+    .translate-wrap {
+      padding: 12px 16px;
+      flex-shrink: 0;
+    }
+
+    .translate-btn {
+      width: 100%;
+      padding: 16px;
+      border-radius: 50px;
+      border: none;
+      background: linear-gradient(135deg, var(--gold-light), var(--gold));
+      color: var(--navy);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 16px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      box-shadow: 0 4px 20px rgba(212,175,55,0.35);
+      transition: all 0.2s;
+    }
+    .translate-btn:active { transform: scale(0.97); box-shadow: 0 2px 10px rgba(212,175,55,0.2); }
+    .translate-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    /* ── BOTTOM NAV ── */
+    .bottom-nav {
+      display: flex;
+      border-top: 1px solid rgba(255,255,255,0.07);
+      flex-shrink: 0;
+    }
+
+    .nav-item {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      padding: 10px 0 8px;
+      cursor: pointer;
+      color: var(--text-dim);
+      font-size: 11px;
+      font-weight: 500;
+      transition: color 0.2s;
+      text-decoration: none;
+    }
+    .nav-item .nav-icon { font-size: 20px; }
+    .nav-item.active { color: var(--gold); }
+    .nav-item:active { opacity: 0.7; }
+
+    /* ── TOAST ── */
+    .toast {
+      position: fixed;
+      bottom: calc(80px + var(--safe-bottom));
+      left: 50%;
+      transform: translateX(-50%) translateY(20px);
+      background: rgba(30,30,70,0.95);
+      border: 1px solid var(--gold);
+      color: white;
+      padding: 10px 20px;
+      border-radius: 30px;
+      font-size: 13px;
+      opacity: 0;
+      transition: all 0.3s;
+      pointer-events: none;
+      white-space: nowrap;
+      z-index: 100;
+    }
+    .toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    /* ── MIC RECORDING STATE ── */
+    .mini-btn.recording {
+      background: rgba(220,50,50,0.2);
+      border-color: #dc3232;
+      color: #dc3232;
+      animation: pulse-red 1s infinite;
+    }
+    @keyframes pulse-red {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(220,50,50,0.4); }
+      50% { box-shadow: 0 0 0 6px rgba(220,50,50,0); }
+    }
+
+    /* ── HISTORY BADGE ── */
+    .history-badge {
+      background: var(--gold);
+      color: var(--navy);
+      font-size: 9px;
+      font-weight: 700;
+      border-radius: 10px;
+      padding: 1px 5px;
+      margin-left: 4px;
+      vertical-align: middle;
+    }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: rgba(212,175,55,0.3); border-radius: 4px; }
+
+    /* Install banner */
+    .install-banner {
+      margin: 0 16px 8px;
+      background: var(--gold-dim);
+      border: 1px solid rgba(212,175,55,0.3);
+      border-radius: 12px;
+      padding: 10px 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      flex-shrink: 0;
+    }
+    .install-banner p { font-size: 13px; color: var(--gold); line-height: 1.3; }
+    .install-banner p span { display: block; font-size: 11px; color: var(--text-dim); margin-top: 2px; }
+    .install-btn {
+      background: var(--gold);
+      color: var(--navy);
+      border: none;
+      border-radius: 20px;
+      padding: 7px 14px;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .close-banner {
+      background: none;
+      border: none;
+      color: var(--text-dim);
+      font-size: 18px;
+      cursor: pointer;
+      padding: 0 4px;
+      flex-shrink: 0;
+    }
+  </style>
+</head>
+<body>
+<div class="app">
+
+  <!-- TOP BAR -->
+  <div class="topbar">
+    <div class="topbar-logo">Oxbridge<span>Translator</span></div>
+    <div class="topbar-actions">
+      <div class="icon-btn" onclick="toggleLanguage()" id="lang-toggle" title="EN/ES">ES</div>
+    </div>
+  </div>
+
+  <!-- INSTALL BANNER (hidden by default, shown if installable) -->
+  <div class="install-banner" id="install-banner" style="display:none;">
+    <p>📲 Instala la app <span>Úsala sin internet</span></p>
+    <button class="install-btn" onclick="installApp()">Instalar</button>
+    <button class="close-banner" onclick="closeBanner()">×</button>
+  </div>
+
+  <!-- DIRECTION BAR -->
+  <div class="direction-bar">
+    <div class="lang-pill active" id="pill-source" onclick="setDirection('es-en')">🇨🇴 Español</div>
+    <button class="swap-btn" id="swap-btn" onclick="swapDirection()">⇄</button>
+    <div class="lang-pill" id="pill-target" onclick="setDirection('en-es')">🇬🇧 English</div>
+  </div>
+
+  <!-- PANELS -->
+  <div class="panels">
+
+    <!-- SOURCE -->
+    <div class="panel">
+      <div class="panel-label source" id="label-source">Escribe en español...</div>
+      <textarea id="source-input" placeholder="Hola, ¿cómo estás?" maxlength="1000" oninput="onInput()"></textarea>
+      <div class="panel-bottom">
+        <span class="char-count"><span id="char-count">0</span>/1000</span>
+        <div class="panel-actions">
+          <div class="mini-btn" id="mic-btn" onclick="toggleMic()" title="Voz">🎤</div>
+          <div class="mini-btn" onclick="clearInput()" title="Borrar">✕</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- OUTPUT -->
+    <div class="panel output-panel">
+      <div class="panel-label" id="label-target">Traducción al inglés</div>
+      <div class="output-text" id="output-text">
+        <span class="output-placeholder" id="output-placeholder">La traducción aparecerá aquí...</span>
+      </div>
+      <div class="panel-bottom">
+        <span class="char-count" id="save-status"></span>
+        <div class="panel-actions">
+          <div class="mini-btn" id="speak-btn" onclick="speakOutput()" title="Escuchar">🔊</div>
+          <div class="mini-btn" onclick="copyOutput()" title="Copiar">📋</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- TRANSLATE BUTTON -->
+  <div class="translate-wrap">
+    <button class="translate-btn" id="translate-btn" onclick="translate()">
+      <span>⚡</span> <span id="btn-label">Traducir</span>
+    </button>
+  </div>
+
+  <!-- BOTTOM NAV -->
+  <div class="bottom-nav">
+    <a class="nav-item active" href="translator-app.html">
+      <span class="nav-icon">🔤</span>
+      <span data-es="Traductor" data-en="Translate">Traductor</span>
+    </a>
+    <a class="nav-item" href="translation-history.html">
+      <span class="nav-icon">🕐</span>
+      <span data-es="Historial" data-en="History">Historial</span><span class="history-badge" id="history-count"></span>
+    </a>
+    <a class="nav-item" href="translation-quiz.html">
+      <span class="nav-icon">🧠</span>
+      <span data-es="Quiz" data-en="Quiz">Quiz</span>
+    </a>
+    <a class="nav-item" href="index.html">
+      <span class="nav-icon">🎓</span>
+      <span data-es="Cursos" data-en="Courses">Cursos</span>
+    </a>
+  </div>
+
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+// ── STATE ──
+let direction = 'es-en'; // source is Spanish by default
+let uiLang = localStorage.getItem('uiLang') || 'es';
+let currentTranslation = '';
+let saveTimer = null;
+let recognition = null;
+let isRecording = false;
+let deferredInstallPrompt = null;
+
+// ── PWA INSTALL ──
+window.addEventListener('beforeinstallprompt', e => {
+  e.preventDefault();
+  deferredInstallPrompt = e;
+  if (!localStorage.getItem('installBannerClosed')) {
+    document.getElementById('install-banner').style.display = 'flex';
+  }
+});
+
+function installApp() {
+  if (deferredInstallPrompt) {
+    deferredInstallPrompt.prompt();
+    deferredInstallPrompt.userChoice.then(() => {
+      deferredInstallPrompt = null;
+      document.getElementById('install-banner').style.display = 'none';
+    });
+  }
+}
+
+function closeBanner() {
+  document.getElementById('install-banner').style.display = 'none';
+  localStorage.setItem('installBannerClosed', '1');
+}
+
+// ── SERVICE WORKER ──
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('sw.js').catch(() => {});
+}
+
+// ── UI LANGUAGE (EN/ES interface) ──
+function toggleLanguage() {
+  uiLang = uiLang === 'es' ? 'en' : 'es';
+  localStorage.setItem('uiLang', uiLang);
+  applyUILanguage();
+}
+
+function applyUILanguage() {
+  const toggle = document.getElementById('lang-toggle');
+  toggle.textContent = uiLang === 'es' ? 'ES' : 'EN';
+  document.querySelectorAll('[data-es][data-en]').forEach(el => {
+    el.textContent = el.getAttribute(`data-${uiLang}`);
+  });
+  updateDirectionLabels();
+  updateButtonLabel();
+}
+
+function updateButtonLabel() {
+  document.getElementById('btn-label').textContent = uiLang === 'es' ? 'Traducir' : 'Translate';
+}
+
+// ── DIRECTION ──
+function setDirection(dir) {
+  direction = dir;
+  updateDirectionLabels();
+  clearInput();
+}
+
+function swapDirection() {
+  const btn = document.getElementById('swap-btn');
+  btn.classList.add('spinning');
+  setTimeout(() => btn.classList.remove('spinning'), 350);
+
+  // Swap text between boxes
+  const input = document.getElementById('source-input');
+  const output = document.getElementById('output-text');
+  const outText = output.querySelector('.output-placeholder') ? '' : output.textContent.trim();
+
+  direction = direction === 'es-en' ? 'en-es' : 'es-en';
+
+  if (outText && outText !== '') {
+    input.value = outText;
+    updateCharCount();
+  }
+
+  clearOutput();
+  updateDirectionLabels();
+}
+
+function updateDirectionLabels() {
+  const srcLang = direction === 'es-en' ? 'es' : 'en';
+  const tgtLang = direction === 'es-en' ? 'en' : 'es';
+
+  const pillSrc = document.getElementById('pill-source');
+  const pillTgt = document.getElementById('pill-target');
+
+  if (direction === 'es-en') {
+    pillSrc.textContent = '🇨🇴 Español';
+    pillSrc.classList.add('active');
+    pillTgt.textContent = '🇬🇧 English';
+    pillTgt.classList.remove('active');
+  } else {
+    pillSrc.textContent = '🇬🇧 English';
+    pillSrc.classList.remove('active');
+    pillTgt.textContent = '🇨🇴 Español';
+    pillTgt.classList.add('active');
+  }
+
+  const labels = {
+    'es-en': {
+      src: uiLang === 'es' ? 'Escribe en español...' : 'Type in Spanish...',
+      tgt: uiLang === 'es' ? 'Traducción al inglés' : 'English translation'
+    },
+    'en-es': {
+      src: uiLang === 'es' ? 'Escribe en inglés...' : 'Type in English...',
+      tgt: uiLang === 'es' ? 'Traducción al español' : 'Spanish translation'
+    }
+  };
+
+  document.getElementById('label-source').textContent = labels[direction].src;
+  document.getElementById('label-target').textContent = labels[direction].tgt;
+  document.getElementById('source-input').placeholder =
+    direction === 'es-en' ? 'Hola, ¿cómo estás?' : 'Hello, how are you?';
+}
+
+// ── INPUT HANDLING ──
+function onInput() {
+  updateCharCount();
+  clearOutput();
+  clearSaveTimer();
+}
+
+function updateCharCount() {
+  const len = document.getElementById('source-input').value.length;
+  document.getElementById('char-count').textContent = len;
+}
+
+function clearInput() {
+  document.getElementById('source-input').value = '';
+  updateCharCount();
+  clearOutput();
+  clearSaveTimer();
+}
+
+function clearOutput() {
+  const out = document.getElementById('output-text');
+  out.innerHTML = '<span class="output-placeholder" id="output-placeholder">' +
+    (uiLang === 'es' ? 'La traducción aparecerá aquí...' : 'Translation will appear here...') + '</span>';
+  currentTranslation = '';
+  document.getElementById('save-status').textContent = '';
+}
+
+// ── TRANSLATE ──
+async function translate() {
+  const text = document.getElementById('source-input').value.trim();
+  if (!text) { showToast(uiLang === 'es' ? 'Escribe algo primero' : 'Type something first'); return; }
+
+  const btn = document.getElementById('translate-btn');
+  btn.disabled = true;
+
+  const out = document.getElementById('output-text');
+  out.innerHTML = '<div class="loading-dots"><span></span><span></span><span></span></div>';
+
+  const srcLang = direction === 'es-en' ? 'Spanish' : 'English';
+  const tgtLang = direction === 'es-en' ? 'English' : 'Spanish';
+
+  try {
+    const response = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 1000,
+        messages: [{
+          role: 'user',
+          content: `Translate the following ${srcLang} text to ${tgtLang}. Return ONLY the translation, no explanations, no quotation marks, no extra text.\n\n${text}`
+        }]
+      })
+    });
+
+    const data = await response.json();
+    const translation = data.content?.[0]?.text?.trim() || '';
+
+    if (!translation) throw new Error('Empty response');
+
+    out.textContent = translation;
+    currentTranslation = translation;
+
+    // Auto-save after 10 seconds
+    startSaveTimer(text, translation);
+
+  } catch (err) {
+    out.innerHTML = '<span style="color:rgba(255,100,100,0.8);font-size:16px;">' +
+      (uiLang === 'es' ? '⚠️ Error. Verifica tu conexión.' : '⚠️ Error. Check your connection.') + '</span>';
+  }
+
+  btn.disabled = false;
+}
+
+// ── AUTO-SAVE ──
+function startSaveTimer(original, translation) {
+  clearSaveTimer();
+  let secs = 10;
+  const statusEl = document.getElementById('save-status');
+  statusEl.textContent = uiLang === 'es' ? `Guardando en ${secs}s...` : `Saving in ${secs}s...`;
+
+  saveTimer = setInterval(() => {
+    secs--;
+    if (secs > 0) {
+      statusEl.textContent = uiLang === 'es' ? `Guardando en ${secs}s...` : `Saving in ${secs}s...`;
+    } else {
+      clearInterval(saveTimer);
+      saveTranslation(original, translation);
+    }
+  }, 1000);
+}
+
+function clearSaveTimer() {
+  if (saveTimer) { clearInterval(saveTimer); saveTimer = null; }
+  document.getElementById('save-status').textContent = '';
+}
+
+function saveTranslation(original, translation) {
+  if (!isValidForSave(original)) return;
+
+  const history = JSON.parse(localStorage.getItem('translationHistory') || '[]');
+
+  // No duplicates in last 20
+  const recent = history.slice(-20).map(e => e.original.toLowerCase().trim());
+  if (recent.includes(original.toLowerCase().trim())) {
+    document.getElementById('save-status').textContent = '';
+    return;
+  }
+
+  const entry = {
+    original,
+    translation,
+    direction,
+    timestamp: new Date().toISOString(),
+    date: new Date().toLocaleDateString(uiLang === 'es' ? 'es-CO' : 'en-GB', {
+      day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit'
+    })
+  };
+
+  history.push(entry);
+  if (history.length > 100) history.shift();
+  localStorage.setItem('translationHistory', JSON.stringify(history));
+
+  document.getElementById('save-status').textContent = uiLang === 'es' ? '✓ Guardado' : '✓ Saved';
+  updateHistoryBadge();
+  showToast(uiLang === 'es' ? '✓ Guardado en historial' : '✓ Saved to history');
+}
+
+function isValidForSave(text) {
+  if (text.length < 2) return false;
+  if (!/[a-záéíóúñüA-Z]/.test(text)) return false;
+  if (/[.,;:!?…]$/.test(text)) return false;
+  return true;
+}
+
+// ── HISTORY BADGE ──
+function updateHistoryBadge() {
+  const history = JSON.parse(localStorage.getItem('translationHistory') || '[]');
+  const badge = document.getElementById('history-count');
+  badge.textContent = history.length > 0 ? history.length : '';
+}
+
+// ── MIC ──
+function toggleMic() {
+  if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
+    showToast(uiLang === 'es' ? 'Micrófono no disponible' : 'Microphone not available');
+    return;
+  }
+
+  if (isRecording) {
+    recognition.stop();
+    return;
+  }
+
+  const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+  recognition = new SpeechRecognition();
+  recognition.lang = direction === 'es-en' ? 'es-CO' : 'en-GB';
+  recognition.interimResults = false;
+  recognition.maxAlternatives = 1;
+
+  recognition.onstart = () => {
+    isRecording = true;
+    document.getElementById('mic-btn').classList.add('recording');
+    document.getElementById('mic-btn').textContent = '⏹';
+  };
+
+  recognition.onresult = e => {
+    const transcript = e.results[0][0].transcript;
+    document.getElementById('source-input').value = transcript;
+    updateCharCount();
+    clearOutput();
+  };
+
+  recognition.onend = () => {
+    isRecording = false;
+    document.getElementById('mic-btn').classList.remove('recording');
+    document.getElementById('mic-btn').textContent = '🎤';
+  };
+
+  recognition.onerror = () => {
+    isRecording = false;
+    document.getElementById('mic-btn').classList.remove('recording');
+    document.getElementById('mic-btn').textContent = '🎤';
+    showToast(uiLang === 'es' ? 'Error de micrófono' : 'Mic error');
+  };
+
+  recognition.start();
+}
+
+// ── SPEAK ──
+function speakOutput() {
+  if (!currentTranslation) return;
+  if ('speechSynthesis' in window) {
+    window.speechSynthesis.cancel();
+    const utter = new SpeechSynthesisUtterance(currentTranslation);
+    utter.lang = direction === 'es-en' ? 'en-GB' : 'es-CO';
+    utter.rate = 0.9;
+    window.speechSynthesis.speak(utter);
+    document.getElementById('speak-btn').classList.add('active');
+    utter.onend = () => document.getElementById('speak-btn').classList.remove('active');
+  }
+}
+
+// ── COPY ──
+function copyOutput() {
+  if (!currentTranslation) return;
+  navigator.clipboard.writeText(currentTranslation).then(() => {
+    showToast(uiLang === 'es' ? '📋 Copiado' : '📋 Copied');
+  });
+}
+
+// ── TOAST ──
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2200);
+}
+
+// ── INIT ──
+applyUILanguage();
+updateHistoryBadge();
+</script>
+</body>
+</html>
