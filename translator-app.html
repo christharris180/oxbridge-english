@@ -880,57 +880,52 @@ function toggleMic() {
   recognition.start();
 }
 
-// ── SPEAK ──
+// ── SPEAK (uses Google TTS audio - works reliably on all devices) ──
+let currentAudio = null;
+
 function speakOutput() {
   if (!currentTranslation) { showToast('No hay texto para escuchar'); return; }
-  if (!('speechSynthesis' in window)) { showToast('Audio no disponible en este navegador'); return; }
 
-  const targetLang = currentTranslationLang || (direction === 'es-en' ? 'en-GB' : 'es-ES');
+  const speakBtn = document.getElementById('speak-btn');
 
-  function doSpeak(voice) {
-    window.speechSynthesis.cancel();
-    // Android needs a short pause after cancel() before speaking
-    setTimeout(() => {
-      // Clean text - remove characters that cause synthesis failures
-      const cleanText = currentTranslation
-        .replace(/[^\w\sÀ-ɏḀ-ỿ.,!?;:\-'"]/g, ' ')
-        .trim();
-      const utter = new SpeechSynthesisUtterance(cleanText);
-      utter.lang = targetLang;
-      utter.rate = 0.85;
-      utter.pitch = 1;
-      utter.volume = 1;
-      if (voice) utter.voice = voice;
-      utter.onerror = (e) => {
-        showToast('Error: ' + e.error);
-        document.getElementById('speak-btn').classList.remove('active');
-      };
-      utter.onend = () => document.getElementById('speak-btn').classList.remove('active');
-      document.getElementById('speak-btn').classList.add('active');
-      window.speechSynthesis.speak(utter);
-    }, 200);
+  // Stop if already playing
+  if (currentAudio) {
+    currentAudio.pause();
+    currentAudio = null;
+    speakBtn.classList.remove('active');
+    return;
   }
 
-  function findVoiceAndSpeak() {
-    const voices = window.speechSynthesis.getVoices();
-    // Try to find a voice matching the target language
-    const langPrefix = targetLang.substring(0, 2); // 'es' or 'en'
-    const voice = voices.find(v => v.lang.startsWith(langPrefix)) || null;
-    doSpeak(voice);
-  }
+  const langCode = currentTranslationLang === 'es-ES' ? 'es' : 'en';
+  const text = currentTranslation.substring(0, 200); // Google TTS limit
+  const url = 'https://translate.google.com/translate_tts?ie=UTF-8&tl=' + langCode + '&client=tw-ob&q=' + encodeURIComponent(text);
 
-  // Android bug: voices may not be loaded yet - wait for them
-  const voices = window.speechSynthesis.getVoices();
-  if (voices.length > 0) {
-    findVoiceAndSpeak();
-  } else {
-    window.speechSynthesis.onvoiceschanged = () => {
-      window.speechSynthesis.onvoiceschanged = null;
-      findVoiceAndSpeak();
-    };
-    // Fallback if onvoiceschanged never fires (some browsers)
-    setTimeout(() => findVoiceAndSpeak(), 500);
-  }
+  currentAudio = new Audio(url);
+  currentAudio.onplay = () => speakBtn.classList.add('active');
+  currentAudio.onended = () => {
+    speakBtn.classList.remove('active');
+    currentAudio = null;
+  };
+  currentAudio.onerror = () => {
+    // Fallback to Web Speech API if Google TTS fails
+    speakBtn.classList.remove('active');
+    currentAudio = null;
+    const targetLang = currentTranslationLang || (direction === 'es-en' ? 'en-GB' : 'es-ES');
+    if ('speechSynthesis' in window) {
+      window.speechSynthesis.cancel();
+      setTimeout(() => {
+        const utter = new SpeechSynthesisUtterance(currentTranslation);
+        utter.lang = targetLang;
+        utter.rate = 0.9;
+        utter.onend = () => speakBtn.classList.remove('active');
+        speakBtn.classList.add('active');
+        window.speechSynthesis.speak(utter);
+      }, 100);
+    } else {
+      showToast('Audio no disponible');
+    }
+  };
+  currentAudio.play();
 }
 
 // ── COPY ──
