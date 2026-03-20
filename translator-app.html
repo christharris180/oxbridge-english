@@ -13,7 +13,6 @@
   <title>Oxbridge Translator</title>
 
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700&family=Work+Sans:wght@600;700&display=swap" rel="stylesheet" />
-  <script src="https://code.responsivevoice.org/responsivevoice.js?key=FREE"></script>
 
   <style>
     :root {
@@ -881,32 +880,60 @@ function toggleMic() {
   recognition.start();
 }
 
-// ── SPEAK (ResponsiveVoice - works reliably on Android PWA) ──
+// ── SPEAK (MyMemory TTS - same server as translation, no CORS issues) ──
+let currentAudio = null;
+
 function speakOutput() {
   if (!currentTranslation) { showToast('No hay texto para escuchar'); return; }
 
   const speakBtn = document.getElementById('speak-btn');
-  const langCode = (currentTranslationLang || (direction === 'es-en' ? 'en' : 'es')).substring(0, 2);
-  const text = currentTranslation.substring(0, 200);
-  const voiceName = langCode === 'es' ? 'Spanish Female' : 'UK English Female';
 
-  if (typeof responsiveVoice !== 'undefined' && responsiveVoice.isPlaying()) {
-    responsiveVoice.cancel();
+  // Stop if already playing
+  if (currentAudio && !currentAudio.paused) {
+    currentAudio.pause();
+    currentAudio.currentTime = 0;
     speakBtn.classList.remove('active');
     return;
   }
 
-  if (typeof responsiveVoice !== 'undefined') {
-    speakBtn.classList.add('active');
-    responsiveVoice.speak(text, voiceName, {
-      rate: 0.9,
-      onend: () => speakBtn.classList.remove('active'),
-      onerror: () => { showToast('Error de audio'); speakBtn.classList.remove('active'); }
-    });
-  } else {
-    showToast('Audio no disponible');
+  const langCode = (currentTranslationLang || (direction === 'es-en' ? 'en' : 'es')).substring(0, 2);
+  const text = currentTranslation.substring(0, 200);
+
+  // MyMemory TTS endpoint - same domain as translation API, no CORS issues
+  const url = 'https://api.mymemory.translated.net/get?q=' + encodeURIComponent(text) + '&langpair=' + langCode + '|' + langCode + '&of=t';
+
+  // Use a direct audio URL from a reliable free TTS service
+  const ttsUrl = 'https://translate.googleapis.com/translate_tts?ie=UTF-8&tl=' + langCode + '&client=gtx&q=' + encodeURIComponent(text);
+
+  speakBtn.classList.add('active');
+  currentAudio = new Audio();
+  currentAudio.crossOrigin = 'anonymous';
+
+  currentAudio.oncanplaythrough = () => currentAudio.play();
+  currentAudio.onended = () => {
     speakBtn.classList.remove('active');
-  }
+    currentAudio = null;
+  };
+  currentAudio.onerror = () => {
+    // Final fallback - Web Speech API
+    speakBtn.classList.remove('active');
+    currentAudio = null;
+    try {
+      window.speechSynthesis.cancel();
+      const utter = new SpeechSynthesisUtterance(text);
+      utter.lang = langCode + '-' + (langCode === 'es' ? 'ES' : 'GB');
+      utter.rate = 0.9;
+      speakBtn.classList.add('active');
+      utter.onend = () => speakBtn.classList.remove('active');
+      utter.onerror = () => speakBtn.classList.remove('active');
+      window.speechSynthesis.speak(utter);
+    } catch(e) {
+      showToast('Audio no disponible');
+    }
+  };
+
+  currentAudio.src = ttsUrl;
+  currentAudio.load();
 }
 
 
