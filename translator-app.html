@@ -904,25 +904,29 @@ function speakOutput() {
 
   speakBtn.classList.add('active');
 
-  // Use Web Speech API directly - most reliable cross-platform
   if ('speechSynthesis' in window) {
     window.speechSynthesis.cancel();
     setTimeout(() => {
       const voices = window.speechSynthesis.getVoices();
       const targetLang = langCode === 'es' ? 'es' : 'en';
-      const matchedVoice = voices.find(v => v.lang.toLowerCase().startsWith(targetLang)) || null;
-      showToast('Lang: ' + targetLang + ' | Voices: ' + voices.length + (matchedVoice ? ' | Voice: ' + matchedVoice.lang : ' | No match'));
+      // Match using underscore format as Android reports it (e.g. es_ES)
+      const matchedVoice = 
+        voices.find(v => v.lang === (langCode === 'es' ? 'es_ES' : 'en_GB')) ||
+        voices.find(v => v.lang === (langCode === 'es' ? 'es-ES' : 'en-GB')) ||
+        voices.find(v => v.lang.toLowerCase().startsWith(targetLang)) ||
+        null;
       const utter = new SpeechSynthesisUtterance(text);
-      utter.lang = langCode === 'es' ? 'es-ES' : 'en-GB';
+      // Set lang to exactly what Android reported
+      utter.lang = matchedVoice ? matchedVoice.lang : (langCode === 'es' ? 'es_ES' : 'en_GB');
       if (matchedVoice) utter.voice = matchedVoice;
       utter.rate = 0.9;
       utter.volume = 1;
-      utter.onerror = (e) => { showToast('Speech error: ' + e.error); speakBtn.classList.remove('active'); };
+      utter.onerror = (e) => { showToast('Error: ' + e.error); speakBtn.classList.remove('active'); };
       utter.onend = () => { speakBtn.classList.remove('active'); currentAudio = null; };
       window.speechSynthesis.speak(utter);
     }, 300);
   } else {
-    showToast('Speech API no disponible');
+    showToast('Audio no disponible');
     speakBtn.classList.remove('active');
   }
 }
