@@ -13,6 +13,7 @@
   <title>Oxbridge Translator</title>
 
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700&family=Work+Sans:wght@600;700&display=swap" rel="stylesheet" />
+  <script src="https://code.responsivevoice.org/responsivevoice.js?key=FREE"></script>
 
   <style>
     :root {
@@ -880,56 +881,34 @@ function toggleMic() {
   recognition.start();
 }
 
-// ── SPEAK (uses Google TTS audio - works reliably on all devices) ──
-let currentAudio = null;
-
+// ── SPEAK (ResponsiveVoice - works reliably on Android PWA) ──
 function speakOutput() {
   if (!currentTranslation) { showToast('No hay texto para escuchar'); return; }
 
   const speakBtn = document.getElementById('speak-btn');
+  const langCode = (currentTranslationLang || (direction === 'es-en' ? 'en' : 'es')).substring(0, 2);
+  const text = currentTranslation.substring(0, 200);
+  const voiceName = langCode === 'es' ? 'Spanish Female' : 'UK English Female';
 
-  // Stop if already playing
-  if (currentAudio) {
-    currentAudio.pause();
-    currentAudio = null;
+  if (typeof responsiveVoice !== 'undefined' && responsiveVoice.isPlaying()) {
+    responsiveVoice.cancel();
     speakBtn.classList.remove('active');
     return;
   }
 
-  const langCode = (currentTranslationLang || (direction === 'es-en' ? 'en' : 'es')).substring(0, 2);
-  const text = currentTranslation.substring(0, 200);
-
-  // Try VoiceRSS free TTS (no CORS issues, works on mobile)
-  const url = 'https://api.voicerss.org/?key=none&hl=' + (langCode === 'es' ? 'es-es' : 'en-gb') + '&src=' + encodeURIComponent(text) + '&f=44khz_16bit_stereo&c=mp3';
-
-  speakBtn.classList.add('active');
-
-  if ('speechSynthesis' in window) {
-    window.speechSynthesis.cancel();
-    setTimeout(() => {
-      const voices = window.speechSynthesis.getVoices();
-      const targetLang = langCode === 'es' ? 'es' : 'en';
-      // Match using underscore format as Android reports it (e.g. es_ES)
-      const matchedVoice = 
-        voices.find(v => v.lang === (langCode === 'es' ? 'es_ES' : 'en_GB')) ||
-        voices.find(v => v.lang === (langCode === 'es' ? 'es-ES' : 'en-GB')) ||
-        voices.find(v => v.lang.toLowerCase().startsWith(targetLang)) ||
-        null;
-      const utter = new SpeechSynthesisUtterance(text);
-      // Set lang to exactly what Android reported
-      utter.lang = matchedVoice ? matchedVoice.lang : (langCode === 'es' ? 'es_ES' : 'en_GB');
-      if (matchedVoice) utter.voice = matchedVoice;
-      utter.rate = 0.9;
-      utter.volume = 1;
-      utter.onerror = (e) => { showToast('Error: ' + e.error); speakBtn.classList.remove('active'); };
-      utter.onend = () => { speakBtn.classList.remove('active'); currentAudio = null; };
-      window.speechSynthesis.speak(utter);
-    }, 300);
+  if (typeof responsiveVoice !== 'undefined') {
+    speakBtn.classList.add('active');
+    responsiveVoice.speak(text, voiceName, {
+      rate: 0.9,
+      onend: () => speakBtn.classList.remove('active'),
+      onerror: () => { showToast('Error de audio'); speakBtn.classList.remove('active'); }
+    });
   } else {
     showToast('Audio no disponible');
     speakBtn.classList.remove('active');
   }
 }
+
 
 // ── COPY ──
 function copyOutput() {
