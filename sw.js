@@ -1,4 +1,4 @@
-const CACHE_NAME = 'oxbridge-translator-v12';
+const CACHE_NAME = 'oxbridge-translator-v13';
 const ASSETS = [
   '/translator-app.html',
   '/manifest.json'

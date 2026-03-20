@@ -896,7 +896,7 @@ function speakOutput() {
     return;
   }
 
-  const langCode = currentTranslationLang === 'es-ES' ? 'es' : 'en';
+  const langCode = (currentTranslationLang || (direction === 'es-en' ? 'en' : 'es')).substring(0, 2);
   const text = currentTranslation.substring(0, 200); // Google TTS limit
   const url = 'https://translate.google.com/translate_tts?ie=UTF-8&tl=' + langCode + '&client=tw-ob&q=' + encodeURIComponent(text);
 
