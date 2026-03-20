@@ -350,25 +350,25 @@
     /* ── PROMO BUTTON ── */
     .promo-btn {
       display: block;
-      margin: 0 0 4px;
-      padding: 11px 16px;
-      background: linear-gradient(180deg, #ffffff 0%, #f0f0f0 60%, #d8d8d8 100%);
+      width: 100%;
+      padding: 13px 16px;
+      background: linear-gradient(180deg, #ffffff 0%, #f2f2f2 50%, #d8d8d8 100%);
       border: 2px solid #cc2020;
-      border-radius: 14px;
+      border-radius: 50px;
       color: var(--text-navy);
       font-family: 'Roboto', sans-serif;
-      font-size: 11.5px;
+      font-size: 11px;
       font-weight: 300;
       line-height: 1.45;
       text-align: center;
       text-decoration: none;
       cursor: pointer;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.35), 0 2px 0 rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.9);
+      box-shadow: 0 5px 12px rgba(0,0,0,0.4), 0 2px 0 rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,1);
       transition: all 0.15s;
       flex-shrink: 0;
     }
     .promo-btn:active {
-      transform: translateY(2px);
+      transform: translateY(3px);
       box-shadow: 0 2px 5px rgba(0,0,0,0.25);
     }
     .promo-btn strong { font-weight: 600; }
@@ -538,11 +538,11 @@
       </div>
     </div>
 
-    <!-- TRANSLATE BUTTON (middle) -->
+    <!-- PROMO BUTTON (middle) -->
     <div class="translate-wrap">
-      <button class="translate-btn" id="translate-btn" onclick="translate()">
-        <span>⚡</span> <span id="btn-label">Traducir</span>
-      </button>
+      <a class="promo-btn" href="https://oxbridge-english.com/courses.html" target="_blank">
+        🎓 ¿Cansado de traducir todo? Empieza hoy un curso de inglés online, guiado por IA y 100% autodidacta con <strong>Oxbridge English</strong>
+      </a>
     </div>
 
     <!-- OUTPUT -->
@@ -559,11 +559,6 @@
         </div>
       </div>
     </div>
-
-    <!-- PROMO BUTTON -->
-    <a class="promo-btn" href="https://oxbridge-english.com/courses.html" target="_blank">
-      🎓 ¿Cansado de traducir todo? Empieza hoy un curso de inglés online, guiado por IA y 100% autodidacta con <strong>Oxbridge English</strong>
-    </a>
 
   </div>
 
@@ -884,6 +879,8 @@ function toggleMic() {
     document.getElementById('source-input').value = transcript;
     updateCharCount();
     clearOutput();
+    // Auto-translate immediately after mic input
+    if (transcript.trim().length > 1) translate();
   };
 
   recognition.onend = () => {
