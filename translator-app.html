@@ -889,17 +889,26 @@ function speakOutput() {
 
   function doSpeak(voice) {
     window.speechSynthesis.cancel();
-    const utter = new SpeechSynthesisUtterance(currentTranslation);
-    utter.lang = targetLang;
-    utter.rate = 0.9;
-    if (voice) utter.voice = voice;
-    utter.onerror = (e) => {
-      showToast('Error de audio: ' + e.error);
-      document.getElementById('speak-btn').classList.remove('active');
-    };
-    utter.onend = () => document.getElementById('speak-btn').classList.remove('active');
-    document.getElementById('speak-btn').classList.add('active');
-    window.speechSynthesis.speak(utter);
+    // Android needs a short pause after cancel() before speaking
+    setTimeout(() => {
+      // Clean text - remove characters that cause synthesis failures
+      const cleanText = currentTranslation
+        .replace(/[^\w\sÀ-ɏḀ-ỿ.,!?;:\-'"]/g, ' ')
+        .trim();
+      const utter = new SpeechSynthesisUtterance(cleanText);
+      utter.lang = targetLang;
+      utter.rate = 0.85;
+      utter.pitch = 1;
+      utter.volume = 1;
+      if (voice) utter.voice = voice;
+      utter.onerror = (e) => {
+        showToast('Error: ' + e.error);
+        document.getElementById('speak-btn').classList.remove('active');
+      };
+      utter.onend = () => document.getElementById('speak-btn').classList.remove('active');
+      document.getElementById('speak-btn').classList.add('active');
+      window.speechSynthesis.speak(utter);
+    }, 200);
   }
 
   function findVoiceAndSpeak() {
