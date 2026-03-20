@@ -897,35 +897,34 @@ function speakOutput() {
   }
 
   const langCode = (currentTranslationLang || (direction === 'es-en' ? 'en' : 'es')).substring(0, 2);
-  const text = currentTranslation.substring(0, 200); // Google TTS limit
-  const url = 'https://translate.google.com/translate_tts?ie=UTF-8&tl=' + langCode + '&client=tw-ob&q=' + encodeURIComponent(text);
+  const text = currentTranslation.substring(0, 200);
 
-  currentAudio = new Audio(url);
-  currentAudio.onplay = () => speakBtn.classList.add('active');
-  currentAudio.onended = () => {
+  // Try VoiceRSS free TTS (no CORS issues, works on mobile)
+  const url = 'https://api.voicerss.org/?key=none&hl=' + (langCode === 'es' ? 'es-es' : 'en-gb') + '&src=' + encodeURIComponent(text) + '&f=44khz_16bit_stereo&c=mp3';
+
+  speakBtn.classList.add('active');
+
+  // Use Web Speech API directly - most reliable cross-platform
+  if ('speechSynthesis' in window) {
+    window.speechSynthesis.cancel();
+    setTimeout(() => {
+      const voices = window.speechSynthesis.getVoices();
+      const targetLang = langCode === 'es' ? 'es' : 'en';
+      const matchedVoice = voices.find(v => v.lang.toLowerCase().startsWith(targetLang)) || null;
+      showToast('Lang: ' + targetLang + ' | Voices: ' + voices.length + (matchedVoice ? ' | Voice: ' + matchedVoice.lang : ' | No match'));
+      const utter = new SpeechSynthesisUtterance(text);
+      utter.lang = langCode === 'es' ? 'es-ES' : 'en-GB';
+      if (matchedVoice) utter.voice = matchedVoice;
+      utter.rate = 0.9;
+      utter.volume = 1;
+      utter.onerror = (e) => { showToast('Speech error: ' + e.error); speakBtn.classList.remove('active'); };
+      utter.onend = () => { speakBtn.classList.remove('active'); currentAudio = null; };
+      window.speechSynthesis.speak(utter);
+    }, 300);
+  } else {
+    showToast('Speech API no disponible');
     speakBtn.classList.remove('active');
-    currentAudio = null;
-  };
-  currentAudio.onerror = () => {
-    // Fallback to Web Speech API if Google TTS fails
-    speakBtn.classList.remove('active');
-    currentAudio = null;
-    const targetLang = currentTranslationLang || (direction === 'es-en' ? 'en-GB' : 'es-ES');
-    if ('speechSynthesis' in window) {
-      window.speechSynthesis.cancel();
-      setTimeout(() => {
-        const utter = new SpeechSynthesisUtterance(currentTranslation);
-        utter.lang = targetLang;
-        utter.rate = 0.9;
-        utter.onend = () => speakBtn.classList.remove('active');
-        speakBtn.classList.add('active');
-        window.speechSynthesis.speak(utter);
-      }, 100);
-    } else {
-      showToast('Audio no disponible');
-    }
-  };
-  currentAudio.play();
+  }
 }
 
 // ── COPY ──
