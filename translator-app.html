@@ -882,15 +882,45 @@ function toggleMic() {
 
 // ── SPEAK ──
 function speakOutput() {
-  if (!currentTranslation) return;
-  if ('speechSynthesis' in window) {
+  if (!currentTranslation) { showToast('No hay texto para escuchar'); return; }
+  if (!('speechSynthesis' in window)) { showToast('Audio no disponible en este navegador'); return; }
+
+  const targetLang = currentTranslationLang || (direction === 'es-en' ? 'en-GB' : 'es-ES');
+
+  function doSpeak(voice) {
     window.speechSynthesis.cancel();
     const utter = new SpeechSynthesisUtterance(currentTranslation);
-    utter.lang = currentTranslationLang || (direction === 'es-en' ? 'en-GB' : 'es-ES');
+    utter.lang = targetLang;
     utter.rate = 0.9;
-    window.speechSynthesis.speak(utter);
-    document.getElementById('speak-btn').classList.add('active');
+    if (voice) utter.voice = voice;
+    utter.onerror = (e) => {
+      showToast('Error de audio: ' + e.error);
+      document.getElementById('speak-btn').classList.remove('active');
+    };
     utter.onend = () => document.getElementById('speak-btn').classList.remove('active');
+    document.getElementById('speak-btn').classList.add('active');
+    window.speechSynthesis.speak(utter);
+  }
+
+  function findVoiceAndSpeak() {
+    const voices = window.speechSynthesis.getVoices();
+    // Try to find a voice matching the target language
+    const langPrefix = targetLang.substring(0, 2); // 'es' or 'en'
+    const voice = voices.find(v => v.lang.startsWith(langPrefix)) || null;
+    doSpeak(voice);
+  }
+
+  // Android bug: voices may not be loaded yet - wait for them
+  const voices = window.speechSynthesis.getVoices();
+  if (voices.length > 0) {
+    findVoiceAndSpeak();
+  } else {
+    window.speechSynthesis.onvoiceschanged = () => {
+      window.speechSynthesis.onvoiceschanged = null;
+      findVoiceAndSpeak();
+    };
+    // Fallback if onvoiceschanged never fires (some browsers)
+    setTimeout(() => findVoiceAndSpeak(), 500);
   }
 }
 
