@@ -114,53 +114,39 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 0;
+      gap: 6px;
       margin: 6px 16px;
-      background: rgba(247,244,229,0.06);
-      border: 1px solid rgba(201,162,39,0.22);
-      border-radius: 50px;
-      padding: 4px;
+      background: transparent;
+      border: none;
+      padding: 0;
       flex-shrink: 0;
     }
 
     .lang-pill {
       flex: 1;
       text-align: center;
-      padding: 9px 0;
-      border-radius: 40px;
+      padding: 11px 6px;
+      border-radius: 50px;
       font-size: 13px;
-      font-weight: 400;
+      font-weight: 500;
       font-family: 'Roboto', sans-serif;
       cursor: pointer;
       transition: all 0.25s ease;
-      color: var(--text-dim);
+      color: rgba(255,255,255,0.35);
+      background: var(--navy-light);
+      border: 1px solid rgba(255,255,255,0.08);
       user-select: none;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.3), 0 2px 0 rgba(0,0,0,0.2);
     }
 
     .lang-pill.active {
       background: linear-gradient(180deg, var(--gold-light) 0%, var(--gold) 60%, #a07c10 100%);
       color: var(--text-navy);
       font-weight: 700;
-      box-shadow: 0 3px 8px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.3);
+      border-color: transparent;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.3), 0 2px 0 rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.3);
     }
 
-    .swap-btn {
-      width: 36px;
-      height: 36px;
-      border-radius: 50%;
-      background: transparent;
-      border: none;
-      color: var(--gold);
-      font-size: 18px;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: transform 0.35s ease;
-      flex-shrink: 0;
-    }
-    .swap-btn:active { transform: rotate(180deg); }
-    .swap-btn.spinning { animation: spin 0.35s ease; }
     @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(180deg); } }
 
     /* ── MAIN PANELS ── */
@@ -184,7 +170,7 @@
       padding: 7px 12px;
       position: relative;
       min-height: 0;
-      max-height: 110px;
+      max-height: 220px;
       box-shadow: inset 0 2px 6px rgba(0,0,0,0.12);
     }
 
@@ -518,9 +504,8 @@
 
   <!-- DIRECTION BAR -->
   <div class="direction-bar">
-    <div class="lang-pill active" id="pill-source" onclick="setDirection('es-en')">🇨🇴 Español</div>
-    <button class="swap-btn" id="swap-btn" onclick="swapDirection()">⇄</button>
-    <div class="lang-pill" id="pill-target" onclick="setDirection('en-es')">🇬🇧 English</div>
+    <div class="lang-pill active" id="pill-es-en" onclick="setDirection('es-en')">Español → English</div>
+    <div class="lang-pill" id="pill-en-es" onclick="setDirection('en-es')">English → Español</div>
   </div>
 
   <!-- PANELS + TRANSLATE IN MIDDLE -->
@@ -593,6 +578,7 @@
 let direction = 'es-en'; // source is Spanish by default
 let uiLang = localStorage.getItem('uiLang') || 'es';
 let currentTranslation = '';
+let currentTranslationLang = '';
 let saveTimer = null;
 let recognition = null;
 let isRecording = false;
@@ -677,19 +663,15 @@ function updateDirectionLabels() {
   const srcLang = direction === 'es-en' ? 'es' : 'en';
   const tgtLang = direction === 'es-en' ? 'en' : 'es';
 
-  const pillSrc = document.getElementById('pill-source');
-  const pillTgt = document.getElementById('pill-target');
+  const pillEsEn = document.getElementById('pill-es-en');
+  const pillEnEs = document.getElementById('pill-en-es');
 
   if (direction === 'es-en') {
-    pillSrc.textContent = '🇨🇴 Español';
-    pillSrc.classList.add('active');
-    pillTgt.textContent = '🇬🇧 English';
-    pillTgt.classList.remove('active');
+    pillEsEn.classList.add('active');
+    pillEnEs.classList.remove('active');
   } else {
-    pillSrc.textContent = '🇬🇧 English';
-    pillSrc.classList.remove('active');
-    pillTgt.textContent = '🇨🇴 Español';
-    pillTgt.classList.add('active');
+    pillEsEn.classList.remove('active');
+    pillEnEs.classList.add('active');
   }
 
   const labels = {
@@ -741,6 +723,7 @@ function clearOutput() {
   out.innerHTML = '<span class="output-placeholder" id="output-placeholder">' +
     (uiLang === 'es' ? 'La traducción aparecerá aquí...' : 'Translation will appear here...') + '</span>';
   currentTranslation = '';
+  currentTranslationLang = '';
   document.getElementById('save-status').textContent = '';
 }
 
@@ -767,6 +750,7 @@ async function translate() {
 
     out.textContent = translation;
     currentTranslation = translation;
+    currentTranslationLang = direction === 'es-en' ? 'en-GB' : 'es-CO';
 
     // Auto-save after 10 seconds
     startSaveTimer(text, translation);
@@ -902,7 +886,7 @@ function speakOutput() {
   if ('speechSynthesis' in window) {
     window.speechSynthesis.cancel();
     const utter = new SpeechSynthesisUtterance(currentTranslation);
-    utter.lang = direction === 'es-en' ? 'en-GB' : 'es-CO';
+    utter.lang = currentTranslationLang || (direction === 'es-en' ? 'en-GB' : 'es-CO');
     utter.rate = 0.9;
     window.speechSynthesis.speak(utter);
     document.getElementById('speak-btn').classList.add('active');
