@@ -377,7 +377,7 @@
       flex-direction: column;
       align-items: center;
       gap: 4px;
-      padding: 10px 0 8px;
+      padding: 12px 0 10px;
       cursor: pointer;
       color: var(--text-dim);
       font-size: 10px;
@@ -387,7 +387,7 @@
       transition: color 0.2s;
       text-decoration: none;
     }
-    .nav-item .nav-icon { font-size: 20px; }
+    .nav-item .nav-icon { font-size: 30px; }
     .nav-item.active { color: var(--gold); }
     .nav-item:active { opacity: 0.7; }
 
@@ -483,6 +483,18 @@
       flex-shrink: 0;
     }
 
+
+    /* ── APP SUBTITLE ── */
+    .app-subtitle {
+      text-align: center;
+      font-family: 'Roboto', sans-serif;
+      font-weight: 300;
+      font-size: 26px;
+      color: white;
+      letter-spacing: 0.3px;
+      padding: 4px 20px 10px;
+      flex-shrink: 0;
+    }
   </style>
 </head>
 <body>
@@ -492,12 +504,13 @@
   <div class="topbar">
     <div class="topbar-logo">
       <img src="favicon-192x192.png" class="topbar-ox" alt="Oxbridge" />
-      <span><strong>Oxbridge English</strong> <span data-en="Quick Translator" data-es="Traductor Rápido">Quick Translator</span></span>
+      <span><strong>Oxbridge English</strong></span>
     </div>
     <div class="topbar-actions">
       <div class="icon-btn" onclick="toggleLanguage()" id="lang-toggle" title="EN/ES">ES</div>
     </div>
   </div>
+  <div class="app-subtitle" data-en="Quick Translator" data-es="Traductor Rápido">Quick Translator</div>
 
   <!-- INSTALL BANNER (hidden by default, shown if installable) -->
   <div class="install-banner" id="install-banner" style="display:none;">
