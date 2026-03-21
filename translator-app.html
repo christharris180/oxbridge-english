@@ -1262,7 +1262,7 @@ function renderQuiz() {
     return '<div class="quiz-question" id="q-' + i + '">' +
       '<div class="quiz-q-text"><strong>' + (i+1) + '.</strong> ' + prompt + '<br>' + escHtml(entry.original) + '</div>' +
       options.map(opt =>
-        '<button class="quiz-option" onclick="answerQuiz(' + i + ', this, '' + escHtml(opt) + '', '' + escHtml(entry.translation) + '')">' +
+        '<button class="quiz-option" data-opt="' + escHtml(opt) + '" data-correct="' + escHtml(entry.translation) + '" onclick="answerQuiz(' + i + ', this)">' +
         escHtml(opt) + '</button>'
       ).join('') +
       '</div>';
@@ -1276,12 +1276,14 @@ function renderQuiz() {
   '</div>';
 }
 
-function answerQuiz(qIndex, btn, selected, correct) {
+function answerQuiz(qIndex, btn) {
+  const selected = btn.getAttribute('data-opt');
+  const correct = btn.getAttribute('data-correct');
   // Disable all options for this question
   const qDiv = document.getElementById('q-' + qIndex);
   qDiv.querySelectorAll('.quiz-option').forEach(b => {
     b.disabled = true;
-    if (b.textContent.trim() === correct) b.classList.add('correct');
+    if (b.getAttribute('data-opt') === correct) b.classList.add('correct');
   });
 
   if (selected === correct) {

@@ -278,16 +278,18 @@ function showQuestion(i) {
       <div class="q-prompt">${prompt}</div>
       <div class="q-text">${esc(q.entry.original)}</div>
       ${q.options.map(opt =>
-        `<button class="option-btn" onclick="answer(this,'${esc(opt)}','${esc(q.correct)}')">${esc(opt)}</button>`
+        `<button class="option-btn" data-opt="${esc(opt)}" data-correct="${esc(q.correct)}" onclick="answer(this)">${esc(opt)}</button>`
       ).join('')}
     </div>`;
 }
 
-function answer(btn, selected, correct) {
+function answer(btn) {
+  const selected = btn.getAttribute('data-opt');
+  const correct = btn.getAttribute('data-correct');
   // Disable all buttons
   document.querySelectorAll('.option-btn').forEach(b => {
     b.disabled = true;
-    if (b.textContent.trim() === correct) b.classList.add('correct');
+    if (b.getAttribute('data-opt') === correct) b.classList.add('correct');
   });
 
   if (selected === correct) {
