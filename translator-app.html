@@ -495,6 +495,177 @@
       padding: 4px 20px 10px;
       flex-shrink: 0;
     }
+
+    /* ── SCREENS (history & quiz) ── */
+    .screen {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: var(--navy);
+      display: flex;
+      flex-direction: column;
+      z-index: 200;
+      padding-top: var(--safe-top);
+      padding-bottom: var(--safe-bottom);
+      animation: slideIn 0.25s ease;
+    }
+    @keyframes slideIn {
+      from { transform: translateX(100%); }
+      to { transform: translateX(0); }
+    }
+
+    .screen-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 16px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      flex-shrink: 0;
+    }
+
+    .screen-title {
+      font-family: 'Roboto', sans-serif;
+      font-weight: 300;
+      font-size: 18px;
+      color: var(--gold);
+      letter-spacing: 0.5px;
+    }
+
+    .back-btn {
+      background: none;
+      border: none;
+      color: var(--gold);
+      font-size: 15px;
+      font-family: 'Roboto', sans-serif;
+      cursor: pointer;
+      padding: 6px 10px 6px 0;
+    }
+
+    .clear-history-btn {
+      background: none;
+      border: none;
+      font-size: 20px;
+      cursor: pointer;
+      padding: 4px 8px;
+    }
+
+    .screen-body {
+      flex: 1;
+      overflow-y: auto;
+      padding: 12px 16px;
+    }
+
+    /* History entries */
+    .history-entry {
+      background: var(--cream);
+      border-radius: 12px;
+      padding: 12px 14px;
+      margin-bottom: 10px;
+    }
+    .history-direction {
+      font-size: 11px;
+      color: rgba(26,26,62,0.45);
+      margin-bottom: 4px;
+      font-family: 'Roboto', sans-serif;
+    }
+    .history-original {
+      font-size: 15px;
+      font-weight: 400;
+      color: var(--text-navy);
+      font-family: 'Roboto', sans-serif;
+      margin-bottom: 3px;
+    }
+    .history-translation {
+      font-size: 15px;
+      font-weight: 300;
+      color: rgba(26,26,62,0.65);
+      font-family: 'Roboto', sans-serif;
+      margin-bottom: 4px;
+    }
+    .history-date {
+      font-size: 10px;
+      color: rgba(26,26,62,0.35);
+      font-family: 'Roboto', sans-serif;
+    }
+    .history-empty {
+      text-align: center;
+      color: var(--text-dim);
+      font-family: 'Roboto', sans-serif;
+      font-size: 15px;
+      margin-top: 60px;
+    }
+
+    /* Quiz */
+    .quiz-question {
+      background: var(--cream);
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 12px;
+    }
+    .quiz-q-text {
+      font-size: 16px;
+      font-weight: 400;
+      color: var(--text-navy);
+      font-family: 'Roboto', sans-serif;
+      margin-bottom: 12px;
+      line-height: 1.4;
+    }
+    .quiz-option {
+      display: block;
+      width: 100%;
+      padding: 10px 14px;
+      margin-bottom: 8px;
+      border-radius: 8px;
+      border: 1px solid rgba(26,26,62,0.2);
+      background: white;
+      color: var(--text-navy);
+      font-family: 'Roboto', sans-serif;
+      font-size: 14px;
+      cursor: pointer;
+      text-align: left;
+      transition: all 0.15s;
+    }
+    .quiz-option.correct { background: #d4edda; border-color: #28a745; color: #155724; }
+    .quiz-option.wrong { background: #f8d7da; border-color: #dc3545; color: #721c24; }
+    .quiz-option:disabled { cursor: default; }
+    .quiz-score {
+      text-align: center;
+      padding: 30px 20px;
+      color: white;
+      font-family: 'Roboto', sans-serif;
+    }
+    .quiz-score-num {
+      font-size: 64px;
+      font-weight: 100;
+      color: var(--gold);
+      display: block;
+    }
+    .quiz-score-label {
+      font-size: 18px;
+      font-weight: 300;
+      margin-bottom: 24px;
+      display: block;
+    }
+    .quiz-restart-btn {
+      background: linear-gradient(180deg, #e8c840 0%, var(--gold-light) 30%, var(--gold) 65%, #8a6808 100%);
+      color: var(--text-navy);
+      border: none;
+      border-radius: 50px;
+      padding: 14px 40px;
+      font-size: 16px;
+      font-weight: 700;
+      font-family: 'Roboto', sans-serif;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    }
+    .quiz-not-enough {
+      text-align: center;
+      color: var(--text-dim);
+      font-family: 'Roboto', sans-serif;
+      font-size: 15px;
+      margin-top: 60px;
+      line-height: 1.6;
+      padding: 0 20px;
+    }
   </style>
 </head>
 <body>
@@ -567,22 +738,42 @@
 
   <!-- BOTTOM NAV -->
   <div class="bottom-nav">
-    <a class="nav-item active" href="https://oxbridge-english.com/translator-app.html" target="_self">
+    <div class="nav-item active" id="nav-translate" onclick="showScreen('translator')">
       <span class="nav-icon">🔤</span>
       <span data-es="Traductor" data-en="Translate">Traductor</span>
-    </a>
-    <a class="nav-item" href="https://oxbridge-english.com/translation-history.html" target="_self">
+    </div>
+    <div class="nav-item" id="nav-history" onclick="showScreen('history')">
       <span class="nav-icon">🕐</span>
       <span data-es="Historial" data-en="History">Historial</span><span class="history-badge" id="history-count"></span>
-    </a>
-    <a class="nav-item" href="https://oxbridge-english.com/translation-quiz.html" target="_self">
+    </div>
+    <div class="nav-item" id="nav-quiz" onclick="showScreen('quiz')">
       <span class="nav-icon">🧠</span>
       <span data-es="Quiz" data-en="Quiz">Quiz</span>
-    </a>
-    <a class="nav-item" href="https://oxbridge-english.com/index.html" target="_self">
+    </div>
+    <div class="nav-item" id="nav-courses" onclick="window.open('https://oxbridge-english.com/courses.html','_blank')">
       <span class="nav-icon">🎓</span>
       <span data-es="Cursos" data-en="Courses">Cursos</span>
-    </a>
+    </div>
+  </div>
+
+  <!-- HISTORY SCREEN -->
+  <div class="screen" id="screen-history" style="display:none;">
+    <div class="screen-header">
+      <button class="back-btn" onclick="showScreen('translator')">← <span data-en="Back" data-es="Volver">Volver</span></button>
+      <span class="screen-title" data-en="History" data-es="Historial">Historial</span>
+      <button class="clear-history-btn" onclick="clearHistory()">🗑</button>
+    </div>
+    <div class="screen-body" id="history-list"></div>
+  </div>
+
+  <!-- QUIZ SCREEN -->
+  <div class="screen" id="screen-quiz" style="display:none;">
+    <div class="screen-header">
+      <button class="back-btn" onclick="showScreen('translator')">← <span data-en="Back" data-es="Volver">Volver</span></button>
+      <span class="screen-title" data-en="Quiz" data-es="Quiz">Quiz</span>
+      <span></span>
+    </div>
+    <div class="screen-body" id="quiz-body"></div>
   </div>
 
 </div>
@@ -968,6 +1159,154 @@ function showToast(msg) {
   t.textContent = msg;
   t.classList.add('show');
   setTimeout(() => t.classList.remove('show'), 2200);
+}
+
+
+// ── SCREEN NAVIGATION ──
+function showScreen(name) {
+  // Hide all screens
+  document.getElementById('screen-history').style.display = 'none';
+  document.getElementById('screen-quiz').style.display = 'none';
+
+  // Update nav active state
+  document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+
+  if (name === 'translator') {
+    document.getElementById('nav-translate').classList.add('active');
+  } else if (name === 'history') {
+    document.getElementById('screen-history').style.display = 'flex';
+    document.getElementById('screen-history').style.flexDirection = 'column';
+    document.getElementById('nav-history').classList.add('active');
+    renderHistory();
+  } else if (name === 'quiz') {
+    document.getElementById('screen-quiz').style.display = 'flex';
+    document.getElementById('screen-quiz').style.flexDirection = 'column';
+    document.getElementById('nav-quiz').classList.add('active');
+    renderQuiz();
+  }
+  // Re-apply UI language to new screen elements
+  applyUILanguage();
+}
+
+// ── HISTORY SCREEN ──
+function renderHistory() {
+  const list = document.getElementById('history-list');
+  const history = JSON.parse(localStorage.getItem('translationHistory') || '[]').reverse();
+
+  if (history.length === 0) {
+    list.innerHTML = '<div class="history-empty">' +
+      (uiLang === 'es' ? 'No hay traducciones guardadas aún.' : 'No saved translations yet.') +
+      '</div>';
+    return;
+  }
+
+  list.innerHTML = history.map((entry, i) => {
+    const flag1 = entry.direction === 'es-en' ? '🇨🇴' : '🇬🇧';
+    const flag2 = entry.direction === 'es-en' ? '🇬🇧' : '🇨🇴';
+    return '<div class="history-entry">' +
+      '<div class="history-direction">' + flag1 + ' → ' + flag2 + '</div>' +
+      '<div class="history-original">' + escHtml(entry.original) + '</div>' +
+      '<div class="history-translation">' + escHtml(entry.translation) + '</div>' +
+      '<div class="history-date">' + (entry.date || '') + '</div>' +
+      '</div>';
+  }).join('');
+}
+
+function clearHistory() {
+  if (confirm(uiLang === 'es' ? '¿Borrar todo el historial?' : 'Clear all history?')) {
+    localStorage.removeItem('translationHistory');
+    updateHistoryBadge();
+    renderHistory();
+  }
+}
+
+function escHtml(str) {
+  return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+// ── QUIZ SCREEN ──
+let quizQuestions = [];
+let quizAnswers = [];
+let quizScore = 0;
+
+function renderQuiz() {
+  const body = document.getElementById('quiz-body');
+  const history = JSON.parse(localStorage.getItem('translationHistory') || '[]');
+
+  if (history.length < 10) {
+    const needed = 10 - history.length;
+    body.innerHTML = '<div class="quiz-not-enough">' +
+      (uiLang === 'es'
+        ? 'Necesitas al menos 10 traducciones guardadas para el quiz.<br>Te faltan <strong>' + needed + '</strong> más.'
+        : 'You need at least 10 saved translations for the quiz.<br><strong>' + needed + '</strong> more to go.') +
+      '</div>';
+    return;
+  }
+
+  // Build 10 random questions
+  const shuffled = [...history].sort(() => Math.random() - 0.5).slice(0, 10);
+  quizQuestions = shuffled;
+  quizAnswers = new Array(10).fill(null);
+  quizScore = 0;
+
+  body.innerHTML = shuffled.map((entry, i) => {
+    // Pick 3 wrong answers from rest of history
+    const others = history.filter(h => h.translation !== entry.translation);
+    const wrongs = others.sort(() => Math.random() - 0.5).slice(0, 3).map(h => h.translation);
+    const options = [entry.translation, ...wrongs].sort(() => Math.random() - 0.5);
+
+    const prompt = entry.direction === 'es-en'
+      ? (uiLang === 'es' ? 'Traduce al inglés:' : 'Translate to English:')
+      : (uiLang === 'es' ? 'Traduce al español:' : 'Translate to Spanish:');
+
+    return '<div class="quiz-question" id="q-' + i + '">' +
+      '<div class="quiz-q-text"><strong>' + (i+1) + '.</strong> ' + prompt + '<br>' + escHtml(entry.original) + '</div>' +
+      options.map(opt =>
+        '<button class="quiz-option" onclick="answerQuiz(' + i + ', this, '' + escHtml(opt) + '', '' + escHtml(entry.translation) + '')">' +
+        escHtml(opt) + '</button>'
+      ).join('') +
+      '</div>';
+  }).join('') +
+  '<div id="quiz-result" style="display:none;" class="quiz-score">' +
+    '<span class="quiz-score-num" id="quiz-score-num">0/10</span>' +
+    '<span class="quiz-score-label" id="quiz-score-label"></span>' +
+    '<button class="quiz-restart-btn" onclick="renderQuiz()">' +
+      (uiLang === 'es' ? '🔄 Intentar de nuevo' : '🔄 Try again') +
+    '</button>' +
+  '</div>';
+}
+
+function answerQuiz(qIndex, btn, selected, correct) {
+  // Disable all options for this question
+  const qDiv = document.getElementById('q-' + qIndex);
+  qDiv.querySelectorAll('.quiz-option').forEach(b => {
+    b.disabled = true;
+    if (b.textContent.trim() === correct) b.classList.add('correct');
+  });
+
+  if (selected === correct) {
+    btn.classList.add('correct');
+    quizScore++;
+  } else {
+    btn.classList.add('wrong');
+  }
+
+  quizAnswers[qIndex] = selected;
+
+  // Check if all answered
+  if (quizAnswers.every(a => a !== null)) {
+    setTimeout(() => {
+      const result = document.getElementById('quiz-result');
+      document.getElementById('quiz-score-num').textContent = quizScore + '/10';
+      const pct = quizScore * 10;
+      document.getElementById('quiz-score-label').textContent =
+        pct >= 80 ? (uiLang === 'es' ? '¡Excelente!' : 'Excellent!') :
+        pct >= 50 ? (uiLang === 'es' ? '¡Buen trabajo!' : 'Good work!') :
+        (uiLang === 'es' ? 'Sigue practicando.' : 'Keep practising.');
+      result.style.display = 'block';
+      result.scrollIntoView({ behavior: 'smooth' });
+    }, 500);
+  }
 }
 
 // ── INIT ──
