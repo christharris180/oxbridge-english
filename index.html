@@ -22,6 +22,23 @@
     
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Homepage only — remove vertical gaps above/below hero box */
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        .hero {
+            flex: 1;
+            padding-top: 0;
+            padding-bottom: 0;
+            min-height: unset;
+        }
+        .main-footer {
+            margin-top: 0;
+        }
+    </style>
 </head>
 <body>
     <!-- Background Video -->
