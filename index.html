@@ -38,6 +38,51 @@
         .main-footer {
             margin-top: 0;
         }
+
+        /* Push content to top of hero box */
+        .hero-content-home {
+            align-items: flex-start !important;
+            padding-top: 40px !important;
+        }
+        .hero-text-wrapper {
+            justify-content: flex-start !important;
+            padding-bottom: 0 !important;
+        }
+
+        /* Smaller buttons — 30% reduction */
+        .home-cta-small {
+            padding: 11px 28px !important;
+            font-size: 11px !important;
+            margin-bottom: 0 !important;
+        }
+
+        /* Translator promo — desktop only */
+        .hero-translator-promo {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 32px;
+            padding-top: 24px;
+            border-top: 1px solid rgba(255,255,255,0.2);
+            gap: 16px;
+        }
+        .hero-promo-text {
+            color: rgba(247,244,229,0.88);
+            font-size: 14px;
+            font-weight: 300;
+            line-height: 1.7;
+            text-align: center;
+            margin: 0;
+        }
+
+        /* Hide promo on mobile, restore button size */
+        @media (max-width: 768px) {
+            .hero-translator-promo { display: none; }
+            .home-cta-small {
+                padding: 16px 40px !important;
+                font-size: 16px !important;
+            }
+        }
     </style>
 </head>
 <body>
@@ -91,12 +136,22 @@
         <div class="hero-content hero-content-home">
             <div class="hero-text-wrapper">
                 <h2 class="hero-title" data-en="Oxbridge English" data-es="Oxbridge English">Oxbridge English</h2>
-                <p class="hero-description" 
-                   data-en="Oxbridge English now offers an interactive, communicative process to learn English alone or in groups and at your own pace with the virtual video guide. All audio material is included on this site for free download."
-                   data-es="Oxbridge English ahora ofrece un proceso interactivo y comunicativo para aprender inglés solo o en grupos y a su propio ritmo con la guía de video virtual. Todo el material de audio está incluido en este sitio para descarga gratuita.">
-                    Oxbridge English now offers an interactive, communicative process to learn English alone or in groups and at your own pace with the virtual video guide. All audio material is included on this site for free download.
+                <p class="hero-description"
+                   data-en="Learn English in a practical, interactive way — at your own pace, on your terms. With Oxbridge English, you're guided step by step through real communication using our virtual video teacher. All audio materials are included and available for free download."
+                   data-es="Aprende inglés de forma práctica e interactiva — a tu propio ritmo, en tus propios términos. Con Oxbridge English, te guiamos paso a paso a través de la comunicación real usando nuestro profesor de video virtual. Todo el material de audio está incluido y disponible para descarga gratuita.">
+                    Learn English in a practical, interactive way — at your own pace, on your terms. With Oxbridge English, you're guided step by step through real communication using our virtual video teacher. All audio materials are included and available for free download.
                 </p>
-                <a href="courses.html" class="cta-button" data-en="Explore Courses" data-es="Explorar Cursos">Explore Courses</a>
+                <a href="courses.html" class="cta-button home-cta-small" data-en="Explore Courses" data-es="Explorar Cursos">Explore Courses</a>
+
+                <!-- Desktop only: translator promo section -->
+                <div class="hero-translator-promo">
+                    <p class="hero-promo-text"
+                       data-en="Discover our new translation learning tool — and stop translating without learning. Your translations are saved and turned into personalized tests, helping you actually learn."
+                       data-es="Descubre nuestra nueva herramienta de aprendizaje por traducción — y deja de traducir sin aprender. Tus traducciones se guardan y se convierten en exámenes personalizados para que realmente aprendas.">
+                        Discover our new translation learning tool — and stop translating without learning.<br>Your translations are saved and turned into personalized tests, helping you actually learn.
+                    </p>
+                    <a href="translator.html" class="cta-button home-cta-small" data-en="Translator" data-es="Traductor">Translator</a>
+                </div>
             </div>
         </div>
         <div class="hero-decoration"></div>
