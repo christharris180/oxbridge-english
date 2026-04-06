@@ -6,6 +6,53 @@
     <title>Contact - Oxbridge English</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Additional inline styles to ensure mobile menu works */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 20px;
+                right: auto;
+                width: auto;
+                min-width: 180px;
+                background: #1a1a3e;
+                flex-direction: column;
+                padding: 15px;
+                box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+                gap: 0;
+                border-radius: 0;
+                z-index: 1000;
+            }
+            .nav-links.active {
+                display: flex !important;
+            }
+            .nav-links li {
+                width: 100%;
+                text-align: left;
+                border-bottom: 1px solid rgba(255,255,255,0.1);
+            }
+            .nav-links li:last-child {
+                border-bottom: none;
+            }
+            .nav-links a {
+                display: block;
+                padding: 12px 10px;
+                width: 100%;
+                text-align: left;
+                font-size: 14px;
+            }
+            .mobile-menu-toggle {
+                display: block;
+                background: none;
+                border: none;
+                font-size: 28px;
+                color: white;
+                cursor: pointer;
+            }
+        }
+    </style>
 </head>
 <body>
     <!-- Background Video -->
@@ -15,14 +62,14 @@
 
     <nav class="main-nav">
         <div class="nav-container">
-            <button class="mobile-menu-toggle">☰</button>
+            <button class="mobile-menu-toggle" id="mobileMenuToggle">☰</button>
             
             <div class="logo">
                 <img src="ox-head-008.jpg" alt="Oxbridge English Logo">
                 <h1 data-en="Oxbridge English" data-es="Oxbridge English">Oxbridge English</h1>
             </div>
             
-            <ul class="nav-links">
+            <ul class="nav-links" id="navLinks">
                 <li><a href="index.html" data-en="Home" data-es="Inicio">Home</a></li>
                 <li><a href="courses.html" data-en="Courses" data-es="Cursos">Courses</a></li>
                 <li><a href="enroll.html" data-en="Enroll" data-es="Inscribirse">Enroll</a></li>
@@ -34,7 +81,7 @@
                 <li><a href="contact.html" class="active" data-en="Contact" data-es="Contacto">Contact</a></li>
             </ul>
             
-            <!-- Language Toggle - At end of nav -->
+            <!-- Language Toggle -->
             <div class="lang-toggle">
                 <button class="lang-option active" data-lang="en">
                     <span class="flag">EN</span>
@@ -43,17 +90,8 @@
                     <span class="flag">ES</span>
                 </button>
             </div>
-            </div>
         </div>
     </nav>
-
-    <!-- Language Toggle -->
-
-    </div>
-        <source src="girl_working_001.mp4" type="video/mp4">
-    </video>
-
-
 
     <div class="contact-container">
         <div class="section-header">
@@ -80,7 +118,7 @@
 
             <div class="contact-details">
                 <p><strong data-en="Phone:" data-es="Teléfono:">Phone:</strong> <a href="tel:+573133813833">0057 313 381 3833</a></p>
-                <p><strong data-en="Email:" data-es="Correo:">Email:</strong> <a href="/cdn-cgi/l/email-protection#650a1d07170c010200000b02090c160d060a1017160016250208040c094b060a08"><span class="__cf_email__" data-cfemail="5f30273d2d363b383a3a313833362c373c302a2d2c3a2c1f38323e3633713c3032">[email&#160;protected]</span></a></p>
+                <p><strong data-en="Email:" data-es="Correo:">Email:</strong> <a href="mailto:oxbridgeenglishcourses@gmail.com">oxbridgeenglishcourses@gmail.com</a></p>
                 <p><strong>LinkedIn:</strong> <a href="https://www.linkedin.com/company/oxbridge-english/" target="_blank">linkedin.com/company/oxbridge-english/</a></p>
             </div>
         </div>
@@ -101,4 +139,71 @@
             </div>
             <p class="footer-text" style="display: flex; align-items: center; justify-content: center; gap: 10px; flex-wrap: wrap;">
                 <span data-en="© 2026 by Oxbridge English" data-es="© 2026 por Oxbridge English">© 2026 by Oxbridge English</span>
-                <img src="logo_jpg_003.jpg" alt="Great Fair                <img src="logo_jpg_003.jpg" alt="Great Fair
+                <span style="color: #666;">|</span>
+                <a href="privacy.html" style="color: #F7F4E5; text-decoration: none; transition: color 0.3s;" onmouseover="this.style.color='#e8c412'" onmouseout="this.style.color='#F7F4E5'">
+                    <span data-en="Privacy" data-es="Privacidad">Privacidad</span>
+                </a>
+                <img src="logo_jpg_003.jpg" alt="Great Fairy" style="height: 30px; width: auto; object-fit: contain;">
+            </p>
+        </div>
+    </footer>
+
+    <!-- Language switcher and mobile menu script -->
+    <script>
+        (function() {
+            // Mobile menu toggle
+            var toggle = document.getElementById('mobileMenuToggle');
+            var navLinks = document.getElementById('navLinks');
+            
+            if (toggle && navLinks) {
+                toggle.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    navLinks.classList.toggle('active');
+                    console.log('Menu toggled'); // For debugging
+                });
+                
+                // Close menu when clicking outside
+                document.addEventListener('click', function(e) {
+                    if (!navLinks.contains(e.target) && e.target !== toggle) {
+                        navLinks.classList.remove('active');
+                    }
+                });
+            }
+            
+            // Language switcher
+            var langOptions = document.querySelectorAll('.lang-option');
+            var elementsToTranslate = document.querySelectorAll('[data-en][data-es]');
+            
+            var currentLang = localStorage.getItem('preferredLanguage') || 'en';
+            
+            function setLanguage(lang) {
+                elementsToTranslate.forEach(function(el) {
+                    var translation = el.getAttribute('data-' + lang);
+                    if (translation) {
+                        el.innerHTML = translation;
+                    }
+                });
+                langOptions.forEach(function(opt) {
+                    if (opt.getAttribute('data-lang') === lang) {
+                        opt.classList.add('active');
+                    } else {
+                        opt.classList.remove('active');
+                    }
+                });
+                document.documentElement.lang = lang;
+            }
+            
+            langOptions.forEach(function(option) {
+                option.addEventListener('click', function() {
+                    var lang = this.getAttribute('data-lang');
+                    setLanguage(lang);
+                    localStorage.setItem('preferredLanguage', lang);
+                });
+            });
+            
+            setLanguage(currentLang);
+        })();
+    </script>
+</body>
+</html>
