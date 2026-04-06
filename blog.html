@@ -45,14 +45,34 @@
             </p>
         </div>
 
-        <div class="recommendations-box" style="background: url('blue_background_001.jpg'); background-size: cover; background-position: center; padding: 60px 40px; border-radius: 20px; box-shadow: 0 8px 24px rgba(0,0,0,0.15); max-width: 1200px; margin: 0 auto;">
-            
-            <!-- Blog Post 1 -->
-            <a href="blog-post-001.html" style="text-decoration: none; display: block; margin-bottom: 30px;">
+        <div class="recommendations-box" style="background: url('blue_background_001.jpg'); background-size: cover; background-position: center; padding: 40px; border-radius: 20px; box-shadow: 0 8px 24px rgba(0,0,0,0.15); max-width: 900px; margin: 0 auto;">
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px;">
+
+            <!-- Blog Post 2 -->
+            <a href="blog-post-002.html" style="text-decoration: none; display: block;">
                 <div class="recommendation-item" style="background: rgba(247, 244, 229, 0.95); padding: 0; border-radius: 15px; overflow: hidden; transition: transform 0.3s ease, box-shadow 0.3s ease;" onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 12px 24px rgba(0,0,0,0.2)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'">
-                    <img src="blog-image-001.jpg" alt="Aprender inglés después de los 30" style="width: 100%; height: 250px; object-fit: cover;">
-                    <div style="padding: 30px;">
-                        <h3 style="color: #1a1a3e; margin: 0 0 15px 0; font-size: 26px; font-weight: 600;">¿De verdad se puede aprender inglés después de los 30?</h3>
+                    <img src="blog-image-002.jpg" alt="Aprender inglés desde cero sin pagar cursos caros" style="width: 100%; height: 180px; object-fit: cover;">
+                    <div style="padding: 18px;">
+                        <h3 style="color: #1a1a3e; margin: 0 0 10px 0; font-size: 18px; font-weight: 600;">Cómo aprender inglés desde cero sin pagar cursos caros</h3>
+                        <p style="color: #666; line-height: 1.6; margin: 0 0 14px 0; font-size: 13px;">
+                            Aprender inglés desde cero puede parecer caro o intimidante. Pero la realidad es otra: sí es posible aprender inglés sin pagar cursos caros, siempre que uses las estrategias correctas...
+                        </p>
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <span class="trans-btn trans-btn-primary" style="display: inline-block; padding: 8px 18px; font-size: 13px; text-decoration: none;">
+                                <span data-en="Read More" data-es="Leer Más">Leer Más</span>
+                            </span>
+                            <span style="color: #999; font-size: 14px;">Abril 2026</span>
+                        </div>
+                    </div>
+                </div>
+            </a>
+
+            <!-- Blog Post 1 -->
+            <a href="blog-post-001.html" style="text-decoration: none; display: block;">
+                <div class="recommendation-item" style="background: rgba(247, 244, 229, 0.95); padding: 0; border-radius: 15px; overflow: hidden; transition: transform 0.3s ease, box-shadow 0.3s ease;" onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 12px 24px rgba(0,0,0,0.2)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'">
+                    <img src="blog-image-001.jpg" alt="Aprender inglés después de los 30" style="width: 100%; height: 180px; object-fit: cover;">
+                    <div style="padding: 18px;">
+                        <h3 style="color: #1a1a3e; margin: 0 0 10px 0; font-size: 18px; font-weight: 600;">¿De verdad se puede aprender inglés después de los 30?</h3>
                         <p style="color: #666; line-height: 1.7; margin: 0 0 20px 0; font-size: 16px;">
                             Si tienes más de 30 años y alguna vez has pensado "ya es muy tarde para aprender inglés", no estás solo. Es una idea muy común en Latinoamérica. Muchos adultos sienten que el inglés es algo que "se aprende de joven"...
                         </p>
@@ -66,8 +86,15 @@
                 </div>
             </a>
 
-        </div>
-    </div>
+            </div><!-- end grid -->
+        </div><!-- end recommendations-box -->
+    </div><!-- end contact-container -->
+
+    <style>
+        @media (max-width: 600px) {
+            .blog-grid { grid-template-columns: 1fr !important; }
+        }
+    </style>
 
     <footer class="main-footer">
         <div class="footer-content">
