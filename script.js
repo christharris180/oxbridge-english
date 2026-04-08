@@ -4,7 +4,6 @@
 
 document.addEventListener('DOMContentLoaded', function() {
     const langOptions = document.querySelectorAll('.lang-toggle .lang-option');
-    const elementsToTranslate = document.querySelectorAll('[data-en][data-es]');
     
     // Get saved language or default to English
     let currentLang = localStorage.getItem('preferredLanguage') || 'en';
@@ -33,8 +32,9 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
         
-        // Update all translatable elements
-        elementsToTranslate.forEach(element => {
+        // Update all translatable elements - QUERY FRESH EVERY TIME
+        // This ensures dynamically generated text (like quiz results) is translated!
+        document.querySelectorAll('[data-en][data-es]').forEach(element => {
             const translation = element.getAttribute(`data-${lang}`);
             if (translation) {
                 element.textContent = translation;
