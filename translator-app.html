@@ -308,32 +308,6 @@
       flex-shrink: 0;
     }
 
-    .translate-btn {
-      width: 100%;
-      padding: 15px;
-      border-radius: 50px;
-      border: none;
-      background: linear-gradient(180deg, #e8c840 0%, var(--gold-light) 30%, var(--gold) 65%, #8a6808 100%);
-      color: var(--text-navy);
-      font-family: 'Roboto', sans-serif;
-      font-size: 17px;
-      font-weight: 700;
-      letter-spacing: 0.8px;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      box-shadow: 0 5px 12px rgba(0,0,0,0.4), 0 2px 0 rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.4);
-      transition: all 0.15s;
-      text-transform: uppercase;
-    }
-    .translate-btn:active {
-      transform: translateY(3px);
-      box-shadow: 0 2px 6px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.2);
-    }
-    .translate-btn:disabled { opacity: 0.5; cursor: not-allowed; }
-
     /* ── PROMO BUTTON ── */
     .promo-btn {
       display: block;
@@ -388,7 +362,7 @@
       transition: color 0.2s;
       text-decoration: none;
     }
-    .nav-item .nav-icon { font-size: 30px; }
+    .nav-item .nav-icon { font-size: 26px; }
     .nav-item.active { color: var(--gold); }
     .nav-item:active { opacity: 0.7; }
 
@@ -498,7 +472,7 @@
       text-shadow: 0 2px 4px rgba(0,0,0,0.8);
     }
 
-    /* ── SCREENS (history & quiz) ── */
+    /* ── SCREENS ── */
     .screen {
       position: fixed;
       top: 0; left: 0; right: 0; bottom: 0;
@@ -737,6 +711,10 @@
       <span class="nav-icon">🔤</span>
       <span data-es="Traductor" data-en="Translate">Traductor</span>
     </div>
+    <div class="nav-item" id="nav-dictionary" onclick="showScreen('dictionary')">
+      <span class="nav-icon">📖</span>
+      <span data-es="Diccionario" data-en="Dictionary">Diccionario</span>
+    </div>
     <div class="nav-item" id="nav-history" onclick="showScreen('history')">
       <span class="nav-icon">🕐</span>
       <span data-es="Historial" data-en="History">Historial</span><span class="history-badge" id="history-count"></span>
@@ -748,6 +726,27 @@
     <div class="nav-item" id="nav-courses" onclick="window.open('https://oxbridge-english.com/courses.html','_blank')">
       <span class="nav-icon">🎓</span>
       <span data-es="Cursos" data-en="Courses">Cursos</span>
+    </div>
+  </div>
+
+  <div class="screen" id="screen-dictionary" style="display:none;">
+    <div class="screen-header">
+      <button class="back-btn" onclick="showScreen('translator')">← <span data-en="Back" data-es="Volver">Volver</span></button>
+      <span class="screen-title" data-en="Dictionary" data-es="Diccionario">Diccionario</span>
+      <span></span>
+    </div>
+    <div class="screen-body">
+      <div style="display: flex; gap: 8px; margin-bottom: 20px;">
+        <select id="dict-lang" style="padding: 12px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.2); background: var(--navy-light); color: white; outline: none; font-size: 16px;">
+          <option value="en">EN</option>
+          <option value="es">ES</option>
+        </select>
+        <input type="text" id="dict-input" placeholder="Search a word..." style="flex: 1; padding: 12px; border-radius: 10px; border: none; outline: none; background: var(--cream); color: var(--text-navy); font-size: 16px;">
+        <button onclick="searchDictionary()" style="padding: 0 16px; border-radius: 10px; border: none; background: var(--gold); color: var(--text-navy); font-size: 18px; cursor: pointer;">🔍</button>
+      </div>
+      <div id="dict-results">
+          <div class="history-empty" data-en="Search for a word to see its definition, examples, and synonyms." data-es="Busca una palabra para ver su definición, ejemplos y sinónimos.">Busca una palabra para ver su definición, ejemplos y sinónimos.</div>
+      </div>
     </div>
   </div>
 
@@ -829,8 +828,6 @@ function applyUILanguage() {
   updateDirectionLabels();
 }
 
-
-
 // ── DIRECTION ──
 function setDirection(dir) {
   direction = dir;
@@ -843,7 +840,6 @@ function swapDirection() {
   btn.classList.add('spinning');
   setTimeout(() => btn.classList.remove('spinning'), 350);
 
-  // Swap text between boxes
   const input = document.getElementById('source-input');
   const output = document.getElementById('output-text');
   const outText = output.querySelector('.output-placeholder') ? '' : output.textContent.trim();
@@ -889,6 +885,10 @@ function updateDirectionLabels() {
   document.getElementById('label-target').textContent = labels[direction].tgt;
   document.getElementById('source-input').placeholder =
     direction === 'es-en' ? 'Hola, ¿cómo estás?' : 'Hello, how are you?';
+  
+  // Set dictionary default to current target language
+  document.getElementById('dict-lang').value = direction === 'es-en' ? 'en' : 'es';
+  document.getElementById('dict-input').placeholder = uiLang === 'es' ? 'Busca una palabra...' : 'Search a word...';
 }
 
 // ── INPUT HANDLING ──
@@ -898,7 +898,6 @@ function onInput() {
   updateCharCount();
   clearOutput();
   clearSaveTimer();
-  // Auto-translate after 800ms pause in typing (like the website)
   clearTimeout(autoTranslateTimer);
   const text = document.getElementById('source-input').value.trim();
   if (text.length > 1) {
@@ -932,12 +931,9 @@ async function translate() {
   const text = document.getElementById('source-input').value.trim();
   if (!text) { showToast(uiLang === 'es' ? 'Escribe algo primero' : 'Type something first'); return; }
 
-  // no translate button anymore - auto only
-
   const out = document.getElementById('output-text');
   out.innerHTML = '<div class="loading-dots"><span></span><span></span><span></span></div>';
 
-  // MyMemory free API — no key needed, works in any browser
   const langPair = direction === 'es-en' ? 'es|en' : 'en|es';
   const url = 'https://api.mymemory.translated.net/get?q=' + encodeURIComponent(text) + '&langpair=' + langPair;
 
@@ -952,15 +948,11 @@ async function translate() {
     currentTranslation = translation;
     currentTranslationLang = direction === 'es-en' ? 'en-GB' : 'es-ES';
 
-    // Auto-save after 10 seconds
     startSaveTimer(text, translation);
-
   } catch (err) {
     out.innerHTML = '<span style="color:rgba(180,40,40,0.9);font-size:15px;">' +
       (uiLang === 'es' ? '⚠️ Error. Verifica tu conexión.' : '⚠️ Error. Check your connection.') + '</span>';
   }
-
-
 }
 
 // ── AUTO-SAVE ──
@@ -990,8 +982,6 @@ function saveTranslation(original, translation) {
   if (!isValidForSave(original)) return;
 
   const history = JSON.parse(localStorage.getItem('translationHistory') || '[]');
-
-  // No duplicates in last 20
   const recent = history.slice(-20).map(e => e.original.toLowerCase().trim());
   if (recent.includes(original.toLowerCase().trim())) {
     document.getElementById('save-status').textContent = '';
@@ -1037,12 +1027,10 @@ function toggleMic() {
     showToast(uiLang === 'es' ? 'Micrófono no disponible' : 'Microphone not available');
     return;
   }
-
   if (isRecording) {
     recognition.stop();
     return;
   }
-
   const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
   recognition = new SpeechRecognition();
   recognition.lang = direction === 'es-en' ? 'es-ES' : 'en-GB';
@@ -1054,55 +1042,40 @@ function toggleMic() {
     document.getElementById('mic-btn').classList.add('recording');
     document.getElementById('mic-btn').textContent = '⏹';
   };
-
   recognition.onresult = e => {
     const transcript = e.results[0][0].transcript;
     document.getElementById('source-input').value = transcript;
     updateCharCount();
     clearOutput();
-    // Auto-translate immediately after mic input
     if (transcript.trim().length > 1) translate();
   };
-
   recognition.onend = () => {
     isRecording = false;
     document.getElementById('mic-btn').classList.remove('recording');
     document.getElementById('mic-btn').textContent = '🎤';
   };
-
   recognition.onerror = () => {
     isRecording = false;
     document.getElementById('mic-btn').classList.remove('recording');
     document.getElementById('mic-btn').textContent = '🎤';
     showToast(uiLang === 'es' ? 'Error de micrófono' : 'Mic error');
   };
-
   recognition.start();
 }
 
-// ── SPEAK (MyMemory TTS - same server as translation, no CORS issues) ──
+// ── SPEAK ──
 let currentAudio = null;
-
 function speakOutput() {
   if (!currentTranslation) { showToast('No hay texto para escuchar'); return; }
-
   const speakBtn = document.getElementById('speak-btn');
-
-  // Stop if already playing
   if (currentAudio && !currentAudio.paused) {
     currentAudio.pause();
     currentAudio.currentTime = 0;
     speakBtn.classList.remove('active');
     return;
   }
-
   const langCode = (currentTranslationLang || (direction === 'es-en' ? 'en' : 'es')).substring(0, 2);
   const text = currentTranslation.substring(0, 200);
-
-  // MyMemory TTS endpoint - same domain as translation API, no CORS issues
-  const url = 'https://api.mymemory.translated.net/get?q=' + encodeURIComponent(text) + '&langpair=' + langCode + '|' + langCode + '&of=t';
-
-  // Use a direct audio URL from a reliable free TTS service
   const ttsUrl = 'https://translate.googleapis.com/translate_tts?ie=UTF-8&tl=' + langCode + '&client=gtx&q=' + encodeURIComponent(text);
 
   speakBtn.classList.add('active');
@@ -1115,7 +1088,6 @@ function speakOutput() {
     currentAudio = null;
   };
   currentAudio.onerror = () => {
-    // Final fallback - Web Speech API
     speakBtn.classList.remove('active');
     currentAudio = null;
     try {
@@ -1131,11 +1103,9 @@ function speakOutput() {
       showToast('Audio no disponible');
     }
   };
-
   currentAudio.src = ttsUrl;
   currentAudio.load();
 }
-
 
 // ── COPY ──
 function copyOutput() {
@@ -1153,31 +1123,109 @@ function showToast(msg) {
   setTimeout(() => t.classList.remove('show'), 2200);
 }
 
-
 // ── SCREEN NAVIGATION ──
 function showScreen(name) {
-  // Hide all screens
   document.getElementById('screen-history').style.display = 'none';
   document.getElementById('screen-quiz').style.display = 'none';
-
-  // Update nav active state
+  document.getElementById('screen-dictionary').style.display = 'none';
   document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
 
   if (name === 'translator') {
     document.getElementById('nav-translate').classList.add('active');
   } else if (name === 'history') {
     document.getElementById('screen-history').style.display = 'flex';
-    document.getElementById('screen-history').style.flexDirection = 'column';
     document.getElementById('nav-history').classList.add('active');
     renderHistory();
   } else if (name === 'quiz') {
     document.getElementById('screen-quiz').style.display = 'flex';
-    document.getElementById('screen-quiz').style.flexDirection = 'column';
     document.getElementById('nav-quiz').classList.add('active');
     renderQuiz();
+  } else if (name === 'dictionary') {
+    document.getElementById('screen-dictionary').style.display = 'flex';
+    document.getElementById('nav-dictionary').classList.add('active');
+    document.getElementById('dict-input').focus();
   }
-  // Re-apply UI language to new screen elements
   applyUILanguage();
+}
+
+// ── DICTIONARY APP LOGIC ──
+async function searchDictionary() {
+  const inputEl = document.getElementById('dict-input');
+  const word = inputEl.value.trim();
+  const lang = document.getElementById('dict-lang').value;
+  const resContainer = document.getElementById('dict-results');
+
+  if (!word) {
+      showToast(uiLang === 'es' ? 'Escribe una palabra' : 'Type a word');
+      return;
+  }
+
+  resContainer.innerHTML = '<div class="loading-dots" style="display:block; text-align:center; padding: 40px;"><span></span><span></span><span></span></div>';
+
+  try {
+    const res = await fetch(`https://api.dictionaryapi.dev/api/v2/entries/${lang}/${encodeURIComponent(word)}`);
+    if (!res.ok) throw new Error('Not found');
+    const data = await res.json();
+    renderDictResults(data[0], lang);
+  } catch (err) {
+    resContainer.innerHTML = `<div class="history-empty" style="margin-top: 20px;">
+      ${uiLang === 'es' ? 'No encontramos la definición para esta palabra.' : 'We couldn\'t find definitions for this word.'}
+    </div>`;
+  }
+}
+
+// Allow pressing Enter to search
+document.getElementById('dict-input').addEventListener('keypress', function (e) {
+    if (e.key === 'Enter') {
+        searchDictionary();
+    }
+});
+
+function renderDictResults(data, langCode) {
+  let audioUrl = '';
+  if(data.phonetics) {
+      const p = data.phonetics.find(x => x.audio);
+      if(p) audioUrl = p.audio;
+  }
+
+  let html = `
+    <div style="background: var(--cream); border-radius: 12px; padding: 20px; margin-top: 5px;">
+      <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(26,26,62,0.1); padding-bottom: 15px; margin-bottom: 15px;">
+          <h2 style="color: var(--navy-light); font-size: 28px; margin: 0; font-family: 'Work Sans', sans-serif; text-transform: capitalize;">${escHtml(data.word)}</h2>
+          <button class="mini-btn" style="width: 45px; height: 45px; font-size: 20px;" onclick="playDictAudio('${audioUrl}', '${escHtml(data.word)}', '${langCode}')">🔊</button>
+      </div>
+  `;
+
+  data.meanings.forEach(meaning => {
+      html += `<h4 style="color: var(--gold); font-size: 16px; margin: 15px 0 10px; font-style: italic; text-transform: lowercase;">${escHtml(meaning.partOfSpeech)}</h4>`;
+
+      meaning.definitions.slice(0, 3).forEach((def, i) => {
+          html += `<p style="color: var(--text-navy); font-size: 15px; font-weight: 400; margin-bottom: 5px; line-height: 1.4;"><strong>${i+1}.</strong> ${escHtml(def.definition)}</p>`;
+          if (def.example) {
+              html += `<p style="color: rgba(26,26,62,0.7); font-size: 14px; font-style: italic; margin-bottom: 12px; border-left: 2px solid var(--gold); padding-left: 10px;">"${escHtml(def.example)}"</p>`;
+          }
+      });
+
+      if (meaning.synonyms && meaning.synonyms.length > 0) {
+          html += `<p style="font-size: 14px; margin-top: 10px; color: var(--navy-light);"><strong>${uiLang === 'es' ? 'Sinónimos:' : 'Synonyms:'}</strong> <span style="color: #666;">${escHtml(meaning.synonyms.slice(0, 5).join(', '))}</span></p>`;
+      }
+  });
+
+  html += `</div>`;
+  document.getElementById('dict-results').innerHTML = html;
+}
+
+function playDictAudio(url, word, langCode) {
+  if (url) {
+      const audio = new Audio(url);
+      audio.play();
+  } else {
+      try {
+          const utter = new SpeechSynthesisUtterance(word);
+          utter.lang = langCode === 'es' ? 'es-ES' : 'en-GB';
+          window.speechSynthesis.speak(utter);
+      } catch(e) {}
+  }
 }
 
 // ── HISTORY SCREEN ──
@@ -1235,14 +1283,12 @@ function renderQuiz() {
     return;
   }
 
-  // Build 10 random questions
   const shuffled = [...history].sort(() => Math.random() - 0.5).slice(0, 10);
   quizQuestions = shuffled;
   quizAnswers = new Array(10).fill(null);
   quizScore = 0;
 
   body.innerHTML = shuffled.map((entry, i) => {
-    // Pick 3 wrong answers from rest of history
     const others = history.filter(h => h.translation !== entry.translation);
     const wrongs = others.sort(() => Math.random() - 0.5).slice(0, 3).map(h => h.translation);
     const options = [entry.translation, ...wrongs].sort(() => Math.random() - 0.5);
@@ -1271,7 +1317,6 @@ function renderQuiz() {
 function answerQuiz(qIndex, btn) {
   const selected = btn.getAttribute('data-opt');
   const correct = btn.getAttribute('data-correct');
-  // Disable all options for this question
   const qDiv = document.getElementById('q-' + qIndex);
   qDiv.querySelectorAll('.quiz-option').forEach(b => {
     b.disabled = true;
@@ -1287,7 +1332,6 @@ function answerQuiz(qIndex, btn) {
 
   quizAnswers[qIndex] = selected;
 
-  // Check if all answered
   if (quizAnswers.every(a => a !== null)) {
     setTimeout(() => {
       const result = document.getElementById('quiz-result');

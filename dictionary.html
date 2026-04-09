@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dictionary - Oxbridge English</title>
+    
+    <link rel="icon" type="image/jpeg" href="ox-head-008.jpg">
+    <link rel="apple-touch-icon" href="ox-head-008.jpg">
+    <link rel="shortcut icon" type="image/jpeg" href="ox-head-008.jpg">
+
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <video autoplay muted loop playsinline class="background-video"><source src="girl_working_001.mp4" type="video/mp4"></video>
+    <nav class="main-nav">
+        <div class="nav-container">
+            <button class="mobile-menu-toggle">☰</button>
+            <div class="logo"><img src="ox-head-008.jpg" alt="Logo"><h1>Oxbridge English</h1></div>
+            <ul class="nav-links">
+                <li><a href="index.html" data-en="Home" data-es="Inicio">Home</a></li>
+                <li><a href="courses.html" data-en="Courses" data-es="Cursos">Courses</a></li>
+                <li><a href="enroll.html" data-en="Enroll" data-es="Inscribirse">Enroll</a></li>
+                <li><a href="books.html" data-en="Books" data-es="Libros">Books</a></li>
+                <li><a href="audio.html" data-en="Audio" data-es="Audio">Audio</a></li>
+                <li><a href="translator.html" data-en="Translator" data-es="Traductor">Translator</a></li>
+                <li><a href="placement-test.html" data-en="Level Test" data-es="Test de Nivel" style="color: #D4AF37; font-weight: bold;">Level Test</a></li>
+                <li><a href="recommendations.html" data-en="Recommendations" data-es="Recomendaciones">Recommendations</a></li>
+                <li><a href="blog.html" data-en="Blog" data-es="Blog">Blog</a></li>
+                <li><a href="contact.html" data-en="Contact" data-es="Contacto">Contact</a></li>
+            </ul>
+            <div class="lang-toggle">
+                <button class="lang-option active" data-lang="en"><span class="flag">EN</span></button>
+                <button class="lang-option" data-lang="es"><span class="flag">ES</span></button>
+            </div>
+        </div>
+    </nav>
+    <div class="translator-page-wrapper">
+        <div class="translator-embed">
+            
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                <a href="translator.html" style="color: #D4AF37; text-decoration: none; font-weight: bold; font-size: 16px;">
+                    <i class="fas fa-arrow-left"></i> <span data-en="Back" data-es="Volver">Back</span>
+                </a>
+                <h2 style="color: #D4AF37; margin: 0; font-family: 'Work Sans', sans-serif;" data-en="Dictionary" data-es="Diccionario">Dictionary</h2>
+                <div style="width: 60px;"></div>
+            </div>
+
+            <div style="display: flex; gap: 8px; margin-bottom: 20px;">
+                <select id="dict-lang" style="padding: 12px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.2); background: #1a1a3e; color: white; outline: none; font-size: 16px;">
+                    <option value="en">EN</option>
+                    <option value="es">ES</option>
+                </select>
+                <input type="text" id="dict-input" placeholder="Search a word..." style="flex: 1; padding: 12px; border-radius: 10px; border: none; outline: none; background: #cdc89e; color: #1a1a3e; font-size: 16px;">
+                <button onclick="searchDictionary()" style="padding: 0 16px; border-radius: 10px; border: none; background: #D4AF37; color: #1a1a3e; font-size: 18px; cursor: pointer;"><i class="fas fa-search"></i></button>
+            </div>
+
+            <div id="dict-results" style="min-height: 200px;">
+                <div style="text-align: center; color: rgba(255,255,255,0.42); font-size: 15px; margin-top: 60px;" data-en="Search for a word to see its definition, examples, and synonyms." data-es="Busca una palabra para ver su definición, ejemplos y sinónimos.">
+                    Search for a word to see its definition, examples, and synonyms.
+                </div>
+            </div>
+
+        </div>
+    </div>
+    
+    <script src="script.js?v=3"></script>
+    <script>
+        function escHtml(str) { return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+        
+        document.getElementById('dict-input').addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') searchDictionary();
+        });
+
+        async function searchDictionary() {
+            const word = document.getElementById('dict-input').value.trim();
+            const lang = document.getElementById('dict-lang').value;
+            const resContainer = document.getElementById('dict-results');
+            const isEs = document.querySelector('.lang-option.active').getAttribute('data-lang') === 'es';
+
+            if (!word) return;
+
+            resContainer.innerHTML = '<div style="text-align:center; padding: 40px; color: #D4AF37;">Cargando...</div>';
+
+            try {
+                const res = await fetch(`https://api.dictionaryapi.dev/api/v2/entries/${lang}/${encodeURIComponent(word)}`);
+                if (!res.ok) throw new Error('Not found');
+                const data = await res.json();
+                renderDictResults(data[0], lang, isEs);
+            } catch (err) {
+                resContainer.innerHTML = `<div style="text-align:center; margin-top: 20px; color: #ff6060;">
+                    ${isEs ? 'No encontramos la definición para esta palabra.' : 'We couldn\'t find definitions for this word.'}
+                </div>`;
+            }
+        }
+
+        function renderDictResults(data, langCode, isEs) {
+            let audioUrl = '';
+            if(data.phonetics) {
+                const p = data.phonetics.find(x => x.audio);
+                if(p) audioUrl = p.audio;
+            }
+
+            let html = `
+                <div style="background: #cdc89e; border-radius: 12px; padding: 20px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(26,26,62,0.1); padding-bottom: 15px; margin-bottom: 15px;">
+                        <h2 style="color: #1a1a3e; font-size: 28px; margin: 0; text-transform: capitalize;">${escHtml(data.word)}</h2>
+                        <button style="width: 45px; height: 45px; border-radius: 50%; background: #D4AF37; border: none; cursor: pointer; font-size: 20px;" onclick="playDictAudio('${audioUrl}', '${escHtml(data.word)}', '${langCode}')">🔊</button>
+                    </div>
+            `;
+
+            data.meanings.forEach(meaning => {
+                html += `<h4 style="color: #C9A227; font-size: 16px; margin: 15px 0 10px; font-style: italic; text-transform: lowercase;">${escHtml(meaning.partOfSpeech)}</h4>`;
+
+                meaning.definitions.slice(0, 3).forEach((def, i) => {
+                    html += `<p style="color: #1a1a3e; font-size: 15px; font-weight: 400; margin-bottom: 5px; line-height: 1.4;"><strong>${i+1}.</strong> ${escHtml(def.definition)}</p>`;
+                    if (def.example) {
+                        html += `<p style="color: rgba(26,26,62,0.7); font-size: 14px; font-style: italic; margin-bottom: 12px; border-left: 2px solid #C9A227; padding-left: 10px;">"${escHtml(def.example)}"</p>`;
+                    }
+                });
+
+                if (meaning.synonyms && meaning.synonyms.length > 0) {
+                    html += `<p style="font-size: 14px; margin-top: 10px; color: #1a1a3e;"><strong>${isEs ? 'Sinónimos:' : 'Synonyms:'}</strong> <span style="color: #444;">${escHtml(meaning.synonyms.slice(0, 5).join(', '))}</span></p>`;
+                }
+            });
+
+            html += `</div>`;
+            document.getElementById('dict-results').innerHTML = html;
+        }
+
+        function playDictAudio(url, word, langCode) {
+            if (url) {
+                new Audio(url).play();
+            } else {
+                try {
+                    const utter = new SpeechSynthesisUtterance(word);
+                    utter.lang = langCode === 'es' ? 'es-ES' : 'en-GB';
+                    window.speechSynthesis.speak(utter);
+                } catch(e) {}
+            }
+        }
+    </script>
+</body>
+</html>
