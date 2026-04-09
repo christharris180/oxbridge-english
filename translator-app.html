@@ -10,7 +10,7 @@
   <meta name="description" content="Traductor Español ↔ Inglés gratuito por Oxbridge English" />
   <link rel="manifest" href="manifest.json" />
   <link rel="apple-touch-icon" href="apple-touch-icon.png" />
-  <title>Oxbridge English Quick Translator</title>
+  <title>Oxbridge English SmarTranslator</title>
 
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700&family=Work+Sans:wght@600;700&display=swap" rel="stylesheet" />
 
@@ -367,7 +367,8 @@
       flex-shrink: 0;
       position: sticky;
       bottom: 0;
-      background: var(--navy);
+      background: rgba(13,13,36,0.85);
+      backdrop-filter: blur(10px);
       z-index: 50;
     }
 
@@ -494,13 +495,15 @@
       letter-spacing: 0.3px;
       padding: 4px 20px 10px;
       flex-shrink: 0;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.8);
     }
 
     /* ── SCREENS (history & quiz) ── */
     .screen {
       position: fixed;
       top: 0; left: 0; right: 0; bottom: 0;
-      background: var(--navy);
+      background: rgba(13, 13, 36, 0.95);
+      backdrop-filter: blur(10px);
       display: flex;
       flex-direction: column;
       z-index: 200;
@@ -668,10 +671,9 @@
     }
   </style>
 </head>
-<body>
+<body style="background: url('blue_background_001.jpg') no-repeat center center fixed; background-size: cover;">
 <div class="app">
 
-  <!-- TOP BAR -->
   <div class="topbar">
     <div class="topbar-logo">
       <img src="favicon-192x192.png" class="topbar-ox" alt="Oxbridge" />
@@ -681,25 +683,21 @@
       <div class="icon-btn" onclick="toggleLanguage()" id="lang-toggle" title="EN/ES">ES</div>
     </div>
   </div>
-  <div class="app-subtitle" data-en="Quick Translator" data-es="Traductor Rápido">Quick Translator</div>
+  <div class="app-subtitle" data-en="SmarTranslator" data-es="SmarTraductor">SmarTranslator</div>
 
-  <!-- INSTALL BANNER (hidden by default, shown if installable) -->
   <div class="install-banner" id="install-banner" style="display:none;">
     <p>📲 Instala la app <span>Úsala sin internet</span></p>
     <button class="install-btn" onclick="installApp()">Instalar</button>
     <button class="close-banner" onclick="closeBanner()">×</button>
   </div>
 
-  <!-- DIRECTION BAR -->
   <div class="direction-bar">
     <div class="lang-pill active" id="pill-es-en" onclick="setDirection('es-en')">Español → English</div>
     <div class="lang-pill" id="pill-en-es" onclick="setDirection('en-es')">English → Español</div>
   </div>
 
-  <!-- PANELS + TRANSLATE IN MIDDLE -->
   <div class="panels">
 
-    <!-- SOURCE -->
     <div class="panel source-panel">
       <div class="panel-label source" id="label-source">Escribe en español...</div>
       <textarea id="source-input" placeholder="Hola, ¿cómo estás?" maxlength="1000" oninput="onInput()"></textarea>
@@ -712,14 +710,12 @@
       </div>
     </div>
 
-    <!-- PROMO BUTTON (middle) -->
     <div class="translate-wrap">
       <a class="promo-btn" href="https://oxbridge-english.com/courses.html" target="_blank">
         🎓 ¿Cansado de traducir todo? Empieza hoy un curso de inglés online, guiado por IA y 100% autodidacta con <strong>Oxbridge English</strong>
       </a>
     </div>
 
-    <!-- OUTPUT -->
     <div class="panel output-panel">
       <div class="panel-label" id="label-target">Traducción al inglés</div>
       <div class="output-text" id="output-text">
@@ -736,7 +732,6 @@
 
   </div>
 
-  <!-- BOTTOM NAV -->
   <div class="bottom-nav">
     <div class="nav-item active" id="nav-translate" onclick="showScreen('translator')">
       <span class="nav-icon">🔤</span>
@@ -756,7 +751,6 @@
     </div>
   </div>
 
-  <!-- HISTORY SCREEN -->
   <div class="screen" id="screen-history" style="display:none;">
     <div class="screen-header">
       <button class="back-btn" onclick="showScreen('translator')">← <span data-en="Back" data-es="Volver">Volver</span></button>
@@ -766,7 +760,6 @@
     <div class="screen-body" id="history-list"></div>
   </div>
 
-  <!-- QUIZ SCREEN -->
   <div class="screen" id="screen-quiz" style="display:none;">
     <div class="screen-header">
       <button class="back-btn" onclick="showScreen('translator')">← <span data-en="Back" data-es="Volver">Volver</span></button>
@@ -778,7 +771,6 @@
 
 </div>
 
-<!-- TOAST -->
 <div class="toast" id="toast"></div>
 
 <script>
