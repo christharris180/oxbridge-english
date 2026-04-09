@@ -4,157 +4,40 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Level Test - Oxbridge English</title>
+    
+    <link rel="icon" type="image/jpeg" href="ox-head-008.jpg">
+    <link rel="apple-touch-icon" href="ox-head-008.jpg">
+    <link rel="shortcut icon" type="image/jpeg" href="ox-head-008.jpg">
+
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
     <style>
-        .cream-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(247, 244, 229, 0.90);
-            z-index: 1;
-        }
-
-        .test-wrapper {
-            position: relative;
-            z-index: 2;
-            padding: 120px 20px 60px 20px;
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .test-container {
-            width: 100%;
-            max-width: 800px;
-            padding: 50px;
-            background: #1a1a3e; 
-            border-radius: 20px;
-            box-shadow: 0 15px 40px rgba(0,0,0,0.2);
-            text-align: center;
-            color: white; 
-        }
-
-        .test-container h2, 
-        .test-container h3, 
-        .test-container p {
-            color: white !important;
-        }
-
-        .options-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 15px;
-            margin-top: 30px;
-        }
-
-        .option-btn {
-            background: rgba(255, 255, 255, 0.05);
-            border: 2px solid rgba(255, 255, 255, 0.2);
-            padding: 15px 20px;
-            border-radius: 10px;
-            cursor: pointer;
-            font-size: 16px;
-            color: white;
-            transition: all 0.3s ease;
-            text-align: left;
-        }
-
-        .option-btn:hover {
-            border-color: #D4AF37;
-            background: rgba(212, 175, 55, 0.15);
-            color: #D4AF37;
-        }
-
-        .option-btn.selected {
-            background: #D4AF37;
-            color: #1a1a3e;
-            border-color: #D4AF37;
-            font-weight: 500;
-        }
-
-        /* Confidence Panel Styles */
-        .confidence-panel {
-            display: none;
-            margin-top: 30px;
-            padding-top: 30px;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            animation: fadeIn 0.4s ease-out;
-        }
-
-        .confidence-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 15px;
-            margin-top: 15px;
-        }
-
-        .confidence-btn {
-            background: transparent;
-            border: 2px solid #D4AF37;
-            color: #D4AF37;
-            padding: 12px;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-weight: 500;
-        }
-
-        .confidence-btn:hover {
-            background: #D4AF37;
-            color: #1a1a3e;
-        }
-
-        .course-recommendation {
-            display: none;
-            margin-top: 30px;
-        }
-
-        .course-recommendation h3 { 
-            color: #D4AF37 !important; 
-            margin-bottom: 15px; 
-            font-size: 24px;
-        }
-
-        .progress-bar {
-            width: 100%;
-            height: 8px;
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 5px;
-            margin-bottom: 30px;
-            overflow: hidden;
-        }
-
-        .progress-fill {
-            height: 100%;
-            background: #D4AF37;
-            width: 0%;
-            transition: width 0.3s ease;
-        }
-        
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+        .cream-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(247, 244, 229, 0.90); z-index: 1; }
+        .test-wrapper { position: relative; z-index: 2; padding: 120px 20px 60px 20px; min-height: 100vh; display: flex; align-items: center; justify-content: center; }
+        .test-container { width: 100%; max-width: 800px; padding: 50px; background: #1a1a3e; border-radius: 20px; box-shadow: 0 15px 40px rgba(0,0,0,0.2); text-align: center; color: white; }
+        .test-container h2, .test-container h3, .test-container p { color: white !important; }
+        .options-grid { display: grid; grid-template-columns: 1fr; gap: 15px; margin-top: 30px; }
+        .option-btn { background: rgba(255, 255, 255, 0.05); border: 2px solid rgba(255, 255, 255, 0.2); padding: 15px 20px; border-radius: 10px; cursor: pointer; font-size: 16px; color: white; transition: all 0.3s ease; text-align: left; }
+        .option-btn:hover { border-color: #D4AF37; background: rgba(212, 175, 55, 0.15); color: #D4AF37; }
+        .option-btn.selected { background: #D4AF37; color: #1a1a3e; border-color: #D4AF37; font-weight: 500; }
+        .confidence-panel { display: none; margin-top: 30px; padding-top: 30px; border-top: 1px solid rgba(255,255,255,0.1); animation: fadeIn 0.4s ease-out; }
+        .confidence-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-top: 15px; }
+        .confidence-btn { background: transparent; border: 2px solid #D4AF37; color: #D4AF37; padding: 12px; border-radius: 8px; cursor: pointer; transition: all 0.3s ease; font-weight: 500; }
+        .confidence-btn:hover { background: #D4AF37; color: #1a1a3e; }
+        .course-recommendation { display: none; margin-top: 30px; }
+        .course-recommendation h3 { color: #D4AF37 !important; margin-bottom: 15px; font-size: 24px; }
+        .progress-bar { width: 100%; height: 8px; background: rgba(255, 255, 255, 0.2); border-radius: 5px; margin-bottom: 30px; overflow: hidden; }
+        .progress-fill { height: 100%; background: #D4AF37; width: 0%; transition: width 0.3s ease; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body>
-    <video autoplay muted loop playsinline class="background-video">
-        <source src="girl_working_001.mp4" type="video/mp4">
-    </video>
-
+    <video autoplay muted loop playsinline class="background-video"><source src="girl_working_001.mp4" type="video/mp4"></video>
     <div class="cream-overlay"></div>
-
     <nav class="main-nav">
         <div class="nav-container">
             <button class="mobile-menu-toggle">☰</button>
-            <div class="logo">
-                <img src="ox-head-008.jpg" alt="Oxbridge English Logo">
-                <h1 data-en="Oxbridge English" data-es="Oxbridge English">Oxbridge English</h1>
-            </div>
+            <div class="logo"><img src="ox-head-008.jpg" alt="Logo"><h1>Oxbridge English</h1></div>
             <ul class="nav-links">
                 <li><a href="index.html" data-en="Home" data-es="Inicio">Home</a></li>
                 <li><a href="courses.html" data-en="Courses" data-es="Cursos">Courses</a></li>
@@ -173,63 +56,41 @@
             </div>
         </div>
     </nav>
-
     <div class="test-wrapper">
         <div class="test-container">
             <div id="start-screen">
-                <h2 class="section-title" data-en="Discover Your English Level" data-es="Descubre tu Nivel de Inglés" style="margin-bottom: 15px;">Discover Your English Level</h2>
-                
-                <p data-en="Take this quick 20-question test to find out your CEFR English level and which Oxbridge English course is right for you." 
-                   data-es="Toma esta prueba rápida de 20 preguntas para descubrir tu nivel de inglés CEFR y qué curso de Oxbridge English es el adecuado para ti."
-                   style="font-size: 18px; color: rgba(255, 255, 255, 0.8) !important; margin-bottom: 20px; font-weight: 300;">
-                   Take this quick 20-question test to find out your CEFR English level and which Oxbridge English course is right for you.
-                </p>
-                
-                <div style="display: inline-block; background: rgba(255, 255, 255, 0.1); color: #90EE90; padding: 10px 20px; border-radius: 30px; font-weight: 500; font-size: 15px; margin: 10px 0 20px 0; border: 1px solid rgba(144, 238, 144, 0.3);">
-                    <span data-en="✓ 100% Free • No email required!" data-es="✓ 100% Gratis • ¡Sin necesidad de correo!">✓ 100% Free • No email required!</span>
+                <h2 class="section-title" data-en="Discover Your English Level" data-es="Descubre tu Nivel de Inglés">Discover Your English Level</h2>
+                <p data-en="Take this quick 20-question test to find out your CEFR English level." data-es="Toma esta prueba rápida de 20 preguntas para descubrir tu nivel CEFR.">Take this quick 20-question test to find out your CEFR English level.</p>
+                <div style="background: rgba(255,255,255,0.1); color: #90EE90; padding: 10px; border-radius: 30px; margin: 20px 0;">
+                    <span data-en="✓ 100% Free • No email required!" data-es="✓ 100% Gratis • ¡Sin correo!">✓ 100% Free • No email required!</span>
                 </div>
-                
-                <p data-en="You will be asked after each question how sure you are of your answer; it is vitally important that you give an honest response to this if you want an accurate analysis of your level." 
-                   data-es="Se te preguntará después de cada pregunta qué tan seguro estás de tu respuesta; es de vital importancia que des una respuesta honesta a esto si quieres un análisis preciso de tu nivel."
-                   style="font-size: 15px; color: rgba(255, 255, 255, 0.75) !important; margin-bottom: 30px; font-weight: 300; font-style: italic; line-height: 1.6; max-width: 650px; margin-left: auto; margin-right: auto;">
-                   You will be asked after each question how sure you are of your answer; it is vitally important that you give an honest response to this if you want an accurate analysis of your level.
-                </p>
-
-                <button onclick="startTest()" class="cta-button" data-en="Start Test" data-es="Comenzar Prueba">Start Test</button>
+                <p style="font-size: 15px; font-style: italic; margin-bottom: 30px;" data-en="You will be asked after each question how sure you are of your answer..." data-es="Se te preguntará después de cada pregunta qué tan seguro estás...">You will be asked after each question how sure you are of your answer; it is vitally important that you give an honest response to this if you want an accurate analysis of your level.</p>
+                <button onclick="startTest()" class="cta-button" data-en="Start Test" data-es="Comenzar">Start Test</button>
             </div>
-
             <div id="quiz-screen" style="display: none;">
-                <div class="progress-bar">
-                    <div class="progress-fill" id="progress"></div>
-                </div>
-                <h3 id="question-text" style="font-size: 24px; margin-bottom: 20px; font-weight: 300;"></h3>
-                
+                <div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+                <h3 id="question-text"></h3>
                 <div id="options-container" class="options-grid"></div>
-
                 <div id="confidence-panel" class="confidence-panel">
-                    <h3 data-en="How sure are you?" data-es="¿Qué tan seguro estás?" style="font-size: 20px; font-weight: 300;">How sure are you?</h3>
+                    <h3 data-en="How sure are you?" data-es="¿Qué tan seguro estás?">How sure are you?</h3>
                     <div class="confidence-grid">
-                        <button class="confidence-btn" onclick="submitAnswer(1)" data-en="Just Guessing" data-es="Solo Adivinando">Just Guessing</button>
-                        <button class="confidence-btn" onclick="submitAnswer(2)" data-en="Somewhat Sure" data-es="Algo Seguro">Somewhat Sure</button>
+                        <button class="confidence-btn" onclick="submitAnswer(1)" data-en="Guessing" data-es="Adivinando">Just Guessing</button>
+                        <button class="confidence-btn" onclick="submitAnswer(2)" data-en="Somewhat" data-es="Algo">Somewhat Sure</button>
                         <button class="confidence-btn" onclick="submitAnswer(3)" data-en="Very Sure" data-es="Muy Seguro">Very Sure</button>
                     </div>
                 </div>
             </div>
-
             <div id="result-screen" class="course-recommendation">
-                <h2 class="section-title" data-en="Your Results" data-es="Tus Resultados" style="margin-bottom: 10px;">Your Results</h2>
-                
-                <p id="score-text" style="font-size: 20px; margin-bottom: 30px; color: rgba(255, 255, 255, 0.9) !important;"></p>
-                
-                <div style="background: rgba(0, 0, 0, 0.2); padding: 30px; border-radius: 15px; border: 1px solid rgba(255, 255, 255, 0.1);">
-                    <h3 id="recommended-course" style="font-weight: 300;"></h3>
-                    <p id="course-reason" style="margin-bottom: 25px; font-size: 16px; color: rgba(255, 255, 255, 0.8) !important; line-height: 1.6;"></p>
-                    <a href="courses.html" class="cta-button" data-en="View Course Details" data-es="Ver Detalles del Curso">View Course Details</a>
+                <h2 data-en="Your Results" data-es="Tus Resultados">Your Results</h2>
+                <p id="score-text"></p>
+                <div style="background: rgba(0,0,0,0.2); padding: 30px; border-radius: 15px;">
+                    <h3 id="recommended-course"></h3>
+                    <p id="course-reason"></p>
+                    <a href="courses.html" class="cta-button" data-en="View Courses" data-es="Ver Cursos">View Course Details</a>
                 </div>
             </div>
         </div>
     </div>
-
     <script src="placement.js?v=3"></script>
     <script src="script.js?v=3"></script> 
 </body>
