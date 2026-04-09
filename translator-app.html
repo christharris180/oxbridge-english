@@ -147,8 +147,6 @@
       box-shadow: 0 3px 8px rgba(0,0,0,0.3), 0 2px 0 rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.3);
     }
 
-    @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(180deg); } }
-
     /* ── MAIN PANELS ── */
     .panels {
       flex: 1;
@@ -1163,7 +1161,21 @@ async function searchDictionary() {
   resContainer.innerHTML = '<div class="loading-dots" style="display:block; text-align:center; padding: 40px;"><span></span><span></span><span></span></div>';
 
   try {
-    const res = await fetch(`https://api.dictionaryapi.dev/api/v2/entries/${lang}/${encodeURIComponent(word)}`);
+    // English searches go to DictionaryAPI, Spanish searches go to FreeDictionaryAPI
+    const apiUrl = lang === 'en' 
+        ? `https://api.dictionaryapi.dev/api/v2/entries/en/${encodeURIComponent(word)}`
+        : `https://freedictionaryapi.com/api/v1/entries/es/${encodeURIComponent(word)}`;
+        
+    let res = await fetch(apiUrl);
+    
+    // Safety Fallback: If one server drops the connection, attempt the other server
+    if (!res.ok) {
+        const fallbackUrl = lang === 'en'
+            ? `https://freedictionaryapi.com/api/v1/entries/en/${encodeURIComponent(word)}`
+            : `https://api.dictionaryapi.dev/api/v2/entries/es/${encodeURIComponent(word)}`;
+        res = await fetch(fallbackUrl);
+    }
+
     if (!res.ok) throw new Error('Not found');
     const data = await res.json();
     renderDictResults(data[0], lang);
