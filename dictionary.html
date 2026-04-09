@@ -74,6 +74,47 @@
             if (e.key === 'Enter') searchDictionary();
         });
 
+        // The hidden Google Translate Dictionary API parser
+        async function fetchGoogleDictionary(word, lang) {
+            const url = `https://translate.googleapis.com/translate_a/single?client=gtx&dt=md&dt=ss&sl=${lang}&tl=${lang}&q=${encodeURIComponent(word)}`;
+            const res = await fetch(url);
+            if (!res.ok) throw new Error('Network error');
+            const data = await res.json();
+            
+            const defsArray = data[12];
+            const synsArray = data[11];
+            
+            if (!defsArray) throw new Error('Not found');
+            
+            const meanings = defsArray.map(posGroup => {
+                const partOfSpeech = posGroup[0] || 'Definición';
+                const defs = (posGroup[1] || []).map(d => ({
+                    definition: d.definition || d[0] || '',
+                    example: d.example || d[1] || ''
+                })).filter(d => d.definition);
+                
+                let synonyms = [];
+                if (synsArray) {
+                    const synGroup = synsArray.find(s => s[0] === partOfSpeech);
+                    if (synGroup && synGroup[1]) {
+                        synonyms = synGroup[1].flatMap(set => set[0] || []);
+                    }
+                }
+                
+                return {
+                    partOfSpeech,
+                    definitions: defs,
+                    synonyms: [...new Set(synonyms)]
+                };
+            });
+            
+            return {
+                word: (defsArray[0] && defsArray[0][2]) ? defsArray[0][2] : word,
+                phonetics: [],
+                meanings: meanings
+            };
+        }
+
         async function searchDictionary() {
             const rawWord = document.getElementById('dict-input').value.trim();
             const word = rawWord.toLowerCase();
@@ -83,44 +124,24 @@
 
             if (!word) return;
 
-            resContainer.innerHTML = '<div style="text-align:center; padding: 40px; color: #D4AF37;">Cargando...</div>';
+            resContainer.innerHTML = '<div style="text-align:center; padding: 40px; color: #D4AF37;"><div class="loading-dots" style="display:inline-flex; gap:5px;"><span style="width:7px; height:7px; background:#D4AF37; border-radius:50%; animation:bounce 1s infinite;"></span><span style="width:7px; height:7px; background:#D4AF37; border-radius:50%; animation:bounce 1s infinite 0.15s;"></span><span style="width:7px; height:7px; background:#D4AF37; border-radius:50%; animation:bounce 1s infinite 0.3s;"></span></div></div>';
 
             try {
                 let finalData = null;
 
                 if (lang === 'en') {
-                    const res = await fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${encodeURIComponent(word)}`);
-                    if (!res.ok) throw new Error('Not found');
-                    const data = await res.json();
-                    finalData = data[0];
-                } else {
-                    // Dual-API Routing: Send Spanish searches to Wiktionary
-                    let res = await fetch(`https://es.wiktionary.org/api/rest_v1/page/definition/${encodeURIComponent(word)}`);
-                    if (!res.ok) {
-                        const capWord = word.charAt(0).toUpperCase() + word.slice(1);
-                        res = await fetch(`https://es.wiktionary.org/api/rest_v1/page/definition/${encodeURIComponent(capWord)}`);
+                    try {
+                        const res = await fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${encodeURIComponent(word)}`);
                         if (!res.ok) throw new Error('Not found');
+                        const data = await res.json();
+                        finalData = data[0];
+                    } catch (e) {
+                        // Fallback to Google if the English API fails
+                        finalData = await fetchGoogleDictionary(word, 'en');
                     }
-                    const data = await res.json();
-                    const esData = data.es || data.en; 
-                    if (!esData || !esData.length) throw new Error('Not found');
-                    
-                    const cleanHtml = (str) => str ? str.replace(/<[^>]*>?/gm, '').trim() : '';
-                    
-                    finalData = {
-                        word: rawWord,
-                        phonetics: [],
-                        meanings: esData.map(m => ({
-                            partOfSpeech: m.partOfSpeech || 'Definición',
-                            definitions: m.definitions.map(d => {
-                                let example = '';
-                                if (d.parsedExamples && d.parsedExamples.length > 0) example = cleanHtml(d.parsedExamples[0].example);
-                                else if (d.examples && d.examples.length > 0) example = cleanHtml(d.examples[0]);
-                                return { definition: cleanHtml(d.definition), example: example };
-                            }),
-                            synonyms: []
-                        }))
-                    };
+                } else {
+                    // For Spanish, always use the powerful Google Dictionary Engine
+                    finalData = await fetchGoogleDictionary(word, 'es');
                 }
 
                 renderDictResults(finalData, lang, isEs);
@@ -142,12 +163,12 @@
                 <div style="background: #cdc89e; border-radius: 12px; padding: 20px;">
                     <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(26,26,62,0.1); padding-bottom: 15px; margin-bottom: 15px;">
                         <h2 style="color: #1a1a3e; font-size: 28px; margin: 0; text-transform: capitalize;">${escHtml(data.word)}</h2>
-                        <button style="width: 45px; height: 45px; border-radius: 50%; background: #D4AF37; border: none; cursor: pointer; font-size: 20px;" onclick="playDictAudio('${audioUrl}', '${escHtml(data.word)}', '${langCode}')">🔊</button>
+                        <button style="width: 45px; height: 45px; border-radius: 50%; background: #D4AF37; border: none; cursor: pointer; font-size: 20px; box-shadow: 0 4px 8px rgba(0,0,0,0.2);" onclick="playDictAudio('${audioUrl}', '${escHtml(data.word).replace(/'/g, "\\'")}', '${langCode}')">🔊</button>
                     </div>
             `;
 
             data.meanings.forEach(meaning => {
-                html += `<h4 style="color: #C9A227; font-size: 16px; margin: 15px 0 10px; font-style: italic; text-transform: lowercase;">${escHtml(meaning.partOfSpeech)}</h4>`;
+                html += `<h4 style="color: #9e7a0e; font-size: 16px; margin: 15px 0 10px; font-style: italic; text-transform: lowercase;">${escHtml(meaning.partOfSpeech)}</h4>`;
 
                 meaning.definitions.slice(0, 3).forEach((def, i) => {
                     html += `<p style="color: #1a1a3e; font-size: 15px; font-weight: 400; margin-bottom: 5px; line-height: 1.4;"><strong>${i+1}.</strong> ${escHtml(def.definition)}</p>`;
