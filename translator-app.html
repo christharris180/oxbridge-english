@@ -232,7 +232,6 @@
       gap: 10px;
     }
 
-    /* 3D gold mini buttons — grey shadow */
     .mini-btn {
       width: 66px;
       height: 66px;
@@ -280,7 +279,6 @@
       font-weight: 300;
     }
 
-    /* Loading dots */
     .loading-dots {
       display: inline-flex;
       gap: 5px;
@@ -300,13 +298,11 @@
       30% { transform: translateY(-6px); opacity: 1; }
     }
 
-    /* ── TRANSLATE BUTTON (sits between panels) ── */
     .translate-wrap {
       padding: 10px 16px;
       flex-shrink: 0;
     }
 
-    /* ── PROMO BUTTON ── */
     .promo-btn {
       display: block;
       width: 100%;
@@ -332,7 +328,6 @@
     }
     .promo-btn strong { font-weight: 600; }
 
-    /* ── BOTTOM NAV ── */
     .bottom-nav {
       display: flex;
       border-top: 1px solid rgba(255,255,255,0.07);
@@ -364,7 +359,6 @@
     .nav-item.active { color: var(--gold); }
     .nav-item:active { opacity: 0.7; }
 
-    /* ── TOAST ── */
     .toast {
       position: fixed;
       bottom: calc(80px + var(--safe-bottom));
@@ -388,7 +382,6 @@
       transform: translateX(-50%) translateY(0);
     }
 
-    /* ── MIC RECORDING STATE ── */
     .mini-btn.recording {
       background: linear-gradient(180deg, #ff6060 0%, #cc2020 60%, #8a0000 100%);
       color: white;
@@ -400,7 +393,6 @@
       50% { box-shadow: 0 0 0 8px rgba(220,50,50,0), 0 4px 8px rgba(200,0,0,0.4); }
     }
 
-    /* ── HISTORY BADGE ── */
     .history-badge {
       background: var(--gold);
       color: var(--text-navy);
@@ -412,12 +404,10 @@
       vertical-align: middle;
     }
 
-    /* Scrollbar */
     ::-webkit-scrollbar { width: 4px; }
     ::-webkit-scrollbar-track { background: transparent; }
     ::-webkit-scrollbar-thumb { background: rgba(201,162,39,0.3); border-radius: 4px; }
 
-    /* Install banner */
     .install-banner {
       margin: 0 16px 8px;
       background: var(--gold-dim);
@@ -456,8 +446,6 @@
       flex-shrink: 0;
     }
 
-
-    /* ── APP SUBTITLE ── */
     .app-subtitle {
       text-align: center;
       font-family: 'Roboto', sans-serif;
@@ -470,7 +458,6 @@
       text-shadow: 0 2px 4px rgba(0,0,0,0.8);
     }
 
-    /* ── SCREENS ── */
     .screen {
       position: fixed;
       top: 0; left: 0; right: 0; bottom: 0;
@@ -669,7 +656,6 @@
   </div>
 
   <div class="panels">
-
     <div class="panel source-panel">
       <div class="panel-label source" id="label-source">Escribe en español...</div>
       <textarea id="source-input" placeholder="Hola, ¿cómo estás?" maxlength="1000" oninput="onInput()"></textarea>
@@ -701,7 +687,6 @@
         </div>
       </div>
     </div>
-
   </div>
 
   <div class="bottom-nav">
@@ -1163,14 +1148,14 @@ async function searchDictionary() {
   const word = rawWord.toLowerCase();
   const lang = document.getElementById('dict-lang').value;
   const resContainer = document.getElementById('dict-results');
-  const isEs = document.querySelector('.lang-option.active').getAttribute('data-lang') === 'es';
+  const isEs = (uiLang === 'es'); // FIXED LOGIC HERE
 
   if (!word) {
-      showToast(uiLang === 'es' ? 'Escribe una palabra' : 'Type a word');
+      showToast(isEs ? 'Escribe una palabra' : 'Type a word');
       return;
   }
 
-  resContainer.innerHTML = '<div style="text-align:center; padding: 40px; color: #D4AF37;"><div class="loading-dots" style="display:inline-flex; gap:5px;"><span style="width:7px; height:7px; background:#D4AF37; border-radius:50%; animation:bounce 1s infinite;"></span><span style="width:7px; height:7px; background:#D4AF37; border-radius:50%; animation:bounce 1s infinite 0.15s;"></span><span style="width:7px; height:7px; background:#D4AF37; border-radius:50%; animation:bounce 1s infinite 0.3s;"></span></div></div>';
+  resContainer.innerHTML = '<div class="loading-dots" style="display:block; text-align:center; padding: 40px;"><span></span><span></span><span></span></div>';
 
   try {
     let finalData = null;
@@ -1182,17 +1167,15 @@ async function searchDictionary() {
             const data = await res.json();
             finalData = data[0];
         } catch (e) {
-            // Fallback to Google if English API fails
             finalData = await fetchGoogleDictionary(word, 'en');
         }
     } else {
-        // Spanish always uses Google API
         finalData = await fetchGoogleDictionary(word, 'es');
     }
     renderDictResults(finalData, lang, isEs);
   } catch (err) {
     resContainer.innerHTML = `<div class="history-empty" style="margin-top: 20px;">
-      ${uiLang === 'es' ? 'No encontramos la definición para esta palabra.' : 'We couldn\'t find definitions for this word.'}
+      ${isEs ? 'No encontramos la definición para esta palabra.' : 'We couldn\'t find definitions for this word.'}
     </div>`;
   }
 }
@@ -1213,7 +1196,7 @@ function renderDictResults(data, langCode, isEs) {
   `;
 
   data.meanings.forEach(meaning => {
-      html += `<h4 style="color: var(--gold); font-size: 16px; margin: 15px 0 10px; font-style: italic; text-transform: lowercase;">${escHtml(meaning.partOfSpeech)}</h4>`;
+      html += `<h4 style="color: #9e7a0e; font-size: 16px; margin: 15px 0 10px; font-style: italic; text-transform: lowercase;">${escHtml(meaning.partOfSpeech)}</h4>`;
 
       meaning.definitions.slice(0, 3).forEach((def, i) => {
           html += `<p style="color: var(--text-navy); font-size: 15px; font-weight: 400; margin-bottom: 5px; line-height: 1.4;"><strong>${i+1}.</strong> ${escHtml(def.definition)}</p>`;
@@ -1223,7 +1206,7 @@ function renderDictResults(data, langCode, isEs) {
       });
 
       if (meaning.synonyms && meaning.synonyms.length > 0) {
-          html += `<p style="font-size: 14px; margin-top: 10px; color: var(--navy-light);"><strong>${isEs ? 'Sinónimos:' : 'Synonyms:'}</strong> <span style="color: #666;">${escHtml(meaning.synonyms.slice(0, 5).join(', '))}</span></p>`;
+          html += `<p style="font-size: 14px; margin-top: 10px; color: var(--navy-light);"><strong>${isEs ? 'Sinónimos:' : 'Synonyms:'}</strong> <span style="color: #444;">${escHtml(meaning.synonyms.slice(0, 5).join(', '))}</span></p>`;
       }
   });
 
@@ -1362,7 +1345,6 @@ function answerQuiz(qIndex, btn) {
   }
 }
 
-// ── INIT ──
 applyUILanguage();
 updateHistoryBadge();
 </script>
