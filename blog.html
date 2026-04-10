@@ -52,7 +52,26 @@
         </div>
 
         <div class="recommendations-box" style="background: url('blue_background_001.jpg'); background-size: cover; background-position: center; padding: 40px; border-radius: 20px; box-shadow: 0 8px 24px rgba(0,0,0,0.15); max-width: 900px; margin: 0 auto;">
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px;">
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px;">
+
+            <a href="blog-post-003.html" style="text-decoration: none; display: block;">
+                <div class="recommendation-item" style="background: rgba(247, 244, 229, 0.95); padding: 0; border-radius: 15px; overflow: hidden; transition: transform 0.3s ease, box-shadow 0.3s ease;" onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 12px 24px rgba(0,0,0,0.2)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'">
+                    <img src="blog-image-003.jpg" alt="Frases en inglés para viajar" style="width: 100%; height: 180px; object-fit: cover;">
+                    <div style="padding: 18px;">
+                        <h3 style="color: #1a1a3e; margin: 0 0 10px 0; font-size: 18px; font-weight: 600;">Las 20 frases en inglés que necesitas para viajar</h3>
+                        <p style="color: #666; line-height: 1.6; margin: 0 0 14px 0; font-size: 13px;">
+                            Viajar a otro país sin saber inglés puede ser estresante. Pero aquí va la buena noticia: no necesitas saber todo el idioma para viajar con confianza...
+                        </p>
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <span class="trans-btn trans-btn-primary" style="display: inline-block; padding: 8px 18px; font-size: 13px; text-decoration: none;">
+                                <span data-en="Read More" data-es="Leer Más">Leer Más</span>
+                            </span>
+                            <span style="color: #999; font-size: 14px;">Abril 2026</span>
+                        </div>
+                    </div>
+                </div>
+            </a>
 
             <a href="blog-post-002.html" style="text-decoration: none; display: block;">
                 <div class="recommendation-item" style="background: rgba(247, 244, 229, 0.95); padding: 0; border-radius: 15px; overflow: hidden; transition: transform 0.3s ease, box-shadow 0.3s ease;" onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 12px 24px rgba(0,0,0,0.2)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'">
@@ -60,7 +79,7 @@
                     <div style="padding: 18px;">
                         <h3 style="color: #1a1a3e; margin: 0 0 10px 0; font-size: 18px; font-weight: 600;">Cómo aprender inglés desde cero sin pagar cursos caros</h3>
                         <p style="color: #666; line-height: 1.6; margin: 0 0 14px 0; font-size: 13px;">
-                            Aprender inglés desde cero puede parecer caro o intimidante. Pero la realidad es otra: sí es posible aprender inglés sin pagar cursos caros, siempre que uses las estrategias correctas...
+                            Aprender inglés desde cero puede parecer caro o intimidante. Pero la realidad es otra: sí es posible aprender inglés sin pagar cursos caros...
                         </p>
                         <div style="display: flex; justify-content: space-between; align-items: center;">
                             <span class="trans-btn trans-btn-primary" style="display: inline-block; padding: 8px 18px; font-size: 13px; text-decoration: none;">
@@ -77,42 +96,21 @@
                     <img src="blog-image-001.jpg" alt="Aprender inglés después de los 30" style="width: 100%; height: 180px; object-fit: cover;">
                     <div style="padding: 18px;">
                         <h3 style="color: #1a1a3e; margin: 0 0 10px 0; font-size: 18px; font-weight: 600;">¿De verdad se puede aprender inglés después de los 30?</h3>
-                        <p style="color: #666; line-height: 1.7; margin: 0 0 20px 0; font-size: 16px;">
-                            Si tienes más de 30 años y alguna vez has pensado "ya es muy tarde para aprender inglés", no estás solo. Es una idea muy común en Latinoamérica. Muchos adultos sienten que el inglés es algo que "se aprende de joven"...
+                        <p style="color: #666; line-height: 1.6; margin: 0 0 14px 0; font-size: 13px;">
+                            Si tienes más de 30 años y alguna vez has pensado "ya es muy tarde para aprender inglés", no estás solo. Es una idea muy común...
                         </p>
                         <div style="display: flex; justify-content: space-between; align-items: center;">
-                            <span class="trans-btn trans-btn-primary" style="display: inline-block; padding: 12px 30px; text-decoration: none;">
+                            <span class="trans-btn trans-btn-primary" style="display: inline-block; padding: 8px 18px; font-size: 13px; text-decoration: none;">
                                 <span data-en="Read More" data-es="Leer Más">Leer Más</span>
                             </span>
-                            <span style="color: #999; font-size: 14px;">15 de marzo de 2026</span>
+                            <span style="color: #999; font-size: 14px;">Marzo 2026</span>
                         </div>
                     </div>
                 </div>
             </a>
 
-            </div></div></div><style>
-        /* Mobile: Force single column layout */
-        @media (max-width: 768px) {
-            .recommendations-box > div {
-                grid-template-columns: 1fr !important;
-                gap: 24px;
-            }
-        }
-    </style>
-
-    <footer class="main-footer">
+            </div></div></div><footer class="main-footer">
         <div class="footer-content">
-            <div class="footer-social">
-                <a href="https://www.instagram.com/cursosdeinglesoxbridge/" target="_blank" aria-label="Instagram">
-                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
-                </a>
-                <a href="https://www.facebook.com/profile.php?id=61564608544805" target="_blank" aria-label="Facebook">
-                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
-                </a>
-                <a href="https://www.linkedin.com/in/christopher-harris-13b678153/" target="_blank" aria-label="LinkedIn">
-                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
-                </a>
-            </div>
             <p class="footer-text" style="display: flex; align-items: center; justify-content: center; gap: 10px; flex-wrap: wrap;">
                 <span data-en="© 2026 by Oxbridge English" data-es="© 2026 por Oxbridge English">© 2026 por Oxbridge English</span>
                 <span style="color: #666;">|</span>
