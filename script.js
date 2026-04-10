@@ -1,14 +1,54 @@
 // ==========================================
-// LANGUAGE SWITCHER (TWO FLAGS)
+// COOKIE CONSENT BANNER (For AdSense/GDPR)
 // ==========================================
 
 document.addEventListener('DOMContentLoaded', function() {
+    
+    // Create the banner if consent hasn't been given yet
+    if (!localStorage.getItem('cookieConsent')) {
+        const banner = document.createElement('div');
+        banner.id = 'cookie-banner';
+        banner.style.cssText = 'position: fixed; bottom: 0; left: 0; right: 0; background: rgba(13, 13, 36, 0.98); border-top: 2px solid #D4AF37; padding: 20px; z-index: 9999; display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 20px; backdrop-filter: blur(10px); box-shadow: 0 -5px 20px rgba(0,0,0,0.4);';
+        
+        banner.innerHTML = `
+            <div style="flex: 1; max-width: 800px; min-width: 250px;">
+                <p style="color: rgba(255,255,255,0.9); margin: 0 0 5px 0; font-size: 14px; line-height: 1.5; font-family: 'Roboto', sans-serif;" 
+                   data-en="We use cookies to personalize content, serve targeted ads, and analyze our traffic. By continuing to use our site, you consent to our use of cookies." 
+                   data-es="Usamos cookies para personalizar el contenido, mostrar anuncios relevantes y analizar nuestro tráfico. Al continuar usando nuestro sitio, acepta nuestro uso de cookies.">
+                   We use cookies to personalize content, serve targeted ads, and analyze our traffic. By continuing to use our site, you consent to our use of cookies.
+                </p>
+                <a href="privacy.html" style="color: #D4AF37; font-size: 13px; text-decoration: none; font-family: 'Roboto', sans-serif; font-weight: 500;" 
+                   data-en="Read our Privacy Policy" 
+                   data-es="Leer nuestra Política de Privacidad">
+                   Read our Privacy Policy
+                </a>
+            </div>
+            <button id="accept-cookies" style="background: linear-gradient(180deg, #D4AF37 0%, #C9A227 60%, #9e7a0e 100%); color: #1a1a3e; border: none; padding: 12px 30px; border-radius: 30px; font-weight: 700; cursor: pointer; font-size: 15px; font-family: 'Roboto', sans-serif; white-space: nowrap; box-shadow: 0 4px 8px rgba(0,0,0,0.3);" 
+                    data-en="Got it!" 
+                    data-es="¡Entendido!">
+                Got it!
+            </button>
+        `;
+        
+        document.body.appendChild(banner);
+        
+        // Add click event to dismiss and save consent
+        document.getElementById('accept-cookies').addEventListener('click', function() {
+            localStorage.setItem('cookieConsent', 'accepted');
+            banner.style.display = 'none';
+        });
+    }
+
+    // ==========================================
+    // LANGUAGE SWITCHER (TWO FLAGS)
+    // ==========================================
+    
     const langOptions = document.querySelectorAll('.lang-toggle .lang-option');
     
     // Get saved language or default to English
     let currentLang = localStorage.getItem('preferredLanguage') || 'en';
     
-    // Apply saved language on page load
+    // Apply saved language on page load (this also translates the new cookie banner!)
     setLanguage(currentLang);
     
     // Language option click handlers
@@ -33,7 +73,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
         
         // Update all translatable elements - QUERY FRESH EVERY TIME
-        // This ensures dynamically generated text (like quiz results) is translated!
         document.querySelectorAll('[data-en][data-es]').forEach(element => {
             const translation = element.getAttribute(`data-${lang}`);
             if (translation) {
