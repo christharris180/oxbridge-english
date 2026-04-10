@@ -1,8 +1,5 @@
 User-agent: *
 Allow: /
 
-# Sitemap location
+# Point Google to the sitemap
 Sitemap: https://oxbridge-english.com/sitemap.xml
-
-# Crawl-delay
-Crawl-delay: 1
