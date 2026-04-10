@@ -28,6 +28,17 @@
         .course-recommendation h3 { color: #D4AF37 !important; margin-bottom: 15px; font-size: 24px; }
         .progress-bar { width: 100%; height: 8px; background: rgba(255, 255, 255, 0.2); border-radius: 5px; margin-bottom: 30px; overflow: hidden; }
         .progress-fill { height: 100%; background: #D4AF37; width: 0%; transition: width 0.3s ease; }
+        
+        /* New warning box style for start screen */
+        .instruction-box {
+            background: rgba(212, 175, 55, 0.15);
+            border-left: 4px solid #D4AF37;
+            padding: 25px;
+            border-radius: 8px;
+            margin: 30px 0;
+            text-align: left;
+        }
+
         @keyframes fadeIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
@@ -61,12 +72,26 @@
             <div id="start-screen">
                 <h2 class="section-title" data-en="Discover Your English Level" data-es="Descubre tu Nivel de Inglés">Discover Your English Level</h2>
                 <p data-en="Take this quick 20-question test to find out your CEFR English level." data-es="Toma esta prueba rápida de 20 preguntas para descubrir tu nivel CEFR.">Take this quick 20-question test to find out your CEFR English level.</p>
-                <div style="background: rgba(255,255,255,0.1); color: #90EE90; padding: 10px; border-radius: 30px; margin: 20px 0;">
+                <div style="background: rgba(255,255,255,0.1); color: #90EE90; padding: 10px; border-radius: 30px; margin: 20px 0; display: inline-block;">
                     <span data-en="✓ 100% Free • No email required!" data-es="✓ 100% Gratis • ¡Sin correo!">✓ 100% Free • No email required!</span>
                 </div>
-                <p style="font-size: 15px; font-style: italic; margin-bottom: 30px;" data-en="You will be asked after each question how sure you are of your answer..." data-es="Se te preguntará después de cada pregunta qué tan seguro estás...">You will be asked after each question how sure you are of your answer; it is vitally important that you give an honest response to this if you want an accurate analysis of your level.</p>
-                <button onclick="startTest()" class="cta-button" data-en="Start Test" data-es="Comenzar">Start Test</button>
+                
+                <div class="instruction-box">
+                    <p style="font-size: 16px; line-height: 1.6; margin-bottom: 20px; color: rgba(255,255,255,0.9);" 
+                       data-en="You will be asked after each question how sure you are of your answer; it is vitally important that you give an honest response to this if you want an accurate analysis of your level." 
+                       data-es="Se te preguntará después de cada pregunta qué tan seguro estás de tu respuesta; es de vital importancia que des una respuesta honesta a esto si quieres un análisis preciso de tu nivel.">
+                        You will be asked after each question how sure you are of your answer; it is vitally important that you give an honest response to this if you want an accurate analysis of your level.
+                    </p>
+                    <p style="font-size: 22px; font-weight: 600; color: #D4AF37; margin: 0; text-align: center;" 
+                       data-en="Remember - the idea is not to pass the test; it is to understand your real level!" 
+                       data-es="Recuerda - la idea no es aprobar el examen; ¡es entender tu nivel real!">
+                        Remember - the idea is not to pass the test; it is to understand your real level!
+                    </p>
+                </div>
+
+                <button onclick="startTest()" class="cta-button" style="font-size: 18px; padding: 15px 40px; margin-top: 10px;" data-en="Start Test" data-es="Comenzar Prueba">Start Test</button>
             </div>
+            
             <div id="quiz-screen" style="display: none;">
                 <div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
                 <h3 id="question-text"></h3>
