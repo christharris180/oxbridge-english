@@ -334,8 +334,7 @@
       flex-shrink: 0;
       position: sticky;
       bottom: 0;
-      background: rgba(13,13,36,0.85);
-      backdrop-filter: blur(10px);
+      background: var(--navy);
       z-index: 50;
     }
 
@@ -355,7 +354,7 @@
       transition: color 0.2s;
       text-decoration: none;
     }
-    .nav-item .nav-icon { font-size: 26px; }
+    .nav-item .nav-icon { font-size: 30px; }
     .nav-item.active { color: var(--gold); }
     .nav-item:active { opacity: 0.7; }
 
@@ -516,7 +515,6 @@
       padding: 12px 16px;
     }
 
-    /* History entries */
     .history-entry {
       background: var(--cream);
       border-radius: 12px;
@@ -556,7 +554,6 @@
       margin-top: 60px;
     }
 
-    /* Quiz */
     .quiz-question {
       background: var(--cream);
       border-radius: 12px;
@@ -1116,10 +1113,22 @@ async function fetchGoogleDictionary(word, lang) {
     
     const meanings = defsArray.map(posGroup => {
         const partOfSpeech = posGroup[0] || 'Definición';
-        const defs = (posGroup[1] || []).map(d => ({
-            definition: d.definition || d[0] || '',
-            example: d.example || d[1] || ''
-        })).filter(d => d.definition);
+        const defs = (posGroup[1] || []).map(d => {
+            let defStr = d[0] || '';
+            let exStr = '';
+            
+            // Filter out Google's internal ID codes by ensuring examples have spaces
+            if (typeof d[2] === 'string' && d[2].includes(' ')) {
+                exStr = d[2];
+            } else if (typeof d[1] === 'string' && d[1].includes(' ')) {
+                exStr = d[1];
+            }
+            
+            return {
+                definition: defStr,
+                example: exStr
+            };
+        }).filter(d => d.definition);
         
         let synonyms = [];
         if (synsArray) {
@@ -1148,7 +1157,7 @@ async function searchDictionary() {
   const word = rawWord.toLowerCase();
   const lang = document.getElementById('dict-lang').value;
   const resContainer = document.getElementById('dict-results');
-  const isEs = (uiLang === 'es'); // FIXED LOGIC HERE
+  const isEs = (uiLang === 'es');
 
   if (!word) {
       showToast(isEs ? 'Escribe una palabra' : 'Type a word');

@@ -88,10 +88,22 @@
             
             const meanings = defsArray.map(posGroup => {
                 const partOfSpeech = posGroup[0] || 'Definición';
-                const defs = (posGroup[1] || []).map(d => ({
-                    definition: d.definition || d[0] || '',
-                    example: d.example || d[1] || ''
-                })).filter(d => d.definition);
+                const defs = (posGroup[1] || []).map(d => {
+                    let defStr = d[0] || '';
+                    let exStr = '';
+                    
+                    // Filter out Google's internal ID codes by ensuring examples have spaces
+                    if (typeof d[2] === 'string' && d[2].includes(' ')) {
+                        exStr = d[2];
+                    } else if (typeof d[1] === 'string' && d[1].includes(' ')) {
+                        exStr = d[1];
+                    }
+                    
+                    return {
+                        definition: defStr,
+                        example: exStr
+                    };
+                }).filter(d => d.definition);
                 
                 let synonyms = [];
                 if (synsArray) {
@@ -136,11 +148,9 @@
                         const data = await res.json();
                         finalData = data[0];
                     } catch (e) {
-                        // Fallback to Google if the English API fails
                         finalData = await fetchGoogleDictionary(word, 'en');
                     }
                 } else {
-                    // For Spanish, always use the powerful Google Dictionary Engine
                     finalData = await fetchGoogleDictionary(word, 'es');
                 }
 
