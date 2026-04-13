@@ -1,4 +1,3 @@
-// The Master Bank of 40 Questions (10 per level)
 const questionBank = {
     level1: [
         { q: "I ___ a student.", options: ["am", "is", "are", "be", "being"], answer: 0 },
@@ -53,10 +52,8 @@ const questionBank = {
 let currentTestQuestions = [];
 let currentQ = 0;
 let userScore = 0;
-let temporarySelection = null;
+let temporarySelectionIsCorrect = false;
 
-// --- BULLETPROOF LANGUAGE LISTENER ---
-// Instantly changes the result text when the user clicks a flag
 document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('.lang-option').forEach(btn => {
         btn.addEventListener('click', function() {
@@ -88,7 +85,7 @@ function startTest() {
 }
 
 function loadQuestion() {
-    temporarySelection = null;
+    temporarySelectionIsCorrect = false;
     document.getElementById('confidence-panel').style.display = 'none'; 
 
     const progress = (currentQ / currentTestQuestions.length) * 100;
@@ -100,17 +97,26 @@ function loadQuestion() {
     const optionsContainer = document.getElementById('options-container');
     optionsContainer.innerHTML = ''; 
 
-    qData.options.forEach((opt, index) => {
+    // Map options to objects before shuffling so we don't lose track of the correct answer
+    let mappedOptions = qData.options.map((opt, index) => ({
+        text: opt,
+        isCorrect: index === qData.answer
+    }));
+
+    // Randomize the order of options for every single question
+    mappedOptions = shuffleArray(mappedOptions);
+
+    mappedOptions.forEach((optObj) => {
         const btn = document.createElement('button');
         btn.className = 'option-btn';
-        btn.textContent = opt;
-        btn.onclick = () => selectOption(btn, index);
+        btn.textContent = optObj.text;
+        btn.onclick = () => selectOption(btn, optObj.isCorrect);
         optionsContainer.appendChild(btn);
     });
 }
 
-function selectOption(btnElement, selectedIndex) {
-    temporarySelection = selectedIndex;
+function selectOption(btnElement, isCorrect) {
+    temporarySelectionIsCorrect = isCorrect;
     
     const allBtns = document.querySelectorAll('.option-btn');
     allBtns.forEach(b => b.classList.remove('selected'));
@@ -120,19 +126,13 @@ function selectOption(btnElement, selectedIndex) {
 }
 
 function submitAnswer(confidenceLevel) {
-    const isCorrect = (temporarySelection === currentTestQuestions[currentQ].answer);
-    
-    if (isCorrect) {
+    if (temporarySelectionIsCorrect) {
         userScore += confidenceLevel;
     }
     
     currentQ++;
-    
-    if (currentQ < currentTestQuestions.length) {
-        loadQuestion();
-    } else {
-        showResults();
-    }
+    if (currentQ < currentTestQuestions.length) loadQuestion();
+    else showResults();
 }
 
 function showResults() {
@@ -140,26 +140,31 @@ function showResults() {
     document.getElementById('result-screen').style.display = 'block';
     document.getElementById('progress').style.width = '100%';
 
-    // Check which language the user has active right now
     const currentLang = document.querySelector('.lang-option.active')?.getAttribute('data-lang') || 'en';
     renderResultText(currentLang);
 }
 
-// Dedicated function to render English OR Spanish results perfectly
 function renderResultText(lang) {
     const scoreText = document.getElementById('score-text');
     const recommendedCourse = document.getElementById('recommended-course');
     const courseReason = document.getElementById('course-reason');
+    const advancedBtn = document.getElementById('advanced-btn');
+    const coursesBtn = document.getElementById('courses-btn');
     
-    if (!scoreText || !recommendedCourse || !courseReason) return; // Prevent crashes
+    if (!scoreText || !recommendedCourse || !courseReason) return;
+
+    if (advancedBtn) advancedBtn.style.display = 'none';
+    if (coursesBtn) coursesBtn.style.display = 'inline-block';
 
     const percentage = (userScore / 60) * 100;
+    
+    // Save this test's score to the browser session for anti-loop logic
+    sessionStorage.setItem('basicPercentage', percentage);
 
     let enScore = `You scored ${userScore} out of 60 possible points.`;
     let esScore = `Obtuviste ${userScore} de 60 puntos posibles.`;
     scoreText.textContent = lang === 'es' ? esScore : enScore;
     
-    // Add translation attributes so your old script.js doesn't accidentally overwrite it
     scoreText.setAttribute('data-en', enScore);
     scoreText.setAttribute('data-es', esScore);
 
@@ -189,10 +194,32 @@ function renderResultText(lang) {
         enReason = "You have a great level, but there was some hesitation with past structures. We recommend starting at Course 3 to consolidate and advance quickly.";
         esReason = "Tienes muy buen nivel, pero hubo dudas en estructuras pasadas. Te recomendamos empezar por el Curso 3 para consolidar y avanzar rápidamente.";
     } else {
-        enRec = "Your CEFR Level: Solid A2 / B1";
-        esRec = "Tu Nivel CEFR: A2 Sólido / B1";
-        enReason = "Excellent work! We recommend taking Courses 3 and 4 as a quick refresher to reinforce your knowledge. Stay tuned for our Advanced Test (coming soon) to map your exact B1 level!";
-        esReason = "¡Excelente trabajo! Recomendamos tomar los Cursos 3 y 4 para un repaso rápido y reforzar conocimientos. ¡Pronto lanzaremos nuestra Prueba Avanzada para medir tu nivel exacto de B1!";
+        // Highest Tier Logic
+        const advPercentage = sessionStorage.getItem('advPercentage');
+
+        // LOOP BREAKER: If they already failed the advanced test, they are "A2 Complete"
+        if (advPercentage !== null && parseFloat(advPercentage) <= 25) {
+            enRec = "Your CEFR Level: A2 Complete";
+            esRec = "Tu Nivel CEFR: A2 Completo";
+            enReason = "You've mastered the basics! Because the advanced test was a bit tricky for you, this confirms you are a very solid A2 ready to break into intermediate English. We recommend taking Courses 3 and 4 to solidify your foundation.";
+            esReason = "¡Has dominado las bases! Debido a que la prueba avanzada fue un poco difícil para ti, esto confirma que eres un A2 muy sólido listo para el inglés intermedio. Recomendamos los Cursos 3 y 4.";
+            
+            if (coursesBtn) coursesBtn.style.display = 'inline-block';
+            if (advancedBtn) advancedBtn.style.display = 'none';
+        } else {
+            // Standard Flow: Aced the basic, need to take the advanced
+            enRec = "Advanced Evaluation Required";
+            esRec = "Se Requiere Evaluación Avanzada";
+            enReason = "You aced the basic questions! Because you scored so high, we cannot accurately place you yet. You must complete the Advanced Test to unlock your official CEFR level.";
+            esReason = "¡Dominaste las preguntas básicas! Ya que obtuviste un puntaje tan alto, aún no podemos ubicarte con precisión. Debes completar la Prueba Avanzada para desbloquear tu nivel CEFR oficial.";
+            
+            if (coursesBtn) coursesBtn.style.display = 'none'; 
+            
+            if (advancedBtn) {
+                advancedBtn.style.display = 'inline-block';
+                advancedBtn.textContent = lang === 'es' ? advancedBtn.getAttribute('data-es') : advancedBtn.getAttribute('data-en');
+            }
+        }
     }
 
     recommendedCourse.textContent = lang === 'es' ? esRec : enRec;
