@@ -15,627 +15,55 @@
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700&family=Work+Sans:wght@600;700&display=swap" rel="stylesheet" />
 
   <style>
-    :root {
-      --gold: #C9A227;
-      --gold-light: #D4AF37;
-      --gold-dim: rgba(201, 162, 39, 0.18);
-      --gold-shadow: rgba(180, 140, 10, 0.6);
-      --navy: #0d0d24;
-      --navy-mid: #111130;
-      --navy-light: #1a1a3e;
-      --cream: #cdc89e;
-      --cream-solid: #c0ba8c;
-      --text-navy: #1a1a3e;
-      --text-light: rgba(255,255,255,0.88);
-      --text-dim: rgba(255,255,255,0.42);
-      --radius: 16px;
-      --safe-top: env(safe-area-inset-top, 0px);
-      --safe-bottom: env(safe-area-inset-bottom, 0px);
-    }
-
+    :root { --gold: #C9A227; --gold-light: #D4AF37; --gold-dim: rgba(201, 162, 39, 0.18); --navy: #0d0d24; --navy-light: #1a1a3e; --cream: #cdc89e; --cream-solid: #c0ba8c; --text-navy: #1a1a3e; --text-dim: rgba(255,255,255,0.42); --radius: 16px; --safe-top: env(safe-area-inset-top, 0px); --safe-bottom: env(safe-area-inset-bottom, 0px); }
     * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
-
-    html, body {
-      height: 100%;
-      background: var(--navy);
-      color: white;
-      font-family: 'Roboto', sans-serif;
-      font-weight: 300;
-      overflow: hidden;
-    }
-
-    .app {
-      display: flex;
-      flex-direction: column;
-      height: 100vh;
-      height: 100dvh;
-      padding-top: var(--safe-top);
-      padding-bottom: var(--safe-bottom);
-    }
-
-    /* ── TOP BAR ── */
-    .topbar {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 16px 20px 12px;
-      flex-shrink: 0;
-    }
-
-    .topbar-logo {
-      display: flex;
-      align-items: center;
-      gap: 9px;
-      font-family: 'Roboto', sans-serif;
-      font-weight: 100;
-      font-size: 15px;
-      color: rgba(255,255,255,0.7);
-      letter-spacing: 0.6px;
-    }
-
-    .topbar-ox {
-      width: 34px;
-      height: 34px;
-      border-radius: 50%;
-      object-fit: cover;
-      border: 1px solid rgba(201,162,39,0.4);
-    }
-
-    .topbar-logo strong {
-      color: var(--gold);
-      font-weight: 300;
-    }
-
-    .topbar-actions {
-      display: flex;
-      gap: 10px;
-    }
-
-    .icon-btn {
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      border: 1px solid rgba(201,162,39,0.35);
-      background: var(--gold-dim);
-      color: var(--gold);
-      font-size: 14px;
-      font-family: 'Roboto', sans-serif;
-      font-weight: 500;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      transition: all 0.2s;
-    }
-    .icon-btn:active { transform: scale(0.92); background: rgba(201,162,39,0.28); }
-
-    /* ── DIRECTION BAR ── */
-    .direction-bar {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
-      margin: 10px 16px;
-      background: transparent;
-      border: none;
-      padding: 0;
-      flex-shrink: 0;
-    }
-
-    .lang-pill {
-      flex: 1;
-      text-align: center;
-      padding: 11px 6px;
-      border-radius: 50px;
-      font-size: 13px;
-      font-weight: 500;
-      font-family: 'Roboto', sans-serif;
-      cursor: pointer;
-      transition: all 0.25s ease;
-      color: rgba(255,255,255,0.35);
-      background: var(--navy-light);
-      border: 1px solid rgba(255,255,255,0.08);
-      user-select: none;
-      box-shadow: 0 3px 8px rgba(0,0,0,0.3), 0 2px 0 rgba(0,0,0,0.2);
-    }
-
-    .lang-pill.active {
-      background: linear-gradient(180deg, var(--gold-light) 0%, var(--gold) 60%, #a07c10 100%);
-      color: var(--text-navy);
-      font-weight: 700;
-      border-color: transparent;
-      box-shadow: 0 3px 8px rgba(0,0,0,0.3), 0 2px 0 rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.3);
-    }
-
-    /* ── MAIN PANELS ── */
-    .panels {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      gap: 0;
-      padding: 0 16px 10px;
-      overflow: hidden;
-      min-height: 0;
-    }
-
-    .panel {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      background: var(--cream);
-      border: none;
-      border-radius: var(--radius);
-      padding: 7px 12px;
-      position: relative;
-      min-height: 0;
-      max-height: 220px;
-      box-shadow: inset 0 2px 6px rgba(0,0,0,0.12);
-    }
-
-    .panel.source-panel {
-      border-radius: var(--radius);
-      margin-bottom: 0;
-    }
-
-    .panel.output-panel {
-      border-radius: var(--radius);
-      background: var(--cream-solid);
-      box-shadow: inset 0 2px 8px rgba(0,0,0,0.1);
-    }
-
-    .panel-label {
-      font-size: 10px;
-      font-weight: 500;
-      font-family: 'Roboto', sans-serif;
-      letter-spacing: 1.4px;
-      text-transform: uppercase;
-      color: rgba(26,26,62,0.45);
-      margin-bottom: 8px;
-      flex-shrink: 0;
-    }
-
+    html, body { height: 100%; background: var(--navy); color: white; font-family: 'Roboto', sans-serif; font-weight: 300; overflow: hidden; }
+    .app { display: flex; flex-direction: column; height: 100vh; height: 100dvh; padding-top: var(--safe-top); padding-bottom: var(--safe-bottom); }
+    .topbar { display: flex; align-items: center; justify-content: space-between; padding: 16px 20px 12px; flex-shrink: 0; }
+    .topbar-logo { display: flex; align-items: center; gap: 9px; font-family: 'Roboto', sans-serif; font-weight: 100; font-size: 15px; color: rgba(255,255,255,0.7); letter-spacing: 0.6px; }
+    .topbar-ox { width: 34px; height: 34px; border-radius: 50%; object-fit: cover; border: 1px solid rgba(201,162,39,0.4); }
+    .topbar-logo strong { color: var(--gold); font-weight: 300; }
+    .icon-btn { width: 40px; height: 40px; border-radius: 50%; border: 1px solid rgba(201,162,39,0.35); background: var(--gold-dim); color: var(--gold); font-size: 14px; font-weight: 500; display: flex; align-items: center; justify-content: center; cursor: pointer; }
+    .direction-bar { display: flex; align-items: center; justify-content: center; gap: 6px; margin: 10px 16px; flex-shrink: 0; }
+    .lang-pill { flex: 1; text-align: center; padding: 11px 6px; border-radius: 50px; font-size: 13px; font-weight: 500; cursor: pointer; color: rgba(255,255,255,0.35); background: var(--navy-light); border: 1px solid rgba(255,255,255,0.08); user-select: none; }
+    .lang-pill.active { background: linear-gradient(180deg, var(--gold-light) 0%, var(--gold) 60%, #a07c10 100%); color: var(--text-navy); font-weight: 700; border-color: transparent; }
+    .panels { flex: 1; display: flex; flex-direction: column; padding: 0 16px 10px; overflow: hidden; min-height: 0; }
+    .panel { flex: 1; display: flex; flex-direction: column; background: var(--cream); border-radius: var(--radius); padding: 7px 12px; min-height: 0; max-height: 220px; box-shadow: inset 0 2px 6px rgba(0,0,0,0.12); }
+    .panel.output-panel { background: var(--cream-solid); }
+    .panel-label { font-size: 10px; font-weight: 500; letter-spacing: 1.4px; text-transform: uppercase; color: rgba(26,26,62,0.45); margin-bottom: 8px; flex-shrink: 0; }
     .panel-label.source { color: var(--navy-light); }
-
-    textarea {
-      flex: 1;
-      background: transparent;
-      border: none;
-      outline: none;
-      color: var(--text-navy);
-      font-family: 'Roboto', sans-serif;
-      font-size: 14px;
-      font-weight: 300;
-      line-height: 1.45;
-      resize: none;
-      width: 100%;
-      min-height: 0;
-    }
-
+    textarea { flex: 1; background: transparent; border: none; outline: none; color: var(--text-navy); font-family: 'Roboto', sans-serif; font-size: 14px; line-height: 1.45; resize: none; width: 100%; min-height: 0; }
     textarea::placeholder { color: rgba(26,26,62,0.25); }
-
-    .panel-bottom {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-top: 6px;
-      flex-shrink: 0;
-    }
-
-    .char-count, #save-status {
-      font-size: 11px;
-      color: rgba(26,26,62,0.4);
-      font-family: 'Roboto', sans-serif;
-    }
-
-    .panel-actions {
-      display: flex;
-      gap: 10px;
-    }
-
-    .mini-btn {
-      width: 66px;
-      height: 66px;
-      border-radius: 50%;
-      border: none;
-      background: linear-gradient(180deg, var(--gold-light) 0%, var(--gold) 55%, #9e7a0e 100%);
-      color: var(--text-navy);
-      font-size: 26px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.35), 0 2px 0 rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.35);
-      transition: all 0.15s;
-    }
-    .mini-btn:active {
-      transform: translateY(2px);
-      box-shadow: 0 2px 4px rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.2);
-    }
-    .mini-btn.clear-btn {
-      background: linear-gradient(180deg, #8a8a9a 0%, #5a5a72 60%, #3a3a52 100%);
-      color: white;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.35), 0 2px 0 rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.2);
-    }
-    .mini-btn.clear-btn:active {
-      transform: translateY(2px);
-      box-shadow: 0 2px 4px rgba(0,0,0,0.25);
-    }
-    .mini-btn.active { filter: brightness(1.15); }
-
-    .output-text {
-      flex: 1;
-      font-size: 14px;
-      font-weight: 300;
-      font-family: 'Roboto', sans-serif;
-      line-height: 1.5;
-      color: var(--text-navy);
-      overflow-y: auto;
-      word-break: break-word;
-    }
-
-    .output-placeholder {
-      color: rgba(26,26,62,0.25);
-      font-size: 14px;
-      font-weight: 300;
-    }
-
-    .loading-dots {
-      display: inline-flex;
-      gap: 5px;
-      align-items: center;
-      padding-top: 4px;
-    }
-    .loading-dots span {
-      width: 7px; height: 7px;
-      border-radius: 50%;
-      background: var(--gold);
-      animation: bounce 1s infinite;
-    }
-    .loading-dots span:nth-child(2) { animation-delay: 0.15s; }
-    .loading-dots span:nth-child(3) { animation-delay: 0.3s; }
-    @keyframes bounce {
-      0%, 60%, 100% { transform: translateY(0); opacity: 0.4; }
-      30% { transform: translateY(-6px); opacity: 1; }
-    }
-
-    .translate-wrap {
-      padding: 10px 16px;
-      flex-shrink: 0;
-    }
-
-    .promo-btn {
-      display: block;
-      width: 100%;
-      padding: 13px 16px;
-      background: linear-gradient(180deg, #ffffff 0%, #f2f2f2 50%, #d8d8d8 100%);
-      border: 2px solid #cc2020;
-      border-radius: 50px;
-      color: var(--text-navy);
-      font-family: 'Roboto', sans-serif;
-      font-size: 11px;
-      font-weight: 300;
-      line-height: 1.45;
-      text-align: center;
-      text-decoration: none;
-      cursor: pointer;
-      box-shadow: 0 5px 12px rgba(0,0,0,0.4), 0 2px 0 rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,1);
-      transition: all 0.15s;
-      flex-shrink: 0;
-    }
-    .promo-btn:active {
-      transform: translateY(3px);
-      box-shadow: 0 2px 5px rgba(0,0,0,0.25);
-    }
-    .promo-btn strong { font-weight: 600; }
-
-    .bottom-nav {
-      display: flex;
-      border-top: 1px solid rgba(255,255,255,0.07);
-      flex-shrink: 0;
-      position: sticky;
-      bottom: 0;
-      background: var(--navy);
-      z-index: 50;
-    }
-
-    .nav-item {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 4px;
-      padding: 12px 0 10px;
-      cursor: pointer;
-      color: var(--text-dim);
-      font-size: 10px;
-      font-weight: 400;
-      font-family: 'Roboto', sans-serif;
-      letter-spacing: 0.3px;
-      transition: color 0.2s;
-      text-decoration: none;
-    }
-    .nav-item .nav-icon { font-size: 30px; }
+    .panel-bottom { display: flex; align-items: center; justify-content: space-between; margin-top: 6px; flex-shrink: 0; }
+    .char-count, #save-status { font-size: 11px; color: rgba(26,26,62,0.4); }
+    .panel-actions { display: flex; gap: 10px; }
+    .mini-btn { width: 66px; height: 66px; border-radius: 50%; border: none; background: linear-gradient(180deg, var(--gold-light) 0%, var(--gold) 55%, #9e7a0e 100%); color: var(--text-navy); font-size: 26px; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 4px 8px rgba(0,0,0,0.35); }
+    .mini-btn.clear-btn { background: linear-gradient(180deg, #8a8a9a 0%, #5a5a72 60%, #3a3a52 100%); color: white; }
+    .output-text { flex: 1; font-size: 14px; font-weight: 300; line-height: 1.5; color: var(--text-navy); overflow-y: auto; word-break: break-word; }
+    .output-placeholder { color: rgba(26,26,62,0.25); font-size: 14px; }
+    .translate-wrap { padding: 10px 16px; flex-shrink: 0; }
+    .promo-btn { display: block; padding: 13px 16px; background: linear-gradient(180deg, #ffffff 0%, #f2f2f2 50%, #d8d8d8 100%); border: 2px solid #cc2020; border-radius: 50px; color: var(--text-navy); font-size: 11px; text-align: center; text-decoration: none; box-shadow: 0 5px 12px rgba(0,0,0,0.4); }
+    .bottom-nav { display: flex; border-top: 1px solid rgba(255,255,255,0.07); flex-shrink: 0; background: var(--navy); z-index: 50; }
+    .nav-item { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 12px 0 10px; cursor: pointer; color: var(--text-dim); font-size: 10px; }
     .nav-item.active { color: var(--gold); }
-    .nav-item:active { opacity: 0.7; }
-
-    .toast {
-      position: fixed;
-      bottom: calc(80px + var(--safe-bottom));
-      left: 50%;
-      transform: translateX(-50%) translateY(20px);
-      background: rgba(13,13,36,0.96);
-      border: 1px solid var(--gold);
-      color: white;
-      padding: 10px 22px;
-      border-radius: 30px;
-      font-size: 13px;
-      font-family: 'Roboto', sans-serif;
-      opacity: 0;
-      transition: all 0.3s;
-      pointer-events: none;
-      white-space: nowrap;
-      z-index: 100;
-    }
-    .toast.show {
-      opacity: 1;
-      transform: translateX(-50%) translateY(0);
-    }
-
-    .mini-btn.recording {
-      background: linear-gradient(180deg, #ff6060 0%, #cc2020 60%, #8a0000 100%);
-      color: white;
-      box-shadow: 0 4px 8px rgba(200,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.2);
-      animation: pulse-red 1s infinite;
-    }
-    @keyframes pulse-red {
-      0%, 100% { box-shadow: 0 0 0 0 rgba(220,50,50,0.5), 0 4px 8px rgba(200,0,0,0.4); }
-      50% { box-shadow: 0 0 0 8px rgba(220,50,50,0), 0 4px 8px rgba(200,0,0,0.4); }
-    }
-
-    .history-badge {
-      background: var(--gold);
-      color: var(--text-navy);
-      font-size: 9px;
-      font-weight: 700;
-      border-radius: 10px;
-      padding: 1px 5px;
-      margin-left: 4px;
-      vertical-align: middle;
-    }
-
-    ::-webkit-scrollbar { width: 4px; }
-    ::-webkit-scrollbar-track { background: transparent; }
-    ::-webkit-scrollbar-thumb { background: rgba(201,162,39,0.3); border-radius: 4px; }
-
-    .install-banner {
-      margin: 0 16px 8px;
-      background: var(--gold-dim);
-      border: 1px solid rgba(201,162,39,0.3);
-      border-radius: 12px;
-      padding: 10px 14px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 10px;
-      flex-shrink: 0;
-    }
-    .install-banner p { font-size: 13px; color: var(--gold); line-height: 1.3; font-family: 'Roboto', sans-serif; }
-    .install-banner p span { display: block; font-size: 11px; color: var(--text-dim); margin-top: 2px; }
-    .install-btn {
-      background: linear-gradient(180deg, var(--gold-light) 0%, var(--gold) 60%, #8a6808 100%);
-      color: var(--text-navy);
-      border: none;
-      border-radius: 20px;
-      padding: 7px 14px;
-      font-size: 12px;
-      font-weight: 700;
-      font-family: 'Roboto', sans-serif;
-      cursor: pointer;
-      white-space: nowrap;
-      flex-shrink: 0;
-      box-shadow: 0 3px 8px rgba(0,0,0,0.35);
-    }
-    .close-banner {
-      background: none;
-      border: none;
-      color: var(--text-dim);
-      font-size: 18px;
-      cursor: pointer;
-      padding: 0 4px;
-      flex-shrink: 0;
-    }
-
-    .app-subtitle {
-      text-align: center;
-      font-family: 'Roboto', sans-serif;
-      font-weight: 300;
-      font-size: 26px;
-      color: white;
-      letter-spacing: 0.3px;
-      padding: 4px 20px 10px;
-      flex-shrink: 0;
-      text-shadow: 0 2px 4px rgba(0,0,0,0.8);
-    }
-
-    .screen {
-      position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(13, 13, 36, 0.95);
-      backdrop-filter: blur(10px);
-      display: flex;
-      flex-direction: column;
-      z-index: 200;
-      padding-top: var(--safe-top);
-      padding-bottom: var(--safe-bottom);
-      animation: slideIn 0.25s ease;
-    }
-    @keyframes slideIn {
-      from { transform: translateX(100%); }
-      to { transform: translateX(0); }
-    }
-
-    .screen-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 14px 16px;
-      border-bottom: 1px solid rgba(255,255,255,0.08);
-      flex-shrink: 0;
-    }
-
-    .screen-title {
-      font-family: 'Roboto', sans-serif;
-      font-weight: 300;
-      font-size: 18px;
-      color: var(--gold);
-      letter-spacing: 0.5px;
-    }
-
-    .back-btn {
-      background: none;
-      border: none;
-      color: var(--gold);
-      font-size: 15px;
-      font-family: 'Roboto', sans-serif;
-      cursor: pointer;
-      padding: 6px 10px 6px 0;
-    }
-
-    .clear-history-btn {
-      background: none;
-      border: none;
-      font-size: 20px;
-      cursor: pointer;
-      padding: 4px 8px;
-    }
-
-    .screen-body {
-      flex: 1;
-      overflow-y: auto;
-      padding: 12px 16px;
-    }
-
-    .history-entry {
-      background: var(--cream);
-      border-radius: 12px;
-      padding: 12px 14px;
-      margin-bottom: 10px;
-    }
-    .history-direction {
-      font-size: 11px;
-      color: rgba(26,26,62,0.45);
-      margin-bottom: 4px;
-      font-family: 'Roboto', sans-serif;
-    }
-    .history-original {
-      font-size: 15px;
-      font-weight: 400;
-      color: var(--text-navy);
-      font-family: 'Roboto', sans-serif;
-      margin-bottom: 3px;
-    }
-    .history-translation {
-      font-size: 15px;
-      font-weight: 300;
-      color: rgba(26,26,62,0.65);
-      font-family: 'Roboto', sans-serif;
-      margin-bottom: 4px;
-    }
-    .history-date {
-      font-size: 10px;
-      color: rgba(26,26,62,0.35);
-      font-family: 'Roboto', sans-serif;
-    }
-    .history-empty {
-      text-align: center;
-      color: var(--text-dim);
-      font-family: 'Roboto', sans-serif;
-      font-size: 15px;
-      margin-top: 60px;
-    }
-
-    .quiz-question {
-      background: var(--cream);
-      border-radius: 12px;
-      padding: 16px;
-      margin-bottom: 12px;
-    }
-    .quiz-q-text {
-      font-size: 16px;
-      font-weight: 400;
-      color: var(--text-navy);
-      font-family: 'Roboto', sans-serif;
-      margin-bottom: 12px;
-      line-height: 1.4;
-    }
-    .quiz-option {
-      display: block;
-      width: 100%;
-      padding: 10px 14px;
-      margin-bottom: 8px;
-      border-radius: 8px;
-      border: 1px solid rgba(26,26,62,0.2);
-      background: white;
-      color: var(--text-navy);
-      font-family: 'Roboto', sans-serif;
-      font-size: 14px;
-      cursor: pointer;
-      text-align: left;
-      transition: all 0.15s;
-    }
-    .quiz-option.correct { background: #d4edda; border-color: #28a745; color: #155724; }
-    .quiz-option.wrong { background: #f8d7da; border-color: #dc3545; color: #721c24; }
-    .quiz-option:disabled { cursor: default; }
-    .quiz-score {
-      text-align: center;
-      padding: 30px 20px;
-      color: white;
-      font-family: 'Roboto', sans-serif;
-    }
-    .quiz-score-num {
-      font-size: 64px;
-      font-weight: 100;
-      color: var(--gold);
-      display: block;
-    }
-    .quiz-score-label {
-      font-size: 18px;
-      font-weight: 300;
-      margin-bottom: 24px;
-      display: block;
-    }
-    .quiz-restart-btn {
-      background: linear-gradient(180deg, #e8c840 0%, var(--gold-light) 30%, var(--gold) 65%, #8a6808 100%);
-      color: var(--text-navy);
-      border: none;
-      border-radius: 50px;
-      padding: 14px 40px;
-      font-size: 16px;
-      font-weight: 700;
-      font-family: 'Roboto', sans-serif;
-      cursor: pointer;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-    }
-    .quiz-not-enough {
-      text-align: center;
-      color: var(--text-dim);
-      font-family: 'Roboto', sans-serif;
-      font-size: 15px;
-      margin-top: 60px;
-      line-height: 1.6;
-      padding: 0 20px;
-    }
-
-    /* ── CLICKABLE WORD STYLES ── */
+    .toast { position: fixed; bottom: calc(80px + var(--safe-bottom)); left: 50%; transform: translateX(-50%) translateY(20px); background: rgba(13,13,36,0.96); border: 1px solid var(--gold); color: white; padding: 10px 22px; border-radius: 30px; font-size: 13px; opacity: 0; pointer-events: none; transition: all 0.3s; z-index: 100; }
+    .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+    .history-badge { background: var(--gold); color: var(--text-navy); font-size: 9px; font-weight: 700; border-radius: 10px; padding: 1px 5px; margin-left: 4px; }
+    .screen { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(13, 13, 36, 0.95); backdrop-filter: blur(10px); display: flex; flex-direction: column; z-index: 200; padding-top: var(--safe-top); padding-bottom: var(--safe-bottom); }
+    .screen-header { display: flex; align-items: center; justify-content: space-between; padding: 14px 16px; border-bottom: 1px solid rgba(255,255,255,0.08); flex-shrink: 0; }
+    .screen-title { font-size: 18px; color: var(--gold); }
+    .back-btn { background: none; border: none; color: var(--gold); font-size: 15px; cursor: pointer; }
+    .screen-body { flex: 1; overflow-y: auto; padding: 12px 16px; }
+    
+    /* MODAL CSS */
     .clickable-word { cursor: pointer; border-bottom: 1px dashed rgba(212, 175, 55, 0.6); transition: background 0.2s, color 0.2s; border-radius: 3px; padding: 0 2px; }
     .clickable-word:hover { background: rgba(212, 175, 55, 0.15); color: #b48c0a; }
     .word-modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(13,13,36,0.8); z-index: 9999; display: flex; justify-content: center; align-items: center; opacity: 0; pointer-events: none; transition: opacity 0.3s; backdrop-filter: blur(4px); }
     .word-modal-overlay.active { opacity: 1; pointer-events: all; }
-    .word-modal-content { background: #cdc89e; width: 90%; max-width: 400px; max-height: 80vh; overflow-y: auto; border-radius: 16px; padding: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); transform: translateY(20px); transition: transform 0.3s; }
-    .word-modal-overlay.active .word-modal-content { transform: translateY(0); }
+    .word-modal-content { background: #cdc89e; width: 90%; max-width: 400px; max-height: 80vh; overflow-y: auto; border-radius: 16px; padding: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
     .word-modal-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(26,26,62,0.1); padding-bottom: 10px; margin-bottom: 15px; }
-    .word-modal-title { color: #1a1a3e; font-size: 24px; font-weight: 700; margin: 0; text-transform: capitalize; font-family: 'Work Sans', sans-serif; }
-    .word-modal-close { background: none; border: none; font-size: 28px; color: #1a1a3e; cursor: pointer; line-height: 1; padding: 0; }
+    .word-modal-title { color: #1a1a3e; font-size: 24px; font-weight: 700; margin: 0; text-transform: capitalize; }
+    .word-modal-close { background: none; border: none; font-size: 28px; color: #1a1a3e; cursor: pointer; }
   </style>
 </head>
 <body style="background: url('blue_background_001.jpg') no-repeat center center fixed; background-size: cover;">
@@ -647,38 +75,31 @@
       <span><strong>Oxbridge English</strong></span>
     </div>
     <div class="topbar-actions">
-      <div class="icon-btn" onclick="toggleLanguage()" id="lang-toggle" title="EN/ES">ES</div>
+      <div class="icon-btn" onclick="window.toggleLanguage()" id="lang-toggle">ES</div>
     </div>
-  </div>
-  <div class="app-subtitle" data-en="SmarTranslator" data-es="SmarTraductor">SmarTranslator</div>
-
-  <div class="install-banner" id="install-banner" style="display:none;">
-    <p>📲 Instala la app <span>Úsala sin internet</span></p>
-    <button class="install-btn" onclick="installApp()">Instalar</button>
-    <button class="close-banner" onclick="closeBanner()">×</button>
   </div>
 
   <div class="direction-bar">
-    <div class="lang-pill active" id="pill-es-en" onclick="setDirection('es-en')">Español → English</div>
-    <div class="lang-pill" id="pill-en-es" onclick="setDirection('en-es')">English → Español</div>
+    <div class="lang-pill active" id="pill-es-en" onclick="window.setDirection('es-en')">Español → English</div>
+    <div class="lang-pill" id="pill-en-es" onclick="window.setDirection('en-es')">English → Español</div>
   </div>
 
   <div class="panels">
     <div class="panel source-panel">
       <div class="panel-label source" id="label-source">Escribe en español...</div>
-      <textarea id="source-input" placeholder="Hola, ¿cómo estás?" maxlength="1000" oninput="handleTextInput()"></textarea>
+      <textarea id="source-input" placeholder="Hola, ¿cómo estás?" maxlength="1000" oninput="window.handleTextInput()"></textarea>
       <div class="panel-bottom">
         <span class="char-count"><span id="char-count">0</span>/1000</span>
         <div class="panel-actions">
-          <div class="mini-btn" id="mic-btn" onclick="toggleMic()" title="Voz">🎤</div>
-          <div class="mini-btn clear-btn" onclick="clearInput()" title="Borrar">✕</div>
+          <div class="mini-btn" id="mic-btn" onclick="window.toggleMic()">🎤</div>
+          <div class="mini-btn clear-btn" onclick="window.clearInput()">✕</div>
         </div>
       </div>
     </div>
 
     <div class="translate-wrap">
       <a class="promo-btn" href="https://oxbridge-english.com/courses.html" target="_blank">
-        🎓 ¿Cansado de traducir todo? Empieza hoy un curso de inglés online, guiado por IA y 100% autodidacta con <strong>Oxbridge English</strong>
+        🎓 Empieza un curso de inglés online guiado por IA con <strong>Oxbridge English</strong>
       </a>
     </div>
 
@@ -690,587 +111,292 @@
       <div class="panel-bottom">
         <span class="char-count" id="save-status"></span>
         <div class="panel-actions">
-          <div class="mini-btn" id="speak-btn" onclick="speakOutput()" title="Escuchar">🔊</div>
-          <div class="mini-btn" onclick="copyOutput()" title="Copiar">📋</div>
+          <div class="mini-btn" id="speak-btn" onclick="window.speakOutput()">🔊</div>
+          <div class="mini-btn" onclick="window.copyOutput()">📋</div>
         </div>
       </div>
     </div>
   </div>
 
-  <div style="text-align: center; padding: 10px; font-size: 11px; background: rgba(13,13,36,0.9); flex-shrink: 0; border-top: 1px solid rgba(255,255,255,0.05);">
-      <a href="privacy.html" target="_blank" style="color: rgba(255,255,255,0.4); text-decoration: none; margin: 0 10px;" data-en="Privacy" data-es="Privacidad">Privacidad</a>
-      <span style="color: rgba(255,255,255,0.2);">|</span>
-      <a href="terms.html" target="_blank" style="color: rgba(255,255,255,0.4); text-decoration: none; margin: 0 10px;" data-en="Terms" data-es="Términos">Términos</a>
-  </div>
-
   <div class="bottom-nav">
-    <div class="nav-item active" id="nav-translate" onclick="showScreen('translator')">
-      <span class="nav-icon">🔤</span>
-      <span data-es="Traductor" data-en="Translate">Traductor</span>
+    <div class="nav-item active" id="nav-translate" onclick="window.showScreen('translator')">
+      <span class="nav-icon">🔤</span> <span data-es="Traductor" data-en="Translate">Traductor</span>
     </div>
-    <div class="nav-item" id="nav-dictionary" onclick="showScreen('dictionary')">
-      <span class="nav-icon">📖</span>
-      <span data-es="Diccionario" data-en="Dictionary">Diccionario</span>
+    <div class="nav-item" id="nav-dictionary" onclick="window.showScreen('dictionary')">
+      <span class="nav-icon">📖</span> <span data-es="Diccionario" data-en="Dictionary">Diccionario</span>
     </div>
-    <div class="nav-item" id="nav-history" onclick="showScreen('history')">
-      <span class="nav-icon">🕐</span>
-      <span data-es="Historial" data-en="History">Historial</span><span class="history-badge" id="history-count"></span>
+    <div class="nav-item" id="nav-history" onclick="window.showScreen('history')">
+      <span class="nav-icon">🕐</span> <span data-es="Historial" data-en="History">Historial</span><span class="history-badge" id="history-count"></span>
     </div>
-    <div class="nav-item" id="nav-quiz" onclick="showScreen('quiz')">
-      <span class="nav-icon">🧠</span>
-      <span data-es="Quiz" data-en="Quiz">Quiz</span>
-    </div>
-    <div class="nav-item" id="nav-courses" onclick="window.open('https://oxbridge-english.com/courses.html','_blank')">
-      <span class="nav-icon">🎓</span>
-      <span data-es="Cursos" data-en="Courses">Cursos</span>
+    <div class="nav-item" id="nav-quiz" onclick="window.showScreen('quiz')">
+      <span class="nav-icon">🧠</span> <span data-es="Quiz" data-en="Quiz">Quiz</span>
     </div>
   </div>
 
   <div class="screen" id="screen-dictionary" style="display:none;">
     <div class="screen-header">
-      <button class="back-btn" onclick="showScreen('translator')">← <span data-en="Back" data-es="Volver">Volver</span></button>
+      <button class="back-btn" onclick="window.showScreen('translator')">← <span data-en="Back" data-es="Volver">Volver</span></button>
       <span class="screen-title" data-en="Dictionary" data-es="Diccionario">Diccionario</span>
       <span></span>
     </div>
     <div class="screen-body">
       <div style="display: flex; gap: 8px; margin-bottom: 20px;">
-        <select id="dict-lang" style="padding: 12px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.2); background: var(--navy-light); color: white; outline: none; font-size: 16px;">
-          <option value="en">EN</option>
-          <option value="es">ES</option>
+        <select id="dict-lang" style="padding: 12px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.2); background: var(--navy-light); color: white;">
+          <option value="en">EN</option><option value="es">ES</option>
         </select>
-        <input type="text" id="dict-input" placeholder="Search a word..." style="flex: 1; padding: 12px; border-radius: 10px; border: none; outline: none; background: var(--cream); color: var(--text-navy); font-size: 16px;">
-        <button onclick="searchDictionary()" style="padding: 0 16px; border-radius: 10px; border: none; background: var(--gold); color: var(--text-navy); font-size: 18px; cursor: pointer;">🔍</button>
+        <input type="text" id="dict-input" placeholder="Search..." style="flex: 1; padding: 12px; border-radius: 10px; outline: none;">
+        <button onclick="window.searchDictionary()" style="padding: 0 16px; border-radius: 10px; background: var(--gold); cursor: pointer;">🔍</button>
       </div>
-      <div id="dict-results">
-          <div class="history-empty" data-en="Search for a word to see its definition, examples, and synonyms." data-es="Busca una palabra para ver su definición, ejemplos y sinónimos.">Busca una palabra para ver su definición, ejemplos y sinónimos.</div>
-      </div>
+      <div id="dict-results"></div>
     </div>
   </div>
 
   <div class="screen" id="screen-history" style="display:none;">
     <div class="screen-header">
-      <button class="back-btn" onclick="showScreen('translator')">← <span data-en="Back" data-es="Volver">Volver</span></button>
-      <span class="screen-title" data-en="History" data-es="Historial">Historial</span>
-      <button class="clear-history-btn" onclick="clearHistory()">🗑</button>
+      <button class="back-btn" onclick="window.showScreen('translator')">← Volver</button>
+      <span class="screen-title">Historial</span>
+      <button style="background: none; border: none; font-size: 20px;" onclick="window.clearHistory()">🗑</button>
     </div>
     <div class="screen-body" id="history-list"></div>
   </div>
 
   <div class="screen" id="screen-quiz" style="display:none;">
     <div class="screen-header">
-      <button class="back-btn" onclick="showScreen('translator')">← <span data-en="Back" data-es="Volver">Volver</span></button>
-      <span class="screen-title" data-en="Quiz" data-es="Quiz">Quiz</span>
+      <button class="back-btn" onclick="window.showScreen('translator')">← Volver</button>
+      <span class="screen-title">Quiz</span>
       <span></span>
     </div>
     <div class="screen-body" id="quiz-body"></div>
   </div>
 
-  <div id="word-modal" class="word-modal-overlay" onclick="closeWordModal(event)">
+  <div id="word-modal" class="word-modal-overlay" onclick="window.closeWordModal(event)">
       <div class="word-modal-content" onclick="event.stopPropagation()">
           <div class="word-modal-header">
               <h3 id="word-modal-title" class="word-modal-title">Word</h3>
-              <button class="word-modal-close" onclick="closeWordModal(event)">&times;</button>
+              <button class="word-modal-close" onclick="window.closeWordModal(event)">&times;</button>
           </div>
           <div id="word-modal-body">Loading...</div>
       </div>
   </div>
 
 </div>
-
 <div class="toast" id="toast"></div>
 
 <script>
-// ── STATE ──
-let direction = 'es-en'; 
-let uiLang = localStorage.getItem('uiLang') || 'es';
-let currentTranslation = '';
-let currentTranslationLang = '';
-let saveTimer = null;
-let recognition = null;
-let isRecording = false;
-let deferredInstallPrompt = null;
+// EXPLICIT GLOBAL BINDING FOR MOBILE WEBVIEWS
+window.direction = 'es-en'; 
+window.uiLang = localStorage.getItem('uiLang') || 'es';
+window.currentTranslation = '';
+window.currentTranslationLang = '';
+window.saveTimer = null;
+window.autoTranslateTimer = null;
+window.recognition = null;
+window.isRecording = false;
 
-window.addEventListener('beforeinstallprompt', e => {
-  e.preventDefault();
-  deferredInstallPrompt = e;
-  if (!localStorage.getItem('installBannerClosed')) {
-    document.getElementById('install-banner').style.display = 'flex';
-  }
-});
+window.escHtml = function(str) {
+  return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+};
 
-function installApp() {
-  if (deferredInstallPrompt) {
-    deferredInstallPrompt.prompt();
-    deferredInstallPrompt.userChoice.then(() => {
-      deferredInstallPrompt = null;
-      document.getElementById('install-banner').style.display = 'none';
-    });
-  }
-}
+window.toggleLanguage = function() {
+  window.uiLang = window.uiLang === 'es' ? 'en' : 'es';
+  localStorage.setItem('uiLang', window.uiLang);
+  window.applyUILanguage();
+};
 
-function closeBanner() {
-  document.getElementById('install-banner').style.display = 'none';
-  localStorage.setItem('installBannerClosed', '1');
-}
-
-if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('sw.js').catch(() => {});
-}
-
-function toggleLanguage() {
-  uiLang = uiLang === 'es' ? 'en' : 'es';
-  localStorage.setItem('uiLang', uiLang);
-  applyUILanguage();
-}
-
-function applyUILanguage() {
-  const toggle = document.getElementById('lang-toggle');
-  toggle.textContent = uiLang === 'es' ? 'ES' : 'EN';
+window.applyUILanguage = function() {
+  document.getElementById('lang-toggle').textContent = window.uiLang === 'es' ? 'ES' : 'EN';
   document.querySelectorAll('[data-es][data-en]').forEach(el => {
-    el.textContent = el.getAttribute(`data-${uiLang}`);
+    el.textContent = el.getAttribute("data-" + window.uiLang);
   });
-  updateDirectionLabels();
-}
+  window.updateDirectionLabels();
+};
 
-function setDirection(dir) {
-  direction = dir;
-  updateDirectionLabels();
-  clearInput();
-}
+window.setDirection = function(dir) {
+  window.direction = dir;
+  window.updateDirectionLabels();
+  window.clearInput();
+};
 
-function updateDirectionLabels() {
-  const srcLang = direction === 'es-en' ? 'es' : 'en';
-  const tgtLang = direction === 'es-en' ? 'en' : 'es';
+window.updateDirectionLabels = function() {
+  document.getElementById('pill-es-en').classList.toggle('active', window.direction === 'es-en');
+  document.getElementById('pill-en-es').classList.toggle('active', window.direction !== 'es-en');
 
-  const pillEsEn = document.getElementById('pill-es-en');
-  const pillEnEs = document.getElementById('pill-en-es');
-
-  if (direction === 'es-en') {
-    pillEsEn.classList.add('active');
-    pillEnEs.classList.remove('active');
-  } else {
-    pillEsEn.classList.remove('active');
-    pillEnEs.classList.add('active');
-  }
-
-  const labels = {
-    'es-en': { src: uiLang === 'es' ? 'Escribe en español...' : 'Type in Spanish...', tgt: uiLang === 'es' ? 'Traducción al inglés' : 'English translation' },
-    'en-es': { src: uiLang === 'es' ? 'Escribe en inglés...' : 'Type in English...', tgt: uiLang === 'es' ? 'Traducción al español' : 'Spanish translation' }
-  };
-
-  document.getElementById('label-source').textContent = labels[direction].src;
-  document.getElementById('label-target').textContent = labels[direction].tgt;
-  document.getElementById('source-input').placeholder = direction === 'es-en' ? 'Hola, ¿cómo estás?' : 'Hello, how are you?';
+  const srcText = window.direction === 'es-en' 
+      ? (window.uiLang === 'es' ? 'Escribe en español...' : 'Type in Spanish...') 
+      : (window.uiLang === 'es' ? 'Escribe en inglés...' : 'Type in English...');
   
-  document.getElementById('dict-lang').value = direction === 'es-en' ? 'en' : 'es';
-  document.getElementById('dict-input').placeholder = uiLang === 'es' ? 'Busca una palabra...' : 'Search a word...';
-}
+  const tgtText = window.direction === 'es-en' 
+      ? (window.uiLang === 'es' ? 'Traducción al inglés' : 'English translation') 
+      : (window.uiLang === 'es' ? 'Traducción al español' : 'Spanish translation');
 
-let autoTranslateTimer = null;
+  document.getElementById('label-source').textContent = srcText;
+  document.getElementById('label-target').textContent = tgtText;
+  document.getElementById('source-input').placeholder = window.direction === 'es-en' ? 'Hola, ¿cómo estás?' : 'Hello, how are you?';
+  document.getElementById('dict-lang').value = window.direction === 'es-en' ? 'en' : 'es';
+};
 
-// NOTE: Renamed to avoid conflicts
-function handleTextInput() {
-  updateCharCount();
-  clearOutput();
-  clearSaveTimer();
-  clearTimeout(autoTranslateTimer);
-  const text = document.getElementById('source-input').value.trim();
-  if (text.length > 1) {
-    autoTranslateTimer = setTimeout(() => performTranslation(), 800);
+window.handleTextInput = function() {
+  document.getElementById('char-count').textContent = document.getElementById('source-input').value.length;
+  window.currentTranslation = '';
+  document.getElementById('output-text').innerHTML = '<span class="output-placeholder">' + (window.uiLang === 'es' ? 'La traducción aparecerá aquí...' : 'Translation will appear here...') + '</span>';
+  
+  clearTimeout(window.saveTimer);
+  clearTimeout(window.autoTranslateTimer);
+  
+  if (document.getElementById('source-input').value.trim().length > 1) {
+    window.autoTranslateTimer = setTimeout(() => window.performTranslation(), 800);
   }
-}
+};
 
-function updateCharCount() {
-  const len = document.getElementById('source-input').value.length;
-  document.getElementById('char-count').textContent = len;
-}
-
-function clearInput() {
+window.clearInput = function() {
   document.getElementById('source-input').value = '';
-  updateCharCount();
-  clearOutput();
-  clearSaveTimer();
-}
+  window.handleTextInput();
+};
 
-function clearOutput() {
-  const out = document.getElementById('output-text');
-  out.innerHTML = '<span class="output-placeholder" id="output-placeholder">' +
-    (uiLang === 'es' ? 'La traducción aparecerá aquí...' : 'Translation will appear here...') + '</span>';
-  currentTranslation = '';
-  currentTranslationLang = '';
-  document.getElementById('save-status').textContent = '';
-}
-
-// ── Word Splitter Logic ──
-function makeTextClickable(text, targetLang) {
+window.makeTextClickable = function(text, targetLang) {
     const parts = text.split(/([a-zA-ZáéíóúñüÁÉÍÓÚÑÜ]+(?:[-'][a-zA-ZáéíóúñüÁÉÍÓÚÑÜ]+)*)/);
     let html = '';
     parts.forEach(part => {
         if (/^[a-zA-ZáéíóúñüÁÉÍÓÚÑÜ]+(?:[-'][a-zA-ZáéíóúñüÁÉÍÓÚÑÜ]+)*$/.test(part)) {
             const cleanWord = part.replace(/'/g, "\\'");
-            html += `<span class="clickable-word" onclick="openWordModal('${cleanWord}', '${targetLang}')">${part}</span>`;
+            html += `<span class="clickable-word" onclick="window.openWordModal('${cleanWord}', '${targetLang}')">${part}</span>`;
         } else {
-            html += escHtml(part);
+            html += window.escHtml(part);
         }
     });
     return html;
-}
+};
 
-// NOTE: Renamed from 'translate' to 'performTranslation' to avoid Chrome's global window.translate conflict
-async function performTranslation() {
+window.performTranslation = async function() {
   const text = document.getElementById('source-input').value.trim();
-  if (!text) { showToast(uiLang === 'es' ? 'Escribe algo primero' : 'Type something first'); return; }
+  if (!text) return;
 
   const out = document.getElementById('output-text');
   out.innerHTML = '<div class="loading-dots"><span></span><span></span><span></span></div>';
 
-  const fromLang = direction === 'es-en' ? 'es' : 'en';
-  const toLang = direction === 'es-en' ? 'en' : 'es';
-  
-  const url = `https://translate.googleapis.com/translate_a/single?client=gtx&dt=t&sl=${fromLang}&tl=${toLang}&q=${encodeURIComponent(text)}`;
+  const fromLang = window.direction === 'es-en' ? 'es' : 'en';
+  const toLang = window.direction === 'es-en' ? 'en' : 'es';
+  const url = "https://translate.googleapis.com/translate_a/single?client=gtx&dt=t&sl=" + fromLang + "&tl=" + toLang + "&q=" + encodeURIComponent(text);
 
   try {
     const response = await fetch(url);
     const data = await response.json();
-    
-    if (!data || !data[0]) throw new Error('No translation data returned');
+    if (!data || !data[0]) throw new Error("No data");
 
-    let primary = data[0].map(item => item[0]).join('').trim();
-    currentTranslation = primary; 
-    currentTranslationLang = direction === 'es-en' ? 'en-GB' : 'es-ES';
+    const primary = data[0].map(item => item[0]).join('').trim();
+    window.currentTranslation = primary; 
+    window.currentTranslationLang = window.direction === 'es-en' ? 'en-GB' : 'es-ES';
 
-    // Output the clickable interactive version
-    const clickableHtml = makeTextClickable(primary, toLang);
+    const clickableHtml = window.makeTextClickable(primary, toLang);
     out.innerHTML = `<div style="font-size: 16px; line-height: 1.6; color: var(--text-navy);">${clickableHtml}</div>`;
 
-    startSaveTimer(text, primary);
+    window.startSaveTimer(text, primary);
   } catch (err) {
-    console.error("Translation API Error: ", err);
-    out.innerHTML = '<span style="color:rgba(180,40,40,0.9);font-size:15px;">' +
-      (uiLang === 'es' ? '⚠️ Error. Verifica tu conexión.' : '⚠️ Error. Check your connection.') + '</span>';
+    out.innerHTML = '<span style="color:#ff6060;">Error. Verifica tu conexión.</span>';
   }
-}
+};
 
-function startSaveTimer(original, translation) {
-  clearSaveTimer();
-  let secs = 10;
-  const statusEl = document.getElementById('save-status');
-  statusEl.textContent = uiLang === 'es' ? `Guardando en ${secs}s...` : `Saving in ${secs}s...`;
+window.startSaveTimer = function(original, translation) {
+  clearTimeout(window.saveTimer);
+  window.saveTimer = setTimeout(() => {
+      let history = JSON.parse(localStorage.getItem('translationHistory') || '[]');
+      if (history.slice(0, 20).some(e => e.original.toLowerCase() === original.toLowerCase())) return;
+      history.unshift({ original: original, translation: translation, direction: window.direction, date: new Date().toLocaleDateString() });
+      if (history.length > 100) history = history.slice(0, 100);
+      localStorage.setItem('translationHistory', JSON.stringify(history));
+      window.updateHistoryBadge();
+      window.showToast(window.uiLang === 'es' ? 'Guardado' : 'Saved');
+  }, 5000);
+};
 
-  saveTimer = setInterval(() => {
-    secs--;
-    if (secs > 0) {
-      statusEl.textContent = uiLang === 'es' ? `Guardando en ${secs}s...` : `Saving in ${secs}s...`;
-    } else {
-      clearInterval(saveTimer);
-      saveTranslation(original, translation);
-    }
-  }, 1000);
-}
+window.updateHistoryBadge = function() {
+  try {
+      const history = JSON.parse(localStorage.getItem('translationHistory') || '[]');
+      document.getElementById('history-count').textContent = history.length > 0 ? history.length : '';
+  } catch(e) {}
+};
 
-function clearSaveTimer() {
-  if (saveTimer) { clearInterval(saveTimer); saveTimer = null; }
-  document.getElementById('save-status').textContent = '';
-}
-
-function saveTranslation(original, translation) {
-  if (!isValidForSave(original)) return;
-
-  const history = JSON.parse(localStorage.getItem('translationHistory') || '[]');
-  const recent = history.slice(-20).map(e => e.original.toLowerCase().trim());
-  if (recent.includes(original.toLowerCase().trim())) {
-    document.getElementById('save-status').textContent = '';
-    return;
-  }
-
-  const entry = {
-    original,
-    translation,
-    direction,
-    timestamp: new Date().toISOString(),
-    date: new Date().toLocaleDateString(uiLang === 'es' ? 'es-CO' : 'en-GB', {
-      day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit'
-    })
-  };
-
-  history.push(entry);
-  if (history.length > 100) history.shift();
-  localStorage.setItem('translationHistory', JSON.stringify(history));
-
-  document.getElementById('save-status').textContent = uiLang === 'es' ? '✓ Guardado' : '✓ Saved';
-  updateHistoryBadge();
-  showToast(uiLang === 'es' ? '✓ Guardado en historial' : '✓ Saved to history');
-}
-
-function isValidForSave(text) {
-  if (text.length < 2) return false;
-  if (!/[a-záéíóúñüA-Z]/.test(text)) return false;
-  if (/[.,;:!?…]$/.test(text)) return false;
-  return true;
-}
-
-function updateHistoryBadge() {
-  const history = JSON.parse(localStorage.getItem('translationHistory') || '[]');
-  const badge = document.getElementById('history-count');
-  badge.textContent = history.length > 0 ? history.length : '';
-}
-
-function toggleMic() {
-  if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
-    showToast(uiLang === 'es' ? 'Micrófono no disponible' : 'Microphone not available');
-    return;
-  }
-  if (isRecording) {
-    recognition.stop();
-    return;
-  }
+window.toggleMic = function() {
   const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-  recognition = new SpeechRecognition();
-  recognition.lang = direction === 'es-en' ? 'es-ES' : 'en-GB';
-  recognition.interimResults = false;
-  recognition.maxAlternatives = 1;
-
-  recognition.onstart = () => {
-    isRecording = true;
-    document.getElementById('mic-btn').classList.add('recording');
-    document.getElementById('mic-btn').textContent = '⏹';
-  };
-  recognition.onresult = e => {
-    const transcript = e.results[0][0].transcript;
-    document.getElementById('source-input').value = transcript;
-    updateCharCount();
-    clearOutput();
-    if (transcript.trim().length > 1) performTranslation();
-  };
-  recognition.onend = () => {
-    isRecording = false;
-    document.getElementById('mic-btn').classList.remove('recording');
-    document.getElementById('mic-btn').textContent = '🎤';
-  };
-  recognition.onerror = () => {
-    isRecording = false;
-    document.getElementById('mic-btn').classList.remove('recording');
-    document.getElementById('mic-btn').textContent = '🎤';
-    showToast(uiLang === 'es' ? 'Error de micrófono' : 'Mic error');
-  };
-  recognition.start();
-}
-
-let currentAudio = null;
-function speakOutput() {
-  if (!currentTranslation) { showToast('No hay texto para escuchar'); return; }
-  const speakBtn = document.getElementById('speak-btn');
-  if (currentAudio && !currentAudio.paused) {
-    currentAudio.pause();
-    currentAudio.currentTime = 0;
-    speakBtn.classList.remove('active');
-    return;
+  if (!SpeechRecognition) { window.showToast('Microphone not available'); return; }
+  
+  if (window.isRecording && window.recognition) {
+      window.recognition.stop();
+  } else {
+      window.recognition = new SpeechRecognition();
+      window.recognition.lang = window.direction === 'es-en' ? 'es-ES' : 'en-US';
+      window.recognition.onstart = () => { window.isRecording = true; document.getElementById('mic-btn').textContent = '⏹'; };
+      window.recognition.onend = () => { window.isRecording = false; document.getElementById('mic-btn').textContent = '🎤'; };
+      window.recognition.onresult = (e) => { 
+          document.getElementById('source-input').value = e.results[0][0].transcript;
+          window.handleTextInput();
+      };
+      window.recognition.start();
   }
-  const langCode = (currentTranslationLang || (direction === 'es-en' ? 'en' : 'es')).substring(0, 2);
-  const text = currentTranslation.substring(0, 200);
-  const ttsUrl = 'https://translate.googleapis.com/translate_tts?ie=UTF-8&tl=' + langCode + '&client=gtx&q=' + encodeURIComponent(text);
+};
 
-  speakBtn.classList.add('active');
-  currentAudio = new Audio();
-  currentAudio.crossOrigin = 'anonymous';
+window.speakOutput = function() {
+  if (!window.currentTranslation) return;
+  window.speechSynthesis.cancel();
+  const utter = new SpeechSynthesisUtterance(window.currentTranslation);
+  utter.lang = window.currentTranslationLang;
+  window.speechSynthesis.speak(utter);
+};
 
-  currentAudio.oncanplaythrough = () => currentAudio.play();
-  currentAudio.onended = () => {
-    speakBtn.classList.remove('active');
-    currentAudio = null;
-  };
-  currentAudio.onerror = () => {
-    speakBtn.classList.remove('active');
-    currentAudio = null;
-    try {
-      window.speechSynthesis.cancel();
-      const utter = new SpeechSynthesisUtterance(text);
-      utter.lang = langCode + '-' + (langCode === 'es' ? 'ES' : 'GB');
-      utter.rate = 0.9;
-      speakBtn.classList.add('active');
-      utter.onend = () => speakBtn.classList.remove('active');
-      utter.onerror = () => speakBtn.classList.remove('active');
-      window.speechSynthesis.speak(utter);
-    } catch(e) {
-      showToast('Audio no disponible');
-    }
-  };
-  currentAudio.src = ttsUrl;
-  currentAudio.load();
-}
-
-function copyOutput() {
-  if (!currentTranslation) return;
-  navigator.clipboard.writeText(currentTranslation).then(() => {
-    showToast(uiLang === 'es' ? '📋 Copiado' : '📋 Copied');
+window.copyOutput = function() {
+  if (!window.currentTranslation) return;
+  navigator.clipboard.writeText(window.currentTranslation).then(() => {
+    window.showToast(window.uiLang === 'es' ? 'Copiado' : 'Copied');
   });
-}
+};
 
-function showToast(msg) {
+window.showToast = function(msg) {
   const t = document.getElementById('toast');
   t.textContent = msg;
   t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), 2200);
-}
+  setTimeout(() => t.classList.remove('show'), 2000);
+};
 
-function showScreen(name) {
+window.showScreen = function(name) {
   document.getElementById('screen-history').style.display = 'none';
   document.getElementById('screen-quiz').style.display = 'none';
   document.getElementById('screen-dictionary').style.display = 'none';
   document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
 
-  if (name === 'translator') {
-    document.getElementById('nav-translate').classList.add('active');
-  } else if (name === 'history') {
-    document.getElementById('screen-history').style.display = 'flex';
-    document.getElementById('nav-history').classList.add('active');
-    renderHistory();
-  } else if (name === 'quiz') {
-    document.getElementById('screen-quiz').style.display = 'flex';
-    document.getElementById('nav-quiz').classList.add('active');
-    renderQuiz();
-  } else if (name === 'dictionary') {
-    document.getElementById('screen-dictionary').style.display = 'flex';
-    document.getElementById('nav-dictionary').classList.add('active');
-    document.getElementById('dict-input').focus();
-  }
-  applyUILanguage();
-}
+  if (name === 'translator') document.getElementById('nav-translate').classList.add('active');
+  if (name === 'dictionary') { document.getElementById('screen-dictionary').style.display = 'flex'; document.getElementById('nav-dictionary').classList.add('active'); }
+  if (name === 'history') { document.getElementById('screen-history').style.display = 'flex'; document.getElementById('nav-history').classList.add('active'); window.renderHistory(); }
+  if (name === 'quiz') { document.getElementById('screen-quiz').style.display = 'flex'; document.getElementById('nav-quiz').classList.add('active'); window.renderQuiz(); }
+};
 
-// ── DICTIONARY APP LOGIC ──
-document.getElementById('dict-input').addEventListener('keypress', function (e) {
-    if (e.key === 'Enter') searchDictionary();
-});
-
-async function fetchGoogleDictionary(word, lang) {
-    const url = `https://translate.googleapis.com/translate_a/single?client=gtx&dt=md&dt=ss&sl=${lang}&tl=${lang}&q=${encodeURIComponent(word)}`;
-    const res = await fetch(url);
-    if (!res.ok) throw new Error('Network error');
-    const data = await res.json();
-    
-    const defsArray = data[12];
-    const synsArray = data[11];
-    
-    if (!defsArray) throw new Error('Not found');
-    
-    const meanings = defsArray.map(posGroup => {
-        const partOfSpeech = posGroup[0] || 'Definición';
-        const defs = (posGroup[1] || []).map(d => {
-            let defStr = d[0] || '';
-            let exStr = '';
-            if (typeof d[2] === 'string' && d[2].includes(' ')) exStr = d[2];
-            else if (typeof d[1] === 'string' && d[1].includes(' ')) exStr = d[1];
-            return { definition: defStr, example: exStr };
-        }).filter(d => d.definition);
-        
-        let synonyms = [];
-        if (synsArray) {
-            const synGroup = synsArray.find(s => s[0] === partOfSpeech);
-            if (synGroup && synGroup[1]) synonyms = synGroup[1].flatMap(set => set[0] || []);
-        }
-        return { partOfSpeech, definitions: defs, synonyms: [...new Set(synonyms)] };
-    });
-    
-    return { word: (defsArray[0] && defsArray[0][2]) ? defsArray[0][2] : word, phonetics: [], meanings: meanings };
-}
-
-async function searchDictionary() {
-  const rawWord = document.getElementById('dict-input').value.trim();
-  const word = rawWord.toLowerCase();
+window.searchDictionary = async function() {
+  const word = document.getElementById('dict-input').value.trim().toLowerCase();
   const lang = document.getElementById('dict-lang').value;
-  const resContainer = document.getElementById('dict-results');
-  const isEs = (uiLang === 'es');
-
-  if (!word) { showToast(isEs ? 'Escribe una palabra' : 'Type a word'); return; }
-  resContainer.innerHTML = '<div class="loading-dots" style="display:block; text-align:center; padding: 40px;"><span></span><span></span><span></span></div>';
-
+  if (!word) return;
+  
+  document.getElementById('dict-results').innerHTML = '<div class="loading-dots"><span></span><span></span><span></span></div>';
   try {
-    let finalData = null;
-    if (lang === 'en') {
-        try {
-            const res = await fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${encodeURIComponent(word)}`);
-            if (!res.ok) throw new Error('Not found');
-            finalData = (await res.json())[0];
-        } catch (e) {
-            finalData = await fetchGoogleDictionary(word, 'en');
-        }
-    } else {
-        finalData = await fetchGoogleDictionary(word, 'es');
-    }
-    renderDictResults(finalData, lang, isEs);
-  } catch (err) {
-    resContainer.innerHTML = `<div class="history-empty" style="margin-top: 20px;">${isEs ? 'No encontramos la definición para esta palabra.' : 'We couldn\'t find definitions for this word.'}</div>`;
+      const url = "https://translate.googleapis.com/translate_a/single?client=gtx&dt=md&dt=ss&sl=" + lang + "&tl=" + lang + "&q=" + encodeURIComponent(word);
+      const res = await fetch(url);
+      const data = await res.json();
+      window.renderModalDictResults(window.parseGoogleDict(data, word), lang, 'dict-results');
+  } catch(e) {
+      document.getElementById('dict-results').innerHTML = "Not found.";
   }
-}
+};
 
-function renderDictResults(data, langCode, isEs) {
-  let audioUrl = '';
-  if(data.phonetics) {
-      const p = data.phonetics.find(x => x.audio);
-      if(p) audioUrl = p.audio;
-  }
-
-  let html = `
-    <div style="background: var(--cream); border-radius: 12px; padding: 20px; margin-top: 5px;">
-      <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(26,26,62,0.1); padding-bottom: 15px; margin-bottom: 15px;">
-          <h2 style="color: var(--navy-light); font-size: 28px; margin: 0; font-family: 'Work Sans', sans-serif; text-transform: capitalize;">${escHtml(data.word)}</h2>
-          <button class="mini-btn" style="width: 45px; height: 45px; font-size: 20px; box-shadow: 0 4px 8px rgba(0,0,0,0.2);" onclick="playDictAudio('${audioUrl}', '${escHtml(data.word).replace(/'/g, "\\'")}', '${langCode}')">🔊</button>
-      </div>
-  `;
-
-  data.meanings.forEach(meaning => {
-      html += `<h4 style="color: #9e7a0e; font-size: 16px; margin: 15px 0 10px; font-style: italic; text-transform: lowercase;">${escHtml(meaning.partOfSpeech)}</h4>`;
-      meaning.definitions.slice(0, 3).forEach((def, i) => {
-          html += `<p style="color: var(--text-navy); font-size: 15px; font-weight: 400; margin-bottom: 5px; line-height: 1.4;"><strong>${i+1}.</strong> ${escHtml(def.definition)}</p>`;
-          if (def.example) html += `<p style="color: rgba(26,26,62,0.7); font-size: 14px; font-style: italic; margin-bottom: 12px; border-left: 2px solid var(--gold); padding-left: 10px;">"${escHtml(def.example)}"</p>`;
-      });
-      if (meaning.synonyms && meaning.synonyms.length > 0) {
-          html += `<p style="font-size: 14px; margin-top: 10px; color: var(--navy-light);"><strong>${isEs ? 'Sinónimos:' : 'Synonyms:'}</strong> <span style="color: #444;">${escHtml(meaning.synonyms.slice(0, 5).join(', '))}</span></p>`;
-      }
-  });
-
-  html += `</div>`;
-  document.getElementById('dict-results').innerHTML = html;
-}
-
-window.playDictAudio = function(url, word, langCode) {
-  if (url) { new Audio(url).play(); } 
-  else {
-      try {
-          const utter = new SpeechSynthesisUtterance(word);
-          utter.lang = langCode === 'es' ? 'es-ES' : 'en-GB';
-          window.speechSynthesis.speak(utter);
-      } catch(e) {}
-  }
-}
-
-// ── MODAL DICTIONARY LOGIC ──
 window.openWordModal = async function(word, langCode) {
-    const modal = document.getElementById('word-modal');
-    const title = document.getElementById('word-modal-title');
-    const body = document.getElementById('word-modal-body');
-
-    title.textContent = word;
-    body.innerHTML = '<div style="text-align:center; padding: 20px;"><div class="loading-dots" style="display:inline-flex; gap:5px;"><span style="width:7px; height:7px; background:#D4AF37; border-radius:50%; animation:bounce 1s infinite;"></span><span style="width:7px; height:7px; background:#D4AF37; border-radius:50%; animation:bounce 1s infinite 0.15s;"></span><span style="width:7px; height:7px; background:#D4AF37; border-radius:50%; animation:bounce 1s infinite 0.3s;"></span></div></div>';
-    
-    modal.classList.add('active');
+    document.getElementById('word-modal-title').textContent = word;
+    document.getElementById('word-modal-body').innerHTML = 'Loading...';
+    document.getElementById('word-modal').classList.add('active');
 
     try {
-        let finalData = null;
-        if (langCode === 'en') {
-            try {
-                const res = await fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${encodeURIComponent(word)}`);
-                if (!res.ok) throw new Error('Not found');
-                finalData = (await res.json())[0];
-            } catch (e) {
-                finalData = await fetchGoogleDictionary(word, 'en');
-            }
-        } else {
-            finalData = await fetchGoogleDictionary(word, 'es');
-        }
-        renderModalDictResults(finalData, langCode);
-    } catch (err) {
-        body.innerHTML = `<div style="text-align:center; padding: 20px; color: #ff6060;">${uiLang === 'es' ? 'No encontramos la definición para esta palabra.' : 'We couldn\\'t find definitions for this word.'}</div>`;
+        const url = "https://translate.googleapis.com/translate_a/single?client=gtx&dt=md&dt=ss&sl=" + langCode + "&tl=" + langCode + "&q=" + encodeURIComponent(word);
+        const res = await fetch(url);
+        const data = await res.json();
+        window.renderModalDictResults(window.parseGoogleDict(data, word), langCode, 'word-modal-body');
+    } catch(e) {
+        document.getElementById('word-modal-body').innerHTML = "Not found.";
     }
 };
 
@@ -1279,136 +405,34 @@ window.closeWordModal = function(e) {
     document.getElementById('word-modal').classList.remove('active');
 };
 
-function renderModalDictResults(data, langCode) {
-    const body = document.getElementById('word-modal-body');
-    let audioUrl = '';
-    if(data.phonetics) {
-        const p = data.phonetics.find(x => x.audio);
-        if(p) audioUrl = p.audio;
-    }
+window.parseGoogleDict = function(data, word) {
+    const defsArray = data[12];
+    if (!defsArray) throw new Error('Not found');
+    const meanings = defsArray.map(posGroup => {
+        return {
+            partOfSpeech: posGroup[0] || 'Definición',
+            definitions: (posGroup[1] || []).map(d => ({ definition: d[0] || '', example: (typeof d[2] === 'string' && d[2].includes(' ')) ? d[2] : '' })).filter(d => d.definition)
+        };
+    });
+    return { word: word, meanings: meanings };
+};
 
-    let html = `
-        <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(26,26,62,0.1); padding-bottom: 10px; margin-bottom: 10px;">
-            <h2 style="color: #1a1a3e; font-size: 22px; margin: 0; text-transform: capitalize; font-family: 'Work Sans', sans-serif;">${escHtml(data.word)}</h2>
-            <button style="background: none; border: none; font-size: 20px; cursor: pointer; color: #D4AF37;" onclick="playDictAudio('${audioUrl}', '${escHtml(data.word).replace(/'/g, "\\'")}', '${langCode}')">🔊</button>
-        </div>
-    `;
-
-    data.meanings.forEach(meaning => {
-        html += `<h4 style="color: #9e7a0e; font-size: 14px; margin: 10px 0 5px; font-style: italic; text-transform: lowercase;">${escHtml(meaning.partOfSpeech)}</h4>`;
-        meaning.definitions.slice(0, 2).forEach((def, i) => {
-            html += `<p style="color: #1a1a3e; font-size: 14px; margin-bottom: 4px; line-height: 1.3;"><strong>${i+1}.</strong> ${escHtml(def.definition)}</p>`;
-            if (def.example) {
-                html += `<p style="color: rgba(26,26,62,0.7); font-size: 13px; font-style: italic; margin-bottom: 8px; border-left: 2px solid #C9A227; padding-left: 8px;">"${escHtml(def.example)}"</p>`;
-            }
+window.renderModalDictResults = function(data, langCode, targetId) {
+    let html = `<h2 style="color:#1a1a3e; text-transform:capitalize; margin-bottom:10px;">${window.escHtml(data.word)}</h2>`;
+    data.meanings.forEach(m => {
+        html += `<h4 style="color:#9e7a0e; margin:10px 0 5px;">${window.escHtml(m.partOfSpeech)}</h4>`;
+        m.definitions.slice(0,2).forEach(d => {
+            html += `<p style="color:#1a1a3e; font-size:14px; margin-bottom:4px;">- ${window.escHtml(d.definition)}</p>`;
+            if (d.example) html += `<p style="color:#666; font-size:13px; font-style:italic; margin-bottom:8px;">"${window.escHtml(d.example)}"</p>`;
         });
     });
-    body.innerHTML = html;
-}
+    document.getElementById(targetId).innerHTML = html;
+};
 
-// ── HISTORY SCREEN ──
-function renderHistory() {
-  const list = document.getElementById('history-list');
-  const history = JSON.parse(localStorage.getItem('translationHistory') || '[]').reverse();
+// Start script execution safely
+window.applyUILanguage();
+window.updateHistoryBadge();
 
-  if (history.length === 0) {
-    list.innerHTML = '<div class="history-empty">' + (uiLang === 'es' ? 'No hay traducciones guardadas aún.' : 'No saved translations yet.') + '</div>';
-    return;
-  }
-
-  list.innerHTML = history.map((entry, i) => {
-    const flag1 = entry.direction === 'es-en' ? '🇨🇴' : '🇬🇧';
-    const flag2 = entry.direction === 'es-en' ? '🇬🇧' : '🇨🇴';
-    return '<div class="history-entry">' +
-      '<div class="history-direction">' + flag1 + ' → ' + flag2 + '</div>' +
-      '<div class="history-original">' + escHtml(entry.original) + '</div>' +
-      '<div class="history-translation">' + escHtml(entry.translation) + '</div>' +
-      '<div class="history-date">' + (entry.date || '') + '</div>' +
-      '</div>';
-  }).join('');
-}
-
-function clearHistory() {
-  if (confirm(uiLang === 'es' ? '¿Borrar todo el historial?' : 'Clear all history?')) {
-    localStorage.removeItem('translationHistory');
-    updateHistoryBadge();
-    renderHistory();
-  }
-}
-
-function escHtml(str) {
-  return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-}
-
-// ── QUIZ SCREEN ──
-let quizQuestions = [];
-let quizAnswers = [];
-let quizScore = 0;
-
-function renderQuiz() {
-  const body = document.getElementById('quiz-body');
-  const history = JSON.parse(localStorage.getItem('translationHistory') || '[]');
-
-  if (history.length < 10) {
-    const needed = 10 - history.length;
-    body.innerHTML = '<div class="quiz-not-enough">' +
-      (uiLang === 'es' ? `Necesitas al menos 10 traducciones guardadas para el quiz.<br>Te faltan <strong>${needed}</strong> más.` : `You need at least 10 saved translations for the quiz.<br><strong>${needed}</strong> more to go.`) +
-      '</div>';
-    return;
-  }
-
-  const shuffled = [...history].sort(() => Math.random() - 0.5).slice(0, 10);
-  quizQuestions = shuffled;
-  quizAnswers = new Array(10).fill(null);
-  quizScore = 0;
-
-  body.innerHTML = shuffled.map((entry, i) => {
-    const others = history.filter(h => h.translation !== entry.translation);
-    const wrongs = others.sort(() => Math.random() - 0.5).slice(0, 3).map(h => h.translation);
-    const options = [entry.translation, ...wrongs].sort(() => Math.random() - 0.5);
-
-    const prompt = entry.direction === 'es-en' ? (uiLang === 'es' ? 'Traduce al inglés:' : 'Translate to English:') : (uiLang === 'es' ? 'Traduce al español:' : 'Translate to Spanish:');
-
-    return '<div class="quiz-question" id="q-' + i + '">' +
-      '<div class="quiz-q-text"><strong>' + (i+1) + '.</strong> ' + prompt + '<br>' + escHtml(entry.original) + '</div>' +
-      options.map(opt => `<button class="quiz-option" data-opt="${escHtml(opt)}" data-correct="${escHtml(entry.translation)}" onclick="answerQuiz(${i}, this)">${escHtml(opt)}</button>`).join('') +
-      '</div>';
-  }).join('') +
-  '<div id="quiz-result" style="display:none;" class="quiz-score">' +
-    '<span class="quiz-score-num" id="quiz-score-num">0/10</span>' +
-    '<span class="quiz-score-label" id="quiz-score-label"></span>' +
-    '<button class="quiz-restart-btn" onclick="renderQuiz()">' + (uiLang === 'es' ? '🔄 Intentar de nuevo' : '🔄 Try again') + '</button>' +
-  '</div>';
-}
-
-function answerQuiz(qIndex, btn) {
-  const selected = btn.getAttribute('data-opt');
-  const correct = btn.getAttribute('data-correct');
-  const qDiv = document.getElementById('q-' + qIndex);
-  qDiv.querySelectorAll('.quiz-option').forEach(b => {
-    b.disabled = true;
-    if (b.getAttribute('data-opt') === correct) b.classList.add('correct');
-  });
-
-  if (selected === correct) { btn.classList.add('correct'); quizScore++; } 
-  else { btn.classList.add('wrong'); }
-
-  quizAnswers[qIndex] = selected;
-
-  if (quizAnswers.every(a => a !== null)) {
-    setTimeout(() => {
-      const result = document.getElementById('quiz-result');
-      document.getElementById('quiz-score-num').textContent = quizScore + '/10';
-      const pct = quizScore * 10;
-      document.getElementById('quiz-score-label').textContent = pct >= 80 ? (uiLang === 'es' ? '¡Excelente!' : 'Excellent!') : pct >= 50 ? (uiLang === 'es' ? '¡Buen trabajo!' : 'Good work!') : (uiLang === 'es' ? 'Sigue practicando.' : 'Keep practising.');
-      result.style.display = 'block';
-      result.scrollIntoView({ behavior: 'smooth' });
-    }, 500);
-  }
-}
-
-applyUILanguage();
-updateHistoryBadge();
 </script>
 </body>
 </html>

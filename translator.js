@@ -2,13 +2,11 @@
 // TRANSLATOR FUNCTIONALITY
 // ==========================================
 
-// Helper function to prevent HTML injection in results
 function escHtml(str) { 
     return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); 
 }
 
 document.addEventListener('DOMContentLoaded', function() {
-    // ─── DOM Elements ────────────────────────
     const inputText = document.getElementById('input-text');
     const outputText = document.getElementById('output-text');
     const clearBtn = document.getElementById('clear-btn');
@@ -23,21 +21,12 @@ document.addEventListener('DOMContentLoaded', function() {
     const toast = document.getElementById('toast');
     const toastMessage = document.getElementById('toast-message');
 
-    // ─── State ──────────────────────────────
     let isSpanishToEnglish = true;
     let isRecording = false;
     let debounceTimer = null;
     let saveToHistoryTimer = null;
     let lastTranslation = { text: '', result: '', direction: '' };
-    window.currentSelectedTranslation = ''; // Tracks text for audio/copying
-
-    // Global function to allow inline onclick handlers on chips to update state
-    window.updateSelectedTranslation = function(newResult) {
-        window.currentSelectedTranslation = newResult;
-        if (lastTranslation) {
-            lastTranslation.result = newResult;
-        }
-    };
+    window.currentSelectedTranslation = ''; 
 
     // ─── Inject Modal UI & Styles ───────────
     const style = document.createElement('style');
@@ -55,11 +44,11 @@ document.addEventListener('DOMContentLoaded', function() {
     document.head.appendChild(style);
 
     const modalHtml = `
-        <div id="word-modal" class="word-modal-overlay" onclick="closeWordModal(event)">
+        <div id="word-modal" class="word-modal-overlay" onclick="window.closeWordModal(event)">
             <div class="word-modal-content" onclick="event.stopPropagation()">
                 <div class="word-modal-header">
                     <h3 id="word-modal-title" class="word-modal-title">Word</h3>
-                    <button class="word-modal-close" onclick="closeWordModal(event)">&times;</button>
+                    <button class="word-modal-close" onclick="window.closeWordModal(event)">&times;</button>
                 </div>
                 <div id="word-modal-body">Loading...</div>
             </div>
@@ -67,7 +56,6 @@ document.addEventListener('DOMContentLoaded', function() {
     `;
     document.body.insertAdjacentHTML('beforeend', modalHtml);
 
-    // ─── UI Strings ─────────────────────────
     const ui = {
         placeholderES: "Escribe o pega tu texto aquí...",
         placeholderEN: "Write or paste your English text here...",
@@ -83,15 +71,14 @@ document.addEventListener('DOMContentLoaded', function() {
     
     function getCurrentLanguage() { return localStorage.getItem('preferredLanguage') || 'en'; }
 
-    // ─── Character Count ────────────────────
     inputText.addEventListener('input', () => {
         const len = inputText.value.length;
         const lang = getCurrentLanguage();
-        const charText = lang === 'es' ? ui.charactersES : ui.charactersEN;
-        charCount.textContent = `${len} ${charText}`;
-
+        charCount.textContent = `${len} ${lang === 'es' ? ui.charactersES : ui.charactersEN}`;
         clearBtn.classList.toggle('hidden', len === 0);
-        autoGrow();
+        
+        inputText.style.height = 'auto';
+        inputText.style.height = Math.min(inputText.scrollHeight, 300) + 'px';
 
         clearTimeout(debounceTimer);
         if (inputText.value.trim().length > 0) {
@@ -102,23 +89,14 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    function autoGrow() {
-        inputText.style.height = 'auto';
-        const maxH = 300;
-        inputText.style.height = Math.min(inputText.scrollHeight, maxH) + 'px';
-    }
-
     clearBtn.addEventListener('click', () => {
         if (saveToHistoryTimer && lastTranslation.text && lastTranslation.result) {
             clearTimeout(saveToHistoryTimer);
             saveToHistory(lastTranslation.text, lastTranslation.result, lastTranslation.direction);
             lastTranslation = { text: '', result: '', direction: '' };
         }
-        
         inputText.value = '';
-        const lang = getCurrentLanguage();
-        const charText = lang === 'es' ? ui.charactersES : ui.charactersEN;
-        charCount.textContent = `0 ${charText}`;
+        charCount.textContent = `0 ${getCurrentLanguage() === 'es' ? ui.charactersES : ui.charactersEN}`;
         clearBtn.classList.add('hidden');
         outputText.textContent = ui.resultPlaceholder;
         outputText.classList.add('empty');
@@ -132,7 +110,6 @@ document.addEventListener('DOMContentLoaded', function() {
             optionEsEn.classList.toggle('active', isSpanishToEnglish);
             optionEnEs.classList.toggle('active', !isSpanishToEnglish);
             inputText.placeholder = isSpanishToEnglish ? ui.placeholderES : ui.placeholderEN;
-
             if (inputText.value.trim().length > 0) {
                 clearTimeout(debounceTimer);
                 debounceTimer = setTimeout(() => doTranslation(), 300);
@@ -140,15 +117,13 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // ─── Word Splitter Logic ────────────────
     function makeTextClickable(text, targetLang) {
-        // Splits by words while preserving spaces and punctuation
         const parts = text.split(/([a-zA-ZáéíóúñüÁÉÍÓÚÑÜ]+(?:[-'][a-zA-ZáéíóúñüÁÉÍÓÚÑÜ]+)*)/);
         let html = '';
         parts.forEach(part => {
             if (/^[a-zA-ZáéíóúñüÁÉÍÓÚÑÜ]+(?:[-'][a-zA-ZáéíóúñüÁÉÍÓÚÑÜ]+)*$/.test(part)) {
                 const cleanWord = part.replace(/'/g, "\\'");
-                html += `<span class="clickable-word" onclick="openWordModal('${cleanWord}', '${targetLang}')">${part}</span>`;
+                html += `<span class="clickable-word" onclick="window.openWordModal('${cleanWord}', '${targetLang}')">${part}</span>`;
             } else {
                 html += escHtml(part);
             }
@@ -156,16 +131,11 @@ document.addEventListener('DOMContentLoaded', function() {
         return html;
     }
 
-    // ─── Translation Logic ──────────────────
     async function doTranslation() {
         const text = inputText.value.trim();
-        if (!text) {
-            outputText.textContent = ui.resultPlaceholder;
-            outputText.classList.add('empty');
-            return;
-        }
-
-        setLoading(true);
+        if (!text) return;
+        loadingShimmer.classList.remove('hidden');
+        outputText.classList.add('hidden');
 
         try {
             const fromLang = isSpanishToEnglish ? 'es' : 'en';
@@ -174,88 +144,50 @@ document.addEventListener('DOMContentLoaded', function() {
             
             const response = await fetch(url);
             const data = await response.json();
-            
             if (!data || !data[0]) throw new Error("Invalid response");
             
             const translation = data[0].map(item => item[0]).join('').trim();
             window.currentSelectedTranslation = translation; 
             
-            // Generate interactive HTML
             const clickableHtml = makeTextClickable(translation, toLang);
             outputText.innerHTML = `<div style="font-size: 16px; line-height: 1.6; color: #1a1a3e;">${clickableHtml}</div>`;
             outputText.classList.remove('empty');
             
-            // Store the translation temporarily
             lastTranslation = { text: text, result: translation, direction: isSpanishToEnglish ? 'es-en' : 'en-es' };
-            
             if (saveToHistoryTimer) clearTimeout(saveToHistoryTimer);
             saveToHistoryTimer = setTimeout(() => {
-                if (lastTranslation.text && lastTranslation.result) {
-                    saveToHistory(lastTranslation.text, lastTranslation.result, lastTranslation.direction);
-                }
+                if (lastTranslation.text && lastTranslation.result) saveToHistory(lastTranslation.text, lastTranslation.result, lastTranslation.direction);
             }, 10000); 
             
         } catch (e) {
-            console.error("Translation error:", e);
             outputText.textContent = ui.errorTranslation;
             outputText.classList.remove('empty');
         }
-        setLoading(false);
+        loadingShimmer.classList.add('hidden');
+        outputText.classList.remove('hidden');
     }
     
-    // ─── Save Translation to History ────────
     function saveToHistory(original, translation, direction) {
         try {
             const originalTrimmed = original.trim();
             const translationTrimmed = translation.trim();
-            const hasMinLength = originalTrimmed.length >= 2 && translationTrimmed.length >= 2;
-            const hasLetters = /[a-zA-ZáéíóúñÁÉÍÓÚÑ]/.test(originalTrimmed) && /[a-zA-ZáéíóúñÁÉÍÓÚÑ]/.test(translationTrimmed);
+            if (originalTrimmed.length < 2 || translationTrimmed.length < 2) return;
+            if (!/[a-zA-Záéíóúñ]/.test(originalTrimmed) || !/[a-zA-Z]/.test(translationTrimmed)) return;
             if (originalTrimmed.toLowerCase() === translationTrimmed.toLowerCase()) return;
-            const incompletePatterns = /(\.\.\.|…|,$|;$|\s-$|\s–$)$/;
-            if (incompletePatterns.test(originalTrimmed) || incompletePatterns.test(translationTrimmed)) return;
-            const tooManyDots = /\.{2,}/;
-            if (tooManyDots.test(originalTrimmed) || tooManyDots.test(translationTrimmed)) return;
-            const validSingleChars = /^[iIaAyY]$/;
-            if (originalTrimmed.length === 1 && !validSingleChars.test(originalTrimmed)) return;
-            if (translationTrimmed.length === 1 && !validSingleChars.test(translationTrimmed)) return;
-            const errorPatterns = /(error|failed|could not|unable to|translating|loading)/i;
-            if (errorPatterns.test(translationTrimmed)) return;
-            if (!hasMinLength || !hasLetters) return;
+            if (/(\.\.\.|…|,$|;$|\s-$|\s–$)$/.test(originalTrimmed)) return;
             
             let history = JSON.parse(localStorage.getItem('translationHistory') || '[]');
-            const isDuplicate = history.slice(0, 20).some(item => item.original.toLowerCase() === originalTrimmed.toLowerCase() && item.translation.toLowerCase() === translationTrimmed.toLowerCase());
-            if (isDuplicate) return; 
+            if (history.slice(0, 20).some(item => item.original.toLowerCase() === originalTrimmed.toLowerCase())) return; 
             
             history.unshift({
                 original: originalTrimmed, translation: translationTrimmed, direction: direction,
                 timestamp: new Date().toISOString(),
-                date: new Date().toLocaleDateString('es-ES', { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' })
+                date: new Date().toLocaleDateString('es-ES', { year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })
             });
-            
             if (history.length > 100) history = history.slice(0, 100);
             localStorage.setItem('translationHistory', JSON.stringify(history));
-        } catch (e) {
-            console.error('Error saving to history:', e);
-        }
+        } catch (e) {}
     }
-
-    // ─── Loading State ──────────────────────
-    function setLoading(isLoading) {
-        if (isLoading) {
-            loadingShimmer.classList.remove('hidden');
-            outputText.classList.add('hidden');
-        } else {
-            loadingShimmer.classList.add('hidden');
-            outputText.classList.remove('hidden');
-        }
-    }
-
-    // ─── Copy & Speak Actions ───────────────
-    copyBtn.addEventListener('click', () => {
-        const text = window.currentSelectedTranslation || outputText.textContent;
-        if (!text || text === ui.resultPlaceholder) return;
-        navigator.clipboard.writeText(text).then(() => { showToast(ui.copied); });
-    });
 
     function showToast(message) {
         toastMessage.textContent = message;
@@ -267,6 +199,12 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 2000);
     }
 
+    copyBtn.addEventListener('click', () => {
+        const text = window.currentSelectedTranslation || outputText.textContent;
+        if (!text || text === ui.resultPlaceholder) return;
+        navigator.clipboard.writeText(text).then(() => { showToast(ui.copied); });
+    });
+
     speakBtn.addEventListener('click', () => {
         const text = window.currentSelectedTranslation || outputText.textContent;
         if (!text || text === ui.resultPlaceholder) return;
@@ -274,64 +212,41 @@ document.addEventListener('DOMContentLoaded', function() {
         const utterance = new SpeechSynthesisUtterance(text);
         utterance.lang = isSpanishToEnglish ? 'en-US' : 'es-ES';
         utterance.rate = 0.9; 
-        utterance.pitch = 1.0;
         window.speechSynthesis.speak(utterance);
     });
 
-    // ─── Speech Recognition (Voice Input) ───────
     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
     let recognition;
-
     if (SpeechRecognition) {
         recognition = new SpeechRecognition();
         recognition.continuous = false;
         recognition.interimResults = false;
-
-        recognition.onstart = () => {
-            isRecording = true;
-            recordBtn.classList.add('recording');
-            inputText.placeholder = ui.listening;
-        };
-
-        recognition.onend = () => {
-            isRecording = false;
-            recordBtn.classList.remove('recording');
-            inputText.placeholder = isSpanishToEnglish ? ui.placeholderES : ui.placeholderEN;
-        };
-
+        recognition.onstart = () => { isRecording = true; recordBtn.classList.add('recording'); inputText.placeholder = ui.listening; };
+        recognition.onend = () => { isRecording = false; recordBtn.classList.remove('recording'); inputText.placeholder = isSpanishToEnglish ? ui.placeholderES : ui.placeholderEN; };
         recognition.onresult = (event) => {
-            const transcript = event.results[0][0].transcript;
-            inputText.value = transcript;
-            charCount.textContent = `${transcript.length} caracteres`;
+            inputText.value = event.results[0][0].transcript;
+            charCount.textContent = `${inputText.value.length} caracteres`;
             clearBtn.classList.remove('hidden');
-            autoGrow();
+            inputText.style.height = 'auto';
+            inputText.style.height = Math.min(inputText.scrollHeight, 300) + 'px';
             clearTimeout(debounceTimer);
             debounceTimer = setTimeout(() => doTranslation(), 300);
         };
-
-        recognition.onerror = (event) => {
-            console.error("Speech recognition error", event.error);
-            isRecording = false;
-            recordBtn.classList.remove('recording');
-            showToast(ui.errorMic + event.error);
-        };
+        recognition.onerror = (event) => { isRecording = false; recordBtn.classList.remove('recording'); showToast(ui.errorMic + event.error); };
     } else {
         recordBtn.classList.add('hidden');
-        console.warn("Speech Recognition not supported in this browser.");
     }
 
     recordBtn.addEventListener('click', () => {
         if (!recognition) { showToast(ui.errorNoMic); return; }
-        if (isRecording) {
-            recognition.stop();
-        } else {
+        if (isRecording) { recognition.stop(); } 
+        else {
             recognition.lang = isSpanishToEnglish ? 'es-ES' : 'en-US';
-            try { recognition.start(); } catch (err) { console.error("Error starting recognition:", err); }
+            try { recognition.start(); } catch (err) {}
         }
     });
     
-    const lang = getCurrentLanguage();
-    charCount.textContent = `0 ${lang === 'es' ? ui.charactersES : ui.charactersEN}`;
+    charCount.textContent = `0 ${getCurrentLanguage() === 'es' ? ui.charactersES : ui.charactersEN}`;
     
     window.addEventListener('beforeunload', () => {
         if (saveToHistoryTimer && lastTranslation.text && lastTranslation.result) {
@@ -348,7 +263,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
         title.textContent = word;
         body.innerHTML = '<div style="text-align:center; padding: 20px;"><div class="loading-dots" style="display:inline-flex; gap:5px;"><span style="width:7px; height:7px; background:#D4AF37; border-radius:50%; animation:bounce 1s infinite;"></span><span style="width:7px; height:7px; background:#D4AF37; border-radius:50%; animation:bounce 1s infinite 0.15s;"></span><span style="width:7px; height:7px; background:#D4AF37; border-radius:50%; animation:bounce 1s infinite 0.3s;"></span></div></div>';
-        
         modal.classList.add('active');
 
         try {
@@ -366,7 +280,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
             renderModalDictResults(finalData, langCode);
         } catch (err) {
-            body.innerHTML = `<div style="text-align:center; padding: 20px; color: #ff6060;">We couldn't find definitions for this word.</div>`;
+            body.innerHTML = `<div style="text-align:center; padding: 20px; color: #ff6060;">Definition not found.</div>`;
         }
     };
 
@@ -386,7 +300,7 @@ document.addEventListener('DOMContentLoaded', function() {
         let html = `
             <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(26,26,62,0.1); padding-bottom: 10px; margin-bottom: 10px;">
                 <h2 style="color: #1a1a3e; font-size: 22px; margin: 0; text-transform: capitalize; font-family: 'Work Sans', sans-serif;">${escHtml(data.word)}</h2>
-                <button style="background: none; border: none; font-size: 20px; cursor: pointer; color: #D4AF37;" onclick="playDictAudio('${audioUrl}', '${escHtml(data.word).replace(/'/g, "\\'")}', '${langCode}')">🔊</button>
+                <button style="background: none; border: none; font-size: 20px; cursor: pointer; color: #D4AF37;" onclick="window.playDictAudio('${audioUrl}', '${escHtml(data.word).replace(/'/g, "\\'")}', '${langCode}')">🔊</button>
             </div>
         `;
 
@@ -408,7 +322,6 @@ document.addEventListener('DOMContentLoaded', function() {
         if (!res.ok) throw new Error('Network error');
         const data = await res.json();
         const defsArray = data[12];
-        const synsArray = data[11];
         if (!defsArray) throw new Error('Not found');
         
         const meanings = defsArray.map(posGroup => {
@@ -420,15 +333,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 else if (typeof d[1] === 'string' && d[1].includes(' ')) exStr = d[1];
                 return { definition: defStr, example: exStr };
             }).filter(d => d.definition);
-            
-            let synonyms = [];
-            if (synsArray) {
-                const synGroup = synsArray.find(s => s[0] === partOfSpeech);
-                if (synGroup && synGroup[1]) synonyms = synGroup[1].flatMap(set => set[0] || []);
-            }
-            return { partOfSpeech, definitions: defs, synonyms: [...new Set(synonyms)] };
+            return { partOfSpeech, definitions: defs, synonyms: [] };
         });
-        
         return { word: (defsArray[0] && defsArray[0][2]) ? defsArray[0][2] : word, phonetics: [], meanings: meanings };
     }
 
