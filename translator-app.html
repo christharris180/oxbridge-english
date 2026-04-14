@@ -625,6 +625,17 @@
       line-height: 1.6;
       padding: 0 20px;
     }
+
+    /* ── CLICKABLE WORD STYLES ── */
+    .clickable-word { cursor: pointer; border-bottom: 1px dashed rgba(212, 175, 55, 0.6); transition: background 0.2s, color 0.2s; border-radius: 3px; padding: 0 2px; }
+    .clickable-word:hover { background: rgba(212, 175, 55, 0.15); color: #b48c0a; }
+    .word-modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(13,13,36,0.8); z-index: 9999; display: flex; justify-content: center; align-items: center; opacity: 0; pointer-events: none; transition: opacity 0.3s; backdrop-filter: blur(4px); }
+    .word-modal-overlay.active { opacity: 1; pointer-events: all; }
+    .word-modal-content { background: #cdc89e; width: 90%; max-width: 400px; max-height: 80vh; overflow-y: auto; border-radius: 16px; padding: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); transform: translateY(20px); transition: transform 0.3s; }
+    .word-modal-overlay.active .word-modal-content { transform: translateY(0); }
+    .word-modal-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(26,26,62,0.1); padding-bottom: 10px; margin-bottom: 15px; }
+    .word-modal-title { color: #1a1a3e; font-size: 24px; font-weight: 700; margin: 0; text-transform: capitalize; font-family: 'Work Sans', sans-serif; }
+    .word-modal-close { background: none; border: none; font-size: 28px; color: #1a1a3e; cursor: pointer; line-height: 1; padding: 0; }
   </style>
 </head>
 <body style="background: url('blue_background_001.jpg') no-repeat center center fixed; background-size: cover;">
@@ -655,7 +666,7 @@
   <div class="panels">
     <div class="panel source-panel">
       <div class="panel-label source" id="label-source">Escribe en español...</div>
-      <textarea id="source-input" placeholder="Hola, ¿cómo estás?" maxlength="1000" oninput="onInput()"></textarea>
+      <textarea id="source-input" placeholder="Hola, ¿cómo estás?" maxlength="1000" oninput="handleTextInput()"></textarea>
       <div class="panel-bottom">
         <span class="char-count"><span id="char-count">0</span>/1000</span>
         <div class="panel-actions">
@@ -754,13 +765,23 @@
     <div class="screen-body" id="quiz-body"></div>
   </div>
 
+  <div id="word-modal" class="word-modal-overlay" onclick="closeWordModal(event)">
+      <div class="word-modal-content" onclick="event.stopPropagation()">
+          <div class="word-modal-header">
+              <h3 id="word-modal-title" class="word-modal-title">Word</h3>
+              <button class="word-modal-close" onclick="closeWordModal(event)">&times;</button>
+          </div>
+          <div id="word-modal-body">Loading...</div>
+      </div>
+  </div>
+
 </div>
 
 <div class="toast" id="toast"></div>
 
 <script>
 // ── STATE ──
-let direction = 'es-en'; // source is Spanish by default
+let direction = 'es-en'; 
 let uiLang = localStorage.getItem('uiLang') || 'es';
 let currentTranslation = '';
 let currentTranslationLang = '';
@@ -833,20 +854,13 @@ function updateDirectionLabels() {
   }
 
   const labels = {
-    'es-en': {
-      src: uiLang === 'es' ? 'Escribe en español...' : 'Type in Spanish...',
-      tgt: uiLang === 'es' ? 'Traducción al inglés' : 'English translation'
-    },
-    'en-es': {
-      src: uiLang === 'es' ? 'Escribe en inglés...' : 'Type in English...',
-      tgt: uiLang === 'es' ? 'Traducción al español' : 'Spanish translation'
-    }
+    'es-en': { src: uiLang === 'es' ? 'Escribe en español...' : 'Type in Spanish...', tgt: uiLang === 'es' ? 'Traducción al inglés' : 'English translation' },
+    'en-es': { src: uiLang === 'es' ? 'Escribe en inglés...' : 'Type in English...', tgt: uiLang === 'es' ? 'Traducción al español' : 'Spanish translation' }
   };
 
   document.getElementById('label-source').textContent = labels[direction].src;
   document.getElementById('label-target').textContent = labels[direction].tgt;
-  document.getElementById('source-input').placeholder =
-    direction === 'es-en' ? 'Hola, ¿cómo estás?' : 'Hello, how are you?';
+  document.getElementById('source-input').placeholder = direction === 'es-en' ? 'Hola, ¿cómo estás?' : 'Hello, how are you?';
   
   document.getElementById('dict-lang').value = direction === 'es-en' ? 'en' : 'es';
   document.getElementById('dict-input').placeholder = uiLang === 'es' ? 'Busca una palabra...' : 'Search a word...';
@@ -854,14 +868,15 @@ function updateDirectionLabels() {
 
 let autoTranslateTimer = null;
 
-function onInput() {
+// NOTE: Renamed to avoid conflicts
+function handleTextInput() {
   updateCharCount();
   clearOutput();
   clearSaveTimer();
   clearTimeout(autoTranslateTimer);
   const text = document.getElementById('source-input').value.trim();
   if (text.length > 1) {
-    autoTranslateTimer = setTimeout(() => translate(), 800);
+    autoTranslateTimer = setTimeout(() => performTranslation(), 800);
   }
 }
 
@@ -886,29 +901,51 @@ function clearOutput() {
   document.getElementById('save-status').textContent = '';
 }
 
-async function translate() {
+// ── Word Splitter Logic ──
+function makeTextClickable(text, targetLang) {
+    const parts = text.split(/([a-zA-ZáéíóúñüÁÉÍÓÚÑÜ]+(?:[-'][a-zA-ZáéíóúñüÁÉÍÓÚÑÜ]+)*)/);
+    let html = '';
+    parts.forEach(part => {
+        if (/^[a-zA-ZáéíóúñüÁÉÍÓÚÑÜ]+(?:[-'][a-zA-ZáéíóúñüÁÉÍÓÚÑÜ]+)*$/.test(part)) {
+            const cleanWord = part.replace(/'/g, "\\'");
+            html += `<span class="clickable-word" onclick="openWordModal('${cleanWord}', '${targetLang}')">${part}</span>`;
+        } else {
+            html += escHtml(part);
+        }
+    });
+    return html;
+}
+
+// NOTE: Renamed from 'translate' to 'performTranslation' to avoid Chrome's global window.translate conflict
+async function performTranslation() {
   const text = document.getElementById('source-input').value.trim();
   if (!text) { showToast(uiLang === 'es' ? 'Escribe algo primero' : 'Type something first'); return; }
 
   const out = document.getElementById('output-text');
   out.innerHTML = '<div class="loading-dots"><span></span><span></span><span></span></div>';
 
-  const langPair = direction === 'es-en' ? 'es|en' : 'en|es';
-  const url = 'https://api.mymemory.translated.net/get?q=' + encodeURIComponent(text) + '&langpair=' + langPair;
+  const fromLang = direction === 'es-en' ? 'es' : 'en';
+  const toLang = direction === 'es-en' ? 'en' : 'es';
+  
+  const url = `https://translate.googleapis.com/translate_a/single?client=gtx&dt=t&sl=${fromLang}&tl=${toLang}&q=${encodeURIComponent(text)}`;
 
   try {
     const response = await fetch(url);
     const data = await response.json();
-    const translation = (data.responseData && data.responseData.translatedText) ? data.responseData.translatedText.trim() : '';
+    
+    if (!data || !data[0]) throw new Error('No translation data returned');
 
-    if (!translation) throw new Error('No translation');
-
-    out.textContent = translation;
-    currentTranslation = translation;
+    let primary = data[0].map(item => item[0]).join('').trim();
+    currentTranslation = primary; 
     currentTranslationLang = direction === 'es-en' ? 'en-GB' : 'es-ES';
 
-    startSaveTimer(text, translation);
+    // Output the clickable interactive version
+    const clickableHtml = makeTextClickable(primary, toLang);
+    out.innerHTML = `<div style="font-size: 16px; line-height: 1.6; color: var(--text-navy);">${clickableHtml}</div>`;
+
+    startSaveTimer(text, primary);
   } catch (err) {
+    console.error("Translation API Error: ", err);
     out.innerHTML = '<span style="color:rgba(180,40,40,0.9);font-size:15px;">' +
       (uiLang === 'es' ? '⚠️ Error. Verifica tu conexión.' : '⚠️ Error. Check your connection.') + '</span>';
   }
@@ -1003,7 +1040,7 @@ function toggleMic() {
     document.getElementById('source-input').value = transcript;
     updateCharCount();
     clearOutput();
-    if (transcript.trim().length > 1) translate();
+    if (transcript.trim().length > 1) performTranslation();
   };
   recognition.onend = () => {
     isRecording = false;
@@ -1105,7 +1142,6 @@ document.getElementById('dict-input').addEventListener('keypress', function (e) 
     if (e.key === 'Enter') searchDictionary();
 });
 
-// The hidden Google Translate Dictionary API parser
 async function fetchGoogleDictionary(word, lang) {
     const url = `https://translate.googleapis.com/translate_a/single?client=gtx&dt=md&dt=ss&sl=${lang}&tl=${lang}&q=${encodeURIComponent(word)}`;
     const res = await fetch(url);
@@ -1122,40 +1158,20 @@ async function fetchGoogleDictionary(word, lang) {
         const defs = (posGroup[1] || []).map(d => {
             let defStr = d[0] || '';
             let exStr = '';
-            
-            // Filter out Google's internal ID codes by ensuring examples have spaces
-            if (typeof d[2] === 'string' && d[2].includes(' ')) {
-                exStr = d[2];
-            } else if (typeof d[1] === 'string' && d[1].includes(' ')) {
-                exStr = d[1];
-            }
-            
-            return {
-                definition: defStr,
-                example: exStr
-            };
+            if (typeof d[2] === 'string' && d[2].includes(' ')) exStr = d[2];
+            else if (typeof d[1] === 'string' && d[1].includes(' ')) exStr = d[1];
+            return { definition: defStr, example: exStr };
         }).filter(d => d.definition);
         
         let synonyms = [];
         if (synsArray) {
             const synGroup = synsArray.find(s => s[0] === partOfSpeech);
-            if (synGroup && synGroup[1]) {
-                synonyms = synGroup[1].flatMap(set => set[0] || []);
-            }
+            if (synGroup && synGroup[1]) synonyms = synGroup[1].flatMap(set => set[0] || []);
         }
-        
-        return {
-            partOfSpeech,
-            definitions: defs,
-            synonyms: [...new Set(synonyms)]
-        };
+        return { partOfSpeech, definitions: defs, synonyms: [...new Set(synonyms)] };
     });
     
-    return {
-        word: (defsArray[0] && defsArray[0][2]) ? defsArray[0][2] : word,
-        phonetics: [],
-        meanings: meanings
-    };
+    return { word: (defsArray[0] && defsArray[0][2]) ? defsArray[0][2] : word, phonetics: [], meanings: meanings };
 }
 
 async function searchDictionary() {
@@ -1165,22 +1181,16 @@ async function searchDictionary() {
   const resContainer = document.getElementById('dict-results');
   const isEs = (uiLang === 'es');
 
-  if (!word) {
-      showToast(isEs ? 'Escribe una palabra' : 'Type a word');
-      return;
-  }
-
+  if (!word) { showToast(isEs ? 'Escribe una palabra' : 'Type a word'); return; }
   resContainer.innerHTML = '<div class="loading-dots" style="display:block; text-align:center; padding: 40px;"><span></span><span></span><span></span></div>';
 
   try {
     let finalData = null;
-
     if (lang === 'en') {
         try {
             const res = await fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${encodeURIComponent(word)}`);
             if (!res.ok) throw new Error('Not found');
-            const data = await res.json();
-            finalData = data[0];
+            finalData = (await res.json())[0];
         } catch (e) {
             finalData = await fetchGoogleDictionary(word, 'en');
         }
@@ -1189,9 +1199,7 @@ async function searchDictionary() {
     }
     renderDictResults(finalData, lang, isEs);
   } catch (err) {
-    resContainer.innerHTML = `<div class="history-empty" style="margin-top: 20px;">
-      ${isEs ? 'No encontramos la definición para esta palabra.' : 'We couldn\'t find definitions for this word.'}
-    </div>`;
+    resContainer.innerHTML = `<div class="history-empty" style="margin-top: 20px;">${isEs ? 'No encontramos la definición para esta palabra.' : 'We couldn\'t find definitions for this word.'}</div>`;
   }
 }
 
@@ -1212,14 +1220,10 @@ function renderDictResults(data, langCode, isEs) {
 
   data.meanings.forEach(meaning => {
       html += `<h4 style="color: #9e7a0e; font-size: 16px; margin: 15px 0 10px; font-style: italic; text-transform: lowercase;">${escHtml(meaning.partOfSpeech)}</h4>`;
-
       meaning.definitions.slice(0, 3).forEach((def, i) => {
           html += `<p style="color: var(--text-navy); font-size: 15px; font-weight: 400; margin-bottom: 5px; line-height: 1.4;"><strong>${i+1}.</strong> ${escHtml(def.definition)}</p>`;
-          if (def.example) {
-              html += `<p style="color: rgba(26,26,62,0.7); font-size: 14px; font-style: italic; margin-bottom: 12px; border-left: 2px solid var(--gold); padding-left: 10px;">"${escHtml(def.example)}"</p>`;
-          }
+          if (def.example) html += `<p style="color: rgba(26,26,62,0.7); font-size: 14px; font-style: italic; margin-bottom: 12px; border-left: 2px solid var(--gold); padding-left: 10px;">"${escHtml(def.example)}"</p>`;
       });
-
       if (meaning.synonyms && meaning.synonyms.length > 0) {
           html += `<p style="font-size: 14px; margin-top: 10px; color: var(--navy-light);"><strong>${isEs ? 'Sinónimos:' : 'Synonyms:'}</strong> <span style="color: #444;">${escHtml(meaning.synonyms.slice(0, 5).join(', '))}</span></p>`;
       }
@@ -1229,10 +1233,9 @@ function renderDictResults(data, langCode, isEs) {
   document.getElementById('dict-results').innerHTML = html;
 }
 
-function playDictAudio(url, word, langCode) {
-  if (url) {
-      new Audio(url).play();
-  } else {
+window.playDictAudio = function(url, word, langCode) {
+  if (url) { new Audio(url).play(); } 
+  else {
       try {
           const utter = new SpeechSynthesisUtterance(word);
           utter.lang = langCode === 'es' ? 'es-ES' : 'en-GB';
@@ -1241,15 +1244,75 @@ function playDictAudio(url, word, langCode) {
   }
 }
 
+// ── MODAL DICTIONARY LOGIC ──
+window.openWordModal = async function(word, langCode) {
+    const modal = document.getElementById('word-modal');
+    const title = document.getElementById('word-modal-title');
+    const body = document.getElementById('word-modal-body');
+
+    title.textContent = word;
+    body.innerHTML = '<div style="text-align:center; padding: 20px;"><div class="loading-dots" style="display:inline-flex; gap:5px;"><span style="width:7px; height:7px; background:#D4AF37; border-radius:50%; animation:bounce 1s infinite;"></span><span style="width:7px; height:7px; background:#D4AF37; border-radius:50%; animation:bounce 1s infinite 0.15s;"></span><span style="width:7px; height:7px; background:#D4AF37; border-radius:50%; animation:bounce 1s infinite 0.3s;"></span></div></div>';
+    
+    modal.classList.add('active');
+
+    try {
+        let finalData = null;
+        if (langCode === 'en') {
+            try {
+                const res = await fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${encodeURIComponent(word)}`);
+                if (!res.ok) throw new Error('Not found');
+                finalData = (await res.json())[0];
+            } catch (e) {
+                finalData = await fetchGoogleDictionary(word, 'en');
+            }
+        } else {
+            finalData = await fetchGoogleDictionary(word, 'es');
+        }
+        renderModalDictResults(finalData, langCode);
+    } catch (err) {
+        body.innerHTML = `<div style="text-align:center; padding: 20px; color: #ff6060;">${uiLang === 'es' ? 'No encontramos la definición para esta palabra.' : 'We couldn\\'t find definitions for this word.'}</div>`;
+    }
+};
+
+window.closeWordModal = function(e) {
+    if (e) e.stopPropagation();
+    document.getElementById('word-modal').classList.remove('active');
+};
+
+function renderModalDictResults(data, langCode) {
+    const body = document.getElementById('word-modal-body');
+    let audioUrl = '';
+    if(data.phonetics) {
+        const p = data.phonetics.find(x => x.audio);
+        if(p) audioUrl = p.audio;
+    }
+
+    let html = `
+        <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(26,26,62,0.1); padding-bottom: 10px; margin-bottom: 10px;">
+            <h2 style="color: #1a1a3e; font-size: 22px; margin: 0; text-transform: capitalize; font-family: 'Work Sans', sans-serif;">${escHtml(data.word)}</h2>
+            <button style="background: none; border: none; font-size: 20px; cursor: pointer; color: #D4AF37;" onclick="playDictAudio('${audioUrl}', '${escHtml(data.word).replace(/'/g, "\\'")}', '${langCode}')">🔊</button>
+        </div>
+    `;
+
+    data.meanings.forEach(meaning => {
+        html += `<h4 style="color: #9e7a0e; font-size: 14px; margin: 10px 0 5px; font-style: italic; text-transform: lowercase;">${escHtml(meaning.partOfSpeech)}</h4>`;
+        meaning.definitions.slice(0, 2).forEach((def, i) => {
+            html += `<p style="color: #1a1a3e; font-size: 14px; margin-bottom: 4px; line-height: 1.3;"><strong>${i+1}.</strong> ${escHtml(def.definition)}</p>`;
+            if (def.example) {
+                html += `<p style="color: rgba(26,26,62,0.7); font-size: 13px; font-style: italic; margin-bottom: 8px; border-left: 2px solid #C9A227; padding-left: 8px;">"${escHtml(def.example)}"</p>`;
+            }
+        });
+    });
+    body.innerHTML = html;
+}
+
 // ── HISTORY SCREEN ──
 function renderHistory() {
   const list = document.getElementById('history-list');
   const history = JSON.parse(localStorage.getItem('translationHistory') || '[]').reverse();
 
   if (history.length === 0) {
-    list.innerHTML = '<div class="history-empty">' +
-      (uiLang === 'es' ? 'No hay traducciones guardadas aún.' : 'No saved translations yet.') +
-      '</div>';
+    list.innerHTML = '<div class="history-empty">' + (uiLang === 'es' ? 'No hay traducciones guardadas aún.' : 'No saved translations yet.') + '</div>';
     return;
   }
 
@@ -1289,9 +1352,7 @@ function renderQuiz() {
   if (history.length < 10) {
     const needed = 10 - history.length;
     body.innerHTML = '<div class="quiz-not-enough">' +
-      (uiLang === 'es'
-        ? 'Necesitas al menos 10 traducciones guardadas para el quiz.<br>Te faltan <strong>' + needed + '</strong> más.'
-        : 'You need at least 10 saved translations for the quiz.<br><strong>' + needed + '</strong> more to go.') +
+      (uiLang === 'es' ? `Necesitas al menos 10 traducciones guardadas para el quiz.<br>Te faltan <strong>${needed}</strong> más.` : `You need at least 10 saved translations for the quiz.<br><strong>${needed}</strong> more to go.`) +
       '</div>';
     return;
   }
@@ -1306,24 +1367,17 @@ function renderQuiz() {
     const wrongs = others.sort(() => Math.random() - 0.5).slice(0, 3).map(h => h.translation);
     const options = [entry.translation, ...wrongs].sort(() => Math.random() - 0.5);
 
-    const prompt = entry.direction === 'es-en'
-      ? (uiLang === 'es' ? 'Traduce al inglés:' : 'Translate to English:')
-      : (uiLang === 'es' ? 'Traduce al español:' : 'Translate to Spanish:');
+    const prompt = entry.direction === 'es-en' ? (uiLang === 'es' ? 'Traduce al inglés:' : 'Translate to English:') : (uiLang === 'es' ? 'Traduce al español:' : 'Translate to Spanish:');
 
     return '<div class="quiz-question" id="q-' + i + '">' +
       '<div class="quiz-q-text"><strong>' + (i+1) + '.</strong> ' + prompt + '<br>' + escHtml(entry.original) + '</div>' +
-      options.map(opt =>
-        '<button class="quiz-option" data-opt="' + escHtml(opt) + '" data-correct="' + escHtml(entry.translation) + '" onclick="answerQuiz(' + i + ', this)">' +
-        escHtml(opt) + '</button>'
-      ).join('') +
+      options.map(opt => `<button class="quiz-option" data-opt="${escHtml(opt)}" data-correct="${escHtml(entry.translation)}" onclick="answerQuiz(${i}, this)">${escHtml(opt)}</button>`).join('') +
       '</div>';
   }).join('') +
   '<div id="quiz-result" style="display:none;" class="quiz-score">' +
     '<span class="quiz-score-num" id="quiz-score-num">0/10</span>' +
     '<span class="quiz-score-label" id="quiz-score-label"></span>' +
-    '<button class="quiz-restart-btn" onclick="renderQuiz()">' +
-      (uiLang === 'es' ? '🔄 Intentar de nuevo' : '🔄 Try again') +
-    '</button>' +
+    '<button class="quiz-restart-btn" onclick="renderQuiz()">' + (uiLang === 'es' ? '🔄 Intentar de nuevo' : '🔄 Try again') + '</button>' +
   '</div>';
 }
 
@@ -1336,12 +1390,8 @@ function answerQuiz(qIndex, btn) {
     if (b.getAttribute('data-opt') === correct) b.classList.add('correct');
   });
 
-  if (selected === correct) {
-    btn.classList.add('correct');
-    quizScore++;
-  } else {
-    btn.classList.add('wrong');
-  }
+  if (selected === correct) { btn.classList.add('correct'); quizScore++; } 
+  else { btn.classList.add('wrong'); }
 
   quizAnswers[qIndex] = selected;
 
@@ -1350,10 +1400,7 @@ function answerQuiz(qIndex, btn) {
       const result = document.getElementById('quiz-result');
       document.getElementById('quiz-score-num').textContent = quizScore + '/10';
       const pct = quizScore * 10;
-      document.getElementById('quiz-score-label').textContent =
-        pct >= 80 ? (uiLang === 'es' ? '¡Excelente!' : 'Excellent!') :
-        pct >= 50 ? (uiLang === 'es' ? '¡Buen trabajo!' : 'Good work!') :
-        (uiLang === 'es' ? 'Sigue practicando.' : 'Keep practising.');
+      document.getElementById('quiz-score-label').textContent = pct >= 80 ? (uiLang === 'es' ? '¡Excelente!' : 'Excellent!') : pct >= 50 ? (uiLang === 'es' ? '¡Buen trabajo!' : 'Good work!') : (uiLang === 'es' ? 'Sigue practicando.' : 'Keep practising.');
       result.style.display = 'block';
       result.scrollIntoView({ behavior: 'smooth' });
     }, 500);
