@@ -183,7 +183,6 @@
 <div class="toast" id="toast"></div>
 
 <script>
-// EXPLICIT GLOBAL BINDING FOR MOBILE WEBVIEWS
 window.direction = 'es-en'; 
 window.uiLang = localStorage.getItem('uiLang') || 'es';
 window.currentTranslation = '';
@@ -379,22 +378,69 @@ window.searchDictionary = async function() {
       const url = "https://translate.googleapis.com/translate_a/single?client=gtx&dt=md&dt=ss&sl=" + lang + "&tl=" + lang + "&q=" + encodeURIComponent(word);
       const res = await fetch(url);
       const data = await res.json();
-      window.renderModalDictResults(window.parseGoogleDict(data, word), lang, 'dict-results');
+      
+      let finalData = window.parseGoogleDict(data, word);
+      
+      // Bulk Bilingual Translation for Main Dictionary Screen
+      if (lang !== window.uiLang) {
+          finalData = await window.bulkTranslateDefinitions(finalData, lang, window.uiLang);
+      }
+      
+      window.renderModalDictResults(finalData, lang, 'dict-results');
   } catch(e) {
       document.getElementById('dict-results').innerHTML = "Not found.";
   }
 };
 
+window.bulkTranslateDefinitions = async function(finalData, fromLang, toLang) {
+    let textsToTranslate = [];
+    finalData.meanings.forEach(m => {
+        textsToTranslate.push((m.partOfSpeech || '').replace(/\n/g, ' '));
+        m.definitions.slice(0, 2).forEach(d => {
+            textsToTranslate.push((d.definition || '').replace(/\n/g, ' '));
+            if (d.example) textsToTranslate.push(d.example.replace(/\n/g, ' '));
+        });
+    });
+
+    if (textsToTranslate.length > 0) {
+        try {
+            const joinedText = textsToTranslate.join('\n');
+            const url = "https://translate.googleapis.com/translate_a/single?client=gtx&dt=t&sl=" + fromLang + "&tl=" + toLang + "&q=" + encodeURIComponent(joinedText);
+            const res = await fetch(url);
+            const tData = await res.json();
+            const translatedString = tData[0].map(item => item[0]).join('');
+            const translatedArray = translatedString.split('\n').map(t => t.trim());
+
+            let tIndex = 0;
+            finalData.meanings.forEach(m => {
+                m.partOfSpeechTranslated = translatedArray[tIndex++] || '';
+                m.definitions.slice(0, 2).forEach(d => {
+                    d.definitionTranslated = translatedArray[tIndex++] || '';
+                    if (d.example) d.exampleTranslated = translatedArray[tIndex++] || '';
+                });
+            });
+        } catch (e) { console.error("Bilingual translation failed", e); }
+    }
+    return finalData;
+};
+
 window.openWordModal = async function(word, langCode) {
     document.getElementById('word-modal-title').textContent = word;
-    document.getElementById('word-modal-body').innerHTML = 'Loading...';
+    document.getElementById('word-modal-body').innerHTML = '<div style="text-align:center; padding: 20px;"><div class="loading-dots"><span></span><span></span><span></span></div></div>';
     document.getElementById('word-modal').classList.add('active');
 
     try {
         const url = "https://translate.googleapis.com/translate_a/single?client=gtx&dt=md&dt=ss&sl=" + langCode + "&tl=" + langCode + "&q=" + encodeURIComponent(word);
         const res = await fetch(url);
         const data = await res.json();
-        window.renderModalDictResults(window.parseGoogleDict(data, word), langCode, 'word-modal-body');
+        let finalData = window.parseGoogleDict(data, word);
+        
+        // Bulk Bilingual Translation for Modal
+        if (langCode !== window.uiLang) {
+            finalData = await window.bulkTranslateDefinitions(finalData, langCode, window.uiLang);
+        }
+        
+        window.renderModalDictResults(finalData, langCode, 'word-modal-body');
     } catch(e) {
         document.getElementById('word-modal-body').innerHTML = "Not found.";
     }
@@ -418,12 +464,20 @@ window.parseGoogleDict = function(data, word) {
 };
 
 window.renderModalDictResults = function(data, langCode, targetId) {
-    let html = `<h2 style="color:#1a1a3e; text-transform:capitalize; margin-bottom:10px;">${window.escHtml(data.word)}</h2>`;
+    let html = `<div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(26,26,62,0.1); padding-bottom: 10px; margin-bottom: 10px;">
+                  <h2 style="color:#1a1a3e; text-transform:capitalize; margin:0;">${window.escHtml(data.word)}</h2>
+                  <button style="background:none; border:none; font-size:20px; cursor:pointer; color:#D4AF37;" onclick="window.playDictAudio('', '${window.escHtml(data.word).replace(/'/g, "\\'")}', '${langCode}')">🔊</button>
+                </div>`;
+    
     data.meanings.forEach(m => {
-        html += `<h4 style="color:#9e7a0e; margin:10px 0 5px;">${window.escHtml(m.partOfSpeech)}</h4>`;
+        html += `<h4 style="color:#9e7a0e; margin:10px 0 5px;">${window.escHtml(m.partOfSpeech)} ${m.partOfSpeechTranslated ? `<span style="color:#666; font-size:12px;">(${window.escHtml(m.partOfSpeechTranslated)})</span>` : ''}</h4>`;
         m.definitions.slice(0,2).forEach(d => {
-            html += `<p style="color:#1a1a3e; font-size:14px; margin-bottom:4px;">- ${window.escHtml(d.definition)}</p>`;
-            if (d.example) html += `<p style="color:#666; font-size:13px; font-style:italic; margin-bottom:8px;">"${window.escHtml(d.example)}"</p>`;
+            html += `<div style="margin-bottom:12px;">
+                        <p style="color:#1a1a3e; font-size:14px; margin-bottom:2px;"><strong>-</strong> ${window.escHtml(d.definition)}</p>`;
+            if (d.definitionTranslated) html += `<p style="color:#4a4a6a; font-size:13px; margin-bottom:4px; padding-left:10px;"><em>${window.escHtml(d.definitionTranslated)}</em></p>`;
+            if (d.example) html += `<p style="color:rgba(26,26,62,0.7); font-size:13px; font-style:italic; margin-bottom:2px; border-left:2px solid #C9A227; padding-left:8px; margin-left:10px;">"${window.escHtml(d.example)}"</p>`;
+            if (d.exampleTranslated) html += `<p style="color:rgba(26,26,62,0.5); font-size:12px; font-style:italic; margin-bottom:8px; border-left:2px solid rgba(201,162,39,0.5); padding-left:8px; margin-left:10px;">"${window.escHtml(d.exampleTranslated)}"</p>`;
+            html += `</div>`;
         });
     });
     document.getElementById(targetId).innerHTML = html;

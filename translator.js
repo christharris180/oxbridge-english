@@ -255,11 +255,12 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // ─── Modal Dictionary Engine ────────────────
+    // ─── Modal Bilingual Dictionary Engine ────────────────
     window.openWordModal = async function(word, langCode) {
         const modal = document.getElementById('word-modal');
         const title = document.getElementById('word-modal-title');
         const body = document.getElementById('word-modal-body');
+        const uiLang = getCurrentLanguage();
 
         title.textContent = word;
         body.innerHTML = '<div style="text-align:center; padding: 20px;"><div class="loading-dots" style="display:inline-flex; gap:5px;"><span style="width:7px; height:7px; background:#D4AF37; border-radius:50%; animation:bounce 1s infinite;"></span><span style="width:7px; height:7px; background:#D4AF37; border-radius:50%; animation:bounce 1s infinite 0.15s;"></span><span style="width:7px; height:7px; background:#D4AF37; border-radius:50%; animation:bounce 1s infinite 0.3s;"></span></div></div>';
@@ -278,6 +279,40 @@ document.addEventListener('DOMContentLoaded', function() {
             } else {
                 finalData = await fetchGoogleDictionary(word, 'es');
             }
+
+            // BILINGUAL BULK TRANSLATOR INJECTION
+            if (langCode !== uiLang) {
+                let textsToTranslate = [];
+                // Strip native newlines so our \n separator works perfectly
+                finalData.meanings.forEach(m => {
+                    textsToTranslate.push((m.partOfSpeech || '').replace(/\n/g, ' '));
+                    m.definitions.slice(0, 2).forEach(d => {
+                        textsToTranslate.push((d.definition || '').replace(/\n/g, ' '));
+                        if (d.example) textsToTranslate.push(d.example.replace(/\n/g, ' '));
+                    });
+                });
+
+                if (textsToTranslate.length > 0) {
+                    try {
+                        const joinedText = textsToTranslate.join('\n');
+                        const url = `https://translate.googleapis.com/translate_a/single?client=gtx&dt=t&sl=${langCode}&tl=${uiLang}&q=${encodeURIComponent(joinedText)}`;
+                        const res = await fetch(url);
+                        const tData = await res.json();
+                        const translatedString = tData[0].map(item => item[0]).join('');
+                        const translatedArray = translatedString.split('\n').map(t => t.trim());
+
+                        let tIndex = 0;
+                        finalData.meanings.forEach(m => {
+                            m.partOfSpeechTranslated = translatedArray[tIndex++] || '';
+                            m.definitions.slice(0, 2).forEach(d => {
+                                d.definitionTranslated = translatedArray[tIndex++] || '';
+                                if (d.example) d.exampleTranslated = translatedArray[tIndex++] || '';
+                            });
+                        });
+                    } catch (e) { console.error("Bilingual translation failed", e); }
+                }
+            }
+
             renderModalDictResults(finalData, langCode);
         } catch (err) {
             body.innerHTML = `<div style="text-align:center; padding: 20px; color: #ff6060;">Definition not found.</div>`;
@@ -304,13 +339,27 @@ document.addEventListener('DOMContentLoaded', function() {
             </div>
         `;
 
-        data.meanings.forEach(meaning => {
-            html += `<h4 style="color: #9e7a0e; font-size: 14px; margin: 10px 0 5px; font-style: italic; text-transform: lowercase;">${escHtml(meaning.partOfSpeech)}</h4>`;
-            meaning.definitions.slice(0, 2).forEach((def, i) => {
-                html += `<p style="color: #1a1a3e; font-size: 14px; margin-bottom: 4px; line-height: 1.3;"><strong>${i+1}.</strong> ${escHtml(def.definition)}</p>`;
-                if (def.example) {
-                    html += `<p style="color: rgba(26,26,62,0.7); font-size: 13px; font-style: italic; margin-bottom: 8px; border-left: 2px solid #C9A227; padding-left: 8px;">"${escHtml(def.example)}"</p>`;
+        data.meanings.forEach(m => {
+            html += `<h4 style="color: #9e7a0e; font-size: 14px; margin: 10px 0 5px; font-style: italic; text-transform: lowercase;">
+                        ${escHtml(m.partOfSpeech)} ${m.partOfSpeechTranslated ? `<span style="color:#666; font-size:12px;">(${escHtml(m.partOfSpeechTranslated)})</span>` : ''}
+                     </h4>`;
+            
+            m.definitions.slice(0, 2).forEach((def, i) => {
+                html += `<div style="margin-bottom: 12px;">
+                            <p style="color: #1a1a3e; font-size: 14px; margin-bottom: 2px; line-height: 1.3;"><strong>${i+1}.</strong> ${escHtml(def.definition)}</p>`;
+                
+                if (def.definitionTranslated) {
+                    html += `<p style="color: #4a4a6a; font-size: 13px; margin-bottom: 4px; line-height: 1.3; padding-left: 14px;"><em>${escHtml(def.definitionTranslated)}</em></p>`;
                 }
+                
+                if (def.example) {
+                    html += `<p style="color: rgba(26,26,62,0.7); font-size: 13px; font-style: italic; margin-bottom: 2px; border-left: 2px solid #C9A227; padding-left: 8px; margin-left: 14px;">"${escHtml(def.example)}"</p>`;
+                }
+                
+                if (def.exampleTranslated) {
+                    html += `<p style="color: rgba(26,26,62,0.5); font-size: 12px; font-style: italic; margin-bottom: 8px; border-left: 2px solid rgba(201,162,39,0.5); padding-left: 8px; margin-left: 14px;">"${escHtml(def.exampleTranslated)}"</p>`;
+                }
+                html += `</div>`;
             });
         });
         body.innerHTML = html;
