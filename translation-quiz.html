@@ -1,348 +1,276 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <meta name="theme-color" content="#0d0d24" />
-  
-  <title>Quiz de Traducción | Oxbridge English</title>
-  <meta name="description" content="Pon a prueba tu aprendizaje con el quiz personalizado de traducciones de Oxbridge English.">
-  <meta name="robots" content="noindex, follow">
-  
-  <link rel="icon" type="image/jpeg" href="ox-head-008.jpg">
-  <link rel="apple-touch-icon" href="ox-head-008.jpg">
-  <link rel="shortcut icon" type="image/jpeg" href="ox-head-008.jpg">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>SmarTranslator Quiz | Oxbridge English</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --gold: #C9A227; --gold-light: #D4AF37; --navy: #0d0d24; --navy-light: #1a1a3e;
+            --cream: #cdc89e; --text-navy: #1a1a3e;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+        body { 
+            background: var(--navy); color: white; font-family: 'Roboto', sans-serif; 
+            min-height: 100vh; display: flex; flex-direction: column;
+        }
+        
+        .topbar { 
+            display: flex; align-items: center; justify-content: space-between; 
+            padding: 16px 20px; border-bottom: 1px solid rgba(255,255,255,0.07); 
+        }
+        .back-btn {
+            background: var(--gold); color: var(--text-navy); border: none; 
+            border-radius: 50px; padding: 8px 16px; font-weight: 700; cursor: pointer;
+        }
 
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700&display=swap" rel="stylesheet" />
-  <style>
-    :root {
-      --gold: #C9A227;
-      --gold-light: #D4AF37;
-      --navy: #0d0d24;
-      --navy-light: #1a1a3e;
-      --cream: #cdc89e;
-      --text-navy: #1a1a3e;
-      --text-dim: rgba(255,255,255,0.42);
-      --safe-top: env(safe-area-inset-top, 0px);
-      --safe-bottom: env(safe-area-inset-bottom, 0px);
-    }
-    * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
-    html, body {
-      min-height: 100%; background: var(--navy);
-      color: white; font-family: 'Roboto', sans-serif; font-weight: 300;
-    }
-    .app {
-      display: flex; flex-direction: column;
-      min-height: 100vh; min-height: 100dvh;
-      padding-top: var(--safe-top); padding-bottom: var(--safe-bottom);
-    }
+        .quiz-container { flex: 1; padding: 20px; display: flex; flex-direction: column; align-items: center; }
+        #quiz-score-header { font-size: 18px; color: var(--gold); margin-bottom: 20px; font-weight: 500; }
 
-    /* TOPBAR */
-    .topbar {
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 16px 20px 8px; flex-shrink: 0;
-      border-bottom: 1px solid rgba(255,255,255,0.07);
-    }
-    .topbar-logo {
-      display: flex; align-items: center; gap: 9px;
-      font-family: 'Roboto', sans-serif; font-weight: 100;
-      font-size: 15px; color: rgba(255,255,255,0.7);
-    }
-    .topbar-ox {
-      width: 34px; height: 34px; border-radius: 50%;
-      object-fit: cover; border: 1px solid rgba(201,162,39,0.4);
-    }
-    .topbar-logo strong { color: var(--gold); font-weight: 300; }
-    .back-btn {
-      background: linear-gradient(180deg, var(--gold-light) 0%, var(--gold) 60%, #8a6808 100%);
-      color: var(--text-navy); border: none; border-radius: 50px;
-      padding: 9px 18px; font-size: 13px; font-weight: 700;
-      font-family: 'Roboto', sans-serif; cursor: pointer;
-      box-shadow: 0 3px 8px rgba(0,0,0,0.35), 0 2px 0 rgba(0,0,0,0.25);
-    }
-    .back-btn:active { transform: translateY(2px); }
+        /* Scramble Mode Styles */
+        #scramble-answer-box { 
+            display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; 
+            min-height: 60px; width: 100%; margin-bottom: 20px; padding: 15px; 
+            background: rgba(255,255,255,0.05); border-radius: 12px; border: 2px dashed var(--gold);
+        }
+        .scramble-btn { 
+            background: var(--navy-light); border: 1px solid var(--gold); color: white; 
+            padding: 10px 15px; border-radius: 8px; cursor: pointer; font-size: 16px;
+        }
 
-    /* SUBTITLE */
-    .app-subtitle {
-      text-align: center; font-weight: 300; font-size: 24px;
-      color: white; padding: 10px 20px 6px;
-    }
+        /* Option Buttons (Multiple Choice) */
+        .option-btn {
+            width: 100%; background: var(--navy-light); border: 1px solid rgba(255,255,255,0.2);
+            color: white; padding: 15px; border-radius: 12px; margin-bottom: 10px;
+            font-size: 16px; cursor: pointer; transition: 0.3s;
+        }
+        .option-btn.correct { background: #2e7d32 !important; border-color: #4caf50; }
+        .option-btn.wrong { background: #c62828 !important; border-color: #ef5350; }
 
-    /* CONTENT */
-    .content { flex: 1; padding: 12px 16px 24px; overflow-y: auto; }
+        .mic-btn-quiz {
+            width: 100px; height: 100px; border-radius: 50%; background: var(--gold);
+            border: none; font-size: 40px; cursor: pointer; box-shadow: 0 4px 15px rgba(201,162,39,0.4);
+        }
+        .mic-btn-quiz.listening { background: #cc2020; animation: pulse 1.5s infinite; }
 
-    /* START SCREEN */
-    .start-card {
-      background: var(--cream); border-radius: 16px;
-      padding: 32px 20px; text-align: center; margin-top: 16px;
-    }
-    .start-icon { font-size: 56px; margin-bottom: 16px; }
-    .start-title {
-      font-size: 20px; font-weight: 500; color: var(--text-navy);
-      margin-bottom: 10px; font-family: 'Roboto', sans-serif;
-    }
-    .start-desc {
-      font-size: 14px; color: rgba(26,26,62,0.6);
-      margin-bottom: 24px; line-height: 1.6; font-family: 'Roboto', sans-serif;
-    }
-    .start-count {
-      font-size: 13px; color: rgba(26,26,62,0.45);
-      margin-bottom: 20px; font-family: 'Roboto', sans-serif;
-    }
-
-    /* GOLD BUTTON */
-    .gold-btn {
-      display: inline-block;
-      background: linear-gradient(180deg, #e8c840 0%, var(--gold-light) 30%, var(--gold) 65%, #8a6808 100%);
-      color: var(--text-navy); border: none; border-radius: 50px;
-      padding: 14px 36px; font-size: 16px; font-weight: 700;
-      font-family: 'Roboto', sans-serif; cursor: pointer;
-      box-shadow: 0 5px 12px rgba(0,0,0,0.4), 0 2px 0 rgba(0,0,0,0.3),
-                  inset 0 1px 0 rgba(255,255,255,0.4);
-      text-decoration: none;
-    }
-    .gold-btn:active { transform: translateY(3px); }
-
-    /* PROGRESS BAR */
-    .progress-bar-wrap {
-      background: rgba(255,255,255,0.1); border-radius: 10px;
-      height: 6px; margin-bottom: 16px; overflow: hidden;
-    }
-    .progress-bar-fill {
-      height: 100%; background: var(--gold);
-      border-radius: 10px; transition: width 0.3s ease;
-    }
-    .progress-label {
-      display: flex; justify-content: space-between;
-      font-size: 12px; color: var(--text-dim);
-      margin-bottom: 6px; font-family: 'Roboto', sans-serif;
-    }
-
-    /* QUESTION CARD */
-    .question-card {
-      background: var(--cream); border-radius: 16px;
-      padding: 18px 16px; margin-bottom: 12px;
-    }
-    .q-prompt {
-      font-size: 12px; font-weight: 500; color: rgba(26,26,62,0.5);
-      text-transform: uppercase; letter-spacing: 1px;
-      font-family: 'Roboto', sans-serif; margin-bottom: 8px;
-    }
-    .q-text {
-      font-size: 18px; font-weight: 400; color: var(--text-navy);
-      font-family: 'Roboto', sans-serif; line-height: 1.45; margin-bottom: 16px;
-    }
-    .option-btn {
-      display: block; width: 100%; padding: 12px 16px;
-      margin-bottom: 10px; border-radius: 10px;
-      border: 1.5px solid rgba(26,26,62,0.18);
-      background: white; color: var(--text-navy);
-      font-family: 'Roboto', sans-serif; font-size: 15px;
-      cursor: pointer; text-align: left; transition: all 0.15s;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.08);
-    }
-    .option-btn:active { transform: scale(0.98); }
-    .option-btn.correct {
-      background: #d4f5d4; border-color: #28a745; color: #155724;
-      box-shadow: 0 0 0 2px rgba(40,167,69,0.3);
-    }
-    .option-btn.wrong {
-      background: #fde8e8; border-color: #dc3545; color: #721c24;
-      box-shadow: 0 0 0 2px rgba(220,53,69,0.3);
-    }
-    .option-btn:disabled { cursor: default; }
-
-    /* RESULTS */
-    .results-card {
-      background: var(--cream); border-radius: 16px;
-      padding: 36px 20px; text-align: center; margin-top: 16px;
-    }
-    .results-icon { font-size: 56px; margin-bottom: 12px; }
-    .results-score {
-      font-size: 72px; font-weight: 100; color: var(--text-navy);
-      font-family: 'Roboto', sans-serif; line-height: 1;
-    }
-    .results-pct {
-      font-size: 20px; font-weight: 300; color: rgba(26,26,62,0.5);
-      font-family: 'Roboto', sans-serif; margin-bottom: 8px;
-    }
-    .results-msg {
-      font-size: 18px; font-weight: 400; color: var(--text-navy);
-      font-family: 'Roboto', sans-serif; margin-bottom: 28px;
-    }
-    .results-btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
-    .grey-btn {
-      background: linear-gradient(180deg, #8a8a9a 0%, #5a5a72 60%, #3a3a52 100%);
-      color: white; border: none; border-radius: 50px;
-      padding: 12px 24px; font-size: 14px; font-weight: 500;
-      font-family: 'Roboto', sans-serif; cursor: pointer; text-decoration: none;
-      display: inline-block;
-      box-shadow: 0 3px 8px rgba(0,0,0,0.35), 0 2px 0 rgba(0,0,0,0.25);
-    }
-    .grey-btn:active { transform: translateY(2px); }
-
-    /* NOT ENOUGH */
-    .not-enough {
-      text-align: center; color: var(--text-dim);
-      font-size: 15px; margin-top: 80px; line-height: 1.7; padding: 0 20px;
-    }
-    .not-enough strong { color: var(--gold); }
-    .not-enough a {
-      display: inline-block; margin-top: 24px;
-      background: linear-gradient(180deg, var(--gold-light) 0%, var(--gold) 60%, #8a6808 100%);
-      color: var(--text-navy); border-radius: 50px;
-      padding: 12px 28px; font-size: 14px; font-weight: 700;
-      font-family: 'Roboto', sans-serif; text-decoration: none;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.35);
-    }
-  </style>
+        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
+        
+        .next-btn {
+            margin-top: 30px; background: var(--gold); color: var(--text-navy);
+            border: none; border-radius: 50px; padding: 12px 40px; font-weight: 700;
+            display: none; cursor: pointer;
+        }
+    </style>
 </head>
 <body>
-<div class="app">
 
-  <div class="topbar">
-    <div class="topbar-logo">
-      <img src="ox-head-008.jpg" class="topbar-ox" alt="Oxbridge" />
-      <span><strong>Oxbridge English</strong></span>
-    </div>
-    <button class="back-btn" onclick="history.back()">← Volver</button>
-  </div>
-
-  <div class="app-subtitle">Quiz</div>
-
-  <div class="content" id="content">
-    </div>
-
-  <div style="text-align: center; padding: 15px 10px; font-size: 12px; background: rgba(13,13,36,0.95); flex-shrink: 0; border-top: 1px solid rgba(255,255,255,0.05); margin-top: auto;">
-      <a href="privacy.html" target="_blank" style="color: rgba(255,255,255,0.5); text-decoration: none; margin: 0 10px; transition: color 0.3s;" onmouseover="this.style.color='#D4AF37'" onmouseout="this.style.color='rgba(255,255,255,0.5)'">Privacidad</a>
-      <span style="color: rgba(255,255,255,0.2);">|</span>
-      <a href="terms.html" target="_blank" style="color: rgba(255,255,255,0.5); text-decoration: none; margin: 0 10px; transition: color 0.3s;" onmouseover="this.style.color='#D4AF37'" onmouseout="this.style.color='rgba(255,255,255,0.5)'">Términos</a>
-  </div>
-
+<div class="topbar">
+    <strong>Oxbridge English Quiz</strong>
+    <button class="back-btn" onclick="location.href='translator.html'">← Salir</button>
 </div>
-<script>
-const history_data = JSON.parse(localStorage.getItem('translationHistory') || '[]');
-let questions = [];
-let answers = [];
-let score = 0;
-let current = 0;
 
-function esc(str) {
-  return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-}
+<div class="quiz-container">
+    <div id="quiz-score-header">Pregunta 1 / 10</div>
+    <div id="quiz-content" style="width: 100%; max-width: 500px;">
+        </div>
+    <button id="next-btn" class="next-btn" onclick="nextQuestion()">Siguiente ➔</button>
+</div>
 
-function init() {
-  const content = document.getElementById('content');
+<audio id="tts-player" style="display:none;"></audio>
 
-  if (history_data.length < 10) {
-    const needed = 10 - history_data.length;
-    content.innerHTML = `<div class="not-enough">
-      Necesitas al menos <strong>10</strong> traducciones guardadas para el quiz.<br>
-      Te faltan <strong>${needed}</strong> más.
-      <br><a href="translator.html">Ir al Traductor</a>
-    </div>`;
-    return;
-  }
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
+    import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
+    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
 
-  showStart();
-}
+    const firebaseConfig = {
+        apiKey: "AIzaSyDyaVRdsqozHWlXIZ-zVdlq2VzTNrsuJc4",
+        authDomain: "oxbridge-english-a3cc3.firebaseapp.com",
+        projectId: "oxbridge-english-a3cc3",
+        storageBucket: "oxbridge-english-a3cc3.firebasestorage.app",
+        messagingSenderId: "508505970812",
+        appId: "1:508505970812:web:51b46ce56f5d96c28091f9"
+    };
 
-function showStart() {
-  const content = document.getElementById('content');
-  content.innerHTML = `<div class="start-card">
-    <div class="start-icon">🎓</div>
-    <div class="start-title">¿Listo para el Quiz?</div>
-    <div class="start-desc">10 preguntas basadas en tus traducciones guardadas.</div>
-    <div class="start-count">${history_data.length} traduciones guardadas</div>
-    <button class="gold-btn" onclick="startQuiz()">▶ Comenzar</button>
-  </div>`;
-}
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+    const auth = getAuth(app);
 
-function startQuiz() {
-  // Build 10 random questions
-  const shuffled = [...history_data].sort(() => Math.random() - 0.5).slice(0, 10);
-  questions = shuffled.map(entry => {
-    const others = history_data.filter(h => h.translation !== entry.translation);
-    const wrongs = others.sort(() => Math.random() - 0.5).slice(0, 3).map(h => h.translation);
-    const options = [entry.translation, ...wrongs].sort(() => Math.random() - 0.5);
-    return { entry, options, correct: entry.translation };
-  });
-  answers = new Array(10).fill(null);
-  score = 0;
-  current = 0;
-  showQuestion(0);
-}
+    window.db = db;
+    window.auth = auth;
+    window.dbSet = setDoc;
+    window.dbDoc = doc;
 
-function showQuestion(i) {
-  const content = document.getElementById('content');
-  const q = questions[i];
-  const pct = (i / 10) * 100;
-  const prompt = q.entry.direction === 'es-en' ? 'Traduce al inglés:' : 'Traduce al español:';
-
-  content.innerHTML = `
-    <div class="progress-label">
-      <span>Pregunta ${i + 1} de 10</span>
-      <span>✓ ${score}</span>
-    </div>
-    <div class="progress-bar-wrap">
-      <div class="progress-bar-fill" style="width:${pct}%"></div>
-    </div>
-    <div class="question-card">
-      <div class="q-prompt">${prompt}</div>
-      <div class="q-text">${esc(q.entry.original)}</div>
-      ${q.options.map(opt =>
-        `<button class="option-btn" data-opt="${esc(opt)}" data-correct="${esc(q.correct)}" onclick="answer(this)">${esc(opt)}</button>`
-      ).join('')}
-    </div>`;
-}
-
-function answer(btn) {
-  const selected = btn.getAttribute('data-opt');
-  const correct = btn.getAttribute('data-correct');
-  // Disable all buttons
-  document.querySelectorAll('.option-btn').forEach(b => {
-    b.disabled = true;
-    if (b.getAttribute('data-opt') === correct) b.classList.add('correct');
-  });
-
-  if (selected === correct) {
-    btn.classList.add('correct');
-    score++;
-  } else {
-    btn.classList.add('wrong');
-  }
-
-  answers[current] = selected;
-  current++;
-
-  setTimeout(() => {
-    if (current < 10) {
-      showQuestion(current);
-    } else {
-      showResults();
-    }
-  }, 900);
-}
-
-function showResults() {
-  const content = document.getElementById('content');
-  const pct = score * 10;
-  const icon = pct >= 80 ? '🏆' : pct >= 50 ? '👍' : '💪';
-  const msg = pct >= 80 ? '¡Excelente trabajo!' : pct >= 50 ? '¡Buen trabajo!' : 'Sigue practicando.';
-
-  content.innerHTML = `<div class="results-card">
-    <div class="results-icon">${icon}</div>
-    <div class="results-score">${score}/10</div>
-    <div class="results-pct">${pct}%</div>
-    <div class="results-msg">${msg}</div>
-    <div class="results-btns">
-      <button class="gold-btn" onclick="startQuiz()">🔄 Intentar de nuevo</button>
-      <a class="grey-btn" href="translation-history.html">📋 Historial</a>
-    </div>
-  </div>`;
-}
-
-init();
+    onAuthStateChanged(auth, (user) => {
+        window.userUid = user ? user.uid : null;
+        initQuiz();
+    });
 </script>
+
+<script>
+    let history = [];
+    let state = { score: 0, current: 0, total: 10, currentItem: null, isAnswering: false };
+
+    function initQuiz() {
+        history = JSON.parse(localStorage.getItem('app_history') || '[]');
+        if (history.length < 20) {
+            document.getElementById('quiz-content').innerHTML = `
+                <div style="text-align:center; padding-top:50px;">
+                    <h2 style="color:var(--gold)">Faltan palabras</h2>
+                    <p>Necesitas al menos 20 traducciones en tu historial para jugar. (Tienes ${history.length})</p>
+                    <br><a href="translator.html" class="back-btn" style="text-decoration:none">Ir a traducir</a>
+                </div>`;
+            document.getElementById('quiz-score-header').style.display = 'none';
+            return;
+        }
+        nextQuestion();
+    }
+
+    function nextQuestion() {
+        if (state.current >= state.total) {
+            showResults();
+            return;
+        }
+        
+        state.isAnswering = false;
+        document.getElementById('next-btn').style.display = 'none';
+        document.getElementById('quiz-score-header').textContent = `Pregunta ${state.current + 1} / ${state.total}`;
+        
+        // Select random item
+        state.currentItem = history[Math.floor(Math.random() * history.length)];
+        
+        // Pick a mode (0: Multi Choice, 1: Listening, 2: Voice, 3: Scramble)
+        const mode = Math.floor(Math.random() * 4);
+        renderMode(mode);
+    }
+
+    function renderMode(mode) {
+        const container = document.getElementById('quiz-content');
+        let html = '';
+
+        if (mode === 3) { // Scramble
+            let words = state.currentItem.translation.split(' ').sort(() => Math.random() - 0.5);
+            html = `<p style="text-align:center; margin-bottom:15px; opacity:0.7;">Ordena la frase:</p>
+                    <h3 style="text-align:center; margin-bottom:20px;">"${state.currentItem.original}"</h3>
+                    <div id="scramble-answer-box"></div>
+                    <div id="scramble-pool" style="display:flex; flex-wrap:wrap; gap:8px; justify-content:center;">
+                        ${words.map(w => `<button class="scramble-btn" onclick="handleScramble(this)">${w}</button>`).join('')}
+                    </div>`;
+        } else if (mode === 2) { // Voice
+            html = `<div style="text-align:center;">
+                        <p style="margin-bottom:20px; opacity:0.7;">Pronuncia la traducción:</p>
+                        <h2 style="margin-bottom:40px;">"${state.currentItem.original}"</h2>
+                        <button id="quiz-mic" class="mic-btn-quiz" onclick="startVoiceQuiz()">🎤</button>
+                        <p id="voice-feedback" style="margin-top:20px;"></p>
+                    </div>`;
+        } else { // Multi-Choice (Visual or Listening)
+            const options = [state.currentItem.translation];
+            while(options.length < 4) {
+                let rand = history[Math.floor(Math.random() * history.length)].translation;
+                if(!options.includes(rand)) options.push(rand);
+            }
+            options.sort(() => Math.random() - 0.5);
+
+            html = `<div style="text-align:center;">
+                        ${mode === 1 ? `<button class="mic-btn-quiz" onclick="playCurrent()">🔊</button>` : `<h2>"${state.currentItem.original}"</h2>`}
+                        <div style="margin-top:30px;">
+                            ${options.map(opt => `<button class="option-btn" onclick="checkAnswer(this, '${opt.replace(/'/g, "\\'")}')">${opt}</button>`).join('')}
+                        </div>
+                    </div>`;
+            if(mode === 1) setTimeout(playCurrent, 500);
+        }
+
+        container.innerHTML = html;
+    }
+
+    function handleScramble(btn) {
+        const box = document.getElementById('scramble-answer-box');
+        const pool = document.getElementById('scramble-pool');
+        if (btn.parentElement.id === 'scramble-pool') box.appendChild(btn);
+        else pool.appendChild(btn);
+
+        if (pool.children.length === 0) {
+            const result = Array.from(box.children).map(b => b.textContent).join(' ');
+            if (result.toLowerCase() === state.currentItem.translation.toLowerCase()) {
+                state.score++;
+                box.style.borderColor = "#4caf50";
+                finishStep();
+            } else {
+                box.style.borderColor = "#f44336";
+                finishStep();
+            }
+        }
+    }
+
+    function checkAnswer(btn, value) {
+        if (state.isAnswering) return;
+        state.isAnswering = true;
+        
+        if (value === state.currentItem.translation) {
+            btn.classList.add('correct');
+            state.score++;
+        } else {
+            btn.classList.add('wrong');
+        }
+        finishStep();
+    }
+
+    function finishStep() {
+        state.current++;
+        document.getElementById('next-btn').style.display = 'block';
+        // Update Mastery in Cloud
+        if (window.userUid && window.db) {
+            const docRef = window.dbDoc(window.db, "translations_history", `${window.userUid}_${state.currentItem.sessionId}`);
+            window.dbSet(docRef, { mastery: 1 }, { merge: true }).catch(() => {});
+        }
+    }
+
+    function playCurrent() {
+        const lang = state.currentItem.dir === 'es-en' ? 'en' : 'es';
+        const url = `https://translate.google.com/translate_tts?ie=UTF-8&client=tw-ob&tl=${lang}&q=${encodeURIComponent(state.currentItem.translation)}`;
+        const p = document.getElementById('tts-player');
+        p.src = url; p.play();
+    }
+
+    function startVoiceQuiz() {
+        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+        if (!SpeechRecognition) return alert("Voz no soportada en este navegador");
+        
+        const rec = new SpeechRecognition();
+        rec.lang = state.currentItem.dir === 'es-en' ? 'en-US' : 'es-ES';
+        const btn = document.getElementById('quiz-mic');
+        
+        rec.onstart = () => btn.classList.add('listening');
+        rec.onresult = (e) => {
+            const talk = e.results[0][0].transcript.toLowerCase();
+            const target = state.currentItem.translation.toLowerCase();
+            document.getElementById('voice-feedback').textContent = `Dijiste: "${talk}"`;
+            if (talk.includes(target) || target.includes(talk)) {
+                state.score++;
+                btn.style.background = "#2e7d32";
+            } else {
+                btn.style.background = "#c62828";
+            }
+            finishStep();
+        };
+        rec.onend = () => btn.classList.remove('listening');
+        rec.start();
+    }
+
+    function showResults() {
+        const container = document.getElementById('quiz-content');
+        container.innerHTML = `
+            <div style="text-align:center;">
+                <h1 style="font-size:60px;">${state.score > 7 ? '🎉' : '💪'}</h1>
+                <h2>¡Quiz Terminado!</h2>
+                <p style="font-size:24px; margin:20px 0;">Puntuación: ${state.score} / ${state.total}</p>
+                <button class="back-btn" onclick="location.reload()">Jugar de nuevo</button>
+            </div>`;
+        document.getElementById('quiz-score-header').style.display = 'none';
+    }
+</script>
+
 </body>
 </html>

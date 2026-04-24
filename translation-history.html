@@ -6,215 +6,193 @@
   <meta name="theme-color" content="#0d0d24" />
   
   <title>Historial de Traducciones | Oxbridge English</title>
-  <meta name="description" content="Revisa tu historial de traducciones guardadas en SmarTranslator de Oxbridge English.">
   <meta name="robots" content="noindex, follow">
   
   <link rel="icon" type="image/jpeg" href="ox-head-008.jpg">
-  <link rel="apple-touch-icon" href="ox-head-008.jpg">
-  <link rel="shortcut icon" type="image/jpeg" href="ox-head-008.jpg">
-
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
   <style>
     :root {
-      --gold: #C9A227;
-      --gold-light: #D4AF37;
-      --navy: #0d0d24;
-      --navy-light: #1a1a3e;
-      --cream: #cdc89e;
-      --cream-solid: #c0ba8c;
-      --text-navy: #1a1a3e;
-      --text-dim: rgba(255,255,255,0.42);
-      --gold-dim: rgba(201,162,39,0.18);
-      --safe-top: env(safe-area-inset-top, 0px);
-      --safe-bottom: env(safe-area-inset-bottom, 0px);
+      --gold: #C9A227; --gold-light: #D4AF37; --navy: #0d0d24; --navy-light: #1a1a3e;
+      --cream: #cdc89e; --text-navy: #1a1a3e; --safe-top: env(safe-area-inset-top, 0px);
     }
     * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
-    html, body {
-      height: 100%; background: var(--navy);
-      color: white; font-family: 'Roboto', sans-serif; font-weight: 300;
-    }
-    .app {
-      display: flex; flex-direction: column;
-      min-height: 100vh; min-height: 100dvh;
-      padding-top: var(--safe-top); padding-bottom: var(--safe-bottom);
-    }
+    body { background: var(--navy); color: white; font-family: 'Roboto', sans-serif; font-weight: 300; }
+    
+    .app { display: flex; flex-direction: column; min-height: 100vh; padding-top: var(--safe-top); }
 
-    /* TOPBAR */
-    .topbar {
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 16px 20px 8px; flex-shrink: 0;
-      border-bottom: 1px solid rgba(255,255,255,0.07);
+    .topbar { 
+        display: flex; align-items: center; justify-content: space-between; 
+        padding: 16px 20px; border-bottom: 1px solid rgba(255,255,255,0.07); 
     }
-    .topbar-logo {
-      display: flex; align-items: center; gap: 9px;
-      font-family: 'Roboto', sans-serif; font-weight: 100;
-      font-size: 15px; color: rgba(255,255,255,0.7);
-    }
-    .topbar-ox {
-      width: 34px; height: 34px; border-radius: 50%;
-      object-fit: cover; border: 1px solid rgba(201,162,39,0.4);
-    }
-    .topbar-logo strong { color: var(--gold); font-weight: 300; }
     .back-btn {
-      background: linear-gradient(180deg, var(--gold-light) 0%, var(--gold) 60%, #8a6808 100%);
-      color: var(--text-navy); border: none; border-radius: 50px;
-      padding: 9px 18px; font-size: 13px; font-weight: 700;
-      font-family: 'Roboto', sans-serif; cursor: pointer;
-      box-shadow: 0 3px 8px rgba(0,0,0,0.35), 0 2px 0 rgba(0,0,0,0.25);
-    }
-    .back-btn:active { transform: translateY(2px); }
-
-    /* SUBTITLE */
-    .app-subtitle {
-      text-align: center; font-family: 'Roboto', sans-serif;
-      font-weight: 300; font-size: 24px; color: white;
-      padding: 10px 20px 6px;
+      background: linear-gradient(180deg, var(--gold-light) 0%, var(--gold) 100%);
+      color: var(--text-navy); border: none; border-radius: 50px; padding: 8px 16px; font-weight: 700; cursor: pointer;
     }
 
-    /* TOOLBAR */
-    .toolbar {
-      display: flex; gap: 10px; padding: 10px 16px;
-      justify-content: flex-end; flex-shrink: 0;
-    }
-    .clear-btn {
-      background: linear-gradient(180deg, #8a8a9a 0%, #5a5a72 60%, #3a3a52 100%);
-      color: white; border: none; border-radius: 50px;
-      padding: 9px 18px; font-size: 13px; font-weight: 500;
-      font-family: 'Roboto', sans-serif; cursor: pointer;
-      box-shadow: 0 3px 8px rgba(0,0,0,0.35), 0 2px 0 rgba(0,0,0,0.25);
-    }
-    .quiz-btn {
-      background: linear-gradient(180deg, var(--gold-light) 0%, var(--gold) 60%, #8a6808 100%);
-      color: var(--text-navy); border: none; border-radius: 50px;
-      padding: 9px 18px; font-size: 13px; font-weight: 700;
-      font-family: 'Roboto', sans-serif; cursor: pointer; text-decoration: none;
-      display: inline-block;
-      box-shadow: 0 3px 8px rgba(0,0,0,0.35), 0 2px 0 rgba(0,0,0,0.25);
-    }
-    .clear-btn:active, .quiz-btn:active { transform: translateY(2px); }
+    .toolbar { display: flex; gap: 10px; padding: 15px 16px; justify-content: flex-end; }
+    .btn-action { border: none; border-radius: 50px; padding: 10px 20px; font-size: 13px; font-weight: 700; cursor: pointer; color: white; }
+    .btn-delete { background: #cc2020; }
+    .btn-quiz { background: var(--gold); color: var(--text-navy); text-decoration: none; }
 
-    /* CONTENT */
-    .content { flex: 1; padding: 8px 16px 20px; overflow-y: auto; }
-
-    /* HISTORY ENTRIES */
+    .content { flex: 1; padding: 0 16px 20px; }
+    
     .history-entry {
-      background: var(--cream); border-radius: 14px;
-      padding: 14px 16px; margin-bottom: 12px;
+      background: var(--cream); border-radius: 14px; padding: 16px; margin-bottom: 12px;
+      transition: all 0.2s; border: 3px solid transparent; cursor: pointer;
     }
-    .entry-header {
-      display: flex; justify-content: space-between;
-      align-items: center; margin-bottom: 8px;
-    }
-    .entry-direction {
-      font-size: 12px; font-weight: 500; color: rgba(26,26,62,0.5);
-      font-family: 'Roboto', sans-serif;
-    }
-    .entry-date {
-      font-size: 10px; color: rgba(26,26,62,0.35);
-      font-family: 'Roboto', sans-serif;
-    }
-    .entry-original {
-      font-size: 15px; font-weight: 400; color: var(--text-navy);
-      font-family: 'Roboto', sans-serif; margin-bottom: 4px; line-height: 1.4;
-    }
-    .entry-arrow {
-      font-size: 12px; color: var(--gold); margin: 2px 0;
-    }
-    .entry-translation {
-      font-size: 15px; font-weight: 300; color: rgba(26,26,62,0.7);
-      font-family: 'Roboto', sans-serif; line-height: 1.4;
-    }
-    .empty-state {
-      text-align: center; color: var(--text-dim);
-      font-size: 16px; margin-top: 80px; line-height: 1.7;
-    }
-    .empty-state a {
-      display: inline-block; margin-top: 20px;
-      background: linear-gradient(180deg, var(--gold-light) 0%, var(--gold) 60%, #8a6808 100%);
-      color: var(--text-navy); border: none; border-radius: 50px;
-      padding: 12px 28px; font-size: 14px; font-weight: 700;
-      font-family: 'Roboto', sans-serif; text-decoration: none;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.35);
+    .history-entry.selected { border-color: var(--gold); background: #e0dbb5; }
+    
+    .entry-header { display: flex; justify-content: space-between; font-size: 12px; color: rgba(26,26,62,0.5); margin-bottom: 8px; }
+    .entry-original { font-size: 16px; font-weight: 500; color: var(--text-navy); margin-bottom: 5px; }
+    .entry-translation { font-size: 16px; color: rgba(26,26,62,0.8); }
+
+    .play-btn { 
+        margin-top: 10px; background: rgba(201, 162, 39, 0.2); border: 1px solid var(--gold); 
+        color: var(--text-navy); padding: 5px 12px; border-radius: 20px; font-size: 12px; cursor: pointer;
     }
 
-    /* BADGE */
-    .count-badge {
-      display: inline-block; background: var(--gold); color: var(--text-navy);
-      font-size: 11px; font-weight: 700; border-radius: 10px;
-      padding: 2px 8px; margin-left: 8px; vertical-align: middle;
+    .toast {
+      position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
+      background: rgba(0,0,0,0.8); color: white; padding: 10px 20px; border-radius: 30px;
+      opacity: 0; transition: 0.3s; pointer-events: none;
     }
+    .toast.show { opacity: 1; }
   </style>
 </head>
 <body>
+
 <div class="app">
-
   <div class="topbar">
-    <div class="topbar-logo">
-      <img src="ox-head-008.jpg" class="topbar-ox" alt="Oxbridge" />
-      <span><strong>Oxbridge English</strong></span>
+    <div style="display:flex; align-items:center; gap:10px;">
+        <img src="ox-head-008.jpg" style="width:30px; height:30px; border-radius:50%;">
+        <strong>Oxbridge English</strong>
     </div>
-    <button class="back-btn" onclick="history.back()">← Volver</button>
-  </div>
-
-  <div class="app-subtitle">
-    Historial <span class="count-badge" id="count-badge"></span>
+    <button class="back-btn" onclick="location.href='translator.html'">← Volver</button>
   </div>
 
   <div class="toolbar">
-    <button class="clear-btn" onclick="clearHistory()">🗑 Borrar todo</button>
-    <a class="quiz-btn" href="translation-quiz.html">🧠 Quiz</a>
+    <button class="btn-action btn-delete" onclick="handleDelete()">🗑 Borrar</button>
+    <a href="translation-quiz.html" class="btn-action btn-quiz">🧠 Quiz</a>
   </div>
 
   <div class="content" id="history-list">
     </div>
 
-  <div style="text-align: center; padding: 15px 10px; font-size: 12px; background: rgba(13,13,36,0.95); flex-shrink: 0; border-top: 1px solid rgba(255,255,255,0.05); margin-top: auto;">
-      <a href="privacy.html" target="_blank" style="color: rgba(255,255,255,0.5); text-decoration: none; margin: 0 10px; transition: color 0.3s;" onmouseover="this.style.color='#D4AF37'" onmouseout="this.style.color='rgba(255,255,255,0.5)'">Privacidad</a>
-      <span style="color: rgba(255,255,255,0.2);">|</span>
-      <a href="terms.html" target="_blank" style="color: rgba(255,255,255,0.5); text-decoration: none; margin: 0 10px; transition: color 0.3s;" onmouseover="this.style.color='#D4AF37'" onmouseout="this.style.color='rgba(255,255,255,0.5)'">Términos</a>
-  </div>
-
+  <div id="toast" class="toast"></div>
 </div>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
+  import { getFirestore, doc, deleteDoc, getDocs, collection, query, where } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
+  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyDyaVRdsqozHWlXIZ-zVdlq2VzTNrsuJc4",
+    authDomain: "oxbridge-english-a3cc3.firebaseapp.com",
+    projectId: "oxbridge-english-a3cc3",
+    storageBucket: "oxbridge-english-a3cc3.firebasestorage.app",
+    messagingSenderId: "508505970812",
+    appId: "1:508505970812:web:51b46ce56f5d96c28091f9"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+  const auth = getAuth(app);
+
+  window.db = db;
+  window.auth = auth;
+  window.dbFunctions = { doc, deleteDoc, getDocs, collection, query, where };
+
+  onAuthStateChanged(auth, (user) => {
+    window.userUid = user ? user.uid : null;
+    loadHistory();
+  });
+</script>
+
 <script>
-function loadHistory() {
-  const list = document.getElementById('history-list');
-  const history = JSON.parse(localStorage.getItem('translationHistory') || '[]').slice().reverse();
-  const badge = document.getElementById('count-badge');
-
-  badge.textContent = history.length > 0 ? history.length : '';
-
-  if (history.length === 0) {
-    list.innerHTML = '<div class="empty-state">No hay traducciones guardadas aún.<br>Usa el traductor para crear tu historial.<br><a href="translator.html">Ir al Traductor</a></div>';
-    return;
+  function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg; t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 2000);
   }
 
-  list.innerHTML = history.map(entry => {
-    const flag1 = entry.direction === 'es-en' ? '🇨🇴' : '🇬🇧';
-    const flag2 = entry.direction === 'es-en' ? '🇬🇧' : '🇨🇴';
-    return `<div class="history-entry">
-      <div class="entry-header">
-        <span class="entry-direction">${flag1} → ${flag2}</span>
-        <span class="entry-date">${entry.date || ''}</span>
-      </div>
-      <div class="entry-original">${esc(entry.original)}</div>
-      <div class="entry-arrow">↓</div>
-      <div class="entry-translation">${esc(entry.translation)}</div>
-    </div>`;
-  }).join('');
-}
+  function loadHistory() {
+    const list = document.getElementById('history-list');
+    // We use 'app_history' to match your Android local data name
+    const history = JSON.parse(localStorage.getItem('app_history') || '[]');
+    
+    if (history.length === 0) {
+      list.innerHTML = '<div style="text-align:center; padding-top:50px; opacity:0.5;">No hay historial aún.</div>';
+      return;
+    }
 
-function clearHistory() {
-  if (confirm('¿Borrar todo el historial?')) {
-    localStorage.removeItem('translationHistory');
+    list.innerHTML = history.map((entry, index) => `
+      <div class="history-entry" onclick="this.classList.toggle('selected')" data-index="${index}" data-session="${entry.sessionId}">
+        <div class="entry-header">
+          <span>${entry.dir === 'es-en' ? 'ES → EN' : 'EN → ES'}</span>
+          <span>${new Date(entry.timestamp).toLocaleDateString()}</span>
+        </div>
+        <div class="entry-original">${entry.original}</div>
+        <div class="entry-translation">${entry.translation}</div>
+        <button class="play-btn" onclick="event.stopPropagation(); playAudio('${entry.translation.replace(/'/g, "\\'")}', '${entry.dir === 'es-en' ? 'en' : 'es'}')">
+            <i class="fas fa-volume-up"></i> Escuchar
+        </button>
+      </div>
+    `).join('');
+  }
+
+  async function handleDelete() {
+    const selected = document.querySelectorAll('.history-entry.selected');
+    if (selected.length === 0) {
+        showToast("Selecciona elementos primero");
+        return;
+    }
+
+    if (!confirm(`¿Borrar ${selected.length} elementos?`)) return;
+
+    let history = JSON.parse(localStorage.getItem('app_history') || '[]');
+    let cloudDeletePromises = [];
+
+    selected.forEach(el => {
+      const session = el.getAttribute('data-session');
+      const index = parseInt(el.getAttribute('data-index'));
+
+      // 1. Remove from Local
+      history = history.filter(item => item.sessionId !== session);
+
+      // 2. Remove from Cloud (Ghost Busting)
+      if (window.userUid && window.db) {
+        const docId = `${window.userUid}_${session}`;
+        const docRef = window.dbFunctions.doc(window.db, "translations_history", docId);
+        cloudDeletePromises.push(window.dbFunctions.deleteDoc(docRef));
+      }
+    });
+
+    localStorage.setItem('app_history', JSON.stringify(history));
+    
+    if (cloudDeletePromises.length > 0) {
+        showToast("Borrando de la nube...");
+        await Promise.all(cloudDeletePromises);
+    }
+
+    showToast("Eliminado con éxito");
     loadHistory();
   }
-}
 
-function esc(str) {
-  return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-}
+  function playAudio(text, lang) {
+    window.speechSynthesis.cancel();
+    const utter = new SpeechSynthesisUtterance(text);
+    utter.lang = lang === 'en' ? 'en-US' : 'es-ES';
+    window.speechSynthesis.speak(utter);
+  }
 
-loadHistory();
+  // Handle back button specifically for web to avoid weird loops
+  window.goBack = () => {
+    window.location.href = 'translator.html';
+  };
 </script>
+
 </body>
 </html>
