@@ -1,6 +1,6 @@
 /**
  * SmarTranslator - Unified Web & App Logic
- * Includes: Firebase Sync, 5-Mode Quiz, Interactive Tutorial, and Bilingual Dictionary
+ * Includes: Firebase Sync, Voice Recognition, Interactive Tutorial, and Bilingual Dictionary
  */
 
 // ==========================================
@@ -9,29 +9,17 @@
 let isSpanishToEnglish = true;
 let isRecording = false;
 let debounceTimer = null;
-let saveToHistoryTimer = null;
 let uiLang = localStorage.getItem('preferredLanguage') || 'en';
 let userUid = null;
-
-// Quiz State
-let quizState = { 
-    score: 0, 
-    currentQuestion: 0, 
-    maxQuestions: 10, 
-    usedWords: [], 
-    currentItem: null, 
-    isAnswering: false, 
-    hasFailedCurrent: false 
-};
 
 // Tutorial State
 let currentTourStep = 0;
 const tourSteps = [
     { target: null, es: "¡Bienvenido al SmarTraductor de Oxbridge English!", en: "Welcome to the Oxbridge English SmarTranslator!" },
-    { target: 'login-btn', es: "1. Inicia sesión para activar la copia de seguridad en la nube y guardar tu progreso.", en: "1. Log in to enable cloud backup and save your progress." },
-    { target: 'record-btn', es: "2. Pulsa aquí para grabar audio y traducir tu voz.", en: "2. Tap here to record audio and translate your voice." },
+    { target: 'record-btn', es: "1. Pulsa aquí para grabar audio y traducir tu voz.", en: "1. Tap here to record audio and translate your voice." },
+    { target: 'input-text', es: "2. Escribe aquí el texto que desees traducir.", en: "2. Write the text you want to translate here." },
     { target: 'output-text', es: "3. ¡Toca cualquier palabra traducida para ver su definición!", en: "3. Tap any translated word to see its definition!" },
-    { target: 'tutorial-btn', es: "Si necesitas ayuda, toca este ícono en cualquier momento.", en: "If you need help, tap this icon anytime!" }
+    { target: 'speak-btn', es: "4. Escucha la pronunciación de la traducción.", en: "4. Listen to the translation." }
 ];
 
 // ==========================================
@@ -41,15 +29,17 @@ const escHtml = (str) => String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').
 
 function showToast(message) {
     const toast = document.getElementById('toast');
-    const toastMessage = document.getElementById('toast-message');
-    if(!toast) return;
-    toastMessage.textContent = message;
-    toast.classList.remove('hidden');
-    toast.classList.add('show');
-    setTimeout(() => {
-        toast.classList.remove('show');
-        setTimeout(() => { toast.classList.add('hidden'); }, 400);
-    }, 2000);
+    if (!toast) {
+        // Create toast if it doesn't exist to prevent errors
+        const newToast = document.createElement('div');
+        newToast.id = 'toast';
+        newToast.style = "position:fixed; bottom:20px; left:50%; transform:translateX(-50%); background:rgba(0,0,0,0.8); color:white; padding:10px 20px; border-radius:30px; z-index:10000; display:none;";
+        document.body.appendChild(newToast);
+    }
+    const t = document.getElementById('toast');
+    t.textContent = message;
+    t.style.display = 'block';
+    setTimeout(() => { t.style.display = 'none'; }, 2500);
 }
 
 // ==========================================
@@ -61,11 +51,13 @@ async function doTranslation() {
     const loadingShimmer = document.getElementById('loading-shimmer');
     
     const text = inputText.value.trim();
-    if (!text) return;
+    if (!text) {
+        outputText.textContent = uiLang === 'es' ? "La traducción aparecerá aquí..." : "Translation will appear here...";
+        return;
+    }
 
-    loadingShimmer.classList.remove('hidden');
-    outputText.classList.add('hidden');
-
+    if(loadingShimmer) loadingShimmer.classList.remove('hidden');
+    
     try {
         const fromLang = isSpanishToEnglish ? 'es' : 'en';
         const toLang = isSpanishToEnglish ? 'en' : 'es';
@@ -76,21 +68,15 @@ async function doTranslation() {
         const translation = data[0].map(item => item[0]).join('').trim();
         
         window.currentSelectedTranslation = translation; 
-        outputText.innerHTML = `<div style="font-size: 18px; line-height: 1.6; color: #1a1a3e;">${makeTextClickable(translation, toLang)}</div>`;
+        outputText.innerHTML = makeTextClickable(translation, toLang);
         outputText.classList.remove('empty');
         
-        // Auto-save logic
         saveToHistory(text, translation, isSpanishToEnglish ? 'es-en' : 'en-es');
         
-        // Auto-speak if enabled
-        if (document.getElementById('auto-speak-toggle')?.checked) {
-            speakText(translation, toLang === 'en' ? 'en-US' : 'es-ES');
-        }
     } catch (e) {
-        outputText.textContent = "Translation Error / Error de traducción";
+        outputText.textContent = "Error de conexión / Connection Error";
     } finally {
-        loadingShimmer.classList.add('hidden');
-        outputText.classList.remove('hidden');
+        if(loadingShimmer) loadingShimmer.classList.add('hidden');
     }
 }
 
@@ -99,94 +85,94 @@ function makeTextClickable(text, targetLang) {
     return parts.map(part => {
         if (/^[a-zA-ZáéíóúñüÁÉÍÓÚÑÜ]+(?:[-'][a-zA-ZáéíóúñüÁÉÍÓÚÑÜ]+)*$/.test(part)) {
             const cleanWord = part.replace(/'/g, "\\'");
-            return `<span class="clickable-word" onclick="openWordModal('${cleanWord}', '${targetLang}')">${part}</span>`;
+            return `<span class="clickable-word" style="cursor:pointer; border-bottom:1px dashed #D4AF37;" onclick="openWordModal('${cleanWord}', '${targetLang}')">${part}</span>`;
         }
         return escHtml(part);
     }).join('');
 }
 
 // ==========================================
-// 4. DATABASE & CLOUD SYNC (FIREBASE)
+// 4. VOICE INPUT (TOGGLE MIC)
 // ==========================================
-async function saveToHistory(original, translation, direction) {
-    if (original.toLowerCase() === translation.toLowerCase()) return;
+async function toggleMic() {
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (!SpeechRecognition) {
+        showToast("Speech recognition not supported / Voz no soportada");
+        return;
+    }
 
-    // Save Locally
-    let history = JSON.parse(localStorage.getItem('app_history') || '[]');
-    const sessionId = Date.now().toString();
-    
-    const newItem = { 
-        original, 
-        translation, 
-        dir: direction, 
-        sessionId, 
-        mastery: 0,
-        timestamp: Date.now() 
+    const recognition = new SpeechRecognition();
+    recognition.lang = isSpanishToEnglish ? 'es-ES' : 'en-US';
+    const recordBtn = document.getElementById('record-btn');
+
+    recognition.onstart = () => {
+        isRecording = true;
+        if(recordBtn) recordBtn.style.background = "#cc2020";
+        showToast(uiLang === 'es' ? "Escuchando..." : "Listening...");
     };
 
+    recognition.onresult = (event) => {
+        const transcript = event.results[0][0].transcript;
+        document.getElementById('input-text').value = transcript;
+        doTranslation();
+    };
+
+    recognition.onend = () => {
+        isRecording = false;
+        if(recordBtn) recordBtn.style.background = "";
+    };
+
+    recognition.onerror = (e) => {
+        showToast("Mic Error: " + e.error);
+    };
+
+    recognition.start();
+}
+
+// ==========================================
+// 5. DATABASE & HISTORY
+// ==========================================
+function saveToHistory(original, translation, direction) {
+    if (original.toLowerCase() === translation.toLowerCase()) return;
+    let history = JSON.parse(localStorage.getItem('app_history') || '[]');
+    const newItem = { original, translation, dir: direction, timestamp: Date.now(), sessionId: Date.now().toString() };
+    
+    // Avoid duplicates
+    if (history.length > 0 && history[0].original === original) return;
+    
     history.unshift(newItem);
     if (history.length > 100) history = history.slice(0, 100);
     localStorage.setItem('app_history', JSON.stringify(history));
-
-    // Sync to Firebase if logged in
-    if (window.cloudDb && userUid) {
-        try {
-            const docId = `${userUid}_${sessionId}`;
-            await window.cloudSetDoc(window.cloudDoc(window.cloudDb, "translations_history", docId), {
-                userId: userUid,
-                originalText: original,
-                translatedText: translation,
-                languageDirection: direction,
-                sessionId: sessionId,
-                timestamp: Date.now(),
-                mastery: 0
-            }, { merge: true });
-        } catch (e) { console.error("Cloud Sync Failed", e); }
-    }
 }
 
 // ==========================================
-// 5. AUDIO & VOICE
-// ==========================================
-function speakText(text, lang) {
-    window.speechSynthesis.cancel();
-    const utter = new SpeechSynthesisUtterance(text);
-    utter.lang = lang;
-    utter.rate = 0.9;
-    window.speechSynthesis.speak(utter);
-}
-
-function playDictAudio(word, langCode) {
-    const audioUrl = `https://translate.google.com/translate_tts?ie=UTF-8&client=tw-ob&tl=${langCode}&q=${encodeURIComponent(word)}`;
-    const audio = new Audio(audioUrl);
-    audio.play().catch(() => showToast("Error playing audio"));
-}
-
-// ==========================================
-// 6. INTERACTIVE TUTORIAL
+// 6. TUTORIAL LOGIC
 // ==========================================
 window.startTutorial = function() {
     currentTourStep = 0;
-    document.getElementById('tour-backdrop').classList.add('active');
+    const backdrop = document.getElementById('tour-backdrop');
+    if(backdrop) backdrop.style.display = 'block';
     renderTourStep();
 };
 
 function renderTourStep() {
     const step = tourSteps[currentTourStep];
     const bubble = document.getElementById('tour-bubble');
-    const textEl = document.getElementById('tour-text');
-    
-    document.querySelectorAll('.tour-highlight').forEach(el => el.classList.remove('tour-highlight'));
-    
-    textEl.textContent = uiLang === 'es' ? step.es : step.en;
-    bubble.classList.add('active');
+    if(!bubble) return;
 
+    bubble.style.display = 'block';
+    bubble.innerHTML = `
+        <p style="margin-bottom:15px; font-weight:500;">${uiLang === 'es' ? step.es : step.en}</p>
+        <button onclick="nextTourStep()" style="background:#D4AF37; border:none; padding:8px 15px; border-radius:20px; cursor:pointer;">
+            ${uiLang === 'es' ? 'Siguiente' : 'Next'}
+        </button>
+    `;
+    
     if (step.target) {
         const targetEl = document.getElementById(step.target);
         if (targetEl) {
-            targetEl.classList.add('tour-highlight');
             const rect = targetEl.getBoundingClientRect();
-            bubble.style.top = (rect.bottom + 20) + 'px';
+            bubble.style.top = (rect.bottom + window.scrollY + 15) + 'px';
             bubble.style.left = '50%';
             bubble.style.transform = 'translateX(-50%)';
         }
@@ -200,56 +186,61 @@ function renderTourStep() {
 window.nextTourStep = function() {
     currentTourStep++;
     if (currentTourStep >= tourSteps.length) {
-        window.endTutorial();
+        document.getElementById('tour-bubble').style.display = 'none';
+        document.getElementById('tour-backdrop').style.display = 'none';
+        localStorage.setItem('tutorial_done', 'true');
     } else {
         renderTourStep();
     }
 };
 
-window.endTutorial = function() {
-    document.getElementById('tour-backdrop').classList.remove('active');
-    document.getElementById('tour-bubble').classList.remove('active');
-    document.querySelectorAll('.tour-highlight').forEach(el => el.classList.remove('tour-highlight'));
-    localStorage.setItem('tutorial_done', 'true');
+// ==========================================
+// 7. DICTIONARY & LISTEN
+// ==========================================
+window.openWordModal = function(word, langCode) {
+    // Basic redirect to dictionary page or handle modal
+    window.location.href = `dictionary.html?word=${encodeURIComponent(word)}&lang=${langCode}`;
 };
 
+function speakOutput() {
+    const text = document.getElementById('output-text').textContent;
+    if (!text || text.includes("...")) return;
+    window.speechSynthesis.cancel();
+    const utter = new SpeechSynthesisUtterance(text);
+    utter.lang = isSpanishToEnglish ? 'en-US' : 'es-ES';
+    window.speechSynthesis.speak(utter);
+}
+
 // ==========================================
-// 7. INITIALIZATION
+// 8. INITIALIZATION
 // ==========================================
 document.addEventListener('DOMContentLoaded', () => {
-    // Button listeners
-    document.getElementById('record-btn')?.addEventListener('click', toggleMic);
-    document.getElementById('tutorial-btn')?.addEventListener('click', window.startTutorial);
-    document.getElementById('clear-btn')?.addEventListener('click', () => {
-        document.getElementById('input-text').value = '';
-        doTranslation();
-    });
+    const inputText = document.getElementById('input-text');
+    const recordBtn = document.getElementById('record-btn');
+    const speakBtn = document.getElementById('speak-btn');
+    const langRadios = document.querySelectorAll('input[name="lang-dir"]');
 
-    // Auto-translate on typing
-    document.getElementById('input-text')?.addEventListener('input', (e) => {
-        clearTimeout(debounceTimer);
-        debounceTimer = setTimeout(doTranslation, 800);
-    });
+    if(recordBtn) recordBtn.addEventListener('click', toggleMic);
+    if(speakBtn) speakBtn.addEventListener('click', speakOutput);
 
-    // Start tutorial if new user
+    if(inputText) {
+        inputText.addEventListener('input', () => {
+            clearTimeout(debounceTimer);
+            debounceTimer = setTimeout(doTranslation, 800);
+        });
+    }
+
+    if(langRadios) {
+        langRadios.forEach(radio => {
+            radio.addEventListener('change', (e) => {
+                isSpanishToEnglish = e.target.value === 'es-en';
+                doTranslation();
+            });
+        });
+    }
+    
+    // Auto-start tutorial for new users
     if (!localStorage.getItem('tutorial_done')) {
         setTimeout(window.startTutorial, 2000);
     }
 });
-
-// Dictionary Modal logic (Global for onclick)
-window.openWordModal = async function(word, langCode) {
-    const modal = document.getElementById('word-modal');
-    const body = document.getElementById('word-modal-body');
-    modal.classList.add('active');
-    body.innerHTML = '<div class="loading-shimmer">Loading Definition...</div>';
-
-    try {
-        const res = await fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${word}`);
-        const data = await res.json();
-        // Render dictionary results...
-        body.innerHTML = `<h3>${word}</h3><p>${data[0].meanings[0].definitions[0].definition}</p>`;
-    } catch (e) {
-        body.innerHTML = "Definition not found / No se encontró definición.";
-    }
-};
