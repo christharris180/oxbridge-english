@@ -39,13 +39,12 @@
     <link rel="stylesheet" href="styles.css">
 
     <style>
-        /* App-Style Top Navigation Icons - 4 columns */
         .app-nav-grid {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 15px;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 12px;
             margin-bottom: 35px;
-            max-width: 500px;
+            max-width: 600px;
             margin-left: auto;
             margin-right: auto;
         }
@@ -56,102 +55,55 @@
             text-decoration: none;
             transition: transform 0.2s ease-in-out;
             cursor: pointer;
-            padding: 5px; /* Added padding to make the highlight box look better */
+            padding: 5px;
         }
         .app-nav-item:hover {
             transform: translateY(-4px);
         }
         .app-nav-icon {
-            width: 54px;
-            height: 54px;
+            width: 50px;
+            height: 50px;
             border-radius: 50%;
             background: rgba(212, 175, 55, 0.15);
             border: 1px solid #D4AF37;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 26px;
+            font-size: 24px;
             margin-bottom: 8px;
             box-shadow: 0 4px 10px rgba(0,0,0,0.25);
             transition: all 0.3s ease;
+            color: #D4AF37;
         }
         .app-nav-item:hover .app-nav-icon {
             background: #D4AF37;
+            color: #1a1a3e !important;
             box-shadow: 0 6px 15px rgba(212, 175, 55, 0.4);
         }
         .app-nav-label {
             font-family: 'Roboto', sans-serif;
-            font-size: 13px;
-            font-weight: 400;
+            font-size: 12px;
+            font-weight: 500;
             color: #ffffff;
             text-transform: uppercase;
             letter-spacing: 0.5px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 100%;
         }
 
         /* Rotating Promo Banner */
-        .translate-wrap {
-            padding: 0;
-            margin: 25px 0;
-            transition: opacity 0.2s ease-in-out;
-        }
-        .promo-btn {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 80px;
-            background: linear-gradient(180deg, #ffffff 0%, #f2f2f2 50%, #d8d8d8 100%);
-            border: 2px solid #cc2020;
-            border-radius: 20px;
-            text-decoration: none;
-            box-shadow: 0 5px 12px rgba(0,0,0,0.4);
-            position: relative;
-            overflow: hidden;
-            cursor: pointer;
-            transition: transform 0.3s ease;
-        }
-        .promo-btn:hover {
-            transform: scale(1.02);
-        }
-        .promo-slide {
-            position: absolute;
-            width: 100%;
-            padding: 0 20px;
-            text-align: center;
-            color: #1a1a3e;
-            font-size: 18px;
-            font-weight: 500;
-            line-height: 1.3;
-            opacity: 0;
-            transition: opacity 0.6s ease-in-out;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            pointer-events: none;
-            height: 100%;
-        }
-        .promo-slide.active {
-            opacity: 1;
-            pointer-events: auto;
-        }
-        .promo-brand {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-        }
-        .promo-icon {
-            width: 32px;
-            height: 32px;
-            border-radius: 6px;
-            object-fit: contain;
-        }
-        .promo-brand strong {
-            font-weight: 700;
-            font-size: 24px;
-            color: #0d0d24;
-        }
+        .translate-wrap { padding: 0; margin: 25px 0; transition: opacity 0.2s ease-in-out; }
+        .promo-btn { display: flex; align-items: center; justify-content: center; height: 80px; background: linear-gradient(180deg, #ffffff 0%, #f2f2f2 50%, #d8d8d8 100%); border: 2px solid #cc2020; border-radius: 20px; text-decoration: none; box-shadow: 0 5px 12px rgba(0,0,0,0.4); position: relative; overflow: hidden; cursor: pointer; transition: transform 0.3s ease; }
+        .promo-btn:hover { transform: scale(1.02); }
+        .promo-slide { position: absolute; width: 100%; padding: 0 20px; text-align: center; color: #1a1a3e; font-size: 18px; font-weight: 500; line-height: 1.3; opacity: 0; transition: opacity 0.6s ease-in-out; display: flex; align-items: center; justify-content: center; pointer-events: none; height: 100%; }
+        .promo-slide.active { opacity: 1; pointer-events: auto; }
+        .promo-brand { display: flex; align-items: center; justify-content: center; gap: 8px; }
+        .promo-icon { width: 32px; height: 32px; border-radius: 6px; object-fit: contain; }
+        .promo-brand strong { font-weight: 700; font-size: 24px; color: #0d0d24; }
 
-        /* --- TUTORIAL STYLES (Fixed Highlight Bug) --- */
+        /* Tutorial Overlays */
         .tour-backdrop { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(13,13,36,0.85); z-index: 10000; opacity: 0; pointer-events: none; transition: opacity 0.3s; }
         .tour-backdrop.active { opacity: 1; pointer-events: all; }
         .tour-bubble { position: absolute; background: #cdc89e; color: #1a1a3e; padding: 20px; border-radius: 16px; width: 85%; max-width: 320px; z-index: 10002; display: flex; flex-direction: column; box-shadow: 0 10px 30px rgba(0,0,0,0.6); opacity: 0; pointer-events: none; transition: opacity 0.3s; border: 2px solid #D4AF37; }
@@ -161,20 +113,12 @@
         .tour-btn { padding: 10px 20px; border-radius: 25px; font-size: 15px; font-weight: 700; cursor: pointer; border: none; transition: transform 0.1s; }
         .tour-skip { background: transparent; color: #cc2020; padding: 10px 15px; }
         .tour-next { background: #D4AF37; color: #1a1a3e; box-shadow: 0 4px 10px rgba(212, 175, 55, 0.4); }
-        
-        /* Fixed highlight - removed background: white */
-        .tour-highlight { 
-            position: relative !important; 
-            z-index: 10001 !important; 
-            box-shadow: 0 0 0 4px #D4AF37, 0 0 20px rgba(0,0,0,0.8) !important; 
-            border-radius: 12px; 
-            pointer-events: none !important; 
-        }
+        .tour-highlight { position: relative !important; z-index: 10001 !important; box-shadow: 0 0 0 4px #D4AF37, 0 0 20px rgba(0,0,0,0.8) !important; border-radius: 12px; pointer-events: none !important; }
         
         @media (max-width: 480px) {
-            .app-nav-grid { gap: 10px; }
-            .app-nav-icon { width: 40px; height: 40px; font-size: 20px; }
-            .app-nav-label { font-size: 10px; }
+            .app-nav-grid { gap: 5px; }
+            .app-nav-icon { width: 38px; height: 38px; font-size: 18px; }
+            .app-nav-label { font-size: 9px; letter-spacing: 0; }
             .promo-slide { font-size: 15px; }
             .promo-brand strong { font-size: 20px; }
         }
@@ -233,11 +177,15 @@
                 </a>
                 <a href="translation-quiz.html" class="app-nav-item" id="nav-quiz">
                     <div class="app-nav-icon">🧠</div>
-                    <span class="app-nav-label" data-en="Test Me" data-es="Examen">Test Me</span>
+                    <span class="app-nav-label" data-en="Test" data-es="Examen">Test</span>
                 </a>
                 <a href="dictionary.html" class="app-nav-item" id="nav-dictionary">
                     <div class="app-nav-icon">📖</div>
-                    <span class="app-nav-label" data-en="Dictionary" data-es="Diccionario">Dictionary</span>
+                    <span class="app-nav-label" data-en="Dict" data-es="Diccio">Dict</span>
+                </a>
+                <a href="#" onclick="window.handleLogin(); return false;" class="app-nav-item" id="nav-profile">
+                    <div class="app-nav-icon" id="profile-icon">👤</div>
+                    <span class="app-nav-label" id="profile-label">Log In</span>
                 </a>
                 <a href="#" onclick="window.startTutorial(); return false;" class="app-nav-item" id="nav-help">
                     <div class="app-nav-icon">❓</div>
@@ -326,19 +274,76 @@
     <script src="script.js"></script>
     <script src="translator.js"></script>
     
-    <script>
-        // Promo Banner Rotation Logic
-        document.addEventListener('DOMContentLoaded', function() {
-            const slides = document.querySelectorAll('.promo-slide');
-            if(slides.length > 0) {
-                let currentSlide = 0;
-                setInterval(() => {
-                    slides[currentSlide].classList.remove('active');
-                    currentSlide = (currentSlide + 1) % slides.length;
-                    slides[currentSlide].classList.add('active');
-                }, 3500);
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
+        import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
+        import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
+
+        // Your secure restricted key
+        const firebaseConfig = {
+            apiKey: "AIzaSyDyaVRdsqozHWlXIZ-zVdlq2VzTNrsuJc4",
+            authDomain: "oxbridge-english-a3cc3.firebaseapp.com",
+            projectId: "oxbridge-english-a3cc3",
+            storageBucket: "oxbridge-english-a3cc3.firebasestorage.app",
+            messagingSenderId: "508505970812",
+            appId: "1:508505970812:web:51b46ce56f5d96c28091f9"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        window.cloudDb = getFirestore(app);
+        window.cloudAuth = getAuth(app);
+        window.cloudProvider = new GoogleAuthProvider();
+        window.cloudDoc = doc;
+        window.cloudSetDoc = setDoc;
+
+        // Listen for Login State
+        onAuthStateChanged(window.cloudAuth, (user) => {
+            const profileLabel = document.getElementById('profile-label');
+            const profileIcon = document.getElementById('profile-icon');
+            if (user) {
+                window.userUid = user.uid;
+                if(profileLabel) profileLabel.textContent = user.displayName.split(' ')[0]; // Show first name
+                if(profileIcon) {
+                    profileIcon.style.background = '#4caf50';
+                    profileIcon.style.color = 'white';
+                    profileIcon.style.borderColor = '#2e7d32';
+                }
+            } else {
+                window.userUid = null;
+                if(profileLabel) profileLabel.textContent = "Log In";
+                if(profileIcon) {
+                    profileIcon.style.background = 'rgba(212, 175, 55, 0.15)';
+                    profileIcon.style.color = '#D4AF37';
+                    profileIcon.style.borderColor = '#D4AF37';
+                }
             }
         });
+
+        // Trigger Google Login
+        window.handleLogin = async function() {
+            if (window.userUid) {
+                if(confirm("¿Cerrar sesión? / Sign out?")) {
+                    await signOut(window.cloudAuth);
+                }
+            } else {
+                try {
+                    await signInWithPopup(window.cloudAuth, window.cloudProvider);
+                } catch(e) {
+                    console.log("Login failed", e);
+                }
+            }
+        };
+
+        // Promo Banner Animation
+        const slides = document.querySelectorAll('.promo-slide');
+        if(slides.length > 0) {
+            let currentSlide = 0;
+            setInterval(() => {
+                slides[currentSlide].classList.remove('active');
+                currentSlide = (currentSlide + 1) % slides.length;
+                slides[currentSlide].classList.add('active');
+            }, 3500);
+        }
     </script>
 </body>
 </html>

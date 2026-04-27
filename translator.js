@@ -1,6 +1,6 @@
 /**
  * SmarTranslator - Unified Web Logic
- * Includes: Translation, Voice (Mic), Clipboard, History Save, and Interactive Tutorial
+ * Includes: Translation, Voice (Mic), Clipboard, History Save, Firebase Sync, and Interactive Tutorial
  */
 
 let isSpanishToEnglish = true;
@@ -33,23 +33,42 @@ async function doTranslation() {
         outputText.innerHTML = translation; 
         outputText.classList.remove('empty');
         
-        // Save to History Local Storage
+        // Save to History (Local + Cloud)
         saveToHistory(text, translation, isSpanishToEnglish ? 'es-en' : 'en-es');
     } catch (e) {
         outputText.textContent = "Error";
     }
 }
 
-function saveToHistory(original, translation, direction) {
+async function saveToHistory(original, translation, direction) {
     if (original.toLowerCase() === translation.toLowerCase()) return;
-    let history = JSON.parse(localStorage.getItem('app_history') || '[]');
-    const newItem = { original, translation, dir: direction, timestamp: Date.now(), sessionId: Date.now().toString(), mastery: 0 };
     
+    let history = JSON.parse(localStorage.getItem('app_history') || '[]');
+    const sessionId = Date.now().toString();
+    const newItem = { original, translation, dir: direction, timestamp: Date.now(), sessionId: sessionId, mastery: 0 };
+    
+    // Avoid immediate duplicates
     if (history.length > 0 && history[0].original === original) return;
     
     history.unshift(newItem);
     if (history.length > 100) history = history.slice(0, 100);
     localStorage.setItem('app_history', JSON.stringify(history));
+
+    // Push to Firebase Cloud if Logged In
+    if (window.cloudDb && window.userUid) {
+        try {
+            const docId = `${window.userUid}_${sessionId}`;
+            await window.cloudSetDoc(window.cloudDoc(window.cloudDb, "translations_history", docId), {
+                userId: window.userUid,
+                originalText: original,
+                translatedText: translation,
+                languageDirection: direction,
+                sessionId: sessionId,
+                timestamp: Date.now(),
+                mastery: 0
+            }, { merge: true });
+        } catch (e) { console.error("Cloud Sync Failed", e); }
+    }
 }
 
 // ==========================================
@@ -67,7 +86,6 @@ async function toggleMic() {
     const recordBtn = document.getElementById('record-btn');
 
     recognition.onstart = () => {
-        isRecording = true;
         if(recordBtn) recordBtn.innerHTML = '<i class="fas fa-circle" style="color:red"></i> ...';
     };
 
@@ -78,7 +96,6 @@ async function toggleMic() {
     };
 
     recognition.onend = () => {
-        isRecording = false;
         if(recordBtn) recordBtn.innerHTML = '<i class="fas fa-microphone"></i> ' + (uiLang === 'es' ? 'Voz' : 'Voice');
     };
 
@@ -106,7 +123,7 @@ function clearInput() {
 }
 
 // ==========================================
-// 4. TUTORIAL LOGIC (Expanded to match Android app)
+// 4. TUTORIAL LOGIC
 // ==========================================
 let currentTourStep = 0;
 const tourSteps = [
@@ -116,10 +133,11 @@ const tourSteps = [
     { target: 'record-btn', es: "3. O pulsa aquí para grabar audio.", en: "3. Or tap here to record audio." },
     { target: 'output-text', es: "4. Lee tu traducción aquí.", en: "4. Read your translation here." },
     { target: 'speak-btn', es: "5. Escucha la pronunciación de la traducción.", en: "5. Listen to the translation." },
-    { target: 'nav-history', es: "6. Revisa todas tus traducciones. Puedes escucharlas de nuevo o eliminar las que ya no necesites.", en: "6. Review all your translations. You can listen to them again or delete the ones you no longer need." },
-    { target: 'nav-quiz', es: "7. ¡La joya de la corona! Un motor de aprendizaje de 5 modos que usa tus propias traducciones. Practica lectura, escucha, pronunciación, gramática y memoria.", en: "7. The crown jewel! A 5-mode learning engine using your own translations. Practice reading, listening, pronunciation, grammar, and memory." },
-    { target: 'nav-dictionary', es: "8. Busca definiciones detalladas, ejemplos de uso y escucha la pronunciación de cualquier palabra en el Diccionario.", en: "8. Search for detailed definitions, usage examples, and listen to the pronunciation of any word in the Dictionary." },
-    { target: 'promo-banner', es: "9. ¡Haz clic aquí para obtener información sobre nuestros cursos!", en: "9. Click here for information about our courses!" },
+    { target: 'nav-profile', es: "6. ¡Inicia sesión aquí para guardar tus traducciones en la nube y no perderlas nunca!", en: "6. Log in here to save your translations to the cloud and never lose them!" },
+    { target: 'nav-history', es: "7. Revisa todas tus traducciones. Puedes escucharlas de nuevo o eliminar las que ya no necesites.", en: "7. Review all your translations. You can listen to them again or delete the ones you no longer need." },
+    { target: 'nav-quiz', es: "8. ¡La joya de la corona! Un motor de aprendizaje de 5 modos que usa tus propias traducciones. Practica lectura, escucha, pronunciación, gramática y memoria.", en: "8. The crown jewel! A 5-mode learning engine using your own translations. Practice reading, listening, pronunciation, grammar, and memory." },
+    { target: 'nav-dictionary', es: "9. Busca definiciones detalladas, ejemplos de uso y escucha la pronunciación de cualquier palabra en el Diccionario.", en: "9. Search for detailed definitions, usage examples, and listen to the pronunciation of any word in the Dictionary." },
+    { target: 'promo-banner', es: "10. ¡Haz clic aquí para obtener información sobre nuestros cursos!", en: "10. Click here for information about our courses!" },
     { target: 'nav-help', es: "Si necesitas ver este tutorial de nuevo, ¡toca este ícono en cualquier momento!", en: "If you need to see this tutorial again, tap this icon anytime!" }
 ];
 
