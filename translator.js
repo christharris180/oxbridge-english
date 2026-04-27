@@ -1,11 +1,12 @@
 /**
  * SmarTranslator - Unified Web Logic
- * Includes: Translation, Voice (Mic), Clipboard, History Save, Firebase Sync, and Interactive Tutorial
+ * Fixed: Session ID updates (no duplicates) & Cloud Sync
  */
 
 let isSpanishToEnglish = true;
 let debounceTimer = null;
 let uiLang = localStorage.getItem('preferredLanguage') || 'en';
+let currentTranslationSessionId = Date.now().toString();
 
 // ==========================================
 // 1. CORE TRANSLATOR LOGIC
@@ -33,7 +34,7 @@ async function doTranslation() {
         outputText.innerHTML = translation; 
         outputText.classList.remove('empty');
         
-        // Save to History (Local + Cloud)
+        // Save to History (Local + Cloud) using Session ID
         saveToHistory(text, translation, isSpanishToEnglish ? 'es-en' : 'en-es');
     } catch (e) {
         outputText.textContent = "Error";
@@ -41,35 +42,79 @@ async function doTranslation() {
 }
 
 async function saveToHistory(original, translation, direction) {
-    if (original.toLowerCase() === translation.toLowerCase()) return;
+    if (original.trim().toLowerCase() === translation.trim().toLowerCase()) return;
     
     let history = JSON.parse(localStorage.getItem('app_history') || '[]');
-    const sessionId = Date.now().toString();
-    const newItem = { original, translation, dir: direction, timestamp: Date.now(), sessionId: sessionId, mastery: 0 };
     
-    // Avoid immediate duplicates
+    // Avoid immediate exact duplicates
     if (history.length > 0 && history[0].original === original) return;
+
+    // Check if we are continuing the same typing session
+    if (history.length > 0 && history[0].sessionId === currentTranslationSessionId) {
+        history[0].original = original;
+        history[0].translation = translation;
+        history[0].timestamp = Date.now();
+    } else {
+        // Create brand new entry
+        const newItem = { original, translation, dir: direction, timestamp: Date.now(), sessionId: currentTranslationSessionId, mastery: 0 };
+        history.unshift(newItem);
+    }
     
-    history.unshift(newItem);
     if (history.length > 100) history = history.slice(0, 100);
     localStorage.setItem('app_history', JSON.stringify(history));
 
     // Push to Firebase Cloud if Logged In
     if (window.cloudDb && window.userUid) {
         try {
-            const docId = `${window.userUid}_${sessionId}`;
+            const docId = `${window.userUid}_${currentTranslationSessionId}`;
             await window.cloudSetDoc(window.cloudDoc(window.cloudDb, "translations_history", docId), {
                 userId: window.userUid,
                 originalText: original,
                 translatedText: translation,
                 languageDirection: direction,
-                sessionId: sessionId,
+                sessionId: currentTranslationSessionId,
                 timestamp: Date.now(),
-                mastery: 0
+                mastery: history[0].mastery || 0
             }, { merge: true });
         } catch (e) { console.error("Cloud Sync Failed", e); }
     }
 }
+
+window.syncCloudHistory = async function() {
+    if (!window.userUid || !window.cloudDb) return;
+
+    try {
+        const q = window.cloudQuery(
+            window.cloudCollection(window.cloudDb, "translations_history"),
+            window.cloudWhere("userId", "==", window.userUid)
+        );
+
+        const querySnapshot = await window.cloudGetDocs(q);
+        let cloudData = [];
+        
+        querySnapshot.forEach((doc) => {
+            let data = doc.data();
+            cloudData.push({
+                original: data.originalText,
+                translation: data.translatedText,
+                dir: data.languageDirection,
+                sessionId: data.sessionId || doc.id.split('_')[1],
+                mastery: data.mastery || 0, 
+                timestamp: data.timestamp || Date.now()
+            });
+        });
+
+        cloudData.sort((a, b) => b.timestamp - a.timestamp);
+        if (cloudData.length > 100) cloudData = cloudData.slice(0, 100);
+
+        if (cloudData.length > 0) {
+            localStorage.setItem('app_history', JSON.stringify(cloudData));
+            console.log("History successfully synced from cloud!");
+        }
+    } catch (error) {
+        console.error("Sync Down Failed", error);
+    }
+};
 
 // ==========================================
 // 2. VOICE INPUT (MIC)
@@ -99,12 +144,6 @@ async function toggleMic() {
         if(recordBtn) recordBtn.innerHTML = '<i class="fas fa-microphone"></i> ' + (uiLang === 'es' ? 'Voz' : 'Voice');
     };
 
-    recognition.onerror = (e) => {
-        if(e.error === 'network') {
-            alert("Brave/Vivaldi blocked the Google Mic. Please enable 'Google Speech Services' in browser settings.");
-        }
-    };
-
     recognition.start();
 }
 
@@ -120,6 +159,7 @@ function copyTranslation() {
 function clearInput() {
     document.getElementById('input-text').value = '';
     document.getElementById('output-text').textContent = uiLang === 'es' ? "La traducción aparecerá aquí..." : "Translation will appear here...";
+    currentTranslationSessionId = Date.now().toString(); // Reset Session ID
 }
 
 // ==========================================
@@ -226,6 +266,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if(inputText) {
         inputText.oninput = () => {
+            if (inputText.value.trim() === '') {
+                currentTranslationSessionId = Date.now().toString(); // Reset on full delete
+            }
             clearTimeout(debounceTimer);
             debounceTimer = setTimeout(doTranslation, 800);
         };
@@ -239,7 +282,6 @@ document.addEventListener('DOMContentLoaded', () => {
         };
     });
 
-    // Auto-start tutorial if not done
     if (!localStorage.getItem('tutorial_done')) {
         setTimeout(window.startTutorial, 1500);
     }

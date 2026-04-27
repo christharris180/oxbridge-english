@@ -276,7 +276,7 @@
     
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
-        import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
+        import { getFirestore, doc, setDoc, collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
         import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
 
         // Your secure restricted key
@@ -295,6 +295,10 @@
         window.cloudProvider = new GoogleAuthProvider();
         window.cloudDoc = doc;
         window.cloudSetDoc = setDoc;
+        window.cloudCollection = collection;
+        window.cloudQuery = query;
+        window.cloudWhere = where;
+        window.cloudGetDocs = getDocs;
 
         // Listen for Login State
         onAuthStateChanged(window.cloudAuth, (user) => {
@@ -308,6 +312,8 @@
                     profileIcon.style.color = 'white';
                     profileIcon.style.borderColor = '#2e7d32';
                 }
+                // TRIGGER CLOUD DOWNLOAD
+                if (window.syncCloudHistory) window.syncCloudHistory();
             } else {
                 window.userUid = null;
                 if(profileLabel) profileLabel.textContent = "Log In";
