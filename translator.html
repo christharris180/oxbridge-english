@@ -39,12 +39,15 @@
     <link rel="stylesheet" href="styles.css">
 
     <style>
-        /* App-Style Top Navigation Icons */
+        /* App-Style Top Navigation Icons - 4 columns */
         .app-nav-grid {
-            display: flex;
-            justify-content: center;
-            gap: 40px;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
             margin-bottom: 35px;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
         }
         .app-nav-item {
             display: flex;
@@ -52,6 +55,8 @@
             align-items: center;
             text-decoration: none;
             transition: transform 0.2s ease-in-out;
+            cursor: pointer;
+            padding: 5px; /* Added padding to make the highlight box look better */
         }
         .app-nav-item:hover {
             transform: translateY(-4px);
@@ -145,11 +150,31 @@
             font-size: 24px;
             color: #0d0d24;
         }
+
+        /* --- TUTORIAL STYLES (Fixed Highlight Bug) --- */
+        .tour-backdrop { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(13,13,36,0.85); z-index: 10000; opacity: 0; pointer-events: none; transition: opacity 0.3s; }
+        .tour-backdrop.active { opacity: 1; pointer-events: all; }
+        .tour-bubble { position: absolute; background: #cdc89e; color: #1a1a3e; padding: 20px; border-radius: 16px; width: 85%; max-width: 320px; z-index: 10002; display: flex; flex-direction: column; box-shadow: 0 10px 30px rgba(0,0,0,0.6); opacity: 0; pointer-events: none; transition: opacity 0.3s; border: 2px solid #D4AF37; }
+        .tour-bubble.active { opacity: 1; pointer-events: all; }
+        .tour-text { font-size: 16px; font-weight: 500; margin-bottom: 20px; line-height: 1.4; text-align: center; }
+        .tour-actions { display: flex; justify-content: space-between; align-items: center; }
+        .tour-btn { padding: 10px 20px; border-radius: 25px; font-size: 15px; font-weight: 700; cursor: pointer; border: none; transition: transform 0.1s; }
+        .tour-skip { background: transparent; color: #cc2020; padding: 10px 15px; }
+        .tour-next { background: #D4AF37; color: #1a1a3e; box-shadow: 0 4px 10px rgba(212, 175, 55, 0.4); }
+        
+        /* Fixed highlight - removed background: white */
+        .tour-highlight { 
+            position: relative !important; 
+            z-index: 10001 !important; 
+            box-shadow: 0 0 0 4px #D4AF37, 0 0 20px rgba(0,0,0,0.8) !important; 
+            border-radius: 12px; 
+            pointer-events: none !important; 
+        }
         
         @media (max-width: 480px) {
-            .app-nav-grid { gap: 20px; }
-            .app-nav-icon { width: 45px; height: 45px; font-size: 22px; }
-            .app-nav-label { font-size: 11px; }
+            .app-nav-grid { gap: 10px; }
+            .app-nav-icon { width: 40px; height: 40px; font-size: 20px; }
+            .app-nav-label { font-size: 10px; }
             .promo-slide { font-size: 15px; }
             .promo-brand strong { font-size: 20px; }
         }
@@ -201,18 +226,22 @@
                 </a>
             </div>
             
-            <div class="app-nav-grid">
-                <a href="translation-history.html" class="app-nav-item">
+            <div class="app-nav-grid" id="app-nav-grid">
+                <a href="translation-history.html" class="app-nav-item" id="nav-history">
                     <div class="app-nav-icon">🕐</div>
                     <span class="app-nav-label" data-en="History" data-es="Historial">History</span>
                 </a>
-                <a href="translation-quiz.html" class="app-nav-item">
+                <a href="translation-quiz.html" class="app-nav-item" id="nav-quiz">
                     <div class="app-nav-icon">🧠</div>
                     <span class="app-nav-label" data-en="Test Me" data-es="Examen">Test Me</span>
                 </a>
-                <a href="dictionary.html" class="app-nav-item">
+                <a href="dictionary.html" class="app-nav-item" id="nav-dictionary">
                     <div class="app-nav-icon">📖</div>
                     <span class="app-nav-label" data-en="Dictionary" data-es="Diccionario">Dictionary</span>
+                </a>
+                <a href="#" onclick="window.startTutorial(); return false;" class="app-nav-item" id="nav-help">
+                    <div class="app-nav-icon">❓</div>
+                    <span class="app-nav-label" data-en="Help" data-es="Ayuda">Help</span>
                 </a>
             </div>
             
@@ -220,7 +249,7 @@
                 data-en="SmarTranslator" 
                 data-es="SmarTraductor">SmarTranslator</h1>
             
-            <div class="language-selector">
+            <div class="language-selector" id="lang-dir-selector">
                 <label class="trans-lang-option active">
                     <input type="radio" name="lang-dir" value="es-en" checked>
                     <span>Español → English</span>
@@ -231,7 +260,7 @@
                 </label>
             </div>
 
-            <div class="card">
+            <div class="card" id="input-card">
                 <textarea id="input-text" class="trans-input" placeholder="Escribe aquí..." rows="5"></textarea>
                 <div class="trans-actions">
                     <button id="clear-btn" class="trans-btn trans-btn-secondary"><i class="fas fa-trash"></i> <span data-en="Clear" data-es="Borrar">Clear</span></button>
@@ -257,7 +286,7 @@
                 </a>
             </div>
 
-            <div class="card">
+            <div class="card" id="output-card">
                 <div id="loading-shimmer" class="loading-shimmer hidden"></div>
                 <div id="output-text" class="trans-output empty">La traducción aparecerá aquí...</div>
                 <div class="trans-actions">
@@ -267,6 +296,15 @@
             </div>
         </div>
     </div>
+    </div>
+
+    <div id="tour-backdrop" class="tour-backdrop" onclick="window.endTutorial()"></div>
+    <div id="tour-bubble" class="tour-bubble">
+        <div class="tour-text" id="tour-text"></div>
+        <div class="tour-actions">
+            <button class="tour-btn tour-skip" onclick="window.endTutorial()" id="tour-skip-btn">Omitir</button>
+            <button class="tour-btn tour-next" onclick="window.nextTourStep()" id="tour-next-btn">Siguiente</button>
+        </div>
     </div>
 
     <footer class="main-footer">
