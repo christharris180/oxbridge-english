@@ -76,7 +76,7 @@
             <div style="text-align: center; margin-bottom: 25px;">
                 <a href="translator-app.html" style="display: inline-flex; align-items: center; justify-content: center; gap: 8px; background: rgba(212, 175, 55, 0.15); border: 1px solid #D4AF37; color: #D4AF37; padding: 10px 20px; border-radius: 30px; text-decoration: none; font-size: 14px; font-weight: 500; transition: all 0.3s ease;" onmouseover="this.style.background='#D4AF37'; this.style.color='#1a1a3e'" onmouseout="this.style.background='rgba(212, 175, 55, 0.15)'; this.style.color='#D4AF37'">
                     <i class="fab fa-android" style="font-size: 18px;"></i>
-                    <span data-en="Download SmarTranslator App" data-es="Descargar App SmarTraductor">Download SmarTranslator App</span>
+                    <span data-en="Download the SmarTranslator App" data-es="Descargar la App SmarTraductor">Download the SmarTranslator App</span>
                 </a>
             </div>
             
@@ -116,20 +116,25 @@
             <div class="card">
                 <textarea id="input-text" class="trans-input" placeholder="Escribe aquí..." rows="5"></textarea>
                 <div class="trans-actions">
+                    <button id="clear-btn" class="trans-btn trans-btn-secondary"><i class="fas fa-trash"></i> <span data-en="Clear" data-es="Borrar">Clear</span></button>
                     <button id="record-btn" class="trans-btn trans-btn-secondary"><i class="fas fa-microphone"></i> <span data-en="Voice" data-es="Voz">Voice</span></button>
                 </div>
             </div>
 
             <a href="https://oxbridge-english-courses.coursify.me" target="_blank" class="translator-promo-banner" style="display: block; text-decoration: none; margin: 20px 0;">
                 <div style="background: white; border: 3px solid #dc2626; border-radius: 15px; padding: 20px; display: flex; align-items: center; gap: 15px;">
-                    <img src="ox-head-008.jpg" alt="Oxbridge" style="width: 50px; height: 50px;">
-                    <p style="color: #1a1a2e; font-size: 14px; margin: 0;">¿Cansado de traducir? Empieza un curso online guiado por IA con Oxbridge English.</p>
+                    <img src="ox-head-008.jpg" alt="Oxbridge English" style="width: 50px; height: 50px; object-fit: contain;">
+                    <p style="color: #1a1a2e; font-size: 15px; font-weight: 400; margin: 0; line-height: 1.4;">
+                        ¿Cansado de traducir? Empieza hoy un curso de inglés online con Oxbridge English.
+                    </p>
                 </div>
             </a>
 
             <div class="card">
+                <div id="loading-shimmer" class="loading-shimmer hidden"></div>
                 <div id="output-text" class="trans-output empty">La traducción aparecerá aquí...</div>
                 <div class="trans-actions">
+                    <button id="copy-btn" class="trans-btn trans-btn-primary"><i class="fas fa-copy"></i> <span data-en="Copy" data-es="Copiar">Copy</span></button>
                     <button id="speak-btn" class="trans-btn trans-btn-secondary"><i class="fas fa-volume-up"></i> <span data-en="Listen" data-es="Escuchar">Listen</span></button>
                 </div>
             </div>
@@ -146,9 +151,9 @@
             </div>
             <p class="footer-text">
                 <span data-en="© 2026 by Oxbridge English" data-es="© 2026 por Oxbridge English">© 2026 by Oxbridge English</span> | 
-                <a href="privacy.html">Privacy Policy</a> | 
-                <a href="terms.html">Terms & Conditions</a>
-                <img src="logo_jpg_003.jpg" alt="Logo" style="height: 30px; margin-left: 10px;">
+                <a href="privacy.html" data-en="Privacy Policy" data-es="Privacidad">Privacy Policy</a> | 
+                <a href="terms.html" data-en="Terms" data-es="Términos">Terms & Conditions</a>
+                <img src="logo_jpg_003.jpg" alt="Oxbridge English" style="height: 30px; margin-left: 10px; vertical-align: middle;">
             </p>
         </div>
     </footer>
