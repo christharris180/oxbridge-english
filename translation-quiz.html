@@ -17,7 +17,6 @@
             --gold-light: #e8c412;
             --navy: #0d0d24;
             --navy-light: #1a1a3e;
-            --cream: #cdc89e;
             --text-navy: #1a1a3e;
         }
 
@@ -29,12 +28,12 @@
         }
 
         .quiz-panel {
-            background: var(--cream);
+            background: var(--navy-light);
             border-radius: 20px;
             padding: 30px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            border: 2px solid var(--gold);
-            color: var(--text-navy);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            color: white;
             width: 100%;
             max-width: 700px;
             min-height: 550px;
@@ -46,40 +45,39 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 1px solid rgba(26,26,62,0.1);
+            border-bottom: 1px solid rgba(255,255,255,0.1);
             padding-bottom: 15px;
             margin-bottom: 25px;
         }
 
         .quiz-header h2 {
-            color: var(--text-navy);
+            color: var(--gold);
             margin: 0;
             font-family: 'Work Sans', sans-serif;
             font-size: 28px;
-            font-weight: 700;
         }
 
         .back-btn {
-            background: rgba(26, 26, 62, 0.1);
-            color: var(--text-navy);
-            border: 1px solid rgba(26, 26, 62, 0.2);
+            background: rgba(212, 175, 55, 0.15);
+            color: var(--gold);
+            border: 1px solid var(--gold);
             padding: 8px 16px;
             border-radius: 20px;
             text-decoration: none;
             font-size: 14px;
-            font-weight: 600;
+            font-weight: 500;
             transition: all 0.3s;
         }
 
         .back-btn:hover {
-            background: var(--navy-light);
-            color: white;
+            background: var(--gold);
+            color: var(--navy);
         }
 
         #quiz-score {
             font-size: 18px;
-            font-weight: 700;
-            color: var(--text-navy);
+            font-weight: 500;
+            color: rgba(255,255,255,0.8);
         }
 
         #quiz-content {
@@ -92,13 +90,12 @@
         }
 
         .quiz-option-btn {
-            background: #ffffff;
-            border: 2px solid rgba(26,26,62,0.1);
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.2);
             border-radius: 12px;
             padding: 16px;
-            color: var(--text-navy);
+            color: white;
             font-size: 18px;
-            font-weight: 500;
             cursor: pointer;
             transition: all 0.2s;
             width: 100%;
@@ -137,14 +134,10 @@
 
         @keyframes fadeIn { 0% { opacity: 0; transform: translateY(10px); } 100% { opacity: 1; transform: translateY(0); } }
         @keyframes popIn { 0% { transform: scale(0.8); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
-        
-        @media (max-width: 480px) {
-            .quiz-panel { padding: 20px; }
-            .quiz-header h2 { font-size: 22px; }
-        }
     </style>
 </head>
 <body>
+    <audio id="tts-player" type="audio/mpeg" style="display:none;"></audio>
 
     <video autoplay muted loop playsinline class="background-video">
         <source src="girl_working_001.mp4" type="video/mp4">
@@ -163,7 +156,7 @@
                 <li><a href="enroll.html" data-en="Enroll" data-es="Inscribirse">Enroll</a></li>
                 <li><a href="books.html" data-en="Books" data-es="Libros">Books</a></li>
                 <li><a href="audio.html" data-en="Audio" data-es="Audio">Audio</a></li>
-                <li><a href="translator.html" data-en="Translator" data-es="Traductor">Translator</a></li>
+                <li><a href="translator.html" class="active" data-en="Translator" data-es="Traductor">Translator</a></li>
                 <li><a href="placement-test.html" data-en="Level Test" data-es="Test de Nivel" style="color: #D4AF37; font-weight: bold;">Level Test</a></li>
                 <li><a href="recommendations.html" data-en="Recommendations" data-es="Recomendaciones">Recommendations</a></li>
                 <li><a href="blog.html" data-en="Blog" data-es="Blog">Blog</a></li>
@@ -205,8 +198,6 @@
             </p>
         </div>
     </footer>
-
-    <script src="script.js"></script>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
@@ -252,14 +243,15 @@
             setTimeout(() => t.classList.remove('show'), 2000);
         };
 
-        // FIXED AUDIO: Bypasses mobile restrictions by generating audio object directly
         window.playDictAudio = function(word, langCode) {
             const audioUrl = "https://translate.google.com/translate_tts?ie=UTF-8&client=tw-ob&tl=" + langCode + "&q=" + encodeURIComponent(word);
-            const audio = new Audio(audioUrl);
-            audio.play().catch(e => {
-                console.error("Audio prevented by browser policy", e);
-                window.showToast(window.uiLang === 'es' ? 'Sube el volumen o permite el audio' : 'Turn up volume or allow audio');
-            });
+            const player = document.getElementById('tts-player');
+            if(player) {
+                player.pause();
+                player.src = audioUrl;
+                player.load();
+                player.play().catch(e => { console.log("Audio prevented by browser policy", e); });
+            }
         };
 
         window.updateCloudMastery = async function(item) {
@@ -294,13 +286,12 @@
                 let cleanUser = userWords.normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[.,?!¿¡'"-]/g, " ").replace(/\s+/g, " ").trim().toLowerCase();
 
                 if (cleanUser === cleanTarget) {
-                    Array.from(answerBox.children).forEach(b => { b.style.background = '#2e7d32'; b.style.borderColor = '#4caf50'; b.style.color = 'white'; });
+                    Array.from(answerBox.children).forEach(b => { b.style.background = '#2e7d32'; b.style.borderColor = '#4caf50'; });
                     window.checkQuizAnswer(null, true);
                 } else {
-                    Array.from(answerBox.children).forEach(b => { b.style.background = '#c62828'; b.style.borderColor = '#ef5350'; b.style.color = 'white'; });
+                    Array.from(answerBox.children).forEach(b => { b.style.background = '#c62828'; b.style.borderColor = '#ef5350'; });
                     let p = document.createElement('p');
-                    p.style.color = "var(--navy-light)";
-                    p.style.fontWeight = "bold";
+                    p.style.color = "var(--gold)";
                     p.style.width = "100%";
                     p.style.marginTop = "15px";
                     p.style.fontSize = "18px";
@@ -336,8 +327,8 @@
             if (strugglePile.length === 0) {
                 container.innerHTML = `
                     <div style="font-size:70px; margin-bottom:20px; text-align:center;">🧠</div>
-                    <h3 style="color:var(--text-navy); text-align:center; font-size:22px;">${window.uiLang === 'es' ? 'Necesitas más palabras' : 'Need more words'}</h3>
-                    <p style="text-align:center; color:rgba(26,26,62,0.8); margin-top:10px; font-size:16px;">
+                    <h3 style="color:var(--gold); text-align:center; font-size:22px;">${window.uiLang === 'es' ? 'Necesitas más palabras' : 'Need more words'}</h3>
+                    <p style="text-align:center; color:rgba(255,255,255,0.6); margin-top:10px; font-size:16px;">
                         ${window.uiLang === 'es' ? 'Para jugar al quiz, necesitas al menos 20 traducciones válidas en tu historial.' : 'To play the quiz, you need at least 20 valid translations in your history.'}
                     </p>
                 `;
@@ -373,9 +364,9 @@
                     shuffled.reverse(); 
                 }
 
-                html += `<p style="color:rgba(26,26,62,0.7); font-weight:600; font-size:16px; margin-bottom:10px;">${window.uiLang === 'es' ? 'Ordena las palabras:' : 'Order the words:'}</p>
-                         <p style="color:var(--text-navy); font-size:20px; font-weight:bold; margin-bottom:20px; font-style:italic;">"${window.escHtml(correctItem.original)}"</p>
-                         <div id="scramble-answer-box" style="display:flex; flex-wrap:wrap; gap:8px; justify-content:center; min-height:56px; margin-bottom:20px; padding:10px; background:rgba(255,255,255,0.5); border-radius:12px; border:2px dashed rgba(26,26,62,0.3);"></div>
+                html += `<p style="color:rgba(255,255,255,0.6); font-size:16px; margin-bottom:10px;">${window.uiLang === 'es' ? 'Ordena las palabras:' : 'Order the words:'}</p>
+                         <p style="color:var(--gold); font-size:18px; margin-bottom:20px; font-style:italic;">"${window.escHtml(correctItem.original)}"</p>
+                         <div id="scramble-answer-box" style="display:flex; flex-wrap:wrap; gap:8px; justify-content:center; min-height:56px; margin-bottom:20px; padding:10px; background:rgba(0,0,0,0.3); border-radius:12px; border:2px dashed rgba(255,255,255,0.2);"></div>
                          <div id="scramble-word-pool" style="display:flex; flex-wrap:wrap; gap:8px; justify-content:center; min-height:56px;">`;
                          
                 shuffled.forEach((w) => {
@@ -412,9 +403,9 @@
                 }
                 clozeOptions.sort(() => Math.random() - 0.5);
 
-                html += `<p style="color:rgba(26,26,62,0.7); font-weight:600; font-size:16px; margin-bottom:10px;">${window.uiLang === 'es' ? 'Completa la frase:' : 'Fill in the blank:'}</p>
-                         <p style="color:var(--text-navy); font-size:18px; margin-bottom:15px; font-style:italic;">"${window.escHtml(correctItem.original)}"</p>
-                         <h2 style="color:var(--text-navy); font-size:28px; margin-bottom:30px; word-wrap: break-word;">${window.escHtml(blankedSentence)}</h2>
+                html += `<p style="color:rgba(255,255,255,0.6); font-size:16px; margin-bottom:10px;">${window.uiLang === 'es' ? 'Completa la frase:' : 'Fill in the blank:'}</p>
+                         <p style="color:var(--gold); font-size:18px; margin-bottom:15px; font-style:italic;">"${window.escHtml(correctItem.original)}"</p>
+                         <h2 style="color:white; font-size:28px; margin-bottom:30px; word-wrap: break-word;">${window.escHtml(blankedSentence)}</h2>
                          <div style="display:flex; flex-direction:column; gap:12px;">`;
                          
                 clozeOptions.forEach((opt) => {
@@ -445,8 +436,8 @@
                 options.sort(() => Math.random() - 0.5); 
 
                 if (quizMode === 0) { 
-                    html += `<p style="color:rgba(26,26,62,0.7); font-weight:600; font-size:16px; margin-bottom:10px;">${window.uiLang === 'es' ? '¿Cómo se dice:' : 'How do you say:'}</p>
-                             <h2 style="color:var(--text-navy); font-size:28px; margin-bottom:30px; word-wrap: break-word;">"${window.escHtml(correctItem.original)}"</h2>
+                    html += `<p style="color:rgba(255,255,255,0.6); font-size:16px; margin-bottom:10px;">${window.uiLang === 'es' ? '¿Cómo se dice:' : 'How do you say:'}</p>
+                             <h2 style="color:white; font-size:28px; margin-bottom:30px; word-wrap: break-word;">"${window.escHtml(correctItem.original)}"</h2>
                              <div style="display:flex; flex-direction:column; gap:12px;">`;
                     options.forEach((opt) => {
                         const isCorrect = opt.translation === correctItem.translation;
@@ -457,7 +448,7 @@
                 else if (quizMode === 1) {
                     const audioLang = correctItem.dir === 'es-en' ? 'en' : 'es';
                     const cleanWord = correctItem.translation.replace(/'/g, "\\'");
-                    html += `<p style="color:rgba(26,26,62,0.7); font-weight:600; font-size:16px; margin-bottom:10px;">${window.uiLang === 'es' ? 'Escucha y selecciona el significado:' : 'Listen and select the meaning:'}</p>
+                    html += `<p style="color:rgba(255,255,255,0.6); font-size:16px; margin-bottom:10px;">${window.uiLang === 'es' ? 'Escucha y selecciona el significado:' : 'Listen and select the meaning:'}</p>
                              <button onclick="window.playDictAudio('${cleanWord}', '${audioLang}')" style="background:var(--gold); border:none; border-radius:50%; width:90px; height:90px; font-size:45px; margin-bottom:30px; cursor:pointer; box-shadow: 0 4px 15px rgba(201,162,39,0.4);">🔊</button>
                              <div style="display:flex; flex-direction:column; gap:12px;">`;
                     options.forEach((opt) => {
@@ -466,25 +457,24 @@
                     });
                     html += `</div>`;
                     
-                    // Delay slightly before attempting auto-play
                     setTimeout(() => window.playDictAudio(cleanWord, audioLang), 600);
                 } 
                 else if (quizMode === 2) {
-                    html += `<p style="color:rgba(26,26,62,0.7); font-weight:600; font-size:16px; margin-bottom:10px;">${window.uiLang === 'es' ? 'Toca el micrófono y di la traducción:' : 'Tap the mic and say the translation:'}</p>
-                             <h2 style="color:var(--text-navy); font-size:28px; margin-bottom:20px; word-wrap: break-word;">"${window.escHtml(correctItem.original)}"</h2>
+                    html += `<p style="color:rgba(255,255,255,0.6); font-size:16px; margin-bottom:10px;">${window.uiLang === 'es' ? 'Toca el micrófono y di la traducción:' : 'Tap the mic and say the translation:'}</p>
+                             <h2 style="color:white; font-size:28px; margin-bottom:20px; word-wrap: break-word;">"${window.escHtml(correctItem.original)}"</h2>
                              
                              <div id="quiz-result-heading" style="font-size:24px; font-weight:bold; height:35px; margin-bottom:10px;"></div>
                              
                              <button id="quiz-mic-btn" onclick="window.startQuizMic()" style="background:var(--gold); border:none; border-radius:50%; width:100px; height:100px; font-size:50px; margin-bottom:15px; cursor:pointer; box-shadow: 0 4px 15px rgba(201,162,39,0.4); transition:all 0.3s;">🎤</button>
                              
-                             <div id="quiz-voice-feedback" style="min-height:90px; margin-top:10px; color:var(--text-navy);"></div>
+                             <div id="quiz-voice-feedback" style="min-height:90px; margin-top:10px;"></div>
                              
                              <button id="quiz-skip-btn" onclick="window.checkQuizAnswer(null, false)" style="display:none; background:transparent; color:#cc2020; border:none; font-size:16px; margin-top:15px; text-decoration:underline; cursor:pointer;"></button>`;
                 }
             }
 
             html += `<div style="margin-top:25px;">
-                        <button id="quiz-next-btn" onclick="window.quizGoNext()" style="display:none; background:linear-gradient(180deg, var(--navy-light) 0%, var(--navy) 100%); border:none; border-radius:30px; padding:12px 40px; font-size:18px; color:white; font-weight:700; cursor:pointer; box-shadow:0 4px 10px rgba(0,0,0,0.3);">
+                        <button id="quiz-next-btn" onclick="window.quizGoNext()" style="display:none; background:linear-gradient(180deg, var(--gold-light) 0%, var(--gold) 100%); border:none; border-radius:30px; padding:12px 40px; font-size:18px; color:var(--text-navy); font-weight:700; cursor:pointer; box-shadow:0 4px 10px rgba(201,162,39,0.4);">
                             ${window.uiLang === 'es' ? 'Siguiente' : 'Next'} ➔
                         </button>
                      </div>`;
@@ -500,11 +490,13 @@
             btn.style.background = '#cc2020'; 
             btn.innerText = '🎙️';
             
+            // Clear previous visual feedback while listening
             document.getElementById('quiz-result-heading').innerHTML = '';
             document.getElementById('quiz-voice-feedback').innerHTML = '';
 
             const langCode = window.quizState.currentItem.dir === 'es-en' ? 'en-US' : 'es-ES';
             
+            // ADVANCED HOMOPHONE AND CONTRACTION NORMALIZER
             const normalizeText = (text) => {
                 if (!text) return "";
                 return text.toLowerCase()
@@ -515,7 +507,7 @@
                     .replace(/it's/g, "it is").replace(/that's/g, "that is")
                     .replace(/he's/g, "he is").replace(/she's/g, "she is")
                     .replace(/you're/g, "you are").replace(/we're/g, "we are").replace(/they're/g, "they are")
-                    .replace(/\bplain\b/g, "plane")
+                    .replace(/\bplain\b/g, "plane") // Fixes the exact "Llano" -> Plane issue
                     .replace(/\bkids\b/g, "children").replace(/\bkid\b/g, "child")
                     .replace(/\bhi\b/g, "hello").replace(/\bhey\b/g, "hello")
                     .replace(/\bbye\b/g, "goodbye").replace(/\btv\b/g, "television")
@@ -529,14 +521,6 @@
             const targetTextClean = normalizeText(window.quizState.currentItem.translation);
 
             const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-            
-            if (!SpeechRecognition) {
-                window.showToast(window.uiLang === 'es' ? 'Tu navegador bloquea el micrófono' : 'Browser blocks microphone');
-                btn.style.background = 'var(--gold)'; 
-                btn.innerText = '🎤';
-                return;
-            }
-
             const rec = new SpeechRecognition();
             rec.lang = langCode;
             rec.onresult = (e) => {
@@ -545,18 +529,11 @@
                 const cleanSpoken = normalizeText(spokenText);
                 window.handleVoiceQuizResult(cleanSpoken === targetTextClean, spokenText);
             };
-            rec.onerror = (e) => { 
-                console.log("Mic error", e);
+            rec.onerror = () => { 
                 btn.style.background = 'var(--gold)'; 
                 btn.innerText = '🎤'; 
-                window.showToast(window.uiLang === 'es' ? 'Error de micrófono' : 'Microphone error');
             };
-            
-            try {
-                rec.start();
-            } catch(e) {
-                console.log("Already started", e);
-            }
+            rec.start();
         };
 
         window.handleVoiceQuizResult = function(isCorrect, spokenText) {
@@ -570,7 +547,7 @@
                 micBtn.style.background = '#2e7d32'; 
                 micBtn.innerText = '🎤';
                 heading.innerHTML = `<span style="color:#4caf50;">${window.uiLang === 'es' ? '¡Correcto!' : 'Correct!'}</span>`;
-                feedback.innerHTML = `<span style="color:var(--text-navy); font-weight:600;">${window.uiLang === 'es' ? 'Escuché:' : 'I heard:'} "${window.escHtml(spokenText)}"</span>`;
+                feedback.innerHTML = `<span style="color:rgba(255,255,255,0.8);">${window.uiLang === 'es' ? 'Escuché:' : 'I heard:'} "${window.escHtml(spokenText)}"</span>`;
                 
                 if (skipBtn) skipBtn.style.display = 'none';
                 let getsPoint = !window.quizState.hasFailedCurrent;
@@ -580,18 +557,19 @@
                 micBtn.innerText = '🎤';
                 if (!window.quizState.hasFailedCurrent) window.quizState.hasFailedCurrent = true;
                 
+                // Detailed Explicit Feedback
                 heading.innerHTML = `<span style="color:#ef5350;">${window.uiLang === 'es' ? '¡Casi!' : 'Almost!'}</span>`;
                 
                 feedback.innerHTML = `
                     <div style="margin-bottom:12px;">
-                        <span style="color:rgba(26,26,62,0.7); font-size: 14px;">${window.uiLang === 'es' ? 'Traducción esperada:' : 'Expected translation:'}</span><br>
-                        <span style="color:var(--text-navy); font-size:20px; font-weight:bold;">"${window.escHtml(target)}"</span>
+                        <span style="color:rgba(255,255,255,0.6); font-size: 14px;">${window.uiLang === 'es' ? 'Traducción esperada:' : 'Expected translation:'}</span><br>
+                        <span style="color:var(--gold); font-size:20px; font-weight:bold;">"${window.escHtml(target)}"</span>
                     </div>
                     <div style="margin-bottom:16px;">
-                        <span style="color:rgba(26,26,62,0.7); font-size: 14px;">${window.uiLang === 'es' ? 'Lo que escuché:' : 'What I heard:'}</span><br>
-                        <span style="color:#ef5350; font-size:18px; font-weight:600;">"${window.escHtml(spokenText)}"</span>
+                        <span style="color:rgba(255,255,255,0.6); font-size: 14px;">${window.uiLang === 'es' ? 'Lo que escuché:' : 'What I heard:'}</span><br>
+                        <span style="color:#ef5350; font-size:18px;">"${window.escHtml(spokenText)}"</span>
                     </div>
-                    <div style="color:var(--text-navy); font-size:15px; font-weight:600; background:rgba(255,255,255,0.6); padding:8px 12px; border-radius:8px; display:inline-block; border: 1px solid rgba(26,26,62,0.2);">
+                    <div style="color:white; font-size:15px; font-weight:500; background:rgba(255,255,255,0.1); padding:8px 12px; border-radius:8px; display:inline-block;">
                         👆 ${window.uiLang === 'es' ? 'Toca el micrófono para intentar de nuevo' : 'Tap the mic to try again'}
                     </div>
                 `;
@@ -614,18 +592,15 @@
                 if (isCorrect) {
                     btn.style.background = '#2e7d32'; 
                     btn.style.borderColor = '#4caf50';
-                    btn.style.color = 'white';
                     window.showToast(window.uiLang === 'es' ? '¡Correcto!' : 'Correct!');
                 } else {
                     btn.style.background = '#c62828'; 
                     btn.style.borderColor = '#ef5350';
-                    btn.style.color = 'white';
                     window.showToast(window.uiLang === 'es' ? 'Incorrecto' : 'Incorrect');
                     btns.forEach(b => {
                         if (b.getAttribute('onclick').includes('true')) {
                             b.style.background = '#2e7d32';
                             b.style.borderColor = '#4caf50';
-                            b.style.color = 'white';
                         }
                     });
                 }
@@ -676,11 +651,11 @@
             container.innerHTML = `
                 <div style="text-align:center; width:100%; animation: popIn 0.5s ease-out;">
                     <div style="font-size:80px; margin-bottom:10px;">${emoji}</div>
-                    <h2 style="color:var(--text-navy); font-size:32px; margin-bottom:5px;">${message}</h2>
-                    <p style="color:var(--text-navy); font-size:20px; font-weight:600; margin-bottom:40px;">
-                        ${window.uiLang === 'es' ? 'Puntuación:' : 'Score:'} <strong style="color:var(--gold); font-size:28px;">${window.quizState.score} / ${window.quizState.maxQuestions}</strong>
+                    <h2 style="color:var(--gold); font-size:32px; margin-bottom:5px;">${message}</h2>
+                    <p style="color:rgba(255,255,255,0.7); font-size:20px; margin-bottom:40px;">
+                        ${window.uiLang === 'es' ? 'Puntuación:' : 'Score:'} <strong style="color:white; font-size:24px;">${window.quizState.score} / ${window.quizState.maxQuestions}</strong>
                     </p>
-                    <button onclick="window.nextQuizQuestion()" style="background:linear-gradient(180deg, var(--navy-light) 0%, var(--navy) 100%); color:white; font-weight:700; border:none; border-radius:30px; padding:16px 40px; font-size:20px; cursor:pointer; box-shadow:0 6px 15px rgba(0,0,0,0.4);">
+                    <button onclick="window.nextQuizQuestion()" style="background:linear-gradient(180deg, var(--gold-light) 0%, var(--gold) 100%); color:var(--text-navy); font-weight:700; border:none; border-radius:30px; padding:16px 40px; font-size:20px; cursor:pointer; box-shadow:0 6px 15px rgba(201,162,39,0.3);">
                         ${window.uiLang === 'es' ? 'Volver a Jugar' : 'Play Again'}
                     </button>
                 </div>
@@ -689,6 +664,7 @@
             window.quizState.score = 0;
         };
 
+        // Initialize quiz
         document.addEventListener('DOMContentLoaded', () => {
             window.nextQuizQuestion();
         });
