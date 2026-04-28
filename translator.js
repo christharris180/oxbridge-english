@@ -1,6 +1,6 @@
 /**
  * SmarTranslator - Unified Web Logic
- * Fixed: Session ID updates (no duplicates) & Cloud Sync
+ * Includes: Translation, Voice, Cloud Sync, and Session IDs
  */
 
 let isSpanishToEnglish = true;
@@ -34,7 +34,7 @@ async function doTranslation() {
         outputText.innerHTML = translation; 
         outputText.classList.remove('empty');
         
-        // Save to History (Local + Cloud) using Session ID
+        // Save to History
         saveToHistory(text, translation, isSpanishToEnglish ? 'es-en' : 'en-es');
     } catch (e) {
         outputText.textContent = "Error";
@@ -46,15 +46,15 @@ async function saveToHistory(original, translation, direction) {
     
     let history = JSON.parse(localStorage.getItem('app_history') || '[]');
     
-    // Avoid immediate exact duplicates
-    if (history.length > 0 && history[0].original === original) return;
-
-    // Check if we are continuing the same typing session
+    // Check if we are continuing the exact same typing session
     if (history.length > 0 && history[0].sessionId === currentTranslationSessionId) {
         history[0].original = original;
         history[0].translation = translation;
         history[0].timestamp = Date.now();
     } else {
+        // Prevent exact duplicates
+        if (history.length > 0 && history[0].original.toLowerCase() === original.toLowerCase()) return;
+        
         // Create brand new entry
         const newItem = { original, translation, dir: direction, timestamp: Date.now(), sessionId: currentTranslationSessionId, mastery: 0 };
         history.unshift(newItem);
@@ -84,6 +84,7 @@ window.syncCloudHistory = async function() {
     if (!window.userUid || !window.cloudDb) return;
 
     try {
+        console.log("Starting cloud download for user:", window.userUid);
         const q = window.cloudQuery(
             window.cloudCollection(window.cloudDb, "translations_history"),
             window.cloudWhere("userId", "==", window.userUid)
@@ -94,22 +95,36 @@ window.syncCloudHistory = async function() {
         
         querySnapshot.forEach((doc) => {
             let data = doc.data();
+            
+            // CRITICAL FIX: Handle Android Timestamps vs Web Numbers safely
+            let timeMs = Date.now();
+            if (data.timestamp) {
+                if (typeof data.timestamp.toMillis === 'function') {
+                    timeMs = data.timestamp.toMillis();
+                } else if (typeof data.timestamp === 'number') {
+                    timeMs = data.timestamp;
+                }
+            }
+
             cloudData.push({
-                original: data.originalText,
-                translation: data.translatedText,
-                dir: data.languageDirection,
+                original: data.originalText || "",
+                translation: data.translatedText || "",
+                dir: data.languageDirection || "es-en",
                 sessionId: data.sessionId || doc.id.split('_')[1],
                 mastery: data.mastery || 0, 
-                timestamp: data.timestamp || Date.now()
+                timestamp: timeMs
             });
         });
 
+        console.log(`Downloaded ${cloudData.length} records from cloud.`);
+
+        // Sort works properly now that all timestamps are converted to numbers
         cloudData.sort((a, b) => b.timestamp - a.timestamp);
         if (cloudData.length > 100) cloudData = cloudData.slice(0, 100);
 
         if (cloudData.length > 0) {
             localStorage.setItem('app_history', JSON.stringify(cloudData));
-            console.log("History successfully synced from cloud!");
+            console.log("History successfully synced and saved locally!");
         }
     } catch (error) {
         console.error("Sync Down Failed", error);
@@ -159,7 +174,7 @@ function copyTranslation() {
 function clearInput() {
     document.getElementById('input-text').value = '';
     document.getElementById('output-text').textContent = uiLang === 'es' ? "La traducción aparecerá aquí..." : "Translation will appear here...";
-    currentTranslationSessionId = Date.now().toString(); // Reset Session ID
+    currentTranslationSessionId = Date.now().toString(); // Reset Session ID on clear
 }
 
 // ==========================================
@@ -267,7 +282,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if(inputText) {
         inputText.oninput = () => {
             if (inputText.value.trim() === '') {
-                currentTranslationSessionId = Date.now().toString(); // Reset on full delete
+                currentTranslationSessionId = Date.now().toString(); // Reset on empty
             }
             clearTimeout(debounceTimer);
             debounceTimer = setTimeout(doTranslation, 800);
