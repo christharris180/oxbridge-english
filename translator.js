@@ -96,7 +96,7 @@ window.syncCloudHistory = async function() {
         querySnapshot.forEach((doc) => {
             let data = doc.data();
             
-            // CRITICAL FIX: Handle Android Timestamps vs Web Numbers safely
+            // Handle Android Timestamps vs Web Numbers safely
             let timeMs = Date.now();
             if (data.timestamp) {
                 if (typeof data.timestamp.toMillis === 'function') {

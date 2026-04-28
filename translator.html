@@ -305,8 +305,11 @@
             const profileLabel = document.getElementById('profile-label');
             const profileIcon = document.getElementById('profile-icon');
             if (user) {
-                window.userUid = user.uid;
-                if(profileLabel) profileLabel.textContent = user.displayName.split(' ')[0]; // Show first name
+                // Grab the raw Google ID to match the Android App, not the Firebase ID
+                const googleProvider = user.providerData.find(p => p.providerId === 'google.com');
+                window.userUid = googleProvider ? googleProvider.uid : user.uid;
+                
+                if(profileLabel) profileLabel.textContent = user.displayName.split(' ')[0];
                 if(profileIcon) {
                     profileIcon.style.background = '#4caf50';
                     profileIcon.style.color = 'white';
