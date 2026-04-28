@@ -325,6 +325,7 @@
             let strugglePile = availableWords.slice(0, 15);
             
             if (strugglePile.length === 0) {
+                // If they have less than 20 items total
                 container.innerHTML = `
                     <div style="font-size:70px; margin-bottom:20px; text-align:center;">🧠</div>
                     <h3 style="color:var(--gold); text-align:center; font-size:22px;">${window.uiLang === 'es' ? 'Necesitas más palabras' : 'Need more words'}</h3>
@@ -457,19 +458,15 @@
                     });
                     html += `</div>`;
                     
+                    // Attempt autoplay, catch if blocked
                     setTimeout(() => window.playDictAudio(cleanWord, audioLang), 600);
                 } 
                 else if (quizMode === 2) {
                     html += `<p style="color:rgba(255,255,255,0.6); font-size:16px; margin-bottom:10px;">${window.uiLang === 'es' ? 'Toca el micrófono y di la traducción:' : 'Tap the mic and say the translation:'}</p>
-                             <h2 style="color:white; font-size:28px; margin-bottom:20px; word-wrap: break-word;">"${window.escHtml(correctItem.original)}"</h2>
-                             
-                             <div id="quiz-result-heading" style="font-size:24px; font-weight:bold; height:35px; margin-bottom:10px;"></div>
-                             
+                             <h2 style="color:white; font-size:28px; margin-bottom:40px; word-wrap: break-word;">"${window.escHtml(correctItem.original)}"</h2>
                              <button id="quiz-mic-btn" onclick="window.startQuizMic()" style="background:var(--gold); border:none; border-radius:50%; width:100px; height:100px; font-size:50px; margin-bottom:15px; cursor:pointer; box-shadow: 0 4px 15px rgba(201,162,39,0.4); transition:all 0.3s;">🎤</button>
-                             
-                             <div id="quiz-voice-feedback" style="min-height:90px; margin-top:10px;"></div>
-                             
-                             <button id="quiz-skip-btn" onclick="window.checkQuizAnswer(null, false)" style="display:none; background:transparent; color:#cc2020; border:none; font-size:16px; margin-top:15px; text-decoration:underline; cursor:pointer;"></button>`;
+                             <p id="quiz-voice-feedback" style="color:white; font-size:18px; margin-top:10px; min-height:50px;"></p>
+                             <button id="quiz-skip-btn" onclick="window.checkQuizAnswer(null, false)" style="background:transparent; color:#cc2020; border:none; font-size:16px; margin-top:10px; text-decoration:underline; cursor:pointer;">${window.uiLang === 'es' ? 'No puedo hablar ahora' : 'I cannot speak right now'}</button>`;
                 }
             }
 
@@ -489,30 +486,13 @@
             const btn = document.getElementById('quiz-mic-btn');
             btn.style.background = '#cc2020'; 
             btn.innerText = '🎙️';
-            
-            // Clear previous visual feedback while listening
-            document.getElementById('quiz-result-heading').innerHTML = '';
-            document.getElementById('quiz-voice-feedback').innerHTML = '';
 
             const langCode = window.quizState.currentItem.dir === 'es-en' ? 'en-US' : 'es-ES';
             
-            // ADVANCED HOMOPHONE AND CONTRACTION NORMALIZER
             const normalizeText = (text) => {
                 if (!text) return "";
                 return text.toLowerCase()
                     .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
-                    .replace(/can't/g, "cannot").replace(/won't/g, "will not").replace(/n't/g, " not")
-                    .replace(/'m/g, " am").replace(/'re/g, " are").replace(/'ll/g, " will")
-                    .replace(/'ve/g, " have").replace(/'d/g, " would")
-                    .replace(/it's/g, "it is").replace(/that's/g, "that is")
-                    .replace(/he's/g, "he is").replace(/she's/g, "she is")
-                    .replace(/you're/g, "you are").replace(/we're/g, "we are").replace(/they're/g, "they are")
-                    .replace(/\bplain\b/g, "plane") // Fixes the exact "Llano" -> Plane issue
-                    .replace(/\bkids\b/g, "children").replace(/\bkid\b/g, "child")
-                    .replace(/\bhi\b/g, "hello").replace(/\bhey\b/g, "hello")
-                    .replace(/\bbye\b/g, "goodbye").replace(/\btv\b/g, "television")
-                    .replace(/\bphoto\b/g, "photograph").replace(/\bbike\b/g, "bicycle")
-                    .replace(/\byeah\b/g, "yes").replace(/\byep\b/g, "yes").replace(/\bokay\b/g, "ok")
                     .replace(/[.,?!¿¡'"-]/g, " ") 
                     .replace(/\s+/g, " ") 
                     .trim();
@@ -529,51 +509,26 @@
                 const cleanSpoken = normalizeText(spokenText);
                 window.handleVoiceQuizResult(cleanSpoken === targetTextClean, spokenText);
             };
-            rec.onerror = () => { 
-                btn.style.background = 'var(--gold)'; 
-                btn.innerText = '🎤'; 
-            };
+            rec.onerror = () => { btn.style.background = 'var(--gold)'; btn.innerText = '🎤'; };
             rec.start();
         };
 
         window.handleVoiceQuizResult = function(isCorrect, spokenText) {
             const feedback = document.getElementById('quiz-voice-feedback');
             const micBtn = document.getElementById('quiz-mic-btn');
-            const heading = document.getElementById('quiz-result-heading');
             const target = window.quizState.currentItem.translation;
             const skipBtn = document.getElementById('quiz-skip-btn');
 
             if (isCorrect) {
                 micBtn.style.background = '#2e7d32'; 
-                micBtn.innerText = '🎤';
-                heading.innerHTML = `<span style="color:#4caf50;">${window.uiLang === 'es' ? '¡Correcto!' : 'Correct!'}</span>`;
-                feedback.innerHTML = `<span style="color:rgba(255,255,255,0.8);">${window.uiLang === 'es' ? 'Escuché:' : 'I heard:'} "${window.escHtml(spokenText)}"</span>`;
-                
+                feedback.innerHTML = `<span style="color:#4caf50;">✅ "${window.escHtml(spokenText)}"</span>`;
                 if (skipBtn) skipBtn.style.display = 'none';
                 let getsPoint = !window.quizState.hasFailedCurrent;
                 window.checkQuizAnswer(null, getsPoint, true);
             } else {
                 micBtn.style.background = '#c62828'; 
-                micBtn.innerText = '🎤';
                 if (!window.quizState.hasFailedCurrent) window.quizState.hasFailedCurrent = true;
-                
-                // Detailed Explicit Feedback
-                heading.innerHTML = `<span style="color:#ef5350;">${window.uiLang === 'es' ? '¡Casi!' : 'Almost!'}</span>`;
-                
-                feedback.innerHTML = `
-                    <div style="margin-bottom:12px;">
-                        <span style="color:rgba(255,255,255,0.6); font-size: 14px;">${window.uiLang === 'es' ? 'Traducción esperada:' : 'Expected translation:'}</span><br>
-                        <span style="color:var(--gold); font-size:20px; font-weight:bold;">"${window.escHtml(target)}"</span>
-                    </div>
-                    <div style="margin-bottom:16px;">
-                        <span style="color:rgba(255,255,255,0.6); font-size: 14px;">${window.uiLang === 'es' ? 'Lo que escuché:' : 'What I heard:'}</span><br>
-                        <span style="color:#ef5350; font-size:18px;">"${window.escHtml(spokenText)}"</span>
-                    </div>
-                    <div style="color:white; font-size:15px; font-weight:500; background:rgba(255,255,255,0.1); padding:8px 12px; border-radius:8px; display:inline-block;">
-                        👆 ${window.uiLang === 'es' ? 'Toca el micrófono para intentar de nuevo' : 'Tap the mic to try again'}
-                    </div>
-                `;
-                
+                feedback.innerHTML = `<span style="color:#ef5350;">❌ ${window.uiLang === 'es' ? 'Dijiste:' : 'You said:'} "${window.escHtml(spokenText)}"</span><br><span style="color:var(--gold); font-size:14px; margin-top:5px; display:inline-block;">(${window.escHtml(target)})</span><br><span style="color:white; font-size:14px; margin-top:12px; display:inline-block;">${window.uiLang === 'es' ? '👆 Toca para reintentar' : '👆 Tap to try again'}</span>`;
                 window.quizState.isAnswering = false; 
                 if (skipBtn) {
                     skipBtn.style.display = 'inline-block';
@@ -614,6 +569,8 @@
             let itemIndex = history.findIndex(i => i.original === window.quizState.currentItem.original);
 
             if (itemIndex > -1) {
+                // A2 user specific logic requirement: Treat high basic / low advanced scores accurately.
+                // The mastery array here handles standard 1-5 levels logic.
                 if (isCorrect) {
                     window.quizState.score++;
                     history[itemIndex].mastery = Math.min(5, (history[itemIndex].mastery || 0) + 1);
