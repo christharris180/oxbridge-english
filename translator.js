@@ -1,6 +1,6 @@
 /**
  * SmarTranslator - Unified Web Logic
- * Includes: Translation, Voice, Cloud Sync, and Session IDs
+ * Includes: Translation, Voice, Cloud Sync, Session IDs, and Interactive Dictionary Modal
  */
 
 let isSpanishToEnglish = true;
@@ -11,6 +11,27 @@ let currentTranslationSessionId = Date.now().toString();
 // ==========================================
 // 1. CORE TRANSLATOR LOGIC
 // ==========================================
+
+// Helper: Escape HTML to prevent injection
+window.escHtml = function(str) {
+    return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+};
+
+// Helper: Wrap words in clickable spans
+window.makeTextClickable = function(text, targetLang) {
+    const parts = text.split(/([a-zA-ZáéíóúñüÁÉÍÓÚÑÜ]+(?:[-'][a-zA-ZáéíóúñüÁÉÍÓÚÑÜ]+)*)/);
+    let html = '';
+    parts.forEach(part => {
+        if (/^[a-zA-ZáéíóúñüÁÉÍÓÚÑÜ]+(?:[-'][a-zA-ZáéíóúñüÁÉÍÓÚÑÜ]+)*$/.test(part)) {
+            const cleanWord = part.replace(/'/g, "\\'");
+            html += `<span class="clickable-word" onclick="window.openWordModal('${cleanWord}', '${targetLang}')">${part}</span>`;
+        } else {
+            html += window.escHtml(part);
+        }
+    });
+    return html;
+};
+
 async function doTranslation() {
     const inputText = document.getElementById('input-text');
     const outputText = document.getElementById('output-text');
@@ -31,7 +52,8 @@ async function doTranslation() {
         const data = await response.json();
         const translation = data[0].map(item => item[0]).join('').trim();
         
-        outputText.innerHTML = translation; 
+        // Render as clickable words
+        outputText.innerHTML = window.makeTextClickable(translation, to); 
         outputText.classList.remove('empty');
         
         // Save to History
@@ -132,7 +154,110 @@ window.syncCloudHistory = async function() {
 };
 
 // ==========================================
-// 2. VOICE INPUT (MIC)
+// 2. DICTIONARY MODAL LOGIC
+// ==========================================
+
+window.openWordModal = async function(word, langCode) {
+    document.activeElement.blur();
+    document.getElementById('word-modal-title').textContent = word;
+    document.getElementById('word-modal-body').innerHTML = '<div style="text-align:center; padding: 20px;"><div class="loading-dots"><span></span><span></span><span></span></div></div>';
+    document.getElementById('word-modal').classList.add('active');
+
+    try {
+        const url = "https://translate.googleapis.com/translate_a/single?client=gtx&dt=md&dt=ss&sl=" + langCode + "&tl=" + langCode + "&q=" + encodeURIComponent(word);
+        const res = await fetch(url);
+        const data = await res.json();
+        let finalData = window.parseGoogleDict(data, word);
+        const sourceLang = isSpanishToEnglish ? 'es' : 'en';
+        if (langCode !== sourceLang) finalData = await window.bulkTranslateDefinitions(finalData, langCode, sourceLang);
+        window.renderModalDictResults(finalData, langCode, 'word-modal-body');
+    } catch(e) {
+        document.getElementById('word-modal-body').innerHTML = `<div style='text-align:center; padding:20px; font-size:18px;'>${uiLang === 'es' ? 'No se encontraron definiciones.' : 'No definitions found.'}</div>`;
+    }
+};
+
+window.closeWordModal = function(e) {
+    if (e) e.stopPropagation();
+    document.getElementById('word-modal').classList.remove('active');
+};
+
+window.parseGoogleDict = function(data, word) {
+    const defsArray = data[12];
+    if (!defsArray) throw new Error('Not found');
+    const meanings = defsArray.map(posGroup => {
+        return {
+            partOfSpeech: posGroup[0] || 'Definición',
+            definitions: (posGroup[1] || []).map(d => ({ definition: d[0] || '', example: (typeof d[2] === 'string' && d[2].includes(' ')) ? d[2] : '' })).filter(d => d.definition)
+        };
+    });
+    return { word: word, meanings: meanings };
+};
+
+window.bulkTranslateDefinitions = async function(finalData, fromLang, toLang) {
+    let textsToTranslate = [];
+    finalData.meanings.forEach(m => {
+        textsToTranslate.push((m.partOfSpeech || '').replace(/\n/g, ' '));
+        m.definitions.slice(0, 2).forEach(d => {
+            textsToTranslate.push((d.definition || '').replace(/\n/g, ' '));
+            if (d.example) textsToTranslate.push(d.example.replace(/\n/g, ' '));
+        });
+    });
+
+    if (textsToTranslate.length > 0) {
+        try {
+            const joinedText = textsToTranslate.join('\n');
+            const url = "https://translate.googleapis.com/translate_a/single?client=gtx&dt=t&sl=" + fromLang + "&tl=" + toLang + "&q=" + encodeURIComponent(joinedText);
+            const res = await fetch(url);
+            const tData = await res.json();
+            const translatedString = tData[0].map(item => item[0]).join('');
+            const translatedArray = translatedString.split('\n').map(t => t.trim());
+
+            let tIndex = 0;
+            finalData.meanings.forEach(m => {
+                m.partOfSpeechTranslated = translatedArray[tIndex++] || '';
+                m.definitions.slice(0, 2).forEach(d => {
+                    d.definitionTranslated = translatedArray[tIndex++] || '';
+                    if (d.example) d.exampleTranslated = translatedArray[tIndex++] || '';
+                });
+            });
+        } catch (e) {}
+    }
+    return finalData;
+};
+
+window.renderModalDictResults = function(data, langCode, targetId) {
+    let html = `<div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(26,26,62,0.1); padding-bottom: 10px; margin-bottom: 15px;">
+                  <h2 style="color:#1a1a3e; font-size:26px; text-transform:capitalize; margin:0;">${window.escHtml(data.word)}</h2>
+                  <button style="background:none; border:none; font-size:28px; cursor:pointer; color:#D4AF37;" onclick="window.playDictAudio('${window.escHtml(data.word).replace(/'/g, "\\'")}', '${langCode}')">🔊</button>
+                </div>`;
+
+    data.meanings.forEach(m => {
+        html += `<h4 style="color:#9e7a0e; font-size:16px; margin:10px 0 5px; font-style:italic;">${window.escHtml(m.partOfSpeech)} ${m.partOfSpeechTranslated ? `<span style="color:#666; font-size:14px;">(${window.escHtml(m.partOfSpeechTranslated)})</span>` : ''}</h4>`;
+        m.definitions.slice(0,2).forEach(d => {
+            html += `<div style="margin-bottom:12px;">
+                        <p style="color:#1a1a3e; font-size:16px; margin-bottom:2px;"><strong>-</strong> ${window.escHtml(d.definition)}</p>`;
+            if (d.definitionTranslated) html += `<p style="color:#4a4a6a; font-size:14px; margin-bottom:4px; padding-left:10px;"><em>${window.escHtml(d.definitionTranslated)}</em></p>`;
+            if (d.example) html += `<p style="color:rgba(26,26,62,0.7); font-size:14px; font-style:italic; margin-bottom:2px; border-left:2px solid #C9A227; padding-left:8px; margin-left:10px;">"${window.escHtml(d.example)}"</p>`;
+            if (d.exampleTranslated) html += `<p style="color:rgba(26,26,62,0.5); font-size:13px; font-style:italic; margin-bottom:8px; border-left:2px solid rgba(201,162,39,0.5); padding-left:8px; margin-left:10px;">"${window.escHtml(d.exampleTranslated)}"</p>`;
+            html += `</div>`;
+        });
+    });
+    document.getElementById(targetId).innerHTML = html;
+};
+
+window.playDictAudio = function(word, langCode) {
+    const audioUrl = "https://translate.google.com/translate_tts?ie=UTF-8&client=tw-ob&tl=" + langCode + "&q=" + encodeURIComponent(word);
+    const player = document.getElementById('tts-player');
+    if(player) {
+        player.pause();
+        player.src = audioUrl;
+        player.load();
+        player.play().catch(e => { console.log("Audio play prevented", e); });
+    }
+};
+
+// ==========================================
+// 3. VOICE INPUT (MIC)
 // ==========================================
 async function toggleMic() {
     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
@@ -163,7 +288,7 @@ async function toggleMic() {
 }
 
 // ==========================================
-// 3. COPY & CLEAR
+// 4. COPY & CLEAR
 // ==========================================
 function copyTranslation() {
     const text = document.getElementById('output-text').textContent;
@@ -178,7 +303,7 @@ function clearInput() {
 }
 
 // ==========================================
-// 4. TUTORIAL LOGIC
+// 5. TUTORIAL LOGIC
 // ==========================================
 let currentTourStep = 0;
 const tourSteps = [
@@ -186,7 +311,7 @@ const tourSteps = [
     { target: 'lang-dir-selector', es: "1. Elige la dirección de la traducción aquí.", en: "1. Choose the translation direction here." },
     { target: 'input-text', es: "2. Escribe aquí el texto que deseas traducir.", en: "2. Write the text you want to translate here." },
     { target: 'record-btn', es: "3. O pulsa aquí para grabar audio.", en: "3. Or tap here to record audio." },
-    { target: 'output-text', es: "4. Lee tu traducción aquí.", en: "4. Read your translation here." },
+    { target: 'output-text', es: "4. Lee tu traducción aquí. (¡Toca cualquier palabra para ver el diccionario interactivo!)", en: "4. Read your translation here. (Tap any word for an interactive dictionary!)" },
     { target: 'speak-btn', es: "5. Escucha la pronunciación de la traducción.", en: "5. Listen to the translation." },
     { target: 'nav-profile', es: "6. ¡Inicia sesión aquí para guardar tus traducciones en la nube y no perderlas nunca!", en: "6. Log in here to save your translations to the cloud and never lose them!" },
     { target: 'nav-history', es: "7. Revisa todas tus traducciones. Puedes escucharlas de nuevo o eliminar las que ya no necesites.", en: "7. Review all your translations. You can listen to them again or delete the ones you no longer need." },
@@ -257,7 +382,7 @@ window.renderTourStep = function() {
 };
 
 // ==========================================
-// 5. INITIALIZATION
+// 6. INITIALIZATION
 // ==========================================
 document.addEventListener('DOMContentLoaded', () => {
     const inputText = document.getElementById('input-text');

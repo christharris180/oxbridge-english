@@ -114,6 +114,22 @@
         .tour-skip { background: transparent; color: #cc2020; padding: 10px 15px; }
         .tour-next { background: #D4AF37; color: #1a1a3e; box-shadow: 0 4px 10px rgba(212, 175, 55, 0.4); }
         .tour-highlight { position: relative !important; z-index: 10001 !important; box-shadow: 0 0 0 4px #D4AF37, 0 0 20px rgba(0,0,0,0.8) !important; border-radius: 12px; pointer-events: none !important; }
+
+        /* Interactive Dictionary Styles */
+        .clickable-word { cursor: pointer; border-bottom: 1px dashed rgba(212, 175, 55, 0.6); transition: background 0.2s, color 0.2s; border-radius: 3px; padding: 0 2px; }
+        .clickable-word:hover { background: rgba(212, 175, 55, 0.15); color: #b48c0a; }
+        .word-modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(13,13,36,0.85); z-index: 9999; display: flex; justify-content: center; align-items: center; opacity: 0; pointer-events: none; transition: opacity 0.3s; backdrop-filter: blur(4px); }
+        .word-modal-overlay.active { opacity: 1; pointer-events: all; }
+        .word-modal-content { background: #cdc89e; width: 90%; max-width: 400px; max-height: 80vh; overflow-y: auto; border-radius: 16px; padding: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); transform: translateY(20px); transition: transform 0.3s; }
+        .word-modal-overlay.active .word-modal-content { transform: translateY(0); }
+        .word-modal-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(26,26,62,0.1); padding-bottom: 10px; margin-bottom: 15px; }
+        .word-modal-title { color: #1a1a3e; font-size: 26px; font-weight: 700; margin: 0; text-transform: capitalize; }
+        .word-modal-close { background: none; border: none; font-size: 32px; color: #1a1a3e; cursor: pointer; line-height: 1; padding: 0; }
+        .loading-dots { display:flex; gap:6px; justify-content:center; align-items:center; height:30px; }
+        .loading-dots span { width:8px; height:8px; background:#D4AF37; border-radius:50%; animation: bounce 0.5s alternate infinite; }
+        .loading-dots span:nth-child(2) { animation-delay: 0.15s; }
+        .loading-dots span:nth-child(3) { animation-delay: 0.3s; }
+        @keyframes bounce { to { transform: translateY(-5px); } }
         
         @media (max-width: 480px) {
             .app-nav-grid { gap: 5px; }
@@ -125,6 +141,8 @@
     </style>
 </head>
 <body>
+    <audio id="tts-player" type="audio/mpeg" style="display:none;"></audio>
+
     <video autoplay muted loop playsinline class="background-video">
         <source src="girl_working_001.mp4" type="video/mp4">
     </video>
@@ -252,6 +270,16 @@
         <div class="tour-actions">
             <button class="tour-btn tour-skip" onclick="window.endTutorial()" id="tour-skip-btn">Omitir</button>
             <button class="tour-btn tour-next" onclick="window.nextTourStep()" id="tour-next-btn">Siguiente</button>
+        </div>
+    </div>
+
+    <div id="word-modal" class="word-modal-overlay" onclick="window.closeWordModal(event)">
+        <div class="word-modal-content" onclick="event.stopPropagation()">
+            <div class="word-modal-header">
+                <h3 id="word-modal-title" class="word-modal-title">Word</h3>
+                <button class="word-modal-close" onclick="window.closeWordModal(event)">&times;</button>
+            </div>
+            <div id="word-modal-body">Loading...</div>
         </div>
     </div>
 
