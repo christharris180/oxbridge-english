@@ -150,8 +150,6 @@
     </style>
 </head>
 <body>
-    <audio id="tts-player" type="audio/mpeg" style="display:none;"></audio>
-
     <video autoplay muted loop playsinline class="background-video">
         <source src="girl_working_001.mp4" type="video/mp4">
     </video>
@@ -403,19 +401,16 @@
             loadHistory();
         }
 
-        // Uses the physical HTML audio tag to bypass mobile autoplay blockers
+        // Native Browser Voice Engine (Works perfectly on mobile)
         function playAudio(word, langCode) {
-            const audioUrl = "https://translate.google.com/translate_tts?ie=UTF-8&client=tw-ob&tl=" + langCode + "&q=" + encodeURIComponent(word);
-            const player = document.getElementById('tts-player');
-            
-            if (player) {
-                player.pause();
-                player.src = audioUrl;
-                player.load();
-                player.play().catch(e => {
-                    console.error("Audio prevented by browser policy", e);
-                    showToast(uiLang === 'es' ? 'Sube el volumen o permite el audio' : 'Turn up volume or allow audio');
-                });
+            try {
+                window.speechSynthesis.cancel();
+                const utter = new SpeechSynthesisUtterance(word);
+                utter.lang = langCode === 'en' ? 'en-US' : 'es-ES';
+                window.speechSynthesis.speak(utter);
+            } catch (e) {
+                console.error(e);
+                showToast(uiLang === 'es' ? 'Error de audio' : 'Audio error');
             }
         }
     </script>
