@@ -18,6 +18,15 @@
 
     <!-- APP-SPECIFIC STYLES (Matching the Translator Page) -->
     <style>
+        :root {
+            --gold: #D4AF37;
+            --gold-light: #e8c412;
+            --navy: #0d0d24;
+            --navy-light: #1a1a3e;
+            --cream: #cdc89e;
+            --text-navy: #1a1a3e;
+        }
+
         .app-nav-grid {
             display: grid;
             grid-template-columns: repeat(5, 1fr);
@@ -72,22 +81,33 @@
             max-width: 100%;
         }
 
-        /* History Specific Styles inside the hero box */
-        .history-container {
-            background: #cdc89e; /* Cream */
+        /* History Specific Layout matching the Quiz/Dict panels */
+        .history-panel {
+            background: var(--cream);
             border-radius: 20px;
-            padding: 20px;
-            min-height: 400px;
-            max-height: 600px;
-            overflow-y: auto;
-            border: 2px solid #D4AF37;
+            padding: 25px;
             box-shadow: inset 0 2px 10px rgba(0,0,0,0.1);
+            border: 2px solid var(--gold);
+            width: 100%;
+            min-height: 450px;
+            display: flex;
+            flex-direction: column;
         }
         
-        .history-toolbar {
+        .history-header {
             display: flex;
             justify-content: flex-end;
-            margin-bottom: 15px;
+            align-items: center;
+            border-bottom: 1px solid rgba(26,26,62,0.1);
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+        }
+
+        .history-list {
+            flex: 1;
+            overflow-y: auto;
+            max-height: 500px;
+            padding-right: 5px;
         }
 
         .btn-delete {
@@ -161,6 +181,7 @@
             .app-nav-grid { gap: 5px; }
             .app-nav-icon { width: 38px; height: 38px; font-size: 18px; }
             .app-nav-label { font-size: 9px; letter-spacing: 0; }
+            .history-panel { padding: 15px; }
         }
     </style>
 </head>
@@ -238,13 +259,15 @@
             <h1 style="font-family: 'Work Sans', sans-serif; font-size: 48px; font-weight: 700; color: #e8c412; text-align: center; margin-bottom: 30px; letter-spacing: 1px;" 
                 id="page-title" data-en="History" data-es="Historial">History</h1>
             
-            <div class="history-toolbar">
-                <button class="btn-delete" onclick="handleDelete()"><i class="fas fa-trash"></i> <span id="del-btn-text" data-en="Delete" data-es="Borrar">Delete</span></button>
-            </div>
+            <!-- History Container replacing the input/output cards -->
+            <div class="history-panel">
+                <div class="history-header">
+                    <button class="btn-delete" onclick="handleDelete()"><i class="fas fa-trash"></i> <span id="del-btn-text" data-en="Delete" data-es="Borrar">Delete</span></button>
+                </div>
 
-            <!-- The scrollable history container replacing the input/output cards -->
-            <div class="history-container" id="history-list">
-                <!-- History items injected here via JS -->
+                <div class="history-list" id="history-list">
+                    <!-- History items injected here via JS -->
+                </div>
             </div>
             
         </div>
