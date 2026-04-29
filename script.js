@@ -62,6 +62,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     function setLanguage(lang) {
         currentLang = lang;
+        window.uiLang = lang; // Set globally so other scripts can read it instantly
         
         // Update active state on flag buttons
         langOptions.forEach(option => {
@@ -82,6 +83,9 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Update HTML lang attribute
         document.documentElement.lang = lang;
+
+        // Fire a custom event so specific page scripts know to update their dynamic text
+        document.dispatchEvent(new CustomEvent('languageChanged', { detail: lang }));
     }
     
     // ==========================================

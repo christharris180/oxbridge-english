@@ -417,12 +417,37 @@ document.addEventListener('DOMContentLoaded', () => {
     langRadios.forEach(radio => {
         radio.onclick = (e) => {
             isSpanishToEnglish = (e.target.value === 'es-en');
-            inputText.placeholder = isSpanishToEnglish ? "Escribe aquí..." : "Type here...";
+            inputText.placeholder = uiLang === 'es' ? "Escribe aquí..." : "Type here...";
             doTranslation();
         };
     });
 
     if (!localStorage.getItem('tutorial_done')) {
         setTimeout(window.startTutorial, 1500);
+    }
+});
+
+// ==========================================
+// 7. DYNAMIC LANGUAGE LISTENER
+// ==========================================
+document.addEventListener('languageChanged', (e) => {
+    uiLang = e.detail;
+    
+    // Update the output placeholder if it's empty
+    const outputText = document.getElementById('output-text');
+    if (outputText && outputText.classList.contains('empty')) {
+        outputText.textContent = uiLang === 'es' ? "La traducción aparecerá aquí..." : "Translation will appear here...";
+    }
+    
+    // Update the record button text
+    const recordBtn = document.getElementById('record-btn');
+    if (recordBtn && !recordBtn.innerHTML.includes('fa-circle')) {
+        recordBtn.innerHTML = '<i class="fas fa-microphone"></i> ' + (uiLang === 'es' ? 'Voz' : 'Voice');
+    }
+    
+    // Update the translation direction labels if needed
+    const inputText = document.getElementById('input-text');
+    if (inputText) {
+        inputText.placeholder = uiLang === 'es' ? "Escribe aquí..." : "Type here...";
     }
 });
