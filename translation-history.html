@@ -142,6 +142,21 @@
         }
         .toast.show { opacity: 1; }
 
+        /* Beautiful Custom Confirm Modal */
+        .custom-confirm-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(13,13,36,0.85); z-index: 10005; display: flex; justify-content: center; align-items: center; opacity: 0; pointer-events: none; transition: opacity 0.3s; backdrop-filter: blur(4px); }
+        .custom-confirm-overlay.active { opacity: 1; pointer-events: all; }
+        .custom-confirm-box { background: #cdc89e; width: 90%; max-width: 400px; border-radius: 20px; padding: 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); transform: translateY(20px); transition: transform 0.3s; border: 2px solid #D4AF37; text-align: center; }
+        .custom-confirm-overlay.active .custom-confirm-box { transform: translateY(0); }
+        .custom-confirm-title { color: #1a1a3e; font-size: 24px; font-weight: 700; margin-bottom: 15px; font-family: 'Work Sans', sans-serif; }
+        .custom-confirm-msg { color: #4a4a6a; font-size: 17px; margin-bottom: 25px; line-height: 1.4; font-weight: 500; }
+        .custom-confirm-actions { display: flex; gap: 12px; justify-content: center; flex-direction: column; }
+        @media (min-width: 400px) { .custom-confirm-actions { flex-direction: row; } }
+        .custom-btn { flex: 1; padding: 14px 20px; border-radius: 30px; font-size: 16px; font-weight: 700; cursor: pointer; border: none; transition: all 0.2s; display: flex; align-items: center; justify-content: center; gap: 8px; }
+        .custom-btn-cancel { background: transparent; color: #1a1a3e; border: 2px solid #1a1a3e; }
+        .custom-btn-cancel:hover { background: rgba(26,26,62,0.1); }
+        .custom-btn-accept { background: #cc2020; color: white; box-shadow: 0 4px 10px rgba(204, 32, 32, 0.3); }
+        .custom-btn-accept:hover { filter: brightness(1.1); transform: translateY(-2px); }
+
         @media (max-width: 480px) {
             .app-nav-grid { gap: 5px; }
             .app-nav-icon { width: 38px; height: 38px; font-size: 18px; }
@@ -150,6 +165,8 @@
     </style>
 </head>
 <body>
+    <audio id="tts-player" type="audio/mpeg" style="display:none;"></audio>
+
     <video autoplay muted loop playsinline class="background-video">
         <source src="girl_working_001.mp4" type="video/mp4">
     </video>
@@ -232,6 +249,18 @@
             
         </div>
     </div>
+    </div>
+
+    <!-- Custom Beautiful Confirm Modal -->
+    <div id="custom-confirm" class="custom-confirm-overlay">
+        <div class="custom-confirm-box">
+            <div id="custom-confirm-title" class="custom-confirm-title">Confirm</div>
+            <div id="custom-confirm-msg" class="custom-confirm-msg">Are you sure you want to delete these items?</div>
+            <div class="custom-confirm-actions">
+                <button id="custom-btn-cancel" class="custom-btn custom-btn-cancel">Cancel</button>
+                <button id="custom-btn-accept" class="custom-btn custom-btn-accept">Delete</button>
+            </div>
+        </div>
     </div>
 
     <div id="toast" class="toast"></div>
@@ -335,6 +364,43 @@
             setTimeout(() => t.classList.remove('show'), 2000);
         }
 
+        // --- Custom Graphical Modal Function ---
+        function showCustomConfirm(title, msg, acceptText, cancelText, acceptColor = '#cc2020') {
+            return new Promise((resolve) => {
+                const overlay = document.getElementById('custom-confirm');
+                document.getElementById('custom-confirm-title').innerHTML = title;
+                document.getElementById('custom-confirm-msg').innerHTML = msg;
+
+                const btnAccept = document.getElementById('custom-btn-accept');
+                const btnCancel = document.getElementById('custom-btn-cancel');
+
+                btnAccept.innerHTML = acceptText;
+                btnCancel.innerHTML = cancelText;
+                
+                // Color overrides for the accept button (e.g. making it gold for the cloud warning)
+                btnAccept.style.background = acceptColor;
+                if(acceptColor !== '#cc2020') {
+                    btnAccept.style.boxShadow = `0 4px 10px ${acceptColor}66`;
+                } else {
+                    btnAccept.style.boxShadow = `0 4px 10px rgba(204, 32, 32, 0.3)`;
+                }
+
+                overlay.classList.add('active');
+
+                const cleanup = () => {
+                    btnAccept.removeEventListener('click', onAccept);
+                    btnCancel.removeEventListener('click', onCancel);
+                    overlay.classList.remove('active');
+                };
+
+                const onAccept = () => { cleanup(); resolve(true); };
+                const onCancel = () => { cleanup(); resolve(false); };
+
+                btnAccept.addEventListener('click', onAccept);
+                btnCancel.addEventListener('click', onCancel);
+            });
+        }
+
         function loadHistory() {
             const list = document.getElementById('history-list');
             const history = JSON.parse(localStorage.getItem('app_history') || '[]');
@@ -372,32 +438,55 @@
                 return;
             }
 
-            if (!confirm(uiLang === 'es' ? `¿Borrar ${selected.length} elementos?` : `Delete ${selected.length} items?`)) return;
+            const isEs = uiLang === 'es';
+
+            // First Confirmation (Local History)
+            const title1 = isEs ? "Confirmar Acción" : "Confirm Action";
+            const msg1 = isEs ? `¿Borrar ${selected.length} elemento(s) seleccionado(s)?` : `Delete ${selected.length} selected item(s)?`;
+            const accept1 = isEs ? '<i class="fas fa-trash"></i> Borrar' : '<i class="fas fa-trash"></i> Delete';
+            const cancel1 = isEs ? "Cancelar" : "Cancel";
+
+            const step1 = await showCustomConfirm(title1, msg1, accept1, cancel1, '#cc2020');
+            if (!step1) return; // User cancelled
 
             let history = JSON.parse(localStorage.getItem('app_history') || '[]');
             let cloudDeletePromises = [];
+            let confirmedCloud = false;
+
+            // Second Confirmation (Cloud Warning - Only if logged in)
+            if (window.userUid && window.db) {
+                const title2 = isEs ? "⚠️ Copia en la Nube" : "⚠️ Cloud Backup";
+                const msg2 = isEs ? "¿Quieres borrar estos elementos de tu copia de seguridad en la nube también?" : "Do you want to permanently delete these items from your cloud backup too?";
+                const accept2 = isEs ? "Sí, borrar todo" : "Yes, delete all";
+                const cancel2 = isEs ? "No, solo local" : "No, keep in cloud";
+
+                // Using a gold color button for the cloud warning to differentiate it
+                confirmedCloud = await showCustomConfirm(title2, msg2, accept2, cancel2, '#D4AF37');
+            }
 
             selected.forEach(el => {
                 const session = el.getAttribute('data-session');
-                // Remove from Local
+                // Remove from Local Storage array
                 history = history.filter(item => item.sessionId !== session);
 
-                // Remove from Cloud (Ghost Busting)
-                if (window.userUid && window.db) {
+                // Setup Cloud Deletion if confirmed
+                if (confirmedCloud) {
                     const docId = `${window.userUid}_${session}`;
                     const docRef = window.dbFunctions.doc(window.db, "translations_history", docId);
                     cloudDeletePromises.push(window.dbFunctions.deleteDoc(docRef));
                 }
             });
 
+            // Save the updated history locally
             localStorage.setItem('app_history', JSON.stringify(history));
             
-            if (cloudDeletePromises.length > 0) {
-                showToast(uiLang === 'es' ? "Borrando de la nube..." : "Deleting from cloud...");
+            // Execute cloud deletions if any
+            if (confirmedCloud && cloudDeletePromises.length > 0) {
+                showToast(isEs ? "Borrando de la nube..." : "Deleting from cloud...");
                 await Promise.all(cloudDeletePromises).catch(e => console.log(e));
             }
 
-            showToast(uiLang === 'es' ? "Eliminado con éxito" : "Successfully deleted");
+            showToast(isEs ? "Eliminado con éxito" : "Successfully deleted");
             loadHistory();
         }
 
