@@ -403,14 +403,20 @@
             loadHistory();
         }
 
-        // Bypasses mobile blocks by creating a new Audio object on the fly
+        // Uses the physical HTML audio tag to bypass mobile autoplay blockers
         function playAudio(word, langCode) {
             const audioUrl = "https://translate.google.com/translate_tts?ie=UTF-8&client=tw-ob&tl=" + langCode + "&q=" + encodeURIComponent(word);
-            const audio = new Audio(audioUrl);
-            audio.play().catch(e => {
-                console.error("Audio prevented by browser policy", e);
-                showToast(uiLang === 'es' ? 'Sube el volumen o permite el audio' : 'Turn up volume or allow audio');
-            });
+            const player = document.getElementById('tts-player');
+            
+            if (player) {
+                player.pause();
+                player.src = audioUrl;
+                player.load();
+                player.play().catch(e => {
+                    console.error("Audio prevented by browser policy", e);
+                    showToast(uiLang === 'es' ? 'Sube el volumen o permite el audio' : 'Turn up volume or allow audio');
+                });
+            }
         }
     </script>
 </body>
