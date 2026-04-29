@@ -1,198 +1,417 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <meta name="theme-color" content="#0d0d24" />
-  
-  <title>Historial de Traducciones | Oxbridge English</title>
-  <meta name="robots" content="noindex, follow">
-  
-  <link rel="icon" type="image/jpeg" href="ox-head-008.jpg">
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
-  <style>
-    :root {
-      --gold: #C9A227; --gold-light: #D4AF37; --navy: #0d0d24; --navy-light: #1a1a3e;
-      --cream: #cdc89e; --text-navy: #1a1a3e; --safe-top: env(safe-area-inset-top, 0px);
-    }
-    * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
-    body { background: var(--navy); color: white; font-family: 'Roboto', sans-serif; font-weight: 300; }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    .app { display: flex; flex-direction: column; min-height: 100vh; padding-top: var(--safe-top); }
-
-    .topbar { 
-        display: flex; align-items: center; justify-content: space-between; 
-        padding: 16px 20px; border-bottom: 1px solid rgba(255,255,255,0.07); 
-    }
-    .back-btn {
-      background: linear-gradient(180deg, var(--gold-light) 0%, var(--gold) 100%);
-      color: var(--text-navy); border: none; border-radius: 50px; padding: 8px 16px; font-weight: 700; cursor: pointer;
-    }
-
-    .toolbar { display: flex; gap: 10px; padding: 15px 16px; justify-content: flex-end; }
-    .btn-action { border: none; border-radius: 50px; padding: 10px 20px; font-size: 13px; font-weight: 700; cursor: pointer; color: white; }
-    .btn-delete { background: #cc2020; }
-    .btn-quiz { background: var(--gold); color: var(--text-navy); text-decoration: none; }
-
-    .content { flex: 1; padding: 0 16px 20px; }
+    <title>SmarTranslator History | Cursos de Inglés Oxbridge English</title>
+    <meta name="robots" content="noindex, follow">
     
-    .history-entry {
-      background: var(--cream); border-radius: 14px; padding: 16px; margin-bottom: 12px;
-      transition: all 0.2s; border: 3px solid transparent; cursor: pointer;
-    }
-    .history-entry.selected { border-color: var(--gold); background: #e0dbb5; }
+    <link rel="icon" type="image/jpeg" href="ox-head-008.jpg">
+    <link rel="apple-touch-icon" href="ox-head-008.jpg">
+    <link rel="shortcut icon" type="image/jpeg" href="ox-head-008.jpg">
     
-    .entry-header { display: flex; justify-content: space-between; font-size: 12px; color: rgba(26,26,62,0.5); margin-bottom: 8px; }
-    .entry-original { font-size: 16px; font-weight: 500; color: var(--text-navy); margin-bottom: 5px; }
-    .entry-translation { font-size: 16px; color: rgba(26,26,62,0.8); }
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
 
-    .play-btn { 
-        margin-top: 10px; background: rgba(201, 162, 39, 0.2); border: 1px solid var(--gold); 
-        color: var(--text-navy); padding: 5px 12px; border-radius: 20px; font-size: 12px; cursor: pointer;
-    }
+    <!-- APP-SPECIFIC STYLES (Matching the Translator Page) -->
+    <style>
+        .app-nav-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 12px;
+            margin-bottom: 35px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .app-nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            transition: transform 0.2s ease-in-out;
+            cursor: pointer;
+            padding: 5px;
+        }
+        .app-nav-item:hover {
+            transform: translateY(-4px);
+        }
+        .app-nav-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: rgba(212, 175, 55, 0.15);
+            border: 1px solid #D4AF37;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            margin-bottom: 8px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.25);
+            transition: all 0.3s ease;
+            color: #D4AF37;
+        }
+        .app-nav-item:hover .app-nav-icon, .app-nav-item.active .app-nav-icon {
+            background: #D4AF37;
+            color: #1a1a3e !important;
+            box-shadow: 0 6px 15px rgba(212, 175, 55, 0.4);
+        }
+        .app-nav-label {
+            font-family: 'Roboto', sans-serif;
+            font-size: 12px;
+            font-weight: 500;
+            color: #ffffff;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 100%;
+        }
 
-    .toast {
-      position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
-      background: rgba(0,0,0,0.8); color: white; padding: 10px 20px; border-radius: 30px;
-      opacity: 0; transition: 0.3s; pointer-events: none;
-    }
-    .toast.show { opacity: 1; }
-  </style>
+        /* History Specific Styles inside the hero box */
+        .history-container {
+            background: #cdc89e; /* Cream */
+            border-radius: 20px;
+            padding: 20px;
+            min-height: 400px;
+            max-height: 600px;
+            overflow-y: auto;
+            border: 2px solid #D4AF37;
+            box-shadow: inset 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .history-toolbar {
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 15px;
+        }
+
+        .btn-delete {
+            background: transparent;
+            color: #cc2020;
+            border: 2px solid #cc2020;
+            border-radius: 25px;
+            padding: 8px 16px;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .btn-delete:hover {
+            background: #cc2020;
+            color: white;
+        }
+
+        .history-entry {
+            background: white;
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 12px;
+            transition: all 0.2s;
+            border: 2px solid transparent;
+            cursor: pointer;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        .history-entry:hover {
+            border-color: rgba(212, 175, 55, 0.5);
+        }
+        .history-entry.selected {
+            border-color: #D4AF37;
+            background: rgba(212, 175, 55, 0.1);
+        }
+        
+        .entry-header { display: flex; justify-content: space-between; font-size: 12px; color: rgba(26,26,62,0.6); margin-bottom: 8px; font-weight: 500; }
+        .entry-original { font-size: 18px; font-weight: 700; color: #1a1a3e; margin-bottom: 5px; }
+        .entry-translation { font-size: 16px; color: #4a4a6a; }
+
+        .play-btn { 
+            margin-top: 10px; background: rgba(212, 175, 55, 0.15); border: 1px solid #D4AF37; 
+            color: #1a1a3e; padding: 6px 14px; border-radius: 20px; font-size: 13px; font-weight: 600; cursor: pointer;
+            transition: all 0.2s;
+        }
+        .play-btn:hover { background: #D4AF37; }
+
+        .toast {
+            position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
+            background: rgba(13,13,36,0.9); border: 1px solid #D4AF37; color: white; padding: 12px 24px; border-radius: 30px;
+            opacity: 0; transition: 0.3s; pointer-events: none; z-index: 9999;
+        }
+        .toast.show { opacity: 1; }
+
+        @media (max-width: 480px) {
+            .app-nav-grid { gap: 5px; }
+            .app-nav-icon { width: 38px; height: 38px; font-size: 18px; }
+            .app-nav-label { font-size: 9px; letter-spacing: 0; }
+        }
+    </style>
 </head>
 <body>
+    <audio id="tts-player" type="audio/mpeg" style="display:none;"></audio>
 
-<div class="app">
-  <div class="topbar">
-    <div style="display:flex; align-items:center; gap:10px;">
-        <img src="ox-head-008.jpg" style="width:30px; height:30px; border-radius:50%;">
-        <strong>Oxbridge English</strong>
-    </div>
-    <button class="back-btn" onclick="location.href='translator.html'">← Volver</button>
-  </div>
+    <video autoplay muted loop playsinline class="background-video">
+        <source src="girl_working_001.mp4" type="video/mp4">
+    </video>
 
-  <div class="toolbar">
-    <button class="btn-action btn-delete" onclick="handleDelete()">🗑 Borrar</button>
-    <a href="translation-quiz.html" class="btn-action btn-quiz">🧠 Quiz</a>
-  </div>
-
-  <div class="content" id="history-list">
-    </div>
-
-  <div id="toast" class="toast"></div>
-</div>
-
-<script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
-  import { getFirestore, doc, deleteDoc, getDocs, collection, query, where } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
-  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
-
-  const firebaseConfig = {
-    apiKey: "AIzaSyDyaVRdsqozHWlXIZ-zVdlq2VzTNrsuJc4",
-    authDomain: "oxbridge-english-a3cc3.firebaseapp.com",
-    projectId: "oxbridge-english-a3cc3",
-    storageBucket: "oxbridge-english-a3cc3.firebasestorage.app",
-    messagingSenderId: "508505970812",
-    appId: "1:508505970812:web:51b46ce56f5d96c28091f9"
-  };
-
-  const app = initializeApp(firebaseConfig);
-  const db = getFirestore(app);
-  const auth = getAuth(app);
-
-  window.db = db;
-  window.auth = auth;
-  window.dbFunctions = { doc, deleteDoc, getDocs, collection, query, where };
-
-  onAuthStateChanged(auth, (user) => {
-    window.userUid = user ? user.uid : null;
-    loadHistory();
-  });
-</script>
-
-<script>
-  function showToast(msg) {
-    const t = document.getElementById('toast');
-    t.textContent = msg; t.classList.add('show');
-    setTimeout(() => t.classList.remove('show'), 2000);
-  }
-
-  function loadHistory() {
-    const list = document.getElementById('history-list');
-    // We use 'app_history' to match your Android local data name
-    const history = JSON.parse(localStorage.getItem('app_history') || '[]');
-    
-    if (history.length === 0) {
-      list.innerHTML = '<div style="text-align:center; padding-top:50px; opacity:0.5;">No hay historial aún.</div>';
-      return;
-    }
-
-    list.innerHTML = history.map((entry, index) => `
-      <div class="history-entry" onclick="this.classList.toggle('selected')" data-index="${index}" data-session="${entry.sessionId}">
-        <div class="entry-header">
-          <span>${entry.dir === 'es-en' ? 'ES → EN' : 'EN → ES'}</span>
-          <span>${new Date(entry.timestamp).toLocaleDateString()}</span>
+    <nav class="main-nav">
+        <div class="nav-container">
+            <button class="mobile-menu-toggle">☰</button>
+            <div class="logo">
+                <img src="ox-head-008.jpg" alt="Oxbridge English Logo">
+                <h1 data-en="Oxbridge English" data-es="Oxbridge English">Oxbridge English</h1>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html" data-en="Home" data-es="Inicio">Home</a></li>
+                <li><a href="courses.html" data-en="Courses" data-es="Cursos">Courses</a></li>
+                <li><a href="enroll.html" data-en="Enroll" data-es="Inscribirse">Enroll</a></li>
+                <li><a href="books.html" data-en="Books" data-es="Libros">Books</a></li>
+                <li><a href="audio.html" data-en="Audio" data-es="Audio">Audio</a></li>
+                <li><a href="translator.html" class="active" data-en="Translator" data-es="Traductor">Translator</a></li>
+                <li><a href="placement-test.html" data-en="Level Test" data-es="Test de Nivel" style="color: #D4AF37; font-weight: bold;">Level Test</a></li>
+                <li><a href="recommendations.html" data-en="Recommendations" data-es="Recomendaciones">Recommendations</a></li>
+                <li><a href="blog.html" data-en="Blog" data-es="Blog">Blog</a></li>
+                <li><a href="contact.html" data-en="Contact" data-es="Contacto">Contact</a></li>
+            </ul>
+            <div class="lang-toggle">
+                <button class="lang-option active" data-lang="en"><span class="flag">EN</span></button>
+                <button class="lang-option" data-lang="es"><span class="flag">ES</span></button>
+            </div>
         </div>
-        <div class="entry-original">${entry.original}</div>
-        <div class="entry-translation">${entry.translation}</div>
-        <button class="play-btn" onclick="event.stopPropagation(); playAudio('${entry.translation.replace(/'/g, "\\'")}', '${entry.dir === 'es-en' ? 'en' : 'es'}')">
-            <i class="fas fa-volume-up"></i> Escuchar
-        </button>
-      </div>
-    `).join('');
-  }
+    </nav>
 
-  async function handleDelete() {
-    const selected = document.querySelectorAll('.history-entry.selected');
-    if (selected.length === 0) {
-        showToast("Selecciona elementos primero");
-        return;
-    }
+    <div class="translator-page-wrapper">
+        <div class="translator-embed">
+            <div class="translator-container-inner">
+            
+            <div style="text-align: center; margin-bottom: 25px;">
+                <a href="SmarTraductor.apk" 
+                   download="SmarTraductor.apk"
+                   style="display: inline-flex; align-items: center; justify-content: center; gap: 8px; background: rgba(212, 175, 55, 0.15); border: 1px solid #D4AF37; color: #D4AF37; padding: 10px 20px; border-radius: 30px; text-decoration: none; font-size: 14px; font-weight: 500; transition: all 0.3s ease;" 
+                   onmouseover="this.style.background='#D4AF37'; this.style.color='#1a1a3e'" 
+                   onmouseout="this.style.background='rgba(212, 175, 55, 0.15)'; this.style.color='#D4AF37'">
+                    <i class="fab fa-android" style="font-size: 18px;"></i>
+                    <span data-en="Download SmarTraductor APK (Android)" data-es="Descargar SmarTraductor APK (Android)">Download SmarTraductor APK (Android)</span>
+                </a>
+            </div>
+            
+            <div class="app-nav-grid" id="app-nav-grid">
+                <a href="translation-history.html" class="app-nav-item active" id="nav-history">
+                    <div class="app-nav-icon">🕐</div>
+                    <span class="app-nav-label" data-en="History" data-es="Historial">History</span>
+                </a>
+                <a href="translation-quiz.html" class="app-nav-item" id="nav-quiz">
+                    <div class="app-nav-icon">🧠</div>
+                    <span class="app-nav-label" data-en="Test" data-es="Examen">Test</span>
+                </a>
+                <a href="dictionary.html" class="app-nav-item" id="nav-dictionary">
+                    <div class="app-nav-icon">📖</div>
+                    <span class="app-nav-label" data-en="Dict" data-es="Diccio">Dict</span>
+                </a>
+                <a href="#" onclick="window.handleLogin(); return false;" class="app-nav-item" id="nav-profile">
+                    <div class="app-nav-icon" id="profile-icon">👤</div>
+                    <span class="app-nav-label" id="profile-label">Log In</span>
+                </a>
+                <a href="translator.html" class="app-nav-item" id="nav-translator">
+                    <div class="app-nav-icon">🔤</div>
+                    <span class="app-nav-label" data-en="Trans" data-es="Traduc">Trans</span>
+                </a>
+            </div>
+            
+            <h1 style="font-family: 'Work Sans', sans-serif; font-size: 48px; font-weight: 700; color: #e8c412; text-align: center; margin-bottom: 30px; letter-spacing: 1px;" 
+                id="page-title" data-en="History" data-es="Historial">History</h1>
+            
+            <div class="history-toolbar">
+                <button class="btn-delete" onclick="handleDelete()"><i class="fas fa-trash"></i> <span id="del-btn-text" data-en="Delete" data-es="Borrar">Delete</span></button>
+            </div>
 
-    if (!confirm(`¿Borrar ${selected.length} elementos?`)) return;
+            <!-- The scrollable history container replacing the input/output cards -->
+            <div class="history-container" id="history-list">
+                <!-- History items injected here via JS -->
+            </div>
+            
+        </div>
+    </div>
+    </div>
 
-    let history = JSON.parse(localStorage.getItem('app_history') || '[]');
-    let cloudDeletePromises = [];
+    <div id="toast" class="toast"></div>
 
-    selected.forEach(el => {
-      const session = el.getAttribute('data-session');
-      const index = parseInt(el.getAttribute('data-index'));
+    <footer class="main-footer">
+        <div class="footer-content">
+            <div class="footer-social">
+                <a href="https://www.instagram.com/cursosdeinglesoxbridge/" target="_blank"><i class="fab fa-instagram"></i></a>
+                <a href="https://www.facebook.com/profile.php?id=61564608544805" target="_blank"><i class="fab fa-facebook"></i></a>
+                <a href="https://www.linkedin.com/in/christopher-harris-13b678153/" target="_blank"><i class="fab fa-linkedin"></i></a>
+            </div>
+            <p class="footer-text">
+                <span data-en="© 2026 by Oxbridge English" data-es="© 2026 por Oxbridge English">© 2026 by Oxbridge English</span> | 
+                <a href="privacy.html" data-en="Privacy Policy" data-es="Privacidad">Privacy Policy</a> | 
+                <a href="terms.html" data-en="Terms" data-es="Términos">Terms & Conditions</a>
+                <img src="logo_jpg_003.jpg" alt="Oxbridge English" style="height: 30px; margin-left: 10px; vertical-align: middle;">
+            </p>
+        </div>
+    </footer>
 
-      // 1. Remove from Local
-      history = history.filter(item => item.sessionId !== session);
-
-      // 2. Remove from Cloud (Ghost Busting)
-      if (window.userUid && window.db) {
-        const docId = `${window.userUid}_${session}`;
-        const docRef = window.dbFunctions.doc(window.db, "translations_history", docId);
-        cloudDeletePromises.push(window.dbFunctions.deleteDoc(docRef));
-      }
-    });
-
-    localStorage.setItem('app_history', JSON.stringify(history));
+    <!-- Global Website Scripts -->
+    <script src="script.js"></script>
     
-    if (cloudDeletePromises.length > 0) {
-        showToast("Borrando de la nube...");
-        await Promise.all(cloudDeletePromises);
-    }
+    <!-- Firebase SDK & Auth Listener -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
+        import { getFirestore, doc, deleteDoc, getDocs, collection, query, where } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
+        import { getAuth, onAuthStateChanged, signInWithPopup, GoogleAuthProvider, signOut } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
 
-    showToast("Eliminado con éxito");
-    loadHistory();
-  }
+        const firebaseConfig = {
+            apiKey: "AIzaSyDyaVRdsqozHWlXIZ-zVdlq2VzTNrsuJc4",
+            authDomain: "oxbridge-english-a3cc3.firebaseapp.com",
+            projectId: "oxbridge-english-a3cc3",
+            storageBucket: "oxbridge-english-a3cc3.firebasestorage.app",
+            messagingSenderId: "508505970812",
+            appId: "1:508505970812:web:51b46ce56f5d96c28091f9"
+        };
 
-  function playAudio(text, lang) {
-    window.speechSynthesis.cancel();
-    const utter = new SpeechSynthesisUtterance(text);
-    utter.lang = lang === 'en' ? 'en-US' : 'es-ES';
-    window.speechSynthesis.speak(utter);
-  }
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        const auth = getAuth(app);
+        window.cloudProvider = new GoogleAuthProvider();
 
-  // Handle back button specifically for web to avoid weird loops
-  window.goBack = () => {
-    window.location.href = 'translator.html';
-  };
-</script>
+        window.db = db;
+        window.cloudAuth = auth;
+        window.dbFunctions = { doc, deleteDoc, getDocs, collection, query, where };
 
+        onAuthStateChanged(auth, (user) => {
+            const profileLabel = document.getElementById('profile-label');
+            const profileIcon = document.getElementById('profile-icon');
+            
+            if (user) {
+                const googleProvider = user.providerData.find(p => p.providerId === 'google.com');
+                window.userUid = googleProvider ? googleProvider.uid : user.uid;
+                
+                if(profileLabel) profileLabel.textContent = user.displayName.split(' ')[0];
+                if(profileIcon) {
+                    profileIcon.style.background = '#4caf50';
+                    profileIcon.style.color = 'white';
+                    profileIcon.style.borderColor = '#2e7d32';
+                }
+            } else {
+                window.userUid = null;
+                if(profileLabel) profileLabel.textContent = "Log In";
+                if(profileIcon) {
+                    profileIcon.style.background = 'rgba(212, 175, 55, 0.15)';
+                    profileIcon.style.color = '#D4AF37';
+                    profileIcon.style.borderColor = '#D4AF37';
+                }
+            }
+            loadHistory();
+        });
+
+        window.handleLogin = async function() {
+            if (window.userUid) {
+                if(confirm(window.uiLang === 'es' ? '¿Cerrar sesión?' : 'Sign out?')) {
+                    await signOut(window.cloudAuth);
+                }
+            } else {
+                try {
+                    await signInWithPopup(window.cloudAuth, window.cloudProvider);
+                } catch(e) { console.log("Login failed", e); }
+            }
+        };
+    </script>
+
+    <!-- History Engine Logic -->
+    <script>
+        let uiLang = localStorage.getItem('preferredLanguage') || 'en';
+
+        // Listen for the global toggle in script.js and re-render history with correct labels
+        document.addEventListener('languageChanged', (e) => {
+            uiLang = e.detail;
+            loadHistory();
+        });
+
+        function showToast(msg) {
+            const t = document.getElementById('toast');
+            t.textContent = msg; 
+            t.classList.add('show');
+            setTimeout(() => t.classList.remove('show'), 2000);
+        }
+
+        function loadHistory() {
+            const list = document.getElementById('history-list');
+            const history = JSON.parse(localStorage.getItem('app_history') || '[]');
+            
+            if (history.length === 0) {
+              list.innerHTML = `<div style="text-align:center; padding-top:100px; color:#1a1a3e; opacity:0.6; font-size:18px;">${uiLang === 'es' ? 'El historial está vacío' : 'History is empty'}</div>`;
+              return;
+            }
+
+            list.innerHTML = history.map((entry, index) => {
+                const audioLang = entry.dir === 'es-en' ? 'en' : 'es';
+                const cleanWord = entry.translation.replace(/'/g, "\\'");
+                const listenText = uiLang === 'es' ? 'Escuchar' : 'Listen';
+                
+                return `
+                <div class="history-entry" onclick="this.classList.toggle('selected')" data-index="${index}" data-session="${entry.sessionId}">
+                    <div class="entry-header">
+                        <span>${entry.dir === 'es-en' ? 'ES → EN' : 'EN → ES'}</span>
+                        <span>${new Date(entry.timestamp).toLocaleDateString()}</span>
+                    </div>
+                    <div class="entry-original">${entry.original}</div>
+                    <div class="entry-translation">${entry.translation}</div>
+                    <button class="play-btn" onclick="event.stopPropagation(); playAudio('${cleanWord}', '${audioLang}')">
+                        <i class="fas fa-volume-up"></i> ${listenText}
+                    </button>
+                </div>
+                `;
+            }).join('');
+        }
+
+        async function handleDelete() {
+            const selected = document.querySelectorAll('.history-entry.selected');
+            if (selected.length === 0) {
+                showToast(uiLang === 'es' ? "Selecciona elementos primero" : "Select items first");
+                return;
+            }
+
+            if (!confirm(uiLang === 'es' ? `¿Borrar ${selected.length} elementos?` : `Delete ${selected.length} items?`)) return;
+
+            let history = JSON.parse(localStorage.getItem('app_history') || '[]');
+            let cloudDeletePromises = [];
+
+            selected.forEach(el => {
+                const session = el.getAttribute('data-session');
+                // Remove from Local
+                history = history.filter(item => item.sessionId !== session);
+
+                // Remove from Cloud (Ghost Busting)
+                if (window.userUid && window.db) {
+                    const docId = `${window.userUid}_${session}`;
+                    const docRef = window.dbFunctions.doc(window.db, "translations_history", docId);
+                    cloudDeletePromises.push(window.dbFunctions.deleteDoc(docRef));
+                }
+            });
+
+            localStorage.setItem('app_history', JSON.stringify(history));
+            
+            if (cloudDeletePromises.length > 0) {
+                showToast(uiLang === 'es' ? "Borrando de la nube..." : "Deleting from cloud...");
+                await Promise.all(cloudDeletePromises).catch(e => console.log(e));
+            }
+
+            showToast(uiLang === 'es' ? "Eliminado con éxito" : "Successfully deleted");
+            loadHistory();
+        }
+
+        // Bypasses mobile blocks by creating a new Audio object on the fly
+        function playAudio(word, langCode) {
+            const audioUrl = "https://translate.google.com/translate_tts?ie=UTF-8&client=tw-ob&tl=" + langCode + "&q=" + encodeURIComponent(word);
+            const audio = new Audio(audioUrl);
+            audio.play().catch(e => {
+                console.error("Audio prevented by browser policy", e);
+                showToast(uiLang === 'es' ? 'Sube el volumen o permite el audio' : 'Turn up volume or allow audio');
+            });
+        }
+    </script>
 </body>
 </html>
