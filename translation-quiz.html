@@ -246,7 +246,6 @@
                 <h1 style="font-family: 'Work Sans', sans-serif; font-size: 48px; font-weight: 700; color: #e8c412; text-align: center; margin-bottom: 30px; letter-spacing: 1px;" 
                     id="page-title" data-en="Translation Quiz" data-es="Quiz de Traducción">Translation Quiz</h1>
                 
-                <!-- The Quiz Container replacing the input/output cards -->
                 <div class="quiz-panel">
                     <div class="quiz-header">
                         <span id="quiz-score"></span>
@@ -344,12 +343,11 @@
     <!-- Quiz Engine Logic -->
     <script>
         window.uiLang = localStorage.getItem('preferredLanguage') || 'en';
-        window.quizState = { score: 0, currentQuestion: 0, maxQuestions: 10, usedWords: [], currentItem: null, isAnswering: false, hasFailedCurrent: false };
+        window.quizState = { score: 0, currentQuestion: 0, maxQuestions: 10, usedWords: [], currentItem: null, isAnswering: false, hasFailedCurrent: false, modeDeck: [] };
 
         // Listen for the global toggle in script.js and re-render quiz UI labels
         document.addEventListener('languageChanged', (e) => {
             window.uiLang = e.detail;
-            // The text updates automatically via data attributes, but we update the question counter manually
             const scoreLabel = document.getElementById('quiz-score');
             if (scoreLabel && window.quizState.currentItem) {
                 scoreLabel.textContent = (window.uiLang === 'es' ? 'Pregunta ' : 'Question ') + 
@@ -439,6 +437,11 @@
                 return;
             }
 
+            // Create and shuffle the deck of 10 modes if empty
+            if (window.quizState.modeDeck.length === 0) {
+                window.quizState.modeDeck = [0, 0, 1, 1, 2, 2, 3, 3, 4, 4].sort(() => Math.random() - 0.5);
+            }
+
             let history = JSON.parse(localStorage.getItem('app_history') || '[]');
             history.forEach(item => { if(item.mastery === undefined) item.mastery = 0; });
             const container = document.getElementById('quiz-content');
@@ -463,21 +466,37 @@
                 return;
             }
 
-            const correctItem = strugglePile[Math.floor(Math.random() * strugglePile.length)];
+            // Draw the target mode from the deck
+            let targetMode = window.quizState.modeDeck[window.quizState.currentQuestion];
+
+            // Browser Fallback: Check if SpeechRecognition is supported for Mode 2
+            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+            if (targetMode === 2 && !SpeechRecognition) targetMode = 0; 
+
+            // Pre-filter the struggle pile so we only pick words that mathematically fit the drawn mode
+            let validStrugglePile = strugglePile.filter(item => {
+                if (targetMode === 3 || targetMode === 4) {
+                    let clean = item.translation.replace(/[.,?!¿¡'"-]/g, " ").replace(/\s+/g, " ").trim();
+                    return clean.split(" ").length >= 3;
+                }
+                return true;
+            });
+
+            // Extreme Fallback: If your history doesn't have any sentences long enough for mode 3 or 4, fallback to 0
+            if (validStrugglePile.length === 0) {
+                targetMode = 0;
+                validStrugglePile = strugglePile;
+            }
+
+            const correctItem = validStrugglePile[Math.floor(Math.random() * validStrugglePile.length)];
             window.quizState.usedWords.push(correctItem.original);
             window.quizState.currentItem = correctItem;
 
-            let quizMode = Math.floor(Math.random() * 5);
+            let quizMode = targetMode; // Assign validated mode
             
-            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-            if (quizMode === 2 && !SpeechRecognition) quizMode = 0;
-
             const translationWords = correctItem.translation.trim().split(/\s+/);
-            if (quizMode === 3 && translationWords.length < 3) quizMode = 0; 
-            
             let cleanSentenceForScramble = correctItem.translation.replace(/[.,?!¿¡'"-]/g, " ").replace(/\s+/g, " ").trim();
             let scrambleWords = cleanSentenceForScramble.split(" ");
-            if (quizMode === 4 && scrambleWords.length < 3) quizMode = 0;
 
             document.getElementById('quiz-score').textContent = 
                 (window.uiLang === 'es' ? 'Pregunta ' : 'Question ') + 
@@ -797,13 +816,14 @@
                     <p style="color:var(--text-navy); font-size:20px; font-weight:600; margin-bottom:40px;">
                         ${window.uiLang === 'es' ? 'Puntuación:' : 'Score:'} <strong style="color:var(--gold); font-size:28px;">${window.quizState.score} / ${window.quizState.maxQuestions}</strong>
                     </p>
-                    <button onclick="window.nextQuizQuestion()" style="background:linear-gradient(180deg, var(--navy-light) 0%, var(--navy) 100%); color:white; font-weight:700; border:none; border-radius:30px; padding:16px 40px; font-size:20px; cursor:pointer; box-shadow:0 6px 15px rgba(0,0,0,0.4);">
+                    <button onclick="window.quizState.modeDeck = []; window.nextQuizQuestion();" style="background:linear-gradient(180deg, var(--navy-light) 0%, var(--navy) 100%); color:white; font-weight:700; border:none; border-radius:30px; padding:16px 40px; font-size:20px; cursor:pointer; box-shadow:0 6px 15px rgba(0,0,0,0.4);">
                         ${window.uiLang === 'es' ? 'Volver a Jugar' : 'Play Again'}
                     </button>
                 </div>
             `;
             window.quizState.currentQuestion = 0;
             window.quizState.score = 0;
+            window.quizState.modeDeck = []; // Reset deck on completion
         };
 
         document.addEventListener('DOMContentLoaded', () => {
