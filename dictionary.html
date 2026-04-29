@@ -1,42 +1,215 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <title>Diccionario de Inglés a Español Gratis | Oxbridge English</title>
+    <title>SmarTranslator Dictionary | Cursos de Inglés Oxbridge English</title>
     <meta name="description" content="Busca palabras en inglés y español. Obtén definiciones, ejemplos, pronunciación y sinónimos con el diccionario bilingüe gratuito de Oxbridge English.">
-    <meta name="keywords" content="diccionario ingles español, diccionario online, significado en ingles, pronunciacion, traductor, oxbridge english">
-    <meta name="author" content="Oxbridge English">
-    <link rel="canonical" href="https://oxbridge-english.com/dictionary.html">
     
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://oxbridge-english.com/dictionary.html">
-    <meta property="og:title" content="Diccionario Inglés-Español | Oxbridge English">
-    <meta property="og:description" content="Encuentra definiciones, pronunciación y ejemplos de uso en inglés y español.">
-    <meta property="og:image" content="https://oxbridge-english.com/ox-head-008.jpg">
-
     <link rel="icon" type="image/jpeg" href="ox-head-008.jpg">
     <link rel="apple-touch-icon" href="ox-head-008.jpg">
     <link rel="shortcut icon" type="image/jpeg" href="ox-head-008.jpg">
-
+    
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="styles.css">
+
+    <!-- APP-SPECIFIC STYLES (Matching the Translator & Quiz Pages) -->
+    <style>
+        :root {
+            --gold: #D4AF37;
+            --gold-light: #e8c412;
+            --navy: #0d0d24;
+            --navy-light: #1a1a3e;
+            --cream: #cdc89e;
+            --text-navy: #1a1a3e;
+        }
+
+        .app-nav-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 12px;
+            margin-bottom: 35px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .app-nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            transition: transform 0.2s ease-in-out;
+            cursor: pointer;
+            padding: 5px;
+        }
+        .app-nav-item:hover { transform: translateY(-4px); }
+        .app-nav-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: rgba(212, 175, 55, 0.15);
+            border: 1px solid #D4AF37;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            margin-bottom: 8px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.25);
+            transition: all 0.3s ease;
+            color: #D4AF37;
+        }
+        .app-nav-item:hover .app-nav-icon, .app-nav-item.active .app-nav-icon {
+            background: #D4AF37;
+            color: #1a1a3e !important;
+            box-shadow: 0 6px 15px rgba(212, 175, 55, 0.4);
+        }
+        .app-nav-label {
+            font-family: 'Roboto', sans-serif;
+            font-size: 12px;
+            font-weight: 500;
+            color: #ffffff;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 100%;
+        }
+
+        /* Dictionary Specific Layout */
+        .dict-panel {
+            background: var(--cream);
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: inset 0 2px 10px rgba(0,0,0,0.1);
+            border: 2px solid var(--gold);
+            color: var(--text-navy);
+            width: 100%;
+            min-height: 450px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .dict-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(26,26,62,0.1);
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+        }
+
+        .dict-header h2 {
+            color: var(--text-navy);
+            margin: 0;
+            font-family: 'Work Sans', sans-serif;
+            font-size: 24px;
+            font-weight: 700;
+        }
+
+        .search-bar {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 25px;
+            flex-shrink: 0;
+        }
+
+        .search-select {
+            padding: 12px 15px;
+            border-radius: 12px;
+            border: 2px solid rgba(26,26,62,0.1);
+            background: var(--navy-light);
+            color: white;
+            outline: none;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .search-input {
+            flex: 1;
+            padding: 12px 20px;
+            border-radius: 12px;
+            border: 2px solid rgba(26,26,62,0.1);
+            outline: none;
+            background: rgba(255,255,255,0.6);
+            color: var(--text-navy);
+            font-size: 18px;
+            transition: all 0.2s;
+            font-family: 'Roboto', sans-serif;
+        }
+        
+        .search-input:focus {
+            background: white;
+            border-color: var(--gold);
+            box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.2);
+        }
+
+        .search-btn {
+            padding: 0 20px;
+            border-radius: 12px;
+            border: none;
+            background: linear-gradient(180deg, var(--gold-light) 0%, var(--gold) 100%);
+            color: var(--text-navy);
+            font-size: 20px;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+            transition: transform 0.1s;
+        }
+        .search-btn:active { transform: scale(0.95); }
+
+        #dict-results {
+            flex: 1;
+            background: white;
+            border-radius: 16px;
+            padding: 20px;
+            overflow-y: auto;
+            max-height: 500px;
+            border: 1px solid rgba(26,26,62,0.1);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+
+        .loading-dots { display:flex; gap:6px; justify-content:center; align-items:center; height:30px; }
+        .loading-dots span { width:10px; height:10px; background:#D4AF37; border-radius:50%; animation: bounce 0.5s alternate infinite; }
+        .loading-dots span:nth-child(2) { animation-delay: 0.15s; }
+        .loading-dots span:nth-child(3) { animation-delay: 0.3s; }
+        @keyframes bounce { to { transform: translateY(-8px); } }
+
+        @media (max-width: 480px) {
+            .app-nav-grid { gap: 5px; }
+            .app-nav-icon { width: 38px; height: 38px; font-size: 18px; }
+            .app-nav-label { font-size: 9px; letter-spacing: 0; }
+            .dict-panel { padding: 15px; }
+            .search-input { font-size: 16px; padding: 12px 15px; }
+            .search-btn { padding: 0 15px; }
+        }
+    </style>
 </head>
 <body>
-    <video autoplay muted loop playsinline class="background-video"><source src="girl_working_001.mp4" type="video/mp4"></video>
+    <!-- Physical Audio tag to safely route dictionary MP3s on mobile -->
+    <audio id="dict-audio-player" style="display:none;"></audio>
+
+    <video autoplay muted loop playsinline class="background-video">
+        <source src="girl_working_001.mp4" type="video/mp4">
+    </video>
+
     <nav class="main-nav">
         <div class="nav-container">
             <button class="mobile-menu-toggle">☰</button>
-            <div class="logo"><img src="ox-head-008.jpg" alt="Logo"><h1>Oxbridge English</h1></div>
+            <div class="logo">
+                <img src="ox-head-008.jpg" alt="Oxbridge English Logo">
+                <h1 data-en="Oxbridge English" data-es="Oxbridge English">Oxbridge English</h1>
+            </div>
             <ul class="nav-links">
                 <li><a href="index.html" data-en="Home" data-es="Inicio">Home</a></li>
                 <li><a href="courses.html" data-en="Courses" data-es="Cursos">Courses</a></li>
                 <li><a href="enroll.html" data-en="Enroll" data-es="Inscribirse">Enroll</a></li>
                 <li><a href="books.html" data-en="Books" data-es="Libros">Books</a></li>
                 <li><a href="audio.html" data-en="Audio" data-es="Audio">Audio</a></li>
-                <li><a href="translator.html" data-en="Translator" data-es="Traductor">Translator</a></li>
+                <li><a href="translator.html" class="active" data-en="Translator" data-es="Traductor">Translator</a></li>
                 <li><a href="placement-test.html" data-en="Level Test" data-es="Test de Nivel" style="color: #D4AF37; font-weight: bold;">Level Test</a></li>
                 <li><a href="recommendations.html" data-en="Recommendations" data-es="Recomendaciones">Recommendations</a></li>
                 <li><a href="blog.html" data-en="Blog" data-es="Blog">Blog</a></li>
@@ -48,66 +221,180 @@
             </div>
         </div>
     </nav>
+
     <div class="translator-page-wrapper">
         <div class="translator-embed">
+            <div class="translator-container-inner">
             
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-                <a href="translator.html" style="color: #D4AF37; text-decoration: none; font-weight: bold; font-size: 16px;">
-                    <i class="fas fa-arrow-left"></i> <span data-en="Back" data-es="Volver">Back</span>
-                </a>
-                <h2 style="color: #D4AF37; margin: 0; font-family: 'Work Sans', sans-serif;" data-en="Dictionary" data-es="Diccionario">Dictionary</h2>
-                <div style="width: 60px;"></div>
-            </div>
-
-            <div style="display: flex; gap: 8px; margin-bottom: 20px;">
-                <select id="dict-lang" style="padding: 12px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.2); background: #1a1a3e; color: white; outline: none; font-size: 16px;">
-                    <option value="en">EN</option>
-                    <option value="es">ES</option>
-                </select>
-                <input type="text" id="dict-input" placeholder="Search a word..." style="flex: 1; padding: 12px; border-radius: 10px; border: none; outline: none; background: #cdc89e; color: #1a1a3e; font-size: 16px;">
-                <button onclick="searchDictionary()" style="padding: 0 16px; border-radius: 10px; border: none; background: #D4AF37; color: #1a1a3e; font-size: 18px; cursor: pointer;"><i class="fas fa-search"></i></button>
-            </div>
-
-            <div id="dict-results" style="min-height: 200px;">
-                <div style="text-align: center; color: rgba(255,255,255,0.42); font-size: 15px; margin-top: 60px;" data-en="Search for a word to see its definition, examples, and synonyms." data-es="Busca una palabra para ver su definición, ejemplos y sinónimos.">
-                    Search for a word to see its definition, examples, and synonyms.
+                <div style="text-align: center; margin-bottom: 25px;">
+                    <a href="SmarTraductor.apk" 
+                       download="SmarTraductor.apk"
+                       style="display: inline-flex; align-items: center; justify-content: center; gap: 8px; background: rgba(212, 175, 55, 0.15); border: 1px solid #D4AF37; color: #D4AF37; padding: 10px 20px; border-radius: 30px; text-decoration: none; font-size: 14px; font-weight: 500; transition: all 0.3s ease;" 
+                       onmouseover="this.style.background='#D4AF37'; this.style.color='#1a1a3e'" 
+                       onmouseout="this.style.background='rgba(212, 175, 55, 0.15)'; this.style.color='#D4AF37'">
+                        <i class="fab fa-android" style="font-size: 18px;"></i>
+                        <span data-en="Download SmarTraductor APK (Android)" data-es="Descargar SmarTraductor APK (Android)">Download SmarTraductor APK (Android)</span>
+                    </a>
                 </div>
-            </div>
+                
+                <div class="app-nav-grid" id="app-nav-grid">
+                    <a href="translation-history.html" class="app-nav-item" id="nav-history">
+                        <div class="app-nav-icon">🕐</div>
+                        <span class="app-nav-label" data-en="History" data-es="Historial">History</span>
+                    </a>
+                    <a href="translation-quiz.html" class="app-nav-item" id="nav-quiz">
+                        <div class="app-nav-icon">🧠</div>
+                        <span class="app-nav-label" data-en="Test" data-es="Examen">Test</span>
+                    </a>
+                    <a href="dictionary.html" class="app-nav-item active" id="nav-dictionary">
+                        <div class="app-nav-icon">📖</div>
+                        <span class="app-nav-label" data-en="Dict" data-es="Diccio">Dict</span>
+                    </a>
+                    <a href="#" onclick="window.handleLogin(); return false;" class="app-nav-item" id="nav-profile">
+                        <div class="app-nav-icon" id="profile-icon">👤</div>
+                        <span class="app-nav-label" id="profile-label">Log In</span>
+                    </a>
+                    <a href="translator.html" class="app-nav-item" id="nav-translator">
+                        <div class="app-nav-icon">🔤</div>
+                        <span class="app-nav-label" data-en="Trans" data-es="Traduc">Trans</span>
+                    </a>
+                </div>
+                
+                <h1 style="font-family: 'Work Sans', sans-serif; font-size: 48px; font-weight: 700; color: #e8c412; text-align: center; margin-bottom: 30px; letter-spacing: 1px;" 
+                    id="page-title" data-en="SmarTranslator" data-es="SmarTraductor">SmarTranslator</h1>
+                
+                <!-- Dictionary Container replacing the input/output cards -->
+                <div class="dict-panel">
+                    <div class="dict-header">
+                        <h2 data-en="Dictionary" data-es="Diccionario">Dictionary</h2>
+                    </div>
+                    
+                    <div class="search-bar">
+                        <select id="dict-lang" class="search-select">
+                            <option value="en">EN</option>
+                            <option value="es">ES</option>
+                        </select>
+                        <input type="text" id="dict-input" class="search-input" placeholder="Search a word...">
+                        <button onclick="searchDictionary()" class="search-btn"><i class="fas fa-search"></i></button>
+                    </div>
 
+                    <div id="dict-results">
+                        <div id="dict-placeholder" style="text-align: center; color: rgba(26,26,62,0.5); font-size: 16px; margin-top: 60px; font-weight: 500;" 
+                             data-en="Search for a word to see its definition, examples, and synonyms." 
+                             data-es="Busca una palabra para ver su definición, ejemplos y sinónimos.">
+                            Search for a word to see its definition, examples, and synonyms.
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
         </div>
     </div>
 
     <footer class="main-footer">
         <div class="footer-content">
             <div class="footer-social">
-                <a href="https://www.instagram.com/cursosdeinglesoxbridge/" target="_blank" aria-label="Instagram">
-                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
-                </a>
-                <a href="https://www.facebook.com/profile.php?id=61564608544805" target="_blank" aria-label="Facebook">
-                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
-                </a>
-                <a href="https://www.linkedin.com/in/christopher-harris-13b678153/" target="_blank" aria-label="LinkedIn">
-                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
-                </a>
+                <a href="https://www.instagram.com/cursosdeinglesoxbridge/" target="_blank"><i class="fab fa-instagram"></i></a>
+                <a href="https://www.facebook.com/profile.php?id=61564608544805" target="_blank"><i class="fab fa-facebook"></i></a>
+                <a href="https://www.linkedin.com/in/christopher-harris-13b678153/" target="_blank"><i class="fab fa-linkedin"></i></a>
             </div>
-            <p class="footer-text" style="display: flex; align-items: center; justify-content: center; gap: 15px; flex-wrap: wrap; padding-top: 20px;">
-                <span data-en="© 2026 by Oxbridge English" data-es="© 2026 por Oxbridge English">© 2026 by Oxbridge English</span>
-                <span style="color: #666;">|</span>
-                <a href="privacy.html" style="color: #F7F4E5; text-decoration: none; transition: color 0.3s;" onmouseover="this.style.color='#D4AF37'" onmouseout="this.style.color='#F7F4E5'">
-                    <span data-en="Privacy Policy" data-es="Política de Privacidad">Privacy Policy</span>
-                </a>
-                <span style="color: #666;">|</span>
-                <a href="terms.html" style="color: #F7F4E5; text-decoration: none; transition: color 0.3s;" onmouseover="this.style.color='#D4AF37'" onmouseout="this.style.color='#F7F4E5'">
-                    <span data-en="Terms & Conditions" data-es="Términos y Condiciones">Terms & Conditions</span>
-                </a>
-                <img src="logo_jpg_003.jpg" alt="Oxbridge English" style="height: 30px; width: auto; object-fit: contain;">
+            <p class="footer-text">
+                <span data-en="© 2026 by Oxbridge English" data-es="© 2026 por Oxbridge English">© 2026 by Oxbridge English</span> | 
+                <a href="privacy.html" data-en="Privacy Policy" data-es="Privacidad">Privacy Policy</a> | 
+                <a href="terms.html" data-en="Terms" data-es="Términos">Terms & Conditions</a>
+                <img src="logo_jpg_003.jpg" alt="Oxbridge English" style="height: 30px; margin-left: 10px; vertical-align: middle;">
             </p>
         </div>
     </footer>
-    
-    <script src="script.js?v=3"></script>
+
+    <!-- Global Website Scripts -->
+    <script src="script.js"></script>
+
+    <!-- Firebase SDK & Auth Listener -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
+        import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
+        import { getAuth, onAuthStateChanged, signInWithPopup, GoogleAuthProvider, signOut } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyDyaVRdsqozHWlXIZ-zVdlq2VzTNrsuJc4",
+            authDomain: "oxbridge-english-a3cc3.firebaseapp.com",
+            projectId: "oxbridge-english-a3cc3",
+            storageBucket: "oxbridge-english-a3cc3.firebasestorage.app",
+            messagingSenderId: "508505970812",
+            appId: "1:508505970812:web:51b46ce56f5d96c28091f9"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        window.cloudDb = getFirestore(app);
+        window.cloudAuth = getAuth(app);
+        window.cloudProvider = new GoogleAuthProvider();
+        window.cloudDoc = doc;
+        window.cloudSetDoc = setDoc;
+
+        onAuthStateChanged(window.cloudAuth, (user) => {
+            const profileLabel = document.getElementById('profile-label');
+            const profileIcon = document.getElementById('profile-icon');
+            
+            if (user) {
+                const googleProvider = user.providerData.find(p => p.providerId === 'google.com');
+                window.userUid = googleProvider ? googleProvider.uid : user.uid;
+                
+                if(profileLabel) profileLabel.textContent = user.displayName.split(' ')[0];
+                if(profileIcon) {
+                    profileIcon.style.background = '#4caf50';
+                    profileIcon.style.color = 'white';
+                    profileIcon.style.borderColor = '#2e7d32';
+                }
+            } else {
+                window.userUid = null;
+                if(profileLabel) profileLabel.textContent = "Log In";
+                if(profileIcon) {
+                    profileIcon.style.background = 'rgba(212, 175, 55, 0.15)';
+                    profileIcon.style.color = '#D4AF37';
+                    profileIcon.style.borderColor = '#D4AF37';
+                }
+            }
+        });
+
+        window.handleLogin = async function() {
+            if (window.userUid) {
+                if(confirm(window.uiLang === 'es' ? '¿Cerrar sesión?' : 'Sign out?')) {
+                    await signOut(window.cloudAuth);
+                }
+            } else {
+                try {
+                    await signInWithPopup(window.cloudAuth, window.cloudProvider);
+                } catch(e) { console.log("Login failed", e); }
+            }
+        };
+    </script>
+
+    <!-- Dictionary Engine Logic -->
     <script>
-        function escHtml(str) { return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+        window.uiLang = localStorage.getItem('preferredLanguage') || 'en';
+
+        // Listen for the global toggle in script.js and re-render dictionary UI labels
+        document.addEventListener('languageChanged', (e) => {
+            window.uiLang = e.detail;
+            
+            const searchInput = document.getElementById('dict-input');
+            if (searchInput) {
+                searchInput.placeholder = window.uiLang === 'es' ? "Buscar una palabra..." : "Search a word...";
+            }
+        });
+
+        // Set initial placeholder based on loaded language
+        document.addEventListener('DOMContentLoaded', () => {
+            const searchInput = document.getElementById('dict-input');
+            if (searchInput) {
+                searchInput.placeholder = window.uiLang === 'es' ? "Buscar una palabra..." : "Search a word...";
+            }
+        });
+
+        function escHtml(str) { 
+            return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); 
+        }
         
         document.getElementById('dict-input').addEventListener('keypress', function (e) {
             if (e.key === 'Enter') searchDictionary();
@@ -171,11 +458,11 @@
             const word = rawWord.toLowerCase();
             const lang = document.getElementById('dict-lang').value;
             const resContainer = document.getElementById('dict-results');
-            const isEs = document.querySelector('.lang-option.active').getAttribute('data-lang') === 'es';
+            const isEs = window.uiLang === 'es';
 
             if (!word) return;
 
-            resContainer.innerHTML = '<div style="text-align:center; padding: 40px; color: #D4AF37;"><div class="loading-dots" style="display:inline-flex; gap:5px;"><span style="width:7px; height:7px; background:#D4AF37; border-radius:50%; animation:bounce 1s infinite;"></span><span style="width:7px; height:7px; background:#D4AF37; border-radius:50%; animation:bounce 1s infinite 0.15s;"></span><span style="width:7px; height:7px; background:#D4AF37; border-radius:50%; animation:bounce 1s infinite 0.3s;"></span></div></div>';
+            resContainer.innerHTML = '<div style="text-align:center; padding: 40px; color: #D4AF37;"><div class="loading-dots"><span></span><span></span><span></span></div></div>';
 
             try {
                 let finalData = null;
@@ -195,7 +482,7 @@
 
                 renderDictResults(finalData, lang, isEs);
             } catch (err) {
-                resContainer.innerHTML = `<div style="text-align:center; margin-top: 20px; color: #ff6060;">
+                resContainer.innerHTML = `<div style="text-align:center; margin-top: 40px; color: #cc2020; font-weight: 600; font-size: 18px;">
                     ${isEs ? 'No encontramos la definición para esta palabra.' : 'We couldn\'t find definitions for this word.'}
                 </div>`;
             }
@@ -209,41 +496,49 @@
             }
 
             let html = `
-                <div style="background: #cdc89e; border-radius: 12px; padding: 20px;">
-                    <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(26,26,62,0.1); padding-bottom: 15px; margin-bottom: 15px;">
-                        <h2 style="color: #1a1a3e; font-size: 28px; margin: 0; text-transform: capitalize;">${escHtml(data.word)}</h2>
-                        <button style="width: 45px; height: 45px; border-radius: 50%; background: #D4AF37; border: none; cursor: pointer; font-size: 20px; box-shadow: 0 4px 8px rgba(0,0,0,0.2);" onclick="playDictAudio('${audioUrl}', '${escHtml(data.word).replace(/'/g, "\\'")}', '${langCode}')">🔊</button>
-                    </div>
+                <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid rgba(26,26,62,0.1); padding-bottom: 15px; margin-bottom: 15px;">
+                    <h2 style="color: #1a1a3e; font-size: 32px; margin: 0; text-transform: capitalize; font-family: 'Work Sans', sans-serif;">${escHtml(data.word)}</h2>
+                    <button style="width: 50px; height: 50px; border-radius: 50%; background: linear-gradient(180deg, #e8c412 0%, #D4AF37 100%); border: none; cursor: pointer; font-size: 22px; box-shadow: 0 4px 10px rgba(0,0,0,0.15); transition: transform 0.1s;" onclick="playDictAudio('${audioUrl}', '${escHtml(data.word).replace(/'/g, "\\'")}', '${langCode}')" onmousedown="this.style.transform='scale(0.95)'" onmouseup="this.style.transform='scale(1)'">🔊</button>
+                </div>
             `;
 
             data.meanings.forEach(meaning => {
-                html += `<h4 style="color: #9e7a0e; font-size: 16px; margin: 15px 0 10px; font-style: italic; text-transform: lowercase;">${escHtml(meaning.partOfSpeech)}</h4>`;
+                html += `<h4 style="color: #9e7a0e; font-size: 18px; margin: 20px 0 12px; font-style: italic; text-transform: lowercase;">${escHtml(meaning.partOfSpeech)}</h4>`;
 
-                meaning.definitions.slice(0, 3).forEach((def, i) => {
-                    html += `<p style="color: #1a1a3e; font-size: 15px; font-weight: 400; margin-bottom: 5px; line-height: 1.4;"><strong>${i+1}.</strong> ${escHtml(def.definition)}</p>`;
+                meaning.definitions.slice(0, 4).forEach((def, i) => {
+                    html += `<p style="color: #1a1a3e; font-size: 16px; font-weight: 500; margin-bottom: 6px; line-height: 1.5;"><strong>${i+1}.</strong> ${escHtml(def.definition)}</p>`;
                     if (def.example) {
-                        html += `<p style="color: rgba(26,26,62,0.7); font-size: 14px; font-style: italic; margin-bottom: 12px; border-left: 2px solid #C9A227; padding-left: 10px;">"${escHtml(def.example)}"</p>`;
+                        html += `<p style="color: rgba(26,26,62,0.7); font-size: 15px; font-style: italic; margin-bottom: 16px; border-left: 3px solid #C9A227; padding-left: 12px;">"${escHtml(def.example)}"</p>`;
                     }
                 });
 
                 if (meaning.synonyms && meaning.synonyms.length > 0) {
-                    html += `<p style="font-size: 14px; margin-top: 10px; color: #1a1a3e;"><strong>${isEs ? 'Sinónimos:' : 'Synonyms:'}</strong> <span style="color: #444;">${escHtml(meaning.synonyms.slice(0, 5).join(', '))}</span></p>`;
+                    html += `<p style="font-size: 15px; margin-top: 15px; padding-top: 10px; border-top: 1px dashed rgba(26,26,62,0.1); color: #1a1a3e;"><strong>${isEs ? 'Sinónimos:' : 'Synonyms:'}</strong> <span style="color: #4a4a6a;">${escHtml(meaning.synonyms.slice(0, 8).join(', '))}</span></p>`;
                 }
             });
 
-            html += `</div>`;
             document.getElementById('dict-results').innerHTML = html;
         }
 
+        // Bypasses mobile blocks: Uses a physical HTML audio tag if an MP3 URL exists, otherwise uses native voice engine.
         function playDictAudio(url, word, langCode) {
             if (url) {
-                new Audio(url).play();
+                const player = document.getElementById('dict-audio-player');
+                if (player) {
+                    player.pause();
+                    player.src = url;
+                    player.load();
+                    player.play().catch(e => console.error("Audio prevented by browser policy", e));
+                }
             } else {
                 try {
+                    window.speechSynthesis.cancel();
                     const utter = new SpeechSynthesisUtterance(word);
                     utter.lang = langCode === 'es' ? 'es-ES' : 'en-GB';
                     window.speechSynthesis.speak(utter);
-                } catch(e) {}
+                } catch(e) {
+                    console.error("Speech Synthesis failed", e);
+                }
             }
         }
     </script>
