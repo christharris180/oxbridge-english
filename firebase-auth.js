@@ -17,10 +17,19 @@ window.cloudDb = getFirestore(app);
 window.cloudAuth = getAuth(app);
 window.cloudProvider = new GoogleAuthProvider();
 
-// Attach Firestore functions globally so all individual pages can use them
+// =====================================================================
+// CRITICAL FIX: Map ALL required Firestore functions to the global 
+// window object so translator.js and the History page can use them.
+// =====================================================================
 window.cloudDoc = doc;
 window.cloudSetDoc = setDoc;
-window.db = window.cloudDb; // Alias used specifically in the history page
+window.cloudCollection = collection;
+window.cloudQuery = query;
+window.cloudWhere = where;
+window.cloudGetDocs = getDocs;
+
+// Specific aliases used by the History & Quiz pages
+window.db = window.cloudDb; 
 window.dbFunctions = { doc, deleteDoc, getDocs, collection, query, where };
 
 // Global Authentication Listener
@@ -29,7 +38,7 @@ onAuthStateChanged(window.cloudAuth, (user) => {
     const profileIcon = document.getElementById('profile-icon');
     
     if (user) {
-        // Grab the raw Google ID to match the Android App
+        // Grab the raw Google ID to match the Android App database records
         const googleProvider = user.providerData.find(p => p.providerId === 'google.com');
         window.userUid = googleProvider ? googleProvider.uid : user.uid;
         
@@ -40,7 +49,7 @@ onAuthStateChanged(window.cloudAuth, (user) => {
             profileIcon.style.borderColor = '#2e7d32';
         }
         
-        // Safely trigger Translator page cloud sync if it exists
+        // Safely trigger Translator page cloud sync if we are on that page
         if (typeof window.syncCloudHistory === 'function') {
             window.syncCloudHistory();
         }
@@ -54,7 +63,7 @@ onAuthStateChanged(window.cloudAuth, (user) => {
         }
     }
     
-    // Safely trigger History page loading sequence if it exists
+    // Safely trigger History page loading sequence if we are on that page
     if (typeof window.loadHistory === 'function') {
         window.loadHistory();
     }
