@@ -142,3 +142,44 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 });
+
+// ==========================================
+// PWA SMART INSTALLATION LOGIC
+// ==========================================
+window.deferredPrompt = null;
+
+// Catch the native install prompt (Android/Chrome/Edge) and hold it
+window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    window.deferredPrompt = e;
+});
+
+window.handlePwaInstall = function() {
+    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+    const uiLang = localStorage.getItem('preferredLanguage') || 'en';
+
+    if (window.deferredPrompt) {
+        // Trigger the official native install popup
+        window.deferredPrompt.prompt();
+        window.deferredPrompt.userChoice.then((choiceResult) => {
+            window.deferredPrompt = null;
+        });
+    } else if (isIOS) {
+        // Apple blocks native prompts. Show instructions instead.
+        alert(uiLang === 'es' ? 
+            'Para instalar en iPhone/iPad:\n\n1. Toca el botón de Compartir (el cuadrado con la flecha hacia arriba) en la parte inferior de Safari.\n2. Desliza hacia abajo y selecciona "Añadir a inicio".' : 
+            'To install on iPhone/iPad:\n\n1. Tap the Share button (square with an upward arrow) at the bottom of Safari.\n2. Scroll down and select "Add to Home Screen".'
+        );
+    } else {
+        // Fallback for browsers that don't support the button
+        alert(uiLang === 'es' ? 
+            'Para instalar esta app, usa la opción "Añadir a la pantalla de inicio" en el menú de tu navegador (los tres puntos en la esquina superior).' : 
+            'To install this app, use the "Add to Home screen" option in your browser menu (the three dots in the top corner).'
+        );
+    }
+};
+
+// Register a Service Worker to satisfy Chrome's PWA requirements
+if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('sw.js').catch(err => console.log('SW registration failed', err));
+}
