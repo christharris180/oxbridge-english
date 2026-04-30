@@ -7,6 +7,12 @@
     <title>SmarTranslator History | Cursos de Inglés Oxbridge English</title>
     <meta name="robots" content="noindex, follow">
     
+    <!-- PWA / Apple App Capabilities -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="SmarTranslator">
+    
     <link rel="icon" type="image/jpeg" href="ox-head-008.jpg">
     <link rel="apple-touch-icon" href="ox-head-008.jpg">
     <link rel="shortcut icon" type="image/jpeg" href="ox-head-008.jpg">
@@ -16,7 +22,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="styles.css">
 
-    <!-- APP-SPECIFIC STYLES (Matching the Translator Page) -->
+    <!-- APP-SPECIFIC STYLES -->
     <style>
         :root {
             --gold: #D4AF37;
@@ -81,7 +87,7 @@
             max-width: 100%;
         }
 
-        /* History Specific Layout matching the Quiz/Dict panels */
+        /* History Specific Layout */
         .history-panel {
             background: var(--cream);
             border-radius: 20px;
@@ -222,15 +228,25 @@
         <div class="translator-embed">
             <div class="translator-container-inner">
             
-            <div style="text-align: center; margin-bottom: 25px;">
+            <div style="text-align: center; margin-bottom: 25px; display: flex; flex-direction: column; align-items: center; gap: 12px;">
+                <!-- Existing Android APK Link -->
                 <a href="SmarTraductor.apk" 
                    download="SmarTraductor.apk"
-                   style="display: inline-flex; align-items: center; justify-content: center; gap: 8px; background: rgba(212, 175, 55, 0.15); border: 1px solid #D4AF37; color: #D4AF37; padding: 10px 20px; border-radius: 30px; text-decoration: none; font-size: 14px; font-weight: 500; transition: all 0.3s ease;" 
+                   style="display: inline-flex; align-items: center; justify-content: center; gap: 8px; background: rgba(212, 175, 55, 0.15); border: 1px solid #D4AF37; color: #D4AF37; padding: 12px 20px; border-radius: 30px; text-decoration: none; font-size: 15px; font-weight: 600; transition: all 0.3s ease; width: 100%; max-width: 320px;" 
                    onmouseover="this.style.background='#D4AF37'; this.style.color='#1a1a3e'" 
                    onmouseout="this.style.background='rgba(212, 175, 55, 0.15)'; this.style.color='#D4AF37'">
-                    <i class="fab fa-android" style="font-size: 18px;"></i>
-                    <span data-en="Download SmarTraductor APK (Android)" data-es="Descargar SmarTraductor APK (Android)">Download SmarTraductor APK (Android)</span>
+                    <i class="fab fa-android" style="font-size: 20px;"></i>
+                    <span data-en="Download APK (Android)" data-es="Descargar APK (Android)">Download APK (Android)</span>
                 </a>
+
+                <!-- NEW iOS / PWA Smart Install Button -->
+                <button onclick="window.handlePwaInstall()" 
+                   style="display: inline-flex; align-items: center; justify-content: center; gap: 8px; background: rgba(26, 26, 62, 0.05); border: 1px solid #1a1a3e; color: #1a1a3e; padding: 12px 20px; border-radius: 30px; text-decoration: none; font-size: 15px; font-weight: 600; cursor: pointer; transition: all 0.3s ease; width: 100%; max-width: 320px;" 
+                   onmouseover="this.style.background='#1a1a3e'; this.style.color='#ffffff'" 
+                   onmouseout="this.style.background='rgba(26, 26, 62, 0.05)'; this.style.color='#1a1a3e'">
+                    <i class="fab fa-apple" style="font-size: 20px;"></i>
+                    <span data-en="Install App (iOS / PC)" data-es="Instalar App (iOS / PC)">Install App (iOS / PC)</span>
+                </button>
             </div>
             
             <div class="app-nav-grid" id="app-nav-grid">
@@ -259,7 +275,7 @@
             <h1 style="font-family: 'Work Sans', sans-serif; font-size: 48px; font-weight: 700; color: #e8c412; text-align: center; margin-bottom: 30px; letter-spacing: 1px;" 
                 id="page-title" data-en="History" data-es="Historial">History</h1>
             
-            <!-- History Container replacing the input/output cards -->
+            <!-- History Container -->
             <div class="history-panel">
                 <div class="history-header">
                     <button class="btn-delete" onclick="handleDelete()"><i class="fas fa-trash"></i> <span id="del-btn-text" data-en="Delete" data-es="Borrar">Delete</span></button>
@@ -340,7 +356,7 @@
                 btnAccept.innerHTML = acceptText;
                 btnCancel.innerHTML = cancelText;
                 
-                // Color overrides for the accept button (e.g. making it gold for the cloud warning)
+                // Color overrides for the accept button
                 btnAccept.style.background = acceptColor;
                 if(acceptColor !== '#cc2020') {
                     btnAccept.style.boxShadow = `0 4px 10px ${acceptColor}66`;
@@ -423,7 +439,6 @@
                 const accept2 = isEs ? "Sí, borrar todo" : "Yes, delete all";
                 const cancel2 = isEs ? "No, solo local" : "No, keep in cloud";
 
-                // Using a gold color button for the cloud warning to differentiate it
                 confirmedCloud = await showCustomConfirm(title2, msg2, accept2, cancel2, '#D4AF37');
             }
 
@@ -453,7 +468,7 @@
             loadHistory();
         }
 
-        // Native Browser Voice Engine (Works perfectly on mobile)
+        // Native Browser Voice Engine
         window.playAudio = function(word, langCode) {
             try {
                 window.speechSynthesis.cancel();

@@ -1,7 +1,18 @@
-const CACHE_NAME = 'oxbridge-translator-v24';
+// Bumped to v25 to force browsers to update to this new version
+const CACHE_NAME = 'oxbridge-translator-v25'; 
+
+// Include ALL core files for the multi-page app
 const ASSETS = [
-  '/translator-app.html',
-  '/manifest.json'
+  '/',
+  '/translator.html',
+  '/dictionary.html',
+  '/translation-history.html',
+  '/translation-quiz.html',
+  '/styles.css',
+  '/script.js',
+  '/firebase-auth.js',
+  '/manifest.json',
+  '/ox-head-008.jpg'
 ];
 
 self.addEventListener('install', event => {
@@ -21,6 +32,14 @@ self.addEventListener('activate', event => {
 });
 
 self.addEventListener('fetch', event => {
+  // SAFETY CHECK: Only cache your own website's files. 
+  // Let Firebase and Google Translate API calls pass through untouched.
+  if (event.request.method !== 'GET' || !event.request.url.startsWith(self.location.origin)) {
+    return;
+  }
+
+  // Network-First strategy: Try to get fresh files from the internet, 
+  // if offline, fall back to the cached files.
   event.respondWith(
     fetch(event.request).catch(() =>
       caches.match(event.request)

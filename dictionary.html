@@ -7,6 +7,12 @@
     <title>SmarTranslator Dictionary | Cursos de Inglés Oxbridge English</title>
     <meta name="description" content="Busca palabras en inglés y español. Obtén definiciones, ejemplos, pronunciación y sinónimos con el diccionario bilingüe gratuito de Oxbridge English.">
     
+    <!-- PWA / Apple App Capabilities -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="SmarTranslator">
+    
     <link rel="icon" type="image/jpeg" href="ox-head-008.jpg">
     <link rel="apple-touch-icon" href="ox-head-008.jpg">
     <link rel="shortcut icon" type="image/jpeg" href="ox-head-008.jpg">
@@ -209,15 +215,25 @@
         <div class="translator-embed">
             <div class="translator-container-inner">
             
-                <div style="text-align: center; margin-bottom: 25px;">
+                <div style="text-align: center; margin-bottom: 25px; display: flex; flex-direction: column; align-items: center; gap: 12px;">
+                    <!-- Existing Android APK Link -->
                     <a href="SmarTraductor.apk" 
                        download="SmarTraductor.apk"
-                       style="display: inline-flex; align-items: center; justify-content: center; gap: 8px; background: rgba(212, 175, 55, 0.15); border: 1px solid #D4AF37; color: #D4AF37; padding: 10px 20px; border-radius: 30px; text-decoration: none; font-size: 14px; font-weight: 500; transition: all 0.3s ease;" 
+                       style="display: inline-flex; align-items: center; justify-content: center; gap: 8px; background: rgba(212, 175, 55, 0.15); border: 1px solid #D4AF37; color: #D4AF37; padding: 12px 20px; border-radius: 30px; text-decoration: none; font-size: 15px; font-weight: 600; transition: all 0.3s ease; width: 100%; max-width: 320px;" 
                        onmouseover="this.style.background='#D4AF37'; this.style.color='#1a1a3e'" 
                        onmouseout="this.style.background='rgba(212, 175, 55, 0.15)'; this.style.color='#D4AF37'">
-                        <i class="fab fa-android" style="font-size: 18px;"></i>
-                        <span data-en="Download SmarTraductor APK (Android)" data-es="Descargar SmarTraductor APK (Android)">Download SmarTraductor APK (Android)</span>
+                        <i class="fab fa-android" style="font-size: 20px;"></i>
+                        <span data-en="Download APK (Android)" data-es="Descargar APK (Android)">Download APK (Android)</span>
                     </a>
+
+                    <!-- NEW iOS / PWA Smart Install Button -->
+                    <button onclick="window.handlePwaInstall()" 
+                       style="display: inline-flex; align-items: center; justify-content: center; gap: 8px; background: rgba(26, 26, 62, 0.05); border: 1px solid #1a1a3e; color: #1a1a3e; padding: 12px 20px; border-radius: 30px; text-decoration: none; font-size: 15px; font-weight: 600; cursor: pointer; transition: all 0.3s ease; width: 100%; max-width: 320px;" 
+                       onmouseover="this.style.background='#1a1a3e'; this.style.color='#ffffff'" 
+                       onmouseout="this.style.background='rgba(26, 26, 62, 0.05)'; this.style.color='#1a1a3e'">
+                        <i class="fab fa-apple" style="font-size: 20px;"></i>
+                        <span data-en="Install App (iOS / PC)" data-es="Instalar App (iOS / PC)">Install App (iOS / PC)</span>
+                    </button>
                 </div>
                 
                 <div class="app-nav-grid" id="app-nav-grid">

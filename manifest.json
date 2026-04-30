@@ -1,8 +1,8 @@
 {
-  "name": "Oxbridge English Translator",
-  "short_name": "OE Translator",
-  "description": "Spanish ↔ English translator by Oxbridge English",
-  "start_url": "/translator-app.html",
+  "name": "SmarTranslator by Oxbridge English",
+  "short_name": "SmarTranslator",
+  "description": "Spanish ↔ English translator and learning tools by Oxbridge English",
+  "start_url": "/translator.html",
   "display": "standalone",
   "background_color": "#1a1a3e",
   "theme_color": "#D4AF37",
