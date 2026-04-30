@@ -299,88 +299,12 @@
         </div>
     </footer>
 
+    <!-- Global Website Scripts -->
     <script src="script.js"></script>
     <script src="translator.js"></script>
     
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
-        import { getFirestore, doc, setDoc, collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
-        import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
-
-        // Your secure restricted key
-        const firebaseConfig = {
-            apiKey: "AIzaSyDyaVRdsqozHWlXIZ-zVdlq2VzTNrsuJc4",
-            authDomain: "oxbridge-english-a3cc3.firebaseapp.com",
-            projectId: "oxbridge-english-a3cc3",
-            storageBucket: "oxbridge-english-a3cc3.firebasestorage.app",
-            messagingSenderId: "508505970812",
-            appId: "1:508505970812:web:51b46ce56f5d96c28091f9"
-        };
-
-        const app = initializeApp(firebaseConfig);
-        window.cloudDb = getFirestore(app);
-        window.cloudAuth = getAuth(app);
-        window.cloudProvider = new GoogleAuthProvider();
-        window.cloudDoc = doc;
-        window.cloudSetDoc = setDoc;
-        window.cloudCollection = collection;
-        window.cloudQuery = query;
-        window.cloudWhere = where;
-        window.cloudGetDocs = getDocs;
-
-        // Listen for Login State
-        onAuthStateChanged(window.cloudAuth, (user) => {
-            const profileLabel = document.getElementById('profile-label');
-            const profileIcon = document.getElementById('profile-icon');
-            if (user) {
-                // Grab the raw Google ID to match the Android App, not the Firebase ID
-                const googleProvider = user.providerData.find(p => p.providerId === 'google.com');
-                window.userUid = googleProvider ? googleProvider.uid : user.uid;
-                
-                if(profileLabel) profileLabel.textContent = user.displayName.split(' ')[0];
-                if(profileIcon) {
-                    profileIcon.style.background = '#4caf50';
-                    profileIcon.style.color = 'white';
-                    profileIcon.style.borderColor = '#2e7d32';
-                }
-                // TRIGGER CLOUD DOWNLOAD
-                if (window.syncCloudHistory) window.syncCloudHistory();
-            } else {
-                window.userUid = null;
-                if(profileLabel) profileLabel.textContent = "Log In";
-                if(profileIcon) {
-                    profileIcon.style.background = 'rgba(212, 175, 55, 0.15)';
-                    profileIcon.style.color = '#D4AF37';
-                    profileIcon.style.borderColor = '#D4AF37';
-                }
-            }
-        });
-
-        // Trigger Google Login
-        window.handleLogin = async function() {
-            if (window.userUid) {
-                if(confirm("¿Cerrar sesión? / Sign out?")) {
-                    await signOut(window.cloudAuth);
-                }
-            } else {
-                try {
-                    await signInWithPopup(window.cloudAuth, window.cloudProvider);
-                } catch(e) {
-                    console.log("Login failed", e);
-                }
-            }
-        };
-
-        // Promo Banner Animation
-        const slides = document.querySelectorAll('.promo-slide');
-        if(slides.length > 0) {
-            let currentSlide = 0;
-            setInterval(() => {
-                slides[currentSlide].classList.remove('active');
-                currentSlide = (currentSlide + 1) % slides.length;
-                slides[currentSlide].classList.add('active');
-            }, 3500);
-        }
-    </script>
+    <!-- Centralized Firebase SDK & Auth Listener -->
+    <script type="module" src="firebase-auth.js"></script>
+    
 </body>
 </html>

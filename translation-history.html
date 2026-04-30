@@ -307,68 +307,8 @@
     <!-- Global Website Scripts -->
     <script src="script.js"></script>
     
-    <!-- Firebase SDK & Auth Listener -->
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
-        import { getFirestore, doc, deleteDoc, getDocs, collection, query, where } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
-        import { getAuth, onAuthStateChanged, signInWithPopup, GoogleAuthProvider, signOut } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
-
-        const firebaseConfig = {
-            apiKey: "AIzaSyDyaVRdsqozHWlXIZ-zVdlq2VzTNrsuJc4",
-            authDomain: "oxbridge-english-a3cc3.firebaseapp.com",
-            projectId: "oxbridge-english-a3cc3",
-            storageBucket: "oxbridge-english-a3cc3.firebasestorage.app",
-            messagingSenderId: "508505970812",
-            appId: "1:508505970812:web:51b46ce56f5d96c28091f9"
-        };
-
-        const app = initializeApp(firebaseConfig);
-        const db = getFirestore(app);
-        const auth = getAuth(app);
-        window.cloudProvider = new GoogleAuthProvider();
-
-        window.db = db;
-        window.cloudAuth = auth;
-        window.dbFunctions = { doc, deleteDoc, getDocs, collection, query, where };
-
-        onAuthStateChanged(auth, (user) => {
-            const profileLabel = document.getElementById('profile-label');
-            const profileIcon = document.getElementById('profile-icon');
-            
-            if (user) {
-                const googleProvider = user.providerData.find(p => p.providerId === 'google.com');
-                window.userUid = googleProvider ? googleProvider.uid : user.uid;
-                
-                if(profileLabel) profileLabel.textContent = user.displayName.split(' ')[0];
-                if(profileIcon) {
-                    profileIcon.style.background = '#4caf50';
-                    profileIcon.style.color = 'white';
-                    profileIcon.style.borderColor = '#2e7d32';
-                }
-            } else {
-                window.userUid = null;
-                if(profileLabel) profileLabel.textContent = "Log In";
-                if(profileIcon) {
-                    profileIcon.style.background = 'rgba(212, 175, 55, 0.15)';
-                    profileIcon.style.color = '#D4AF37';
-                    profileIcon.style.borderColor = '#D4AF37';
-                }
-            }
-            loadHistory();
-        });
-
-        window.handleLogin = async function() {
-            if (window.userUid) {
-                if(confirm(window.uiLang === 'es' ? '¿Cerrar sesión?' : 'Sign out?')) {
-                    await signOut(window.cloudAuth);
-                }
-            } else {
-                try {
-                    await signInWithPopup(window.cloudAuth, window.cloudProvider);
-                } catch(e) { console.log("Login failed", e); }
-            }
-        };
-    </script>
+    <!-- Centralized Firebase SDK & Auth Listener -->
+    <script type="module" src="firebase-auth.js"></script>
 
     <!-- History Engine Logic -->
     <script>
@@ -424,7 +364,7 @@
             });
         }
 
-        function loadHistory() {
+        window.loadHistory = function() {
             const list = document.getElementById('history-list');
             const history = JSON.parse(localStorage.getItem('app_history') || '[]');
             
@@ -514,7 +454,7 @@
         }
 
         // Native Browser Voice Engine (Works perfectly on mobile)
-        function playAudio(word, langCode) {
+        window.playAudio = function(word, langCode) {
             try {
                 window.speechSynthesis.cancel();
                 const utter = new SpeechSynthesisUtterance(word);
@@ -525,6 +465,13 @@
                 showToast(uiLang === 'es' ? 'Error de audio' : 'Audio error');
             }
         }
+
+        // Initialize history list if it's already available
+        document.addEventListener('DOMContentLoaded', () => {
+            if (typeof window.loadHistory === 'function') {
+                window.loadHistory();
+            }
+        });
     </script>
 </body>
 </html>
