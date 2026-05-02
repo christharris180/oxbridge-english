@@ -214,25 +214,27 @@
         <div class="translator-embed">
             <div class="translator-container-inner">
             
-                <div style="text-align: center; margin-bottom: 25px; display: flex; flex-direction: column; align-items: center; gap: 12px;">
-                    <!-- Existing Android APK Link -->
+                <div style="text-align: center; margin-bottom: 30px; display: flex; flex-direction: row; justify-content: center; flex-wrap: wrap; gap: 15px; width: 100%; max-width: 600px; margin-left: auto; margin-right: auto;">
+                    
+                    <!-- Premium Golden Android APK Button (Side-by-Side) -->
                     <a href="SmarTraductor.apk" 
                        download="SmarTraductor.apk"
-                       style="display: inline-flex; align-items: center; justify-content: center; gap: 8px; background: rgba(212, 175, 55, 0.15); border: 1px solid #D4AF37; color: #D4AF37; padding: 12px 20px; border-radius: 30px; text-decoration: none; font-size: 15px; font-weight: 600; transition: all 0.3s ease; width: 100%; max-width: 320px;" 
-                       onmouseover="this.style.background='#D4AF37'; this.style.color='#1a1a3e'" 
-                       onmouseout="this.style.background='rgba(212, 175, 55, 0.15)'; this.style.color='#D4AF37'">
+                       style="display: inline-flex; align-items: center; justify-content: center; gap: 8px; background: linear-gradient(180deg, #e8c412 0%, #D4AF37 100%); border: 1px solid #C9A227; color: #1a1a3e; padding: 12px 20px; border-radius: 30px; text-decoration: none; font-size: 14px; font-weight: 700; transition: all 0.2s ease; flex: 1; min-width: 200px; max-width: 280px; box-shadow: 0 4px 10px rgba(0,0,0,0.2);" 
+                       onmouseover="this.style.background='linear-gradient(180deg, #D4AF37 0%, #C9A227 100%)'; this.style.transform='translateY(-2px)'" 
+                       onmouseout="this.style.background='linear-gradient(180deg, #e8c412 0%, #D4AF37 100%)'; this.style.transform='translateY(0)'">
                         <i class="fab fa-android" style="font-size: 20px;"></i>
-                        <span data-en="Download APK (Android)" data-es="Descargar APK (Android)">Download APK (Android)</span>
+                        <span data-en="Download APK" data-es="Descargar APK">Download APK</span>
                     </a>
-
-                    <!-- NEW iOS / PWA Smart Install Button -->
+                
+                    <!-- Premium Silver iOS / PC Install Button (Side-by-Side) -->
                     <button onclick="window.handlePwaInstall()" 
-                       style="display: inline-flex; align-items: center; justify-content: center; gap: 8px; background: rgba(26, 26, 62, 0.05); border: 1px solid #1a1a3e; color: #1a1a3e; padding: 12px 20px; border-radius: 30px; text-decoration: none; font-size: 15px; font-weight: 600; cursor: pointer; transition: all 0.3s ease; width: 100%; max-width: 320px;" 
-                       onmouseover="this.style.background='#1a1a3e'; this.style.color='#ffffff'" 
-                       onmouseout="this.style.background='rgba(26, 26, 62, 0.05)'; this.style.color='#1a1a3e'">
+                       style="display: inline-flex; align-items: center; justify-content: center; gap: 8px; background: linear-gradient(180deg, #ffffff 0%, #e0e0e0 100%); border: 1px solid #b0b0b0; color: #1a1a3e; padding: 12px 20px; border-radius: 30px; text-decoration: none; font-size: 14px; font-weight: 700; cursor: pointer; transition: all 0.2s ease; flex: 1; min-width: 200px; max-width: 280px; box-shadow: 0 4px 10px rgba(0,0,0,0.2);" 
+                       onmouseover="this.style.background='linear-gradient(180deg, #e0e0e0 0%, #cccccc 100%)'; this.style.transform='translateY(-2px)'" 
+                       onmouseout="this.style.background='linear-gradient(180deg, #ffffff 0%, #e0e0e0 100%)'; this.style.transform='translateY(0)'">
                         <i class="fab fa-apple" style="font-size: 20px;"></i>
-                        <span data-en="Install App (iOS / PC)" data-es="Instalar App (iOS / PC)">Install App (iOS / PC)</span>
+                        <span data-en="Install App" data-es="Instalar App">Install App</span>
                     </button>
+                    
                 </div>
                 
                 <div class="app-nav-grid" id="app-nav-grid">
