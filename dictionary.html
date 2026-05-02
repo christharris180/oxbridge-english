@@ -214,28 +214,32 @@
         <div class="translator-embed">
             <div class="translator-container-inner">
             
-                <div style="text-align: center; margin-bottom: 30px; display: flex; flex-direction: row; justify-content: center; flex-wrap: wrap; gap: 15px; width: 100%; max-width: 600px; margin-left: auto; margin-right: auto;">
-                    
-                    <!-- Premium Golden Android APK Button (Side-by-Side) -->
-                    <a href="SmarTraductor.apk" 
-                       download="SmarTraductor.apk"
-                       style="display: inline-flex; align-items: center; justify-content: center; gap: 8px; background: linear-gradient(180deg, #e8c412 0%, #D4AF37 100%); border: 1px solid #C9A227; color: #1a1a3e; padding: 12px 20px; border-radius: 30px; text-decoration: none; font-size: 14px; font-weight: 700; transition: all 0.2s ease; flex: 1; min-width: 200px; max-width: 280px; box-shadow: 0 4px 10px rgba(0,0,0,0.2);" 
-                       onmouseover="this.style.background='linear-gradient(180deg, #D4AF37 0%, #C9A227 100%)'; this.style.transform='translateY(-2px)'" 
-                       onmouseout="this.style.background='linear-gradient(180deg, #e8c412 0%, #D4AF37 100%)'; this.style.transform='translateY(0)'">
-                        <i class="fab fa-android" style="font-size: 20px;"></i>
-                        <span data-en="Download APK" data-es="Descargar APK">Download APK</span>
-                    </a>
-                
-                    <!-- Premium Silver iOS / PC Install Button (Side-by-Side) -->
-                    <button onclick="window.handlePwaInstall()" 
-                       style="display: inline-flex; align-items: center; justify-content: center; gap: 8px; background: linear-gradient(180deg, #ffffff 0%, #e0e0e0 100%); border: 1px solid #b0b0b0; color: #1a1a3e; padding: 12px 20px; border-radius: 30px; text-decoration: none; font-size: 14px; font-weight: 700; cursor: pointer; transition: all 0.2s ease; flex: 1; min-width: 200px; max-width: 280px; box-shadow: 0 4px 10px rgba(0,0,0,0.2);" 
-                       onmouseover="this.style.background='linear-gradient(180deg, #e0e0e0 0%, #cccccc 100%)'; this.style.transform='translateY(-2px)'" 
-                       onmouseout="this.style.background='linear-gradient(180deg, #ffffff 0%, #e0e0e0 100%)'; this.style.transform='translateY(0)'">
-                        <i class="fab fa-apple" style="font-size: 20px;"></i>
-                        <span data-en="Install App" data-es="Instalar App">Install App</span>
-                    </button>
-                    
-                </div>
+                <div style="text-align: center; margin-bottom: 30px; display: flex; flex-direction: row; justify-content: center; flex-wrap: nowrap; gap: 12px; width: 100%; max-width: 600px; margin-left: auto; margin-right: auto; padding: 0 10px; box-sizing: border-box;">
+    
+    <!-- 3D Metallic Golden Android Button -->
+    <a href="SmarTraductor.apk" 
+       download="SmarTraductor.apk"
+       style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; background: linear-gradient(to bottom, #fcecae 0%, #e8c412 25%, #c99b06 75%, #a37a00 100%); border: 1px solid #8a6600; color: #1a1a3e; padding: 12px 6px; border-radius: 16px; text-decoration: none; font-size: 13px; font-weight: 800; transition: all 0.2s ease; flex: 1; min-width: 0; box-shadow: inset 0 2px 2px rgba(255,255,255,0.8), inset 0 -4px 6px rgba(0,0,0,0.3), 0 6px 10px rgba(0,0,0,0.25), 0 2px 4px rgba(0,0,0,0.2); text-shadow: 0 1px 1px rgba(255,255,255,0.4);" 
+       onmouseover="this.style.filter='brightness(1.1)'; this.style.transform='translateY(-2px)'" 
+       onmouseout="this.style.filter='brightness(1)'; this.style.transform='translateY(0)'"
+       onmousedown="this.style.boxShadow='inset 0 2px 8px rgba(0,0,0,0.5), 0 1px 2px rgba(0,0,0,0.2)'; this.style.transform='translateY(2px)'"
+       onmouseup="this.style.boxShadow='inset 0 2px 2px rgba(255,255,255,0.8), inset 0 -4px 6px rgba(0,0,0,0.3), 0 6px 10px rgba(0,0,0,0.25), 0 2px 4px rgba(0,0,0,0.2)'; this.style.transform='translateY(-2px)'">
+        <i class="fab fa-android" style="font-size: 24px; filter: drop-shadow(0 1px 1px rgba(255,255,255,0.5));"></i>
+        <span data-en="Install Android App" data-es="Instalar App Android" style="text-align: center; line-height: 1.1;">Install Android App</span>
+    </a>
+
+    <!-- 3D Metallic Silver Apple Button -->
+    <button onclick="window.handlePwaInstall()" 
+       style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; background: linear-gradient(to bottom, #ffffff 0%, #e6e6e6 25%, #b3b3b3 75%, #8c8c8c 100%); border: 1px solid #666666; color: #1a1a3e; padding: 12px 6px; border-radius: 16px; text-decoration: none; font-size: 13px; font-weight: 800; cursor: pointer; transition: all 0.2s ease; flex: 1; min-width: 0; box-shadow: inset 0 2px 2px rgba(255,255,255,0.9), inset 0 -4px 6px rgba(0,0,0,0.3), 0 6px 10px rgba(0,0,0,0.25), 0 2px 4px rgba(0,0,0,0.2); text-shadow: 0 1px 1px rgba(255,255,255,0.6);" 
+       onmouseover="this.style.filter='brightness(1.1)'; this.style.transform='translateY(-2px)'" 
+       onmouseout="this.style.filter='brightness(1)'; this.style.transform='translateY(0)'"
+       onmousedown="this.style.boxShadow='inset 0 2px 8px rgba(0,0,0,0.5), 0 1px 2px rgba(0,0,0,0.2)'; this.style.transform='translateY(2px)'"
+       onmouseup="this.style.boxShadow='inset 0 2px 2px rgba(255,255,255,0.9), inset 0 -4px 6px rgba(0,0,0,0.3), 0 6px 10px rgba(0,0,0,0.25), 0 2px 4px rgba(0,0,0,0.2)'; this.style.transform='translateY(-2px)'">
+        <i class="fab fa-apple" style="font-size: 24px; filter: drop-shadow(0 1px 1px rgba(255,255,255,0.6));"></i>
+        <span data-en="Install Apple App" data-es="Instalar App Apple" style="text-align: center; line-height: 1.1;">Install Apple App</span>
+    </button>
+    
+</div>
                 
                 <div class="app-nav-grid" id="app-nav-grid">
                     <a href="translation-history.html" class="app-nav-item" id="nav-history">
