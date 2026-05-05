@@ -22,6 +22,33 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
 
+    <!-- Desktop Image Fix Override - Updated to show entire image -->
+    <style>
+        .course-card {
+            overflow: hidden !important;
+            display: flex;
+            flex-direction: column;
+        }
+        .course-image {
+            width: 100% !important;
+            height: auto !important;
+            max-height: 300px;
+            object-fit: contain !important;
+            display: block;
+            background-color: #1a1a3e; /* Matches your navy theme if letterboxing occurs */
+        }
+    </style>
+
+    <!-- Google tag (gtag.js) - REPLACE G-XXXXXXXXXX WITH YOUR ACTUAL ID -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-XXXXXXXXXX');
+    </script>
+
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -151,6 +178,27 @@
             </div>
         </div>
 
+        <!-- COMPACT BUNDLE BANNER WITH BOOK EXPLANATION -->
+        <div class="fade-in-content" style="max-width: 900px; margin: 0 auto 50px auto; padding: 30px 25px; background: rgba(26, 26, 62, 0.7); border: 1px solid rgba(212, 175, 55, 0.3); border-radius: 10px; text-align: center; box-shadow: 0 4px 20px rgba(0,0,0,0.15);">
+            <h4 style="color: #D4AF37; margin-bottom: 10px; font-weight: 300; font-size: 24px; font-family: 'Roboto', sans-serif;" data-en="Looking for the best value?" data-es="¿Buscas el mejor valor?">Looking for the best value?</h4>
+            
+            <p style="color: rgba(255, 255, 255, 0.9); font-size: 15px; margin-bottom: 25px; font-weight: 300; max-width: 750px; margin-left: auto; margin-right: auto; line-height: 1.6;"
+               data-en="The included free books are the physical workbooks from which the course PDFs were created. They are shipped directly to you and are designed to be filled in by hand while you follow along with the video lessons."
+               data-es="Los libros gratuitos incluidos son los libros de trabajo físicos a partir de los cuales se crearon los PDF del curso. Se envían directamente a usted y están diseñados para completarse a mano mientras sigue las lecciones en video.">
+               The included free books are the physical workbooks from which the course PDFs were created. They are shipped directly to you and are designed to be filled in by hand while you follow along with the video lessons.
+            </p>
+
+            <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; font-size: 14px; margin-bottom: 20px;">
+                <span style="color: #fff; background: rgba(212, 175, 55, 0.15); padding: 8px 18px; border-radius: 20px; border: 1px solid rgba(212, 175, 55, 0.2);" data-en="Courses 1 & 2 + Free Book" data-es="Cursos 1 y 2 + Libro Gratis">Courses 1 & 2 + Free Book</span>
+                <span style="color: #fff; background: rgba(212, 175, 55, 0.15); padding: 8px 18px; border-radius: 20px; border: 1px solid rgba(212, 175, 55, 0.2);" data-en="Courses 3 & 4 + Free Book" data-es="Cursos 3 y 4 + Libro Gratis">Courses 3 & 4 + Free Book</span>
+                <span style="color: #1a1a3e; background: linear-gradient(180deg, #e8c412 0%, #D4AF37 100%); padding: 8px 18px; border-radius: 20px; font-weight: 500;" data-en="All 4 Courses + 2 Free Books" data-es="Los 4 Cursos + 2 Libros Gratis">All 4 Courses + 2 Free Books</span>
+            </div>
+            
+            <p style="margin-bottom: 0;">
+                <a href="enroll.html" style="color: #fff; text-decoration: none; font-weight: 300; font-size: 16px; border-bottom: 1px solid #D4AF37; padding-bottom: 2px; transition: color 0.3s;" onmouseover="this.style.color='#D4AF37'" onmouseout="this.style.color='#fff'" data-en="See all bundles on the enrollment page &rarr;" data-es="Ver todos los paquetes en la página de inscripción &rarr;">See all bundles on the enrollment page &rarr;</a>
+            </p>
+        </div>
+
         <div class="courses-grid">
             <div class="course-card">
                 <img src="course-1.jpg" alt="Course 1" class="course-image">
@@ -219,8 +267,8 @@
                     Not sure which course is for you?
                 </h3>
                 <p style="color: rgba(255, 255, 255, 0.9); font-size: 18px; margin-bottom: 30px; font-weight: 300;"
-                   data-en="Try our level tests and find out exactly where to start."
-                   data-es="Prueba nuestros tests de nivel y descubre exactamente por dónde empezar.">
+                    data-en="Try our level tests and find out exactly where to start."
+                    data-es="Prueba nuestros tests de nivel y descubre exactamente por dónde empezar.">
                     Try our level tests and find out exactly where to start.
                 </p>
                 <div style="display: flex; gap: 20px; justify-content: center; flex-wrap: wrap;">
