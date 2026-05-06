@@ -56,12 +56,24 @@
             padding-bottom: 0 !important;
         }
 
+        /* --- THE NEW ANIMATION --- */
+        @keyframes slideFadeUp {
+            0% {
+                opacity: 0;
+                transform: translateY(15px); /* Starts slightly lower */
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0); /* Slides up into final position */
+            }
+        }
+
         /* Carousel Buttons — Hyper-aggressive Overrides */
         a.cta-button.home-cta-small {
             padding: 8px 24px !important; 
             font-size: 13px !important; 
             font-weight: 300 !important; 
-            margin: 0 auto !important; /* Force center alignment */
+            margin: 0 auto !important; 
             background: rgba(255, 255, 255, 0.1) !important; 
             color: #D4AF37 !important; 
             border: 1px solid #D4AF37 !important; 
@@ -70,16 +82,20 @@
             transition: transform 0.2s ease, background 0.2s ease !important;
             text-decoration: none !important;
             
-            /* The Fix: Force shrink-to-fit and override external CSS */
+            /* Sizing fixes */
             display: inline-flex !important; 
             align-items: center !important;
             justify-content: center !important;
-            width: fit-content !important; /* Shrinks the box to exactly match the text + padding */
+            width: fit-content !important; 
             max-width: 80% !important;
             height: auto !important;
             min-width: 0 !important;
             min-height: 0 !important;
             line-height: 1.2 !important;
+
+            /* Animation Settings (Slight delay so it appears last) */
+            opacity: 0; 
+            animation: slideFadeUp 0.6s ease-out 0.3s forwards !important; 
         }
 
         a.cta-button.home-cta-small:hover {
@@ -122,6 +138,10 @@
             margin-bottom: 12px;
             font-weight: 300;
             letter-spacing: 1px;
+            
+            /* Animation Settings (Appears first) */
+            opacity: 0;
+            animation: slideFadeUp 0.6s ease-out forwards;
         }
 
         .slide-text {
@@ -130,6 +150,10 @@
             line-height: 1.6;
             margin-bottom: 25px;
             font-weight: 100;
+
+            /* Animation Settings (Appears second) */
+            opacity: 0;
+            animation: slideFadeUp 0.6s ease-out 0.15s forwards;
         }
 
         .hero-slide .home-cta-small {
@@ -159,30 +183,28 @@
 
         /* --- MOBILE SPECIFIC FIXES --- */
         @media (max-width: 768px) {
-            /* Tightly pack the button on mobile */
             a.cta-button.home-cta-small {
                 padding: 6px 16px !important; 
                 font-size: 11px !important; 
             }
 
-            /* Squeeze the text to fit cleanly under the image area */
             .slide-heading {
                 font-size: 1.1rem;
                 margin-bottom: 8px;
             }
 
             .slide-text {
-                font-size: 0.9rem; /* Smaller text */
-                line-height: 1.4; /* Tighter line spacing */
-                margin-bottom: 18px; /* Less gap above the button */
+                font-size: 0.9rem; 
+                line-height: 1.4; 
+                margin-bottom: 18px; 
             }
 
             .hero-carousel-container {
-                margin-top: 5px; /* Push the whole carousel up slightly */
+                margin-top: 5px; 
             }
 
             .carousel-dots {
-                margin-top: 20px; /* Pull the dots closer to the button */
+                margin-top: 20px; 
             }
         }
     </style>
