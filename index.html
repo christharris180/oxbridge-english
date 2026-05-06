@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-   <!-- Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-BW4FK9RBTY"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
@@ -14,12 +13,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     <title>Oxbridge English | Aprende Inglés Online a tu Ritmo</title>
-    <!-- Optimized Meta Description for Google Search (approx 155 chars) -->
     <meta name="description" content="Olvídate de academias caras. Domina el inglés de forma independiente con un profesor nativo virtual, herramientas con IA y ejercicios a tu propio ritmo.">
     
     <link rel="canonical" href="https://oxbridge-english.com/">
 
-   <link rel="icon" type="image/png" href="https://oxbridge-english.com/favicon-192x192.png">
+    <link rel="icon" type="image/png" href="https://oxbridge-english.com/favicon-192x192.png">
     <link rel="apple-touch-icon" href="https://oxbridge-english.com/favicon-192x192.png">
     
     <meta property="og:type" content="website">
@@ -30,6 +28,7 @@
     
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
+    
     <style>
         /* Homepage only — remove vertical gaps above/below hero box */
         body {
@@ -57,38 +56,133 @@
             padding-bottom: 0 !important;
         }
 
-        /* Smaller buttons — 30% reduction */
-        .home-cta-small {
-            padding: 11px 28px !important;
-            font-size: 11px !important;
-            margin-bottom: 0 !important;
+        /* Carousel Buttons — Hyper-aggressive Overrides */
+        a.cta-button.home-cta-small {
+            padding: 8px 24px !important; 
+            font-size: 13px !important; 
+            font-weight: 300 !important; 
+            margin: 0 auto !important; /* Force center alignment */
+            background: rgba(255, 255, 255, 0.1) !important; 
+            color: #D4AF37 !important; 
+            border: 1px solid #D4AF37 !important; 
+            box-shadow: 0 6px 15px rgba(0,0,0,0.3) !important;
+            border-radius: 30px !important;
+            transition: transform 0.2s ease, background 0.2s ease !important;
+            text-decoration: none !important;
+            
+            /* The Fix: Force shrink-to-fit and override external CSS */
+            display: inline-flex !important; 
+            align-items: center !important;
+            justify-content: center !important;
+            width: fit-content !important; /* Shrinks the box to exactly match the text + padding */
+            max-width: 80% !important;
+            height: auto !important;
+            min-width: 0 !important;
+            min-height: 0 !important;
+            line-height: 1.2 !important;
         }
 
-        /* Translator promo — desktop only */
-        .hero-translator-promo {
+        a.cta-button.home-cta-small:hover {
+            transform: translateY(-2px) !important;
+            background: rgba(255, 255, 255, 0.2) !important; 
+            color: #D4AF37 !important;
+        }
+
+        /* --- Hero Carousel Styles --- */
+        .hero-carousel-container {
+            width: 100%;
+            max-width: 650px; 
+            overflow: hidden;
+            position: relative;
+            margin-top: 15px;
+            padding-bottom: 10px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .hero-carousel-track {
+            display: flex;
+            width: 100%;
+            align-items: stretch; 
+        }
+
+        .hero-slide {
+            min-width: 100%;
+            box-sizing: border-box;
+            padding: 10px 15px 20px 15px;
             display: flex;
             flex-direction: column;
             align-items: center;
-            margin-top: 32px;
-            padding-top: 24px;
-            border-top: 1px solid rgba(255,255,255,0.2);
-            gap: 16px;
-        }
-        .hero-promo-text {
-            color: rgba(247,244,229,0.88);
-            font-size: 14px;
-            font-weight: 300;
-            line-height: 1.7;
             text-align: center;
-            margin: 0;
         }
 
-        /* Hide promo on mobile, restore button size */
+        .slide-heading {
+            color: #D4AF37; 
+            font-size: 1.4rem;
+            margin-bottom: 12px;
+            font-weight: 300;
+            letter-spacing: 1px;
+        }
+
+        .slide-text {
+            color: rgba(247, 244, 229, 0.95);
+            font-size: 1.15rem; 
+            line-height: 1.6;
+            margin-bottom: 25px;
+            font-weight: 100;
+        }
+
+        .hero-slide .home-cta-small {
+            margin-top: auto;
+        }
+
+        .carousel-dots {
+            display: flex;
+            justify-content: center;
+            gap: 16px; 
+            margin-top: 45px; 
+        }
+
+        .dot {
+            width: 8px;
+            height: 8px;
+            background-color: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .dot.active {
+            background-color: #D4AF37;
+            transform: scale(1.3);
+        }
+
+        /* --- MOBILE SPECIFIC FIXES --- */
         @media (max-width: 768px) {
-            .hero-translator-promo { display: none; }
-            .home-cta-small {
-                padding: 16px 40px !important;
-                font-size: 16px !important;
+            /* Tightly pack the button on mobile */
+            a.cta-button.home-cta-small {
+                padding: 6px 16px !important; 
+                font-size: 11px !important; 
+            }
+
+            /* Squeeze the text to fit cleanly under the image area */
+            .slide-heading {
+                font-size: 1.1rem;
+                margin-bottom: 8px;
+            }
+
+            .slide-text {
+                font-size: 0.9rem; /* Smaller text */
+                line-height: 1.4; /* Tighter line spacing */
+                margin-bottom: 18px; /* Less gap above the button */
+            }
+
+            .hero-carousel-container {
+                margin-top: 5px; /* Push the whole carousel up slightly */
+            }
+
+            .carousel-dots {
+                margin-top: 20px; /* Pull the dots closer to the button */
             }
         }
     </style>
@@ -139,25 +233,62 @@
         
         <div class="hero-content hero-content-home">
             <div class="hero-text-wrapper">
+                
                 <h2 class="hero-title" data-en="Oxbridge English" data-es="Oxbridge English">Oxbridge English</h2>
                 
-                <!-- Updated Hero Description -->
-                <p class="hero-description"
-                   data-en="Ditch the expensive academies. Master English independently with a virtual native teacher, custom AI tools, and immersive exercises. No subscriptions—just real results at your own pace."
-                   data-es="Olvídate de las academias caras. Domina el inglés de forma independiente con un profesor nativo virtual, herramientas de IA y ejercicios inmersivos. Sin suscripciones—solo resultados reales a tu propio ritmo.">
-                    Ditch the expensive academies. Master English independently with a virtual native teacher, custom AI tools, and immersive exercises. No subscriptions—just real results at your own pace.
-                </p>
-                
-                <a href="courses.html" class="cta-button home-cta-small" data-en="Explore Courses" data-es="Explorar Cursos">Explore Courses</a>
+                <div class="hero-carousel-container">
+                    <div class="hero-carousel-track" id="heroCarouselTrack">
+                        
+                        <div class="hero-slide">
+                            <h3 class="slide-heading" data-en="Our Courses" data-es="Nuestros Cursos">Our Courses</h3>
+                            <p class="slide-text" 
+                               data-en="Ditch the expensive academies. Master English independently with a virtual native teacher, custom AI tools, and immersive exercises. No subscriptions—just real results at your own pace." 
+                               data-es="Olvídate de las academias caras. Domina el inglés de forma independiente con un profesor nativo virtual, herramientas de IA y ejercicios inmersivos. Sin suscripciones—solo resultados reales a tu propio ritmo.">
+                                Ditch the expensive academies. Master English independently with a virtual native teacher, custom AI tools, and immersive exercises. No subscriptions—just real results at your own pace.
+                            </p>
+                            <a href="courses.html" class="cta-button home-cta-small" data-en="Explore Courses" data-es="Explorar Cursos">Explore Courses</a>
+                        </div>
 
-                <div class="hero-translator-promo">
-                    <p class="hero-promo-text"
-                       data-en="Discover our new translation learning tool — and stop translating without learning. Your translations are saved and turned into personalized tests, helping you actually learn."
-                       data-es="Descubre nuestra nueva herramienta de aprendizaje por traducción — y deja de traducir sin aprender. Tus traducciones se guardan y se convierten en exámenes personalizados para que realmente aprendas.">
-                        Discover our new translation learning tool — and stop translating without learning.<br>Your translations are saved and turned into personalized tests, helping you actually learn.
-                    </p>
-                    <a href="translator.html" class="cta-button home-cta-small" data-en="Translator" data-es="Traductor">Translator</a>
+                        <div class="hero-slide">
+                            <h3 class="slide-heading" data-en="Discover Your Level" data-es="Descubre Tu Nivel">Discover Your Level</h3>
+                            <p class="slide-text" 
+                               data-en="Take our placement test to discover your exact English level. Choose between our foundational test for beginners, or our advanced test to perfect your fluency, and receive personalized study recommendations." 
+                               data-es="Realiza nuestra prueba para descubrir tu nivel exacto de inglés. Elige entre nuestra prueba básica para principiantes o la avanzada para perfeccionar tu fluidez, y recibe recomendaciones de estudio personalizadas.">
+                                Take our placement test to discover your exact English level. Choose between our foundational test for beginners, or our advanced test to perfect your fluency, and receive personalized study recommendations.
+                            </p>
+                            <a href="placement-test.html" class="cta-button home-cta-small" data-en="Level Test" data-es="Test de Nivel">Level Test</a>
+                        </div>
+
+                        <div class="hero-slide">
+                            <h3 class="slide-heading" data-en="SmarTraductor" data-es="SmarTraductor">SmarTraductor</h3>
+                            <p class="slide-text" 
+                               data-en="Discover our new translation learning tool — and stop translating without learning. Your translations are saved and turned into personalized tests, helping you actually learn." 
+                               data-es="Descubre nuestra nueva herramienta de aprendizaje por traducción — y deja de traducir sin aprender. Tus traducciones se guardan y se convierten en exámenes personalizados para que realmente aprendas.">
+                                Discover our new translation learning tool — and stop translating without learning. Your translations are saved and turned into personalized tests, helping you actually learn.
+                            </p>
+                            <a href="translator.html" class="cta-button home-cta-small" data-en="Translator" data-es="Traductor">Translator</a>
+                        </div>
+
+                        <div class="hero-slide">
+                            <h3 class="slide-heading" data-en="Read Our Blog" data-es="Lee Nuestro Blog">Read Our Blog</h3>
+                            <p class="slide-text" 
+                               data-en="Explore our latest articles covering everything from grammar hacks and native pronunciation tips, to effective study routines and cultural insights for mastering the English language at home." 
+                               data-es="Explora nuestros artículos que cubren desde trucos de gramática y consejos de pronunciación nativa, hasta rutinas de estudio efectivas y aspectos culturales para dominar el inglés en casa.">
+                                Explore our latest articles covering everything from grammar hacks and native pronunciation tips, to effective study routines and cultural insights for mastering the English language at home.
+                            </p>
+                            <a href="blog.html" class="cta-button home-cta-small" data-en="Read Blog" data-es="Leer Blog">Read Blog</a>
+                        </div>
+
+                    </div>
+
+                    <div class="carousel-dots">
+                        <span class="dot active" onclick="goToSlide(0)"></span>
+                        <span class="dot" onclick="goToSlide(1)"></span>
+                        <span class="dot" onclick="goToSlide(2)"></span>
+                        <span class="dot" onclick="goToSlide(3)"></span>
+                    </div>
                 </div>
+
             </div>
         </div>
         <div class="hero-decoration"></div>

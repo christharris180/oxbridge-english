@@ -77,7 +77,7 @@ document.addEventListener('DOMContentLoaded', function() {
         document.querySelectorAll('[data-en][data-es]').forEach(element => {
             const translation = element.getAttribute(`data-${lang}`);
             if (translation) {
-                element.textContent = translation;
+                element.innerHTML = translation;
             }
         });
         
@@ -141,6 +141,83 @@ document.addEventListener('DOMContentLoaded', function() {
             link.classList.remove('active');
         }
     });
+
+    // ==========================================
+    // HERO CAROUSEL LOGIC
+    // ==========================================
+    
+    const track = document.getElementById('heroCarouselTrack');
+            
+    if (track) {
+        let currentSlideIndex = 0;
+        const slides = document.querySelectorAll('.hero-slide');
+        const dots = document.querySelectorAll('.dot');
+        const totalOriginalSlides = slides.length;
+        let carouselTimer;
+        let isTransitioning = false;
+
+        // Clone the first slide and append it to the end for the seamless infinite loop
+        const firstSlideClone = slides[0].cloneNode(true);
+        track.appendChild(firstSlideClone);
+
+        function updateCarousel(instant = false) {
+            if (instant) {
+                // Instant snap (used invisibly behind the scenes)
+                track.style.transition = 'none';
+            } else {
+                // Slower, smoother 1.2-second slide
+                track.style.transition = 'transform 1.2s ease-in-out';
+            }
+            
+            track.style.transform = `translateX(-${currentSlideIndex * 100}%)`;
+            
+            // Manage active dot state (accounting for the clone)
+            let activeDotIndex = currentSlideIndex === totalOriginalSlides ? 0 : currentSlideIndex;
+            dots.forEach(dot => dot.classList.remove('active'));
+            if (dots[activeDotIndex]) {
+                dots[activeDotIndex].classList.add('active');
+            }
+        }
+
+        window.goToSlide = function(index) {
+            // Prevent clicking dots during the fake loop transition
+            if (isTransitioning) return;
+            
+            currentSlideIndex = index;
+            updateCarousel();
+            resetTimer();
+        };
+
+        function nextSlide() {
+            if (isTransitioning) return;
+            
+            currentSlideIndex++;
+            updateCarousel();
+            
+            // If we just slid to the cloned slide, we need to snap back to the start invisibly
+            if (currentSlideIndex === totalOriginalSlides) {
+                isTransitioning = true;
+                
+                // Wait exactly the length of the CSS transition (1.2s = 1200ms)
+                setTimeout(() => {
+                    currentSlideIndex = 0;
+                    updateCarousel(true); // true = instant snap without animation
+                    
+                    // Force browser reflow to register the instant snap before animating again
+                    track.offsetHeight; 
+                    isTransitioning = false;
+                }, 1200); 
+            }
+        }
+
+        function resetTimer() {
+            clearInterval(carouselTimer);
+            // Changed timing to 8 seconds (8000 milliseconds)
+            carouselTimer = setInterval(nextSlide, 8000); 
+        }
+
+        resetTimer();
+    }
 });
 
 // ==========================================
