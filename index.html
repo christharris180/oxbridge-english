@@ -48,30 +48,55 @@
 
         /* Push content to top of hero box */
         .hero-content-home {
-            align-items: flex-start !important;
+            align-items: center !important; 
             padding-top: 40px !important;
         }
         .hero-text-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
             justify-content: flex-start !important;
             padding-bottom: 0 !important;
+            text-align: center;
         }
 
-        /* --- THE NEW ANIMATION --- */
+        /* --- HEADER & SUB-HEADER REFINEMENTS --- */
+        .hero-title {
+            font-family: 'Roboto', sans-serif !important;
+            font-weight: 300 !important;
+            font-size: 3.3rem !important; /* Increased by ~10% from base typical sizes */
+            margin-bottom: 20px !important; /* Added more space between header and sub-header */
+            letter-spacing: 1px;
+        }
+
+        .hero-sub-title {
+            font-family: 'Roboto', sans-serif !important;
+            font-weight: 300 !important;
+            color: #D4AF37; /* Gold */
+            font-size: 1.25rem; /* Decreased by ~10% */
+            margin-top: 0;
+            margin-bottom: 50px; /* Spaced out more from the carousel */
+            letter-spacing: 1px;
+            opacity: 0;
+            animation: slideFadeUp 0.6s ease-out 0.1s forwards;
+        }
+
+        /* --- THE ANIMATION --- */
         @keyframes slideFadeUp {
             0% {
                 opacity: 0;
-                transform: translateY(15px); /* Starts slightly lower */
+                transform: translateY(15px);
             }
             100% {
                 opacity: 1;
-                transform: translateY(0); /* Slides up into final position */
+                transform: translateY(0);
             }
         }
 
-        /* Carousel Buttons — Hyper-aggressive Overrides */
+        /* Carousel Buttons — Scaled down 10% */
         a.cta-button.home-cta-small {
-            padding: 8px 24px !important; 
-            font-size: 13px !important; 
+            padding: 7px 21px !important; /* Reduced 10% */
+            font-size: 11.7px !important; /* Reduced 10% */
             font-weight: 300 !important; 
             margin: 0 auto !important; 
             background: rgba(255, 255, 255, 0.1) !important; 
@@ -82,7 +107,6 @@
             transition: transform 0.2s ease, background 0.2s ease !important;
             text-decoration: none !important;
             
-            /* Sizing fixes */
             display: inline-flex !important; 
             align-items: center !important;
             justify-content: center !important;
@@ -93,7 +117,6 @@
             min-height: 0 !important;
             line-height: 1.2 !important;
 
-            /* Animation Settings (Slight delay so it appears last) */
             opacity: 0; 
             animation: slideFadeUp 0.6s ease-out 0.3s forwards !important; 
         }
@@ -110,7 +133,7 @@
             max-width: 650px; 
             overflow: hidden;
             position: relative;
-            margin-top: 15px;
+            margin-top: 80px; 
             padding-bottom: 10px;
             display: flex;
             flex-direction: column;
@@ -134,24 +157,22 @@
 
         .slide-heading {
             color: #D4AF37; 
-            font-size: 1.4rem;
-            margin-bottom: 12px;
+            font-size: 1.08rem; /* Reduced 10% from 1.2rem */
+            margin-bottom: 10px;
             font-weight: 300;
             letter-spacing: 1px;
             
-            /* Animation Settings (Appears first) */
             opacity: 0;
             animation: slideFadeUp 0.6s ease-out forwards;
         }
 
         .slide-text {
             color: rgba(247, 244, 229, 0.95);
-            font-size: 1.15rem; 
-            line-height: 1.6;
-            margin-bottom: 25px;
+            font-size: 0.9rem; /* Reduced 10% from 1rem */
+            line-height: 1.5;
+            margin-bottom: 20px;
             font-weight: 100;
 
-            /* Animation Settings (Appears second) */
             opacity: 0;
             animation: slideFadeUp 0.6s ease-out 0.15s forwards;
         }
@@ -164,7 +185,7 @@
             display: flex;
             justify-content: center;
             gap: 16px; 
-            margin-top: 45px; 
+            margin-top: 40px; 
         }
 
         .dot {
@@ -183,24 +204,31 @@
 
         /* --- MOBILE SPECIFIC FIXES --- */
         @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.2rem !important;
+            }
+            .hero-sub-title {
+                font-size: 1rem;
+                margin-bottom: 30px;
+            }
             a.cta-button.home-cta-small {
                 padding: 6px 16px !important; 
-                font-size: 11px !important; 
+                font-size: 10px !important; 
             }
 
             .slide-heading {
-                font-size: 1.1rem;
+                font-size: 0.9rem;
                 margin-bottom: 8px;
             }
 
             .slide-text {
-                font-size: 0.9rem; 
+                font-size: 0.8rem; 
                 line-height: 1.4; 
-                margin-bottom: 18px; 
+                margin-bottom: 15px; 
             }
 
             .hero-carousel-container {
-                margin-top: 5px; 
+                margin-top: 50px; 
             }
 
             .carousel-dots {
@@ -257,6 +285,13 @@
             <div class="hero-text-wrapper">
                 
                 <h2 class="hero-title" data-en="Oxbridge English" data-es="Oxbridge English">Oxbridge English</h2>
+                
+                <!-- GOLD SUBHEADING -->
+                <p class="hero-sub-title" 
+                   data-en="Independent English Learning Through Technology" 
+                   data-es="Aprendizaje Independiente de Inglés a través de la Tecnología">
+                   Independent English Learning Through Technology
+                </p>
                 
                 <div class="hero-carousel-container">
                     <div class="hero-carousel-track" id="heroCarouselTrack">
