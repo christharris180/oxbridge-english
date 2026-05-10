@@ -1,18 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-BW4FK9RBTY"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-BW4FK9RBTY');
+    </script>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <title>Descargas de Audio | Material de Estudio - Oxbridge English</title>
+    <title>Descargas de Audio | Material de Estudio - Oxford English</title>
     <meta name="description" content="Escucha y descarga materiales de audio gratuitos para acompañar tu aprendizaje de inglés. Practica la pronunciación y mejora tu comprensión auditiva.">
-    <meta name="keywords" content="audios en ingles, escuchar ingles, descargar audios ingles, practicar pronunciacion, oxbridge english">
-    <meta name="author" content="Oxbridge English">
+    <meta name="keywords" content="audios en ingles, escuchar ingles, descargar audios ingles, practicar pronunciacion, oxford english">
+    <meta name="author" content="Oxford English">
     <link rel="canonical" href="https://oxbridge-english.com/audio.html">
     
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://oxbridge-english.com/audio.html">
-    <meta property="og:title" content="Descargas de Audio | Oxbridge English">
+    <meta property="og:title" content="Descargas de Audio | Oxford English">
     <meta property="og:description" content="Escucha y descarga materiales de audio gratuitos para practicar tu listening y pronunciación.">
     <meta property="og:image" content="https://oxbridge-english.com/ox-head-008.jpg">
 
@@ -21,6 +30,27 @@
 
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Fix for audio player width - ensures full width on all devices */
+        .audio-file-item audio {
+            width: 100% !important;
+            max-width: 600px !important;
+            display: block !important;
+            margin: 8px 0 !important;
+        }
+        /* Ensure the audio file name div doesn't constrain the audio element */
+        .audio-file-item {
+            display: flex !important;
+            flex-wrap: wrap !important;
+            align-items: flex-start !important;
+            gap: 15px !important;
+        }
+        .audio-file-name {
+            flex-shrink: 0 !important;
+            width: auto !important;
+            min-width: 150px !important;
+        }
+    </style>
 </head>
 <body>
     <video autoplay muted loop playsinline class="background-video">
@@ -32,8 +62,8 @@
             <button class="mobile-menu-toggle">☰</button>
             
             <div class="logo">
-                <img src="ox-head-008.jpg" alt="Oxbridge English Logo">
-                <h1 data-en="Oxbridge English" data-es="Oxbridge English">Oxbridge English</h1>
+                <img src="ox-head-008.jpg" alt="Oxford English Logo">
+                <h1 data-en="Oxford English" data-es="Oxford English">Oxford English</h1>
             </div>
             
             <ul class="nav-links">
@@ -42,7 +72,7 @@
                 <li><a href="enroll.html" data-en="Enroll" data-es="Inscribirse">Enroll</a></li>
                 <li><a href="books.html" data-en="Books" data-es="Libros">Books</a></li>
                 <li><a href="audio.html" class="active" data-en="Audio" data-es="Audio">Audio</a></li>
-                <li><a href="translator.html" data-en="Translator" data-es="Traductor">Translator</a></li>
+                <li><a href="translator.html" data-en="Translator" data-es="Traductor">Traductor</a></li>
                 <li><a href="placement-test.html" data-en="Level Test" data-es="Test de Nivel" style="color: #D4AF37; font-weight: bold;">Level Test</a></li>
                 <li><a href="recommendations.html" data-en="Recommendations" data-es="Recomendaciones">Recommendations</a></li>
                 <li><a href="blog.html" data-en="Blog" data-es="Blog">Blog</a></li>
@@ -409,9 +439,9 @@
                 </li>
                 
                 <li class="audio-file-item">
-                    <div class="audio-file-name">Course 3 Unit 4 Exercise 2c</div>
+                    <div class="audio-file-name">Course 3 Unit 4 Exercise 2e</div>
                     <audio controls preload="metadata">
-                        <source src="audio-book-2/course 3 unit 4 exercise 2c.mp3" type="audio/mpeg">
+                        <source src="audio-book-2/course 3 unit 4 exercise 2e.mp3" type="audio/mpeg">
                         Your browser does not support the audio element.
                     </audio>
                 </li>
@@ -602,26 +632,26 @@
         <div class="footer-content">
             <div class="footer-social">
                 <a href="https://www.instagram.com/cursosdeinglesoxbridge/" target="_blank" aria-label="Instagram">
-                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265.07-1.644.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
                 </a>
                 <a href="https://www.facebook.com/profile.php?id=61564608544805" target="_blank" aria-label="Facebook">
                     <svg viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
                 </a>
                 <a href="https://www.linkedin.com/in/christopher-harris-13b678153/" target="_blank" aria-label="LinkedIn">
-                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
                 </a>
             </div>
             <p class="footer-text" style="display: flex; align-items: center; justify-content: center; gap: 15px; flex-wrap: wrap; padding-top: 20px;">
-                <span data-en="© 2026 by Oxbridge English" data-es="© 2026 por Oxbridge English">© 2026 by Oxbridge English</span>
-                <span style="color: #666;">|</span>
-                <a href="privacy.html" style="color: #F7F4E5; text-decoration: none; transition: color 0.3s;" onmouseover="this.style.color='#D4AF37'" onmouseout="this.style.color='#F7F4E5'">
+                <span data-en="© 2026 by Oxford English" data-es="© 2026 por Oxford English">© 2026 by Oxford English</span>
+                <span style="color: #ffffff;">|</span>
+                <a href="privacy.html" style="color: #ffffff; text-decoration: none; transition: color 0.3s;" onmouseover="this.style.color='#D4AF37'" onmouseout="this.style.color='#ffffff'">
                     <span data-en="Privacy Policy" data-es="Política de Privacidad">Privacy Policy</span>
                 </a>
-                <span style="color: #666;">|</span>
-                <a href="terms.html" style="color: #F7F4E5; text-decoration: none; transition: color 0.3s;" onmouseover="this.style.color='#D4AF37'" onmouseout="this.style.color='#F7F4E5'">
+                <span style="color: #ffffff;">|</span>
+                <a href="terms.html" style="color: #ffffff; text-decoration: none; transition: color 0.3s;" onmouseover="this.style.color='#D4AF37'" onmouseout="this.style.color='#ffffff'">
                     <span data-en="Terms & Conditions" data-es="Términos y Condiciones">Terms & Conditions</span>
                 </a>
-                <img src="logo_jpg_003.jpg" alt="Oxbridge English" style="height: 30px; width: auto; object-fit: contain;">
+                <img src="logo_jpg_003.jpg" alt="Oxford English" style="height: 30px; width: auto; object-fit: contain;">
             </p>
         </div>
     </footer>
