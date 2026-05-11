@@ -295,7 +295,7 @@
                     </div>
                     <div id="quiz-content">
                         <!-- Quiz content dynamically injected here -->
-                    </div
+                    </div>
                 </div>
                 
             </div>
@@ -759,7 +759,7 @@
             } else {
                 if(isCorrect) window.showToast(window.uiLang === 'es' ? '¡Correcto!' : 'Correct!');
                 else if(isVoiceRetrySuccess) window.showToast(window.uiLang === 'es' ? '¡Bien pronunciado! (Modo práctica)' : 'Well pronounced! (Practice mode)');
-                else window.showToast(window.uiLang === ' la-es' ? 'Incorrecto' : 'Incorrect');
+                else window.showToast(window.uiLang === 'es' ? 'Incorrecto' : 'Incorrect');
             }
 
             let history = JSON.parse(localStorage.getItem('app_history') || '[]');
