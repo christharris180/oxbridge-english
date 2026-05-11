@@ -160,6 +160,31 @@ document.addEventListener('DOMContentLoaded', function() {
         const firstSlideClone = slides[0].cloneNode(true);
         track.appendChild(firstSlideClone);
 
+        // SYNC NAV HIGHLIGHT FUNCTION
+        function syncNavWithCarousel(slideIndex) {
+            // Remove the highlight from all navigation links first
+            document.querySelectorAll('.nav-links a').forEach(link => {
+                link.classList.remove('nav-carousel-highlight');
+            });
+
+            // Map the slide index (0 to 3) to the actual HTML page links
+            const slideLinks = {
+                0: 'courses.html',
+                1: 'placement-test.html',
+                2: 'translator.html',
+                3: 'blog.html'
+            };
+
+            // Find the matching link and add the yellow highlight
+            const targetHref = slideLinks[slideIndex];
+            if (targetHref) {
+                const activeLink = document.querySelector(`.nav-links a[href="${targetHref}"]`);
+                if (activeLink) {
+                    activeLink.classList.add('nav-carousel-highlight');
+                }
+            }
+        }
+
         function updateCarousel(instant = false) {
             if (instant) {
                 // Instant snap (used invisibly behind the scenes)
@@ -177,6 +202,9 @@ document.addEventListener('DOMContentLoaded', function() {
             if (dots[activeDotIndex]) {
                 dots[activeDotIndex].classList.add('active');
             }
+            
+            // Update the navigation menu highlight based on the current slide
+            syncNavWithCarousel(activeDotIndex);
         }
 
         window.goToSlide = function(index) {
@@ -216,6 +244,8 @@ document.addEventListener('DOMContentLoaded', function() {
             carouselTimer = setInterval(nextSlide, 8000); 
         }
 
+        // Initialize carousel and light up the first navigation item
+        syncNavWithCarousel(0);
         resetTimer();
     }
 });
