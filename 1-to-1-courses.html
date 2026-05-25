@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-BW4FK9RBTY"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-BW4FK9RBTY');
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>1-to-1 Classes | Oxbridge English</title>
+    <meta name="description" content="Master spoken English with private, 1-to-1 live sessions with a native teacher.">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    
+    <style>
+        /* =========================================
+           PAGE-SPECIFIC STYLES - 1-TO-1
+           ========================================= */
+        
+        /* Overrides global cream body to allow video to show underneath */
+        body {
+            background-color: transparent !important;
+        }
+        
+        .page-wrapper-transparent {
+            min-height: 100vh;
+            padding-bottom: 60px;
+        }
+
+        /* --- HERO BANNER --- */
+        .page-hero {
+            position: relative;
+            /* Adjusted padding to make section shorter (reduced top/bottom) and add 12% right margin effect */
+            padding: 130px 12% 70px 20px; 
+            background-image: url('blue_background_008.jpg');
+            background-size: cover;
+            /* Anchors the image to the top so your face is not cropped */
+            background-position: top center; 
+            border-bottom: 2px solid #D4AF37;
+            
+            /* Flex settings to align the text block to the right */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-end;
+        }
+
+        /* The text wrapper to constrain width and center text inside itself */
+        .hero-text-wrapper {
+            max-width: 750px; 
+            text-align: center; 
+        }
+
+        .page-hero-title {
+            color: #ffffff !important;
+            margin-bottom: 20px !important;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.8);
+        }
+
+        .page-hero-subtitle {
+            color: #D4AF37 !important;
+            margin-bottom: 40px !important;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.9);
+        }
+
+        /* --- HERO BOXES --- */
+        .section-hero-box {
+            background-image: url('blue_background_001.jpg');
+            background-size: cover;
+            background-position: center;
+            border-radius: 15px;
+            padding: 60px 40px;
+            border: 1px solid rgba(212, 175, 55, 0.4);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.6);
+            margin-bottom: 40px;
+        }
+
+        .white-heading {
+            color: #ffffff !important;
+            text-align: center;
+            margin-bottom: 40px !important;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.8);
+        }
+
+        /* --- BENEFITS --- */
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .benefit-item {
+            padding: 20px;
+            text-align: center;
+        }
+
+        .benefit-icon {
+            font-size: 2.5rem;
+            color: #D4AF37;
+            margin-bottom: 20px;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+        }
+
+        .benefit-title {
+            color: #ffffff !important;
+            margin-bottom: 15px !important;
+            text-shadow: 0 1px 5px rgba(0,0,0,0.5);
+        }
+
+        .benefit-desc {
+            color: rgba(255,255,255,0.95) !important;
+            text-shadow: 0 1px 5px rgba(0,0,0,0.5);
+        }
+
+        /* --- INSTRUCTOR PROFILE --- */
+        .instructor-container {
+            display: flex;
+            align-items: center;
+            gap: 50px;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .instructor-img {
+            width: 188px; 
+            height: 188px; 
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #D4AF37;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            flex-shrink: 0;
+        }
+
+        .instructor-bio h3 {
+            color: #D4AF37 !important;
+            margin-bottom: 15px !important;
+            text-shadow: 0 2px 5px rgba(0,0,0,0.5);
+        }
+
+        .instructor-bio p {
+            color: rgba(255,255,255,0.95) !important;
+            text-shadow: 0 1px 5px rgba(0,0,0,0.5);
+            margin-bottom: 15px;
+        }
+
+        /* --- PRICING CONTENT --- */
+        .pricing-content {
+            max-width: 850px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .pricing-explanation {
+            color: rgba(255,255,255,0.95) !important;
+            margin-bottom: 20px;
+            text-shadow: 0 1px 5px rgba(0,0,0,0.5);
+        }
+
+        .intensity-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin: 40px 0;
+        }
+
+        .intensity-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid #D4AF37;
+            border-radius: 30px;
+            padding: 15px 25px;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+            transition: transform 0.2s, background 0.2s;
+        }
+        
+        .intensity-item:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-2px);
+        }
+
+        .intensity-hours {
+            color: #D4AF37 !important;
+            text-align: left;
+            flex: 1;
+        }
+
+        .intensity-price {
+            color: #ffffff !important;
+            text-align: right;
+            flex: 1;
+        }
+
+        /* --- CONTACT BUTTONS --- */
+        .contact-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 40px;
+            flex-wrap: wrap;
+        }
+
+        .btn-email {
+            background: rgba(255, 255, 255, 0.1) !important;
+            color: #D4AF37 !important;
+            border: 1px solid #D4AF37 !important;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.3) !important;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px 28px;
+            border-radius: 50px;
+            gap: 8px;
+            transition: all 0.3s;
+        }
+
+        .btn-email:hover {
+            background: rgba(255, 255, 255, 0.2) !important;
+            transform: translateY(-2px);
+        }
+
+        .btn-wa {
+            background: rgba(37, 211, 102, 0.15) !important;
+            color: #25D366 !important;
+            border: 1px solid #25D366 !important;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.3) !important;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px 28px;
+            border-radius: 50px;
+            gap: 8px;
+            transition: all 0.3s;
+        }
+
+        .btn-wa:hover {
+            background: rgba(37, 211, 102, 0.25) !important;
+            transform: translateY(-2px);
+        }
+
+        /* --- FAQ --- */
+        .faq-list { max-width: 850px; margin: 0 auto; }
+        
+        details {
+            margin-bottom: 5px;
+            border-bottom: 1px solid rgba(212, 175, 55, 0.3);
+        }
+        
+        details:last-child {
+            border-bottom: none;
+        }
+
+        summary {
+            padding: 20px 10px;
+            cursor: pointer;
+            color: #D4AF37 !important;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            list-style: none;
+            text-shadow: 0 1px 5px rgba(0,0,0,0.5);
+            margin: 0;
+            font-size: 15px; /* Maps to P size */
+            font-weight: 300;
+        }
+
+        summary::-webkit-details-marker {
+            display: none;
+        }
+
+        summary::after {
+            content: '\f078';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900 !important; 
+            font-size: 0.9rem;
+            transition: transform 0.3s;
+        }
+
+        details[open] summary::after {
+            transform: rotate(180deg);
+        }
+
+        .faq-answer { 
+            padding: 0 10px 25px 10px; 
+            color: rgba(255,255,255,0.95) !important; 
+            text-shadow: 0 1px 5px rgba(0,0,0,0.5);
+            margin: 0;
+        }
+
+        /* --- MOBILE RESPONSIVE --- */
+        @media (max-width: 992px) {
+            /* Snaps everything back to the center for tablets and smaller screens */
+            .page-hero { 
+                align-items: center; 
+                padding-right: 20px; 
+            }
+        }
+        @media (max-width: 768px) {
+            .instructor-container { flex-direction: column; text-align: center; }
+            .section-hero-box { padding: 40px 20px; }
+            .contact-buttons { flex-direction: column; }
+            .intensity-item { flex-direction: column; align-items: flex-start; gap: 8px; }
+            .intensity-price { text-align: left; }
+        }
+    </style>
+
+    <script>
+        function forceOpenMenu(event) {
+            event.preventDefault();
+            event.stopPropagation();
+            var nav = document.getElementById('nav-links');
+            if (nav.classList.contains('mobile-force-open')) {
+                nav.classList.remove('mobile-force-open');
+            } else {
+                nav.classList.add('mobile-force-open');
+            }
+        }
+    </script>
+</head>
+<body>
+
+    <video autoplay muted loop playsinline class="background-video">
+        <source src="girl_working_001.mp4" type="video/mp4">
+    </video>
+    <div style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(247, 244, 229, 0.9); z-index: -1; pointer-events: none;"></div>
+
+    <nav class="main-nav">
+        <div class="nav-container">
+            <button class="mobile-menu-toggle" id="mobile-toggle" onclick="forceOpenMenu(event)">☰</button>
+            
+            <div class="logo">
+                <img src="ox-head-008.jpg" alt="Oxbridge English Logo">
+                <h4 data-en="Oxbridge English" data-es="Oxbridge English" style="color: #DFDFD0;">Oxbridge English</h4>
+            </div>
+            
+            <ul class="nav-links" id="nav-links">
+                <li><a href="index.html" data-en="Home" data-es="Inicio">Home</a></li>
+                
+                <li><a href="recommendations.html" data-en="About Us" data-es="Quiénes Somos">About Us</a></li>
+                
+                <li class="dropdown">
+                    <a href="javascript:void(0);" id="courses-dropdown-toggle" data-en="Courses <i class='fa-solid fa-caret-down'></i>" data-es="Cursos <i class='fa-solid fa-caret-down'></i>">Courses <i class="fa-solid fa-caret-down"></i></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="interactive-courses.html" data-en="Interactive Courses" data-es="Cursos Interactivos">Interactive Courses</a></li>
+                        <li><a href="1-to-1-courses.html" class="active" data-en="1 to 1 Courses" data-es="Cursos 1 a 1">1 to 1 Courses</a></li>
+                        <li><a href="empresas.html" data-en="English for Companies" data-es="Inglés para Empresas">English for Companies</a></li>
+                        <li><a href="icfes.html" data-en="ICFES Preparation" data-es="Preparación ICFES">ICFES Preparation</a></li>
+                    </ul>
+                </li>
+                
+                <li><a href="placement-test.html" data-en="Level Test" data-es="Test de Nivel">Level Test</a></li>
+                
+                <li><a href="books.html" data-en="Books" data-es="Libros">Books</a></li>
+                
+                <li><a href="audio.html" data-en="Audio" data-es="Audio">Audio</a></li>
+                
+                <li><a href="translator.html" data-en="Translator" data-es="Traductor">Translator</a></li>
+                
+                <li><a href="blog.html" data-en="Blog" data-es="Blog">Blog</a></li>
+                
+                <li><a href="contact.html" data-en="Contact" data-es="Contacto">Contact</a></li>
+            </ul>
+            
+            <div class="lang-toggle">
+                <button class="lang-option active" data-lang="en">
+                    <span class="flag">EN</span>
+                </button>
+                <button class="lang-option" data-lang="es">
+                    <span class="flag">ES</span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="page-wrapper-transparent">
+        
+        <header class="page-hero">
+            <div class="hero-text-wrapper">
+                <h1 class="page-hero-title" data-en="Master Real Spoken English" data-es="Domina el Inglés Hablado Real">
+                    Master Real Spoken English
+                </h1>
+                <h3 class="page-hero-subtitle" data-en="Combine our advanced technology with highly personalized, 1-to-1 live sessions to achieve fluency faster." data-es="Combina nuestra tecnología con sesiones en vivo 1 a 1 altamente personalizadas para alcanzar la fluidez más rápido.">
+                    Combine our advanced technology with highly personalized, 1-to-1 live sessions to achieve fluency faster.
+                </h3>
+                <a href="#enroll" class="cta-button btn-text" data-en="View Packages & Enroll" data-es="Ver Paquetes e Inscribirse" style="border:none;">View Packages & Enroll</a>
+                
+                <div style="margin-top: 50px; padding-top: 25px; border-top: 1px solid rgba(212, 175, 55, 0.4);">
+                    <p style="color: #ffffff; font-size: 18px; font-style: italic; line-height: 1.5; text-shadow: 0 2px 10px rgba(0,0,0,0.8); margin-bottom: 15px;"
+                       data-en='"One of the best teachers I&#39;ve ever had. Professional, fun, and with a unique methodology. You will not regret hiring him and learning with him."'
+                       data-es='"Uno de los mejores profesores que he tenido. Profesional, divertido y con una metodología única. No te arrepentirás de contratarlo y aprender con él."'>
+                        "Uno de los mejores profesores que he tenido. Profesional, divertido y con una metodología única. No te arrepentirás de contratarlo y aprender con él."
+                    </p>
+                    <p style="color: #D4AF37; font-weight: bold; font-size: 16px; margin: 0; text-shadow: 0 2px 5px rgba(0,0,0,0.8);">Eddy Adrian Cortez Rodriguez</p>
+                    <p style="color: rgba(255,255,255,0.8); font-size: 14px; margin: 5px 0 0 0; text-shadow: 0 2px 5px rgba(0,0,0,0.8);"
+                       data-en="Senior Full Stack Engineer in TEAM International"
+                       data-es="Ingeniero Senior Full Stack en TEAM International">
+                        Ingeniero Senior Full Stack en TEAM International
+                    </p>
+                </div>
+            </div>
+        </header>
+
+        <main style="max-width: 1200px; margin: 40px auto; padding: 0 20px;">
+            
+            <section class="section-hero-box">
+                <h2 class="white-heading" data-en="Why Choose 1-to-1 Classes?" data-es="¿Por qué elegir clases 1 a 1?">¿Por qué elegir clases 1 a 1?</h2>
+                
+                <div class="benefits-grid">
+                    <div class="benefit-item">
+                        <i class="fa-solid fa-bullseye benefit-icon"></i>
+                        <h3 class="benefit-title" data-en="Targeted Progress" data-es="Progreso Enfocado">Progreso Enfocado</h3>
+                        <p class="benefit-desc" data-en="We design every session around your specific professional goals and language barriers." data-es="Diseñamos cada sesión en torno a tus objetivos profesionales y barreras lingüísticas específicas.">Diseñamos cada sesión en torno a tus objetivos profesionales y barreras lingüísticas específicas.</p>
+                    </div>
+                    <div class="benefit-item">
+                        <i class="fa-solid fa-comments benefit-icon"></i>
+                        <h3 class="benefit-title" data-en="Native Fluency" data-es="Fluidez Nativa">Fluidez Nativa</h3>
+                        <p class="benefit-desc" data-en="Build conversational confidence in a private environment tailored to your individual rhythm." data-es="Desarrolla confianza conversacional en un entorno privado adaptado a tu ritmo individual.">Desarrolla confianza conversacional en un entorno privado adaptado a tu ritmo individual.</p>
+                    </div>
+                    <div class="benefit-item">
+                        <i class="fa-solid fa-bolt benefit-icon"></i>
+                        <h3 class="benefit-title" data-en="Direct Results" data-es="Resultados Directos">Resultados Directos</h3>
+                        <p class="benefit-desc" data-en="Eliminate bad habits with immediate native correction and practical, real-world application." data-es="Elimina malos hábitos con correcciones nativas inmediatas y aplicación práctica en el mundo real.">Elimina malos hábitos con correcciones nativas inmediatas y aplicación práctica en el mundo real.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section-hero-box">
+                <h2 class="white-heading" data-en="Meet Your Native Teacher" data-es="Conoce a tu Profesor Nativo">Conoce a tu Profesor Nativo</h2>
+                
+                <div class="instructor-container">
+                    <img src="person_1.png" alt="Christopher Harris" class="instructor-img">
+                    <div class="instructor-bio">
+                        <h3 data-en="Hello — I'm Christopher" data-es="Hola — Soy Christopher">Hola — Soy Christopher</h3>
+                        
+                        <p data-en="With over 15 years of experience helping professionals and young adults achieve fluency, pass examinations, and prepare for high-stakes interviews, my mission is straightforward: to deliver tangible, real-world results — free from empty promises or unrealistic expectations." data-es="Con más de 15 años de experiencia ayudando a profesionales y jóvenes adultos a alcanzar la fluidez, aprobar exámenes y prepararse para entrevistas de alto nivel, mi misión es directa: entregar resultados tangibles y reales, sin promesas vacías ni expectativas poco realistas.">
+                            Con más de 15 años de experiencia ayudando a profesionales y jóvenes adultos a alcanzar la fluidez, aprobar exámenes y prepararse para entrevistas de alto nivel, mi misión es directa: entregar resultados tangibles y reales, sin promesas vacías ni expectativas poco realistas.
+                        </p>
+                        
+                        <p data-en="My schedule is limited, and my calendar fills up quickly, so early booking is advised. That said, I don't entrust my students to anyone else." data-es="Mi agenda es limitada y mi calendario se llena rápido, por lo que se recomienda reservar con antelación. Dicho esto, no confío a mis estudiantes a nadie más.">
+                            Mi agenda es limitada y mi calendario se llena rápido, por lo que se recomienda reservar con antelación. Dicho esto, no confío a mis estudiantes a nadie más.
+                        </p>
+                        
+                        <p data-en="Whether you've completed our interactive courses or already possess an intermediate foundation, my bespoke 1-to-1 classes are tailored precisely to your needs. Together, we will address your challenges to build confidence, fluency, and the skills necessary for lasting success." data-es="Ya sea que hayas completado nuestros cursos interactivos o ya poseas una base intermedia, mis clases personalizadas 1 a 1 se adaptan precisamente a tus necesidades. Juntos, abordaremos tus desafíos para desarrollar confianza, fluidez y las habilidades necesarias para un éxito duradero.">
+                            Ya sea que hayas completado nuestros cursos interactivos o ya poseas una base intermedia, mis clases personalizadas 1 a 1 se adaptan precisamente a tus necesidades. Juntos, abordaremos tus desafíos para desarrollar confianza, fluidez y las habilidades necesarias para un éxito duradero.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="enroll" class="section-hero-box">
+                <h2 class="white-heading" data-en="Bespoke 1-to-1 Program" data-es="Programa 1 a 1 Personalizado">Programa 1 a 1 Personalizado</h2>
+                    
+                <div class="pricing-content">
+                    <p class="pricing-explanation" data-en="Your customized program offers the same exceptional quality regardless of the intensity you choose." data-es="Tu programa personalizado ofrece la misma calidad excepcional sin importar la intensidad que elijas.">
+                        Tu programa personalizado ofrece la misma calidad excepcional sin importar la intensidad que elijas.
+                    </p>
+                    
+                    <h4 class="pricing-explanation" style="color: #D4AF37; margin-top: 30px;" data-en="How it works:" data-es="Cómo funciona:">
+                        Cómo funciona:
+                    </h4>
+                    
+                    <p class="pricing-explanation" data-en="We work in 4-week cycles. The hours shown below represent the total number of classes you will receive in each cycle. Each cycle is paid in advance, ensuring your commitment and guaranteeing consistent results." data-es="Trabajamos en ciclos de 4 semanas. Las horas que ves a continuación representan el número total de clases que recibirás en cada ciclo. Cada ciclo se paga por adelantado, asegurando tu compromiso y garantizando resultados consistentes.">
+                        Trabajamos en ciclos de 4 semanas. Las horas que ves a continuación representan el número total de clases que recibirás en cada ciclo. Cada ciclo se paga por adelantado, asegurando tu compromiso y garantizando resultados consistentes.
+                    </p>
+
+                    <div class="intensity-list">
+                        <div class="intensity-item">
+                            <p class="intensity-hours" data-en="1 Hour per week (4 hours total)" data-es="1 Hora por semana (4 horas en total)" style="margin:0;">1 Hora por semana (4 horas en total)</p>
+                            <p class="intensity-price" style="margin:0;">COP 360.000</p>
+                        </div>
+                        <div class="intensity-item">
+                            <p class="intensity-hours" data-en="2 Hours per week (8 hours total)" data-es="2 Horas por semana (8 horas en total)" style="margin:0;">2 Horas por semana (8 horas en total)</p>
+                            <p class="intensity-price" style="margin:0;">COP 680.000</p>
+                        </div>
+                        <div class="intensity-item">
+                            <p class="intensity-hours" data-en="3 Hours per week (12 hours total)" data-es="3 Horas por semana (12 hours en total)" style="margin:0;">3 Horas por semana (12 horas en total)</p>
+                            <p class="intensity-price" style="margin:0;">COP 990.000</p>
+                        </div>
+                        <div class="intensity-item">
+                            <p class="intensity-hours" data-en="4 Hours per week (16 hours total)" data-es="4 Horas por semana (16 horas en total)" style="margin:0;">4 Horas por semana (16 horas en total)</p>
+                            <p class="intensity-price" style="margin:0;">COP 1.200.000</p>
+                        </div>
+                    </div>
+
+                    <small class="S" style="display: block; margin-bottom: 5px; color: #D4AF37;" data-en="*International payments accepted via PayPal & Wise" data-es="*Pagos internacionales aceptados vía PayPal y Wise">
+                        *Pagos internacionales aceptados vía PayPal y Wise
+                    </small>
+
+                    <p class="pricing-explanation" style="margin-bottom: 10px;" data-en="Because our schedule is highly limited, we do not use automated checkouts. To enroll and fix your ideal schedule, please contact us directly:" data-es="Debido a que nuestro horario es limitado y altamente personalizado, no utilizamos pagos automáticos. Para inscribirte y fijar tu horario ideal, contáctanos directamente:">
+                        Debido a que nuestro horario es limitado y altamente personalizado, no utilizamos pagos automáticos. Para inscribirte y fijar tu horario ideal, contáctanos directamente:
+                    </p>
+
+                    <div class="contact-buttons">
+                        <a href="mailto:oxbridgeenglishcourses@gmail.com" class="btn-email btn-text">
+                            <i class="fa-regular fa-envelope"></i> Email Us
+                        </a>
+                        <a href="https://wa.me/573133813833" target="_blank" class="btn-wa btn-text">
+                            <i class="fa-brands fa-whatsapp"></i> WhatsApp Us
+                        </a>
+                    </div>
+                </div>
+            </section>
+
+            <div class="fade-in-content" style="max-width: 1000px; margin: 0 auto 40px auto;">
+                <div style="background: rgba(247, 244, 229, 0.95); padding: 40px; border-radius: 15px; display: flex; align-items: center; gap: 30px; box-shadow: 0 15px 35px rgba(0,0,0,0.3); border: 1px solid rgba(212, 175, 55, 0.4); flex-wrap: wrap; justify-content: center;">
+                    <img src="person_8.png" alt="José Luis Cómbita" style="width: 120px; height: 120px; border-radius: 50%; object-fit: cover; box-shadow: 0 4px 15px rgba(0,0,0,0.2);">
+                    <div style="flex: 1; min-width: 300px; text-align: left;">
+                        <h4 style="color: #000000; font-size: 20px; font-weight: 500; line-height: 1.6; margin: 0 0 15px 0;"
+                            data-en='"I highly recommend Christopher as an exceptional English teacher. As a native speaker, he has a deep understanding of the language, but what truly sets him apart is his ability to guide students toward fluency and confidence. His teaching focuses on practical communication, personalized feedback, and building a strong foundation in both speaking and listening skills. With his patience and encouragement, I&#39;ve seen tremendous improvement in my ability to express myself in English. If you&#39;re looking to improve your fluency and feel more confident using English, Christopher is the ideal teacher."'
+                            data-es='"Recomiendo ampliamente a Christopher como un profesor de inglés excepcional. Como hablante nativo, tiene un profundo conocimiento del idioma, pero lo que realmente lo distingue es su capacidad para guiar a los estudiantes hacia la fluidez y la confianza. Su enseñanza se centra en la comunicación práctica, la retroalimentación personalizada y la construcción de una base sólida en habilidades tanto orales como auditivas. Con su paciencia y motivación, he visto una mejora tremenda en mi capacidad para expresarme en inglés. Si buscas mejorar tu fluidez y sentirte más seguro usando el inglés, Christopher es el profesor ideal."'>
+                            "Recomiendo ampliamente a Christopher como un profesor de inglés excepcional. Como hablante nativo, tiene un profundo conocimiento del idioma, pero lo que realmente lo distingue es su capacidad para guiar a los estudiantes hacia la fluidez y la confianza. Su enseñanza se centra en la comunicación práctica, la retroalimentación personalizada y la construcción de una base sólida en habilidades tanto orales como auditivas. Con su paciencia y motivación, he visto una mejora tremenda en mi capacidad para expresarme en inglés. Si buscas mejorar tu fluidez y sentirte más seguro usando el inglés, Christopher es el profesor ideal."
+                        </h4>
+                        <p style="color: #1a1a3e; margin: 0; font-weight: bold; font-size: 16px;">— José Luis Cómbita</p>
+                        <p style="color: #666; margin: 5px 0 0 0; font-size: 14px; font-style: italic;" 
+                           data-en="Biologist, M.Sc. Sciences (Ecology)" 
+                           data-es="Biólogo, Mag. Ciencias (Ecología)">
+                           Biólogo, Mag. Ciencias (Ecología)
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <section class="section-hero-box">
+                <h2 class="white-heading" data-en="Frequently Asked Questions" data-es="Preguntas Frecuentes">Preguntas Frecuentes</h2>
+                
+                <div class="faq-list">
+                    
+                    <details>
+                        <summary data-en="How do we fix the schedule?" data-es="¿Cómo fijamos el horario?">¿Cómo fijamos el horario?</summary>
+                        <p class="faq-answer" data-en="Because scheduling is complex and availability changes, we will coordinate directly with you via email or WhatsApp to find the perfect weekly slots before you make any payment." data-es="Debido a que la programación es compleja y la disponibilidad cambia, nos coordinaremos directamente contigo a través de correo electrónico o WhatsApp para encontrar los horarios semanales perfectos antes de realizar cualquier pago.">
+                            Debido a que la programación es compleja y la disponibilidad cambia, nos coordinaremos directamente contigo a través de correo electrónico o WhatsApp para encontrar los horarios semanales perfectos antes de realizar cualquier pago.
+                        </p>
+                    </details>
+
+                    <details>
+                        <summary data-en="What platform is used for the classes?" data-es="¿Qué plataforma se utiliza para las clases?">¿Qué plataforma se utiliza para las clases?</summary>
+                        <p class="faq-answer" data-en="We typically use Google Meet to provide a stable, high-quality video connection for our live sessions." data-es="Generalmente utilizamos Google Meet para proporcionar una conexión de video estable y de alta calidad para nuestras sesiones en vivo.">
+                            Generalmente utilizamos Google Meet para proporcionar una conexión de video estable y de alta calidad para nuestras sesiones en vivo.
+                        </p>
+                    </details>
+
+                    <details>
+                        <summary data-en="Can I reschedule a session?" data-es="¿Puedo reprogramar una sesión?">¿Puedo reprogramar una sesión?</summary>
+                        <p class="faq-answer" data-en="Yes, we allow rescheduling with at least 24 hours' notice. Sessions must be completed within the current 4-week cycle." data-es="Sí, permitimos reprogramaciones con al menos 24 horas de antelación. Las sesiones deben completarse dentro del ciclo actual de 4 semanas.">
+                            Sí, permitimos reprogramaciones con al menos 24 horas de antelación. Las sesiones deben completarse dentro del ciclo actual de 4 semanas.
+                        </p>
+                    </details>
+
+                    <details>
+                        <summary data-en="What happens if I miss a class without notice?" data-es="¿Qué pasa si falto a una clase sin avisar?">¿Qué pasa si falto a una clase sin avisar?</summary>
+                        <p class="faq-answer" data-en="Because my schedule is highly limited, no-shows or cancellations with less than 24 hours' notice cannot be rescheduled and will be counted as a completed class." data-es="Debido a que mi agenda es muy limitada, las ausencias o cancelaciones con menos de 24 horas de antelación no se pueden reprogramar y se considerarán como una clase completada.">
+                            Debido a que mi agenda es muy limitada, las ausencias o cancelaciones con menos de 24 horas de antelación no se pueden reprogramar y se considerarán como una clase completada.
+                        </p>
+                    </details>
+
+                    <details>
+                        <summary data-en="Do I need to buy any textbooks?" data-es="¿Necesito comprar algún libro de texto?">¿Necesito comprar algún libro de texto?</summary>
+                        <p class="faq-answer" data-en="No. All digital materials, including custom exercises and access to our AI tools like the SmarTranslator, are fully included in your package." data-es="No. Todos los materiales digitales, incluyendo ejercicios personalizados y acceso a nuestras herramientas de IA como el SmarTraductor, están totalmente incluidos en tu paquete.">
+                            No. Todos los materiales digitales, incluyendo ejercicios personalizados y acceso a nuestras herramientas de IA como el SmarTraductor, están totalmente incluidos en tu paquete.
+                        </p>
+                    </details>
+
+                    <details>
+                        <summary data-en="Will I have homework between sessions?" data-es="¿Tendré tareas entre las sesiones?">¿Tendré tareas entre las sesiones?</summary>
+                        <p class="faq-answer" data-en="Yes. To maximize our 1-to-1 time, I assign targeted exercises, reading, or listening practice to complete independently between our live sessions. Please note that the lower the intensity of your package, the more emphasis you must place on extra study between classes to maintain progress." data-es="Sí. Para maximizar nuestro tiempo 1 a 1, asigno ejercicios específicos, lecturas o prácticas de escucha para completar de forma independiente. Ten en cuenta que a menor intensidad de tu paquete, mayor énfasis deberás poner en el estudio adicional entre clases para mantener el progreso.">
+                            Sí. Para maximizar nuestro tiempo 1 a 1, asigno ejercicios específicos, lecturas o prácticas de escucha para completar de forma independiente. Ten en cuenta que a menor intensidad de tu paquete, mayor énfasis deberás poner en el estudio adicional entre clases para mantener el progreso.
+                        </p>
+                    </details>
+
+                    <details>
+                        <summary data-en="Can I change my package intensity later?" data-es="¿Puedo cambiar la intensidad de mi paquete más adelante?">¿Puedo cambiar la intensidad de mi paquete más adelante?</summary>
+                        <p class="faq-answer" data-en="Absolutely. At the end of each 4-week cycle, you can choose to upgrade or downgrade your hours for the upcoming month based on your schedule and goals." data-es="Absolutamente. Al final de cada ciclo de 4 semanas, puedes elegir aumentar o reducir tus horas para el mes siguiente según tus horarios y objetivos.">
+                            Absolutamente. Al final de cada ciclo de 4 semanas, puedes elegir aumentar o reducir tus horas para el mes siguiente según tus horarios y objetivos.
+                        </p>
+                    </details>
+
+                    <details>
+                        <summary data-en="Do I need to have an advanced level to start?" data-es="¿Necesito tener un nivel avanzado para empezar?">¿Necesito tener un nivel avanzado para empezar?</summary>
+                        <p class="faq-answer" data-en="Not at all. Whether you are building a foundational base or preparing for a high-stakes corporate interview, the bespoke nature of these classes means we start exactly where you are. However, we highly recommend beginning with our interactive self-study courses and transitioning to 1-to-1 classes once you have mastered the basics." data-es="En absoluto. Ya sea que estés construyendo una base fundamental o preparándote para una entrevista corporativa de alto nivel, la naturaleza personalizada de estas clases significa que comenzamos exactamente donde estás. Sin embargo, recomendamos encarecidamente empezar con nuestros cursos interactivos de autoestudio y hacer la transición a clases 1 a 1 una vez que hayas dominado los conceptos básicos.">
+                            En absoluto. Ya sea que estés construyendo una base fundamental o preparándote para una entrevista corporativa de alto nivel, la naturaleza personalizada de estas clases significa que comenzamos exactamente donde estás. Sin embargo, recomendamos encarecidamente empezar con nuestros cursos interactivos de autoestudio y hacer la transición a clases 1 a 1 una vez que hayas dominado los conceptos básicos.
+                        </p>
+                    </details>
+
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <footer class="main-footer" style="background-color: #1a1a3e;">
+        <div class="footer-content">
+            <div class="footer-social" style="display: flex; gap: 20px; justify-content: center; margin-bottom: 20px;">
+                <a href="https://www.instagram.com/cursosdeinglesoxbridge/" target="_blank" aria-label="Instagram" style="color: #DFDFD0;">
+                    <svg style="width: 18px; height: 18px;" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                </a>
+                <a href="https://www.facebook.com/profile.php?id=61564608544805" target="_blank" aria-label="Facebook" style="color: #DFDFD0;">
+                    <svg style="width: 18px; height: 18px;" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.04C6.5 2.04 2 6.53 2 12.06C2 17.06 5.66 21.21 10.44 21.96V14.96H7.9V12.06H10.44V9.85C10.44 7.34 11.93 5.96 14.22 5.96C15.31 5.96 16.45 6.15 16.45 6.15V8.62H15.19C13.95 8.62 13.56 9.39 13.56 10.18V12.06H16.34L15.89 14.96H13.56V21.96A10 10 0 0 0 22 12.06C22 6.53 17.5 2.04 12 2.04Z"/></svg>
+                </a>
+                <a href="https://www.linkedin.com/in/christopher-harris-13b678153/" target="_blank" aria-label="LinkedIn" style="color: #DFDFD0;">
+                    <svg style="width: 18px; height: 18px;" viewBox="0 0 24 24" fill="currentColor"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+                </a>
+            </div>
+            <p class="footer-text" style="display: flex; align-items: center; justify-content: center; gap: 15px; flex-wrap: wrap; padding-top: 20px; color: #DFDFD0;">
+                <span data-en="© 2026 by Oxbridge English" data-es="© 2026 por Oxbridge English">© 2026 by Oxbridge English</span>
+                <span style="color: #666;">|</span>
+                <a href="privacy.html" style="color: #DFDFD0; text-decoration: none; transition: color 0.3s;" onmouseover="this.style.color='#D4AF37'" onmouseout="this.style.color='#DFDFD0'">
+                    <span data-en="Privacy Policy" data-es="Política de Privacidad">Privacy Policy</span>
+                </a>
+                <span style="color: #666;">|</span>
+                <a href="terms.html" style="color: #DFDFD0; text-decoration: none; transition: color 0.3s;" onmouseover="this.style.color='#D4AF37'" onmouseout="this.style.color='#DFDFD0'">
+                    <span data-en="Terms & Conditions" data-es="Términos y Condiciones">Terms & Conditions</span>
+                </a>
+                <img src="logo_jpg_003.jpg" alt="Oxbridge English" style="height: 30px; width: auto; object-fit: contain;">
+            </p>
+        </div>
+    </footer>
+
+    <script src="script.js?v=3"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const dropdownToggle = document.getElementById('courses-dropdown-toggle');
+            if (dropdownToggle) {
+                dropdownToggle.addEventListener('click', (e) => {
+                    if (window.innerWidth <= 768) {
+                        e.preventDefault();
+                        dropdownToggle.parentElement.classList.toggle('active-mobile');
+                    }
+                });
+            }
+
+            const langOptions = document.querySelectorAll('.lang-option');
+            const elementsToTranslate = document.querySelectorAll('[data-en][data-es]');
+
+            langOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    const lang = this.getAttribute('data-lang');
+                    
+                    langOptions.forEach(opt => opt.classList.remove('active'));
+                    this.classList.add('active');
+
+                    elementsToTranslate.forEach(el => {
+                        const translation = el.getAttribute('data-' + lang);
+                        if (translation) {
+                            el.innerHTML = translation;
+                        }
+                    });
+
+                    localStorage.setItem('preferredLanguage', lang);
+                    document.documentElement.lang = lang;
+                });
+            });
+
+            const savedLang = localStorage.getItem('preferredLanguage') || 'en';
+            const activeBtn = document.querySelector(`.lang-option[data-lang="${savedLang}"]`);
+            if (activeBtn) {
+                activeBtn.click();
+            }
+        });
+    </script>
+</body>
+</html>
