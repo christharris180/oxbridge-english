@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <!-- Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-BW4FK9RBTY"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
@@ -16,13 +15,11 @@
     <title>Oxbridge English | Aprendizaje Independiente de Inglés con Tecnología</title>
     <meta name="description" content="Olvídate de academias caras. Domina el inglés de forma independiente con un profesor nativo virtual, herramientas con IA y ejercicios a tu propio ritmo.">
     
-    <!-- SEO & Meta: Canonical -->
     <link rel="canonical" href="https://oxbridge-english.com/">
 
     <link rel="icon" type="image/png" href="https://oxbridge-english.com/favicon-192x192.png">
     <link rel="apple-touch-icon" href="https://oxbridge-english.com/favicon-192x192.png">
     
-    <!-- Full Open Graph Suite -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://oxbridge-english.com/">
     <meta property="og:title" content="Oxbridge English | Aprende Inglés Online a tu Ritmo">
@@ -30,12 +27,16 @@
     <meta property="og:image" content="https://oxbridge-english.com/ox-head-008.jpg">
     <meta property="og:locale" content="en_US">
     
-    <!-- Asset Loading: Font Awesome 6.4.0 & Roboto -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
     
     <style>
+        /* --- BLACK FADE TRANSITION FIX --- */
+        html {
+            background-color: #000000 !important; /* Forces the lowest canvas level to be black */
+        }
+
         /* Homepage only — remove vertical gaps above/below hero box */
         body {
             display: flex;
@@ -67,7 +68,7 @@
         }
 
         /* --- HEADER & SUB-HEADER REFINEMENTS --- */
-        .hero-title {
+        h1.hero-title {
             font-family: 'Roboto', sans-serif !important;
             font-weight: 300 !important;
             font-size: 3.3rem !important; 
@@ -75,7 +76,7 @@
             letter-spacing: 1px;
         }
 
-        .hero-sub-title {
+        h3.hero-sub-title {
             font-family: 'Roboto', sans-serif !important;
             font-weight: 300 !important;
             color: #D4AF37; /* Gold */
@@ -208,19 +209,19 @@
             transform: scale(1.3);
         }
 
-        /* Dynamic Carousel Nav Highlight */
-        .nav-carousel-highlight {
+        /* Dynamic Carousel Nav Highlight - FIXED SPECIFICITY */
+        #nav-links a.nav-carousel-highlight {
             color: #D4AF37 !important;
-            font-weight: bold !important;
+            font-weight: 500 !important;
             transition: color 0.3s ease;
         }
 
         /* --- MOBILE SPECIFIC FIXES --- */
         @media (max-width: 768px) {
-            .hero-sub-title {
+            h3.hero-sub-title {
                 display: none !important;
             }
-            .hero-title {
+            h1.hero-title {
                 font-size: 2.2rem !important;
             }
             a.cta-button.home-cta-small {
@@ -239,8 +240,35 @@
                 margin-bottom: 15px; 
             }
 
+            .hero-content-home {
+                align-items: center !important;
+                text-align: center !important;
+            }
+
+            .hero-text-wrapper {
+                width: 100% !important;
+                max-width: 100% !important;
+                margin: 0 auto !important;
+                align-self: center !important;
+            }
+
             .hero-carousel-container {
-                margin-top: 50px; 
+                width: 100% !important;
+                max-width: 100% !important;
+                margin-top: 50px;
+                margin-left: auto !important;
+                margin-right: auto !important;
+            }
+
+            .hero-slide {
+                align-items: center !important;
+                text-align: center !important;
+            }
+
+            .slide-heading,
+            .slide-text {
+                width: 100% !important;
+                text-align: center !important;
             }
 
             .carousel-dots {
@@ -248,6 +276,19 @@
             }
         }
     </style>
+
+    <script>
+        function forceOpenMenu(event) {
+            event.preventDefault();
+            event.stopPropagation();
+            var nav = document.getElementById('nav-links');
+            if (nav.classList.contains('mobile-force-open')) {
+                nav.classList.remove('mobile-force-open');
+            } else {
+                nav.classList.add('mobile-force-open');
+            }
+        }
+    </script>
 </head>
 <body>
     <video autoplay muted loop playsinline class="background-video" poster="ox-head-008.jpg">
@@ -256,23 +297,38 @@
 
     <nav class="main-nav">
         <div class="nav-container">
-            <button class="mobile-menu-toggle">☰</button>
+            <button class="mobile-menu-toggle" id="mobile-toggle" onclick="forceOpenMenu(event)">☰</button>
             
             <div class="logo">
                 <img src="ox-head-008.jpg" alt="Oxbridge English Logo">
-                <h1 data-en="Oxbridge English" data-es="Oxbridge English">Oxbridge English</h1>
+                <h4 data-en="Oxbridge English" data-es="Oxbridge English" style="color: #DFDFD0;">Oxbridge English</h4>
             </div>
             
-            <ul class="nav-links">
-                <li><a href="/" class="active" data-en="Home" data-es="Inicio">Home</a></li>
-                <li><a href="courses.html" data-en="Courses" data-es="Cursos">Courses</a></li>
-                <li><a href="enroll.html" data-en="Enroll" data-es="Inscribirse">Enroll</a></li>
-                <li><a href="books.html" data-en="Books" data-es="Libros">Books</a></li>
-                <li><a href="audio.html" data-en="Audio" data-es="Audio">Audio</a></li>
-                <li><a href="translator.html" data-en="Translator" data-es="Traductor">Translator</a></li>
+            <ul class="nav-links" id="nav-links">
+                <li><a href="index.html" class="active" data-en="Home" data-es="Inicio">Home</a></li>
+                
+                <li><a href="recommendations.html" data-en="About Us" data-es="Quiénes Somos">About Us</a></li>
+                
+                <li class="dropdown">
+                    <a href="javascript:void(0);" id="courses-dropdown-toggle" data-en="Courses <i class='fa-solid fa-caret-down'></i>" data-es="Cursos <i class='fa-solid fa-caret-down'></i>">Courses <i class="fa-solid fa-caret-down"></i></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="interactive-courses.html" data-en="Interactive Courses" data-es="Cursos Interactivos">Interactive Courses</a></li>
+                        <li><a href="1-to-1-courses.html" data-en="1 to 1 Courses" data-es="Cursos 1 a 1">1 to 1 Courses</a></li>
+                        <li><a href="empresas.html" data-en="English for Companies" data-es="Inglés para Empresas">English for Companies</a></li>
+                        <li><a href="icfes.html" data-en="ICFES Preparation" data-es="Preparación ICFES">ICFES Preparation</a></li>
+                    </ul>
+                </li>
+                
                 <li><a href="placement-test.html" data-en="Level Test" data-es="Test de Nivel">Level Test</a></li>
-                <li><a href="recommendations.html" data-en="Recommendations" data-es="Recomendaciones">Recommendations</a></li>
+                
+                <li><a href="books.html" data-en="Books" data-es="Libros">Books</a></li>
+                
+                <li><a href="audio.html" data-en="Audio" data-es="Audio">Audio</a></li>
+                
+                <li><a href="translator.html" data-en="Translator" data-es="Traductor">Translator</a></li>
+                
                 <li><a href="blog.html" data-en="Blog" data-es="Blog">Blog</a></li>
+                
                 <li><a href="contact.html" data-en="Contact" data-es="Contacto">Contact</a></li>
             </ul>
             
@@ -296,13 +352,13 @@
         <div class="hero-content hero-content-home">
             <div class="hero-text-wrapper">
                 
-                <h2 class="hero-title" data-en="Oxbridge English" data-es="Oxbridge English">Oxbridge English</h2>
+                <h1 class="hero-title" data-en="Oxbridge English" data-es="Oxbridge English">Oxbridge English</h1>
                 
-                <p class="hero-sub-title" 
+                <h3 class="hero-sub-title" 
                    data-en="Independent English Learning Through Technology" 
                    data-es="Aprendizaje Independiente de Inglés a través de la Tecnología">
                    Independent English Learning Through Technology
-                </p>
+                </h3>
                 
                 <div class="hero-carousel-container">
                     <div class="hero-carousel-track" id="heroCarouselTrack">
@@ -314,7 +370,7 @@
                                data-es="Olvídate de las academias caras. Domina el inglés de forma independiente con un profesor nativo virtual, herramientas de IA y ejercicios inmersivos. Sin suscripciones—solo resultados reales a tu propio ritmo.">
                                 Ditch the expensive academies. Master English independently with a virtual native teacher, custom AI tools, and immersive exercises. No subscriptions—just real results at your own pace.
                             </p>
-                            <a href="courses.html" class="cta-button home-cta-small" data-en="Explore Courses" data-es="Explorar Cursos">Explore Courses</a>
+                            <a href="interactive-courses.html" class="cta-button home-cta-small" data-en="Explore Courses" data-es="Explorar Cursos">Explore Courses</a>
                         </div>
 
                         <div class="hero-slide">
@@ -362,28 +418,27 @@
         <div class="hero-decoration"></div>
     </section>
 
-    <!-- Footer High-Fidelity Update -->
-    <footer class="main-footer">
+    <footer class="main-footer" style="background-color: #1a1a3e;">
         <div class="footer-content">
-            <div class="footer-social">
-                <a href="https://www.instagram.com/cursosdeinglesoxbridge/" target="_blank" aria-label="Instagram">
-                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+            <div class="footer-social" style="display: flex; gap: 20px; justify-content: center; margin-bottom: 20px;">
+                <a href="https://www.instagram.com/cursosdeinglesoxbridge/" target="_blank" aria-label="Instagram" style="color: #DFDFD0;">
+                    <svg style="width: 18px; height: 18px;" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
                 </a>
-                <a href="https://www.facebook.com/profile.php?id=61564608544805" target="_blank" aria-label="Facebook">
-                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+                <a href="https://www.facebook.com/profile.php?id=61564608544805" target="_blank" aria-label="Facebook" style="color: #DFDFD0;">
+                    <svg style="width: 18px; height: 18px;" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.04C6.5 2.04 2 6.53 2 12.06C2 17.06 5.66 21.21 10.44 21.96V14.96H7.9V12.06H10.44V9.85C10.44 7.34 11.93 5.96 14.22 5.96C15.31 5.96 16.45 6.15 16.45 6.15V8.62H15.19C13.95 8.62 13.56 9.39 13.56 10.18V12.06H16.34L15.89 14.96H13.56V21.96A10 10 0 0 0 22 12.06C22 6.53 17.5 2.04 12 2.04Z"/></svg>
                 </a>
-                <a href="https://www.linkedin.com/in/christopher-harris-13b678153/" target="_blank" aria-label="LinkedIn">
-                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+                <a href="https://www.linkedin.com/in/christopher-harris-13b678153/" target="_blank" aria-label="LinkedIn" style="color: #DFDFD0;">
+                    <svg style="width: 18px; height: 18px;" viewBox="0 0 24 24" fill="currentColor"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
                 </a>
             </div>
-            <p class="footer-text" style="display: flex; align-items: center; justify-content: center; gap: 15px; flex-wrap: wrap; padding-top: 20px;">
-                <span data-en="© 2026 by Oxbridge English" data-es="© 2026 por Oxbridge English" style="color: #ffffff;">© 2026 by Oxbridge English</span>
+            <p class="footer-text" style="display: flex; align-items: center; justify-content: center; gap: 15px; flex-wrap: wrap; padding-top: 20px; color: #DFDFD0;">
+                <span data-en="© 2026 by Oxbridge English" data-es="© 2026 por Oxbridge English">© 2026 by Oxbridge English</span>
                 <span style="color: #666;">|</span>
-                <a href="privacy.html" style="color: #ffffff; text-decoration: none; transition: color 0.3s;" onmouseover="this.style.color='#D4AF37'" onmouseout="this.style.color='#ffffff'">
+                <a href="privacy.html" style="color: #DFDFD0; text-decoration: none; transition: color 0.3s;" onmouseover="this.style.color='#D4AF37'" onmouseout="this.style.color='#DFDFD0'">
                     <span data-en="Privacy Policy" data-es="Política de Privacidad">Privacy Policy</span>
                 </a>
                 <span style="color: #666;">|</span>
-                <a href="terms.html" style="color: #ffffff; text-decoration: none; transition: color 0.3s;" onmouseover="this.style.color='#D4AF37'" onmouseout="this.style.color='#ffffff'">
+                <a href="terms.html" style="color: #DFDFD0; text-decoration: none; transition: color 0.3s;" onmouseover="this.style.color='#D4AF37'" onmouseout="this.style.color='#DFDFD0'">
                     <span data-en="Terms & Conditions" data-es="Términos y Condiciones">Terms & Conditions</span>
                 </a>
                 <img src="logo_jpg_003.jpg" alt="Oxbridge English" style="height: 30px; width: auto; object-fit: contain;">
@@ -392,5 +447,47 @@
     </footer>
 
     <script src="script.js?v=3"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const dropdownToggle = document.getElementById('courses-dropdown-toggle');
+            if (dropdownToggle) {
+                dropdownToggle.addEventListener('click', (e) => {
+                    if (window.innerWidth <= 768) {
+                        e.preventDefault();
+                        dropdownToggle.parentElement.classList.toggle('active-mobile');
+                    }
+                });
+            }
+
+            const langOptions = document.querySelectorAll('.lang-option');
+            const elementsToTranslate = document.querySelectorAll('[data-en][data-es]');
+
+            langOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    const lang = this.getAttribute('data-lang');
+                    
+                    langOptions.forEach(opt => opt.classList.remove('active'));
+                    this.classList.add('active');
+
+                    elementsToTranslate.forEach(el => {
+                        const translation = el.getAttribute('data-' + lang);
+                        if (translation) {
+                            el.innerHTML = translation;
+                        }
+                    });
+
+                    localStorage.setItem('preferredLanguage', lang);
+                    document.documentElement.lang = lang;
+                });
+            });
+
+            const savedLang = localStorage.getItem('preferredLanguage') || 'en';
+            const activeBtn = document.querySelector(`.lang-option[data-lang="${savedLang}"]`);
+            if (activeBtn) {
+                activeBtn.click();
+            }
+        });
+    </script>
 </body>
 </html>

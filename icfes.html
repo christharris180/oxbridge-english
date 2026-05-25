@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-BW4FK9RBTY"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-BW4FK9RBTY');
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>Preparación ICFES Saber 11 | Oxbridge English</title>
+    <meta name="description" content="Asegure el futuro de su hijo. Nuestro programa interactivo elimina la frustración del colegio y los prepara para el ICFES y el mercado laboral.">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    
+    <style>
+        /* =========================================
+           PAGE-SPECIFIC STYLES - ICFES
+           ========================================= */
+        
+        body { background-color: transparent !important; }
+        .page-wrapper-transparent { min-height: 100vh; padding-bottom: 60px; }
+
+        .background-video {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            z-index: -2;
+            transform: translateX(-50%) translateY(-50%);
+            object-fit: cover;
+        }
+
+        /* --- HERO BANNER (MATCHES PREVIOUS PAGES) --- */
+        .page-hero {
+            position: relative;
+            /* Sizing matched to Interactive, 1-to-1, and Empresas */
+            padding: 200px 12% 140px 20px; 
+            background-image: url('blue_background_007.jpg');
+            background-size: cover;
+            background-position: center; 
+            border-bottom: 2px solid #D4AF37;
+            
+            /* Flex settings to align the text block to the right */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-end;
+        }
+
+        .hero-text-wrapper {
+            max-width: 750px; 
+            text-align: center; 
+        }
+
+        .page-hero-title { color: #ffffff !important; margin-bottom: 20px !important; text-shadow: 0 2px 10px rgba(0,0,0,0.8); }
+        .page-hero-subtitle { color: #D4AF37 !important; margin-bottom: 40px !important; text-shadow: 0 2px 10px rgba(0,0,0,0.9); }
+
+        /* --- SECTION BOXES --- */
+        .section-hero-box {
+            background-image: url('blue_background_001.jpg');
+            background-size: cover;
+            background-position: center;
+            border-radius: 15px;
+            padding: 60px 40px;
+            border: 1px solid rgba(212, 175, 55, 0.4);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.6);
+            margin-bottom: 40px;
+        }
+
+        .white-heading { color: #ffffff !important; text-align: center; margin-bottom: 40px !important; text-shadow: 0 2px 10px rgba(0,0,0,0.8); }
+        .gold-subheading { color: #D4AF37 !important; margin-bottom: 15px !important; text-shadow: 0 1px 5px rgba(0,0,0,0.5); }
+        .content-paragraph { color: rgba(255,255,255,0.95) !important; text-shadow: 0 1px 5px rgba(0,0,0,0.5); margin-bottom: 20px; line-height: 1.6; }
+
+        /* --- BENEFITS GRID --- */
+        .benefits-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; }
+        .benefit-item { padding: 20px; text-align: center; }
+        .benefit-icon { font-size: 2.5rem; color: #D4AF37; margin-bottom: 20px; text-shadow: 0 2px 10px rgba(0,0,0,0.5); }
+
+        /* --- PRICING & BUNDLES --- */
+        .pricing-content { max-width: 850px; margin: 0 auto; text-align: center; }
+        
+        .bundles-list { display: flex; flex-direction: column; gap: 20px; margin: 40px auto; max-width: 850px; }
+        
+        .bundle-card {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid #D4AF37;
+            border-radius: 20px;
+            padding: 30px 40px;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+            transition: transform 0.2s, background 0.2s;
+        }
+        .bundle-card:hover { background: rgba(255, 255, 255, 0.15); transform: translateY(-2px); }
+        .bundle-info { text-align: left; flex: 1; padding-right: 20px; }
+        
+        .bundle-price { font-size: 1.5rem; color: #ffffff; margin-bottom: 0; text-shadow: 0 1px 5px rgba(0,0,0,0.5); font-weight: 500; }
+        .bundle-action { flex-shrink: 0; }
+
+        .bundle-btn-small {
+            display: inline-block;
+            padding: 16px 35px;
+            background: linear-gradient(180deg, #e8c412 0%, #D4AF37 100%);
+            border-radius: 30px;
+            border: none;
+            text-decoration: none;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            transition: transform 0.2s, filter 0.2s;
+            white-space: nowrap;
+        }
+        .bundle-btn-small:hover { transform: translateY(-2px); filter: brightness(1.1); }
+
+        /* --- BUTTONS --- */
+        .contact-buttons { display: flex; justify-content: center; gap: 20px; margin-top: 40px; flex-wrap: wrap; }
+        .btn-wa { background: rgba(37, 211, 102, 0.15) !important; color: #25D366 !important; border: 1px solid #25D366 !important; box-shadow: 0 6px 15px rgba(0,0,0,0.3) !important; text-decoration: none; display: inline-flex; align-items: center; justify-content: center; padding: 12px 28px; border-radius: 50px; gap: 8px; transition: all 0.3s; }
+        .btn-wa:hover { background: rgba(37, 211, 102, 0.25) !important; transform: translateY(-2px); }
+        .btn-email { background: rgba(255, 255, 255, 0.1) !important; color: #D4AF37 !important; border: 1px solid #D4AF37 !important; box-shadow: 0 6px 15px rgba(0,0,0,0.3) !important; text-decoration: none; display: inline-flex; align-items: center; justify-content: center; padding: 12px 28px; border-radius: 50px; gap: 8px; transition: all 0.3s; }
+        .btn-email:hover { background: rgba(255, 255, 255, 0.2) !important; transform: translateY(-2px); }
+
+        /* --- FAQ --- */
+        .faq-list { max-width: 850px; margin: 0 auto; }
+        details { margin-bottom: 5px; border-bottom: 1px solid rgba(212, 175, 55, 0.3); }
+        details:last-child { border-bottom: none; }
+        summary { padding: 20px 10px; cursor: pointer; color: #D4AF37 !important; display: flex; justify-content: space-between; align-items: center; list-style: none; text-shadow: 0 1px 5px rgba(0,0,0,0.5); margin: 0; font-size: 15px; font-weight: 300; }
+        summary::-webkit-details-marker { display: none; }
+        summary::after { content: '\f078'; font-family: 'Font Awesome 6 Free'; font-weight: 900 !important; font-size: 0.9rem; transition: transform 0.3s; }
+        details[open] summary::after { transform: rotate(180deg); }
+        .faq-answer { padding: 0 10px 25px 10px; color: rgba(255,255,255,0.95) !important; text-shadow: 0 1px 5px rgba(0,0,0,0.5); margin: 0; }
+
+        @media (max-width: 992px) {
+            .page-hero { align-items: center; padding-right: 20px; }
+        }
+        @media (max-width: 768px) {
+            .section-hero-box { padding: 40px 20px; }
+            .contact-buttons { flex-direction: column; }
+            .bundle-card { flex-direction: column; text-align: center; gap: 25px; padding: 30px 20px; }
+            .bundle-info { padding-right: 0; text-align: center; }
+            .bundle-btn-small { width: 100%; text-align: center; }
+        }
+    </style>
+
+    <script>
+        function forceOpenMenu(event) {
+            event.preventDefault(); event.stopPropagation();
+            var nav = document.getElementById('nav-links');
+            if (nav.classList.contains('mobile-force-open')) { nav.classList.remove('mobile-force-open'); } 
+            else { nav.classList.add('mobile-force-open'); }
+        }
+    </script>
+</head>
+<body>
+
+    <video autoplay muted loop playsinline class="background-video">
+        <source src="girl_working_001.mp4" type="video/mp4">
+    </video>
+    <div style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(247, 244, 229, 0.9); z-index: -1; pointer-events: none;"></div>
+
+    <nav class="main-nav">
+        <div class="nav-container">
+            <button class="mobile-menu-toggle" id="mobile-toggle" onclick="forceOpenMenu(event)">☰</button>
+            
+            <div class="logo">
+                <img src="ox-head-008.jpg" alt="Oxbridge English Logo">
+                <h4 data-en="Oxbridge English" data-es="Oxbridge English" style="color: #DFDFD0;">Oxbridge English</h4>
+            </div>
+            
+            <ul class="nav-links" id="nav-links">
+                <li><a href="index.html" data-en="Home" data-es="Inicio">Home</a></li>
+                <li><a href="recommendations.html" data-en="About Us" data-es="Quiénes Somos">About Us</a></li>
+                <li class="dropdown">
+                    <a href="javascript:void(0);" id="courses-dropdown-toggle" data-en="Courses <i class='fa-solid fa-caret-down'></i>" data-es="Cursos <i class='fa-solid fa-caret-down'></i>">Courses <i class="fa-solid fa-caret-down"></i></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="interactive-courses.html" data-en="Interactive Courses" data-es="Cursos Interactivos">Interactive Courses</a></li>
+                        <li><a href="1-to-1-courses.html" data-en="1 to 1 Courses" data-es="Cursos 1 a 1">1 to 1 Courses</a></li>
+                        <li><a href="empresas.html" data-en="English for Companies" data-es="Inglés para Empresas">English for Companies</a></li>
+                        <li><a href="icfes.html" class="active" data-en="ICFES Preparation" data-es="Preparación ICFES">ICFES Preparation</a></li>
+                    </ul>
+                </li>
+                <li><a href="placement-test.html" data-en="Level Test" data-es="Test de Nivel">Level Test</a></li>
+                <li><a href="books.html" data-en="Books" data-es="Libros">Books</a></li>
+                <li><a href="audio.html" data-en="Audio" data-es="Audio">Audio</a></li>
+                <li><a href="translator.html" data-en="Translator" data-es="Traductor">Translator</a></li>
+                <li><a href="blog.html" data-en="Blog" data-es="Blog">Blog</a></li>
+                <li><a href="contact.html" data-en="Contact" data-es="Contacto">Contact</a></li>
+            </ul>
+            
+            <div class="lang-toggle">
+                <button class="lang-option active" data-lang="en"><span class="flag">EN</span></button>
+                <button class="lang-option" data-lang="es"><span class="flag">ES</span></button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="page-wrapper-transparent">
+        
+        <header class="page-hero">
+            <div class="hero-text-wrapper">
+                <h1 class="page-hero-title" data-en="ICFES Saber 11 English Prep" data-es="Preparación Inglés ICFES Saber 11">
+                    Preparación Inglés ICFES Saber 11
+                </h1>
+                <h3 class="page-hero-subtitle" data-en="Secure your child's future. Overcome school frustration and master the most demanded skill in the job market with our interactive bundles." data-es="Asegure el futuro de su hijo(a). Supere la frustración del colegio y domine la habilidad más exigida por el mercado laboral con nuestros paquetes interactivos.">
+                    Asegure el futuro de su hijo(a). Supere la frustración del colegio y domine la habilidad más exigida por el mercado laboral con nuestros paquetes interactivos.
+                </h3>
+                <a href="#enroll" class="cta-button" style="border:none; text-decoration: none; display: inline-block;">
+                    <h5 style="margin: 0; color: #1a1a3e;" data-en="View Bundles" data-es="Ver Paquetes de Estudio">Ver Paquetes de Estudio</h5>
+                </a>
+            </div>
+        </header>
+
+        <main style="max-width: 1200px; margin: 40px auto; padding: 0 20px;">
+            
+            <section class="section-hero-box" style="text-align: center; padding: 40px;">
+                <img src="learning%20model%20spanish%20009.png" 
+                     data-src-en="learning%20model%20english%20009.png" 
+                     data-src-es="learning%20model%20spanish%20009.png" 
+                     alt="Learning Model" 
+                     style="max-width: 100%; height: auto; border-radius: 10px; box-shadow: 0 8px 25px rgba(0,0,0,0.5);">
+            </section>
+
+            <section class="section-hero-box">
+                <h2 class="white-heading" data-en="Why Prepare Your Child With Us?" data-es="¿Por qué preparar a su hijo(a) con nosotros?">
+                    ¿Por qué preparar a su hijo(a) con nosotros?
+                </h2>
+                
+                <div class="benefits-grid">
+                    <div class="benefit-item">
+                        <i class="fa-solid fa-house-user benefit-icon"></i>
+                        <h3 class="gold-subheading" data-en="Learn Without Pressure" data-es="Aprender Sin Presión">Aprender Sin Presión</h3>
+                        <p class="content-paragraph" data-en="If your child has struggled with English in school, our platform offers a safe haven. They will study away from classroom stress, bad grades, and peer pressure, learning at their own pace." data-es="Si su hijo(a) ha tenido dificultades con el inglés en el colegio, nuestra plataforma es un refugio. Estudiará lejos del estrés del aula, las malas notas y la presión, aprendiendo a su propio ritmo.">Si su hijo(a) ha tenido dificultades con el inglés en el colegio, nuestra plataforma es un refugio. Estudiará lejos del estrés del aula, las malas notas y la presión, aprendiendo a su propio ritmo.</p>
+                    </div>
+                    <div class="benefit-item">
+                        <i class="fa-solid fa-briefcase benefit-icon"></i>
+                        <h3 class="gold-subheading" data-en="The #1 Job Market Skill" data-es="La Habilidad #1 del Mercado">La Habilidad #1 del Mercado</h3>
+                        <p class="content-paragraph" data-en="Beyond the ICFES score, English is the absolute requirement for professional success today. Give them a real competitive advantage before they even step into university." data-es="Más allá del puntaje del ICFES, el inglés es hoy el requisito indispensable para el éxito profesional. Dele una ventaja competitiva real antes de que pise la universidad.">Más allá del puntaje del ICFES, el inglés es hoy el requisito indispensable para el éxito profesional. Dele una ventaja competitiva real antes de que pise la universidad.</p>
+                    </div>
+                    <div class="benefit-item">
+                        <i class="fa-solid fa-file-signature benefit-icon"></i>
+                        <h3 class="gold-subheading" data-en="Exclusive Mock Exams" data-es="Simulacros Exclusivos">Simulacros Exclusivos</h3>
+                        <p class="content-paragraph" data-en="Our bundles include mock exams designed specifically around the ICFES format. They will practice reading comprehension exactly as it appears on the real test." data-es="Nuestros paquetes incluyen simulacros diseñados específicamente con el formato ICFES. Practicarán la comprensión de lectura exactamente como aparece en la prueba real.">Nuestros paquetes incluyen simulacros diseñados específicamente con el formato ICFES. Practicarán la comprensión de lectura exactamente como aparece en la prueba real.</p>
+                    </div>
+                </div>
+            </section>
+
+            <div class="fade-in-content" style="max-width: 1000px; margin: 0 auto 40px auto;">
+                <div style="background: rgba(247, 244, 229, 0.95); padding: 40px; border-radius: 15px; display: flex; align-items: center; gap: 30px; box-shadow: 0 15px 35px rgba(0,0,0,0.3); border: 1px solid rgba(212, 175, 55, 0.4); flex-wrap: wrap; justify-content: center;">
+                    <img src="person_14.png" alt="Erika Vanessa Correa Leon" style="width: 120px; height: 120px; border-radius: 50%; object-fit: cover; box-shadow: 0 4px 15px rgba(0,0,0,0.2);">
+                    <div style="flex: 1; min-width: 300px; text-align: left;">
+                        <h4 style="color: #000000; font-size: 20px; font-weight: 500; line-height: 1.6; margin: 0 0 15px 0;"
+                            data-en='"The course is very comprehensive and covers all the basics in a structured and easy-to-follow manner. Highly recommended for beginners."'
+                            data-es='"El curso es muy completo y cubre todas las bases de una manera estructurada y fácil de seguir. Muy recomendado para principiantes."'>
+                            "El curso es muy completo y cubre todas las bases de una manera estructurada y fácil de seguir. Muy recomendado para principiantes."
+                        </h4>
+                        <p style="color: #1a1a3e; margin: 0; font-weight: bold; font-size: 16px;">— Erika Vanessa Correa Leon</p>
+                        <p style="color: #666; margin: 5px 0 0 0; font-size: 14px; font-style: italic;" 
+                           data-en="Student" 
+                           data-es="Estudiante">
+                           Estudiante
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <section class="section-hero-box">
+                <h2 class="white-heading" data-en="Our Preparation Methodology" data-es="Nuestra Metodología de Preparación">
+                    Nuestra Metodología de Preparación
+                </h2>
+                
+                <div class="benefits-grid">
+                    <div class="benefit-item" style="background: rgba(255, 255, 255, 0.1); border: 1px solid #D4AF37; border-radius: 30px; padding: 30px; box-shadow: 0 6px 15px rgba(0,0,0,0.3); transition: transform 0.2s, background 0.2s;" onmouseover="this.style.background='rgba(255, 255, 255, 0.15)';" onmouseout="this.style.background='rgba(255, 255, 255, 0.1)';">
+                        <i class="fa-solid fa-laptop-code benefit-icon"></i>
+                        <h3 class="gold-subheading" data-en="Phase 1: Autonomous Foundation" data-es="Fase 1: Construcción Autónoma">Fase 1: Construcción Autónoma</h3>
+                        <p class="content-paragraph" data-en="We strongly recommend starting at least 6 months in advance. Your child will use our interactive courses to raise their baseline English level step by step, without the anxiety of a traditional classroom." data-es="Recomendamos iniciar con al menos 6 meses de anticipación. Su hijo(a) usará nuestros cursos interactivos para elevar su nivel base de inglés paso a paso, sin la ansiedad del salón de clases.">
+                            Recomendamos iniciar con al menos 6 meses de anticipación. Su hijo(a) usará nuestros cursos interactivos para elevar su nivel base de inglés paso a paso, sin la ansiedad del salón de clases.
+                        </p>
+                    </div>
+                    <div class="benefit-item" style="background: rgba(255, 255, 255, 0.1); border: 1px solid #D4AF37; border-radius: 30px; padding: 30px; box-shadow: 0 6px 15px rgba(0,0,0,0.3); transition: transform 0.2s, background 0.2s;" onmouseover="this.style.background='rgba(255, 255, 255, 0.15)';" onmouseout="this.style.background='rgba(255, 255, 255, 0.1)';">
+                        <i class="fa-solid fa-stopwatch benefit-icon"></i>
+                        <h3 class="gold-subheading" data-en="Phase 2: Test Format Practice" data-es="Fase 2: Práctica de Formato">Fase 2: Práctica de Formato</h3>
+                        <p class="content-paragraph" data-en="Once they have absorbed the grammar and vocabulary from the courses and books, they will transition to the mock exams on our platform, training their brain to solve ICFES-style questions." data-es="Una vez absorbida la gramática y el vocabulario de los cursos y libros, pasarán a resolver los simulacros en nuestra plataforma, entrenando su cerebro para resolver preguntas tipo ICFES.">
+                            Una vez absorbida la gramática y el vocabulario de los cursos y libros, pasarán a resolver los simulacros en nuestra plataforma, entrenando su cerebro para resolver preguntas tipo ICFES.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="enroll" class="section-hero-box">
+                <h2 class="white-heading" data-en="Preparation Bundles (via Hotmart)" data-es="Paquetes de Preparación (vía Hotmart)">
+                    Paquetes de Preparación (vía Hotmart)
+                </h2>
+                
+                <div class="pricing-content">
+                    <p class="content-paragraph" style="font-size: 1.1rem;" data-en="We have structured our materials into comprehensive bundles hosted securely on Hotmart. Choose the level that fits your child's current needs." data-es="Hemos estructurado nuestros materiales en paquetes completos alojados de forma segura en Hotmart. Elija el nivel que se adapte a las necesidades de su hijo(a).">
+                        Hemos estructurado nuestros materiales en paquetes completos alojados de forma segura en Hotmart. Elija el nivel que se adapte a las necesidades de su hijo(a).
+                    </p>
+
+                    <div class="bundles-list">
+                        
+                        <div class="bundle-card">
+                            <div class="bundle-info">
+                                <h3 class="gold-subheading" style="font-size: 1.6rem; margin-bottom: 5px !important;" data-en="Basic Level Bundle" data-es="Paquete Nivel Básico">Paquete Nivel Básico</h3>
+                                <p class="content-paragraph" style="margin-bottom: 15px;" data-en="Courses 1 & 2 + Book 1 + 2 Mock Exams" data-es="Cursos 1 y 2 + Libro 1 + 2 Simulacros ICFES">Cursos 1 y 2 + Libro 1 + 2 Simulacros ICFES</p>
+                                <h4 class="bundle-price">$450.000 COP</h4>
+                            </div>
+                            <div class="bundle-action">
+                                <a href="https://hotmart.com/" target="_blank" class="bundle-btn-small">
+                                    <h5 style="margin: 0; color: #1a1a3e;" data-en="Buy Now" data-es="Comprar Ahora">Comprar Ahora</h5>
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="bundle-card">
+                            <div class="bundle-info">
+                                <h3 class="gold-subheading" style="font-size: 1.6rem; margin-bottom: 5px !important;" data-en="Intermediate Level Bundle" data-es="Paquete Nivel Intermedio">Paquete Nivel Intermedio</h3>
+                                <p class="content-paragraph" style="margin-bottom: 15px;" data-en="Courses 3 & 4 + Book 2 + 2 Mock Exams" data-es="Cursos 3 y 4 + Libro 2 + 2 Simulacros ICFES">Cursos 3 y 4 + Libro 2 + 2 Simulacros ICFES</p>
+                                <h4 class="bundle-price">$450.000 COP</h4>
+                            </div>
+                            <div class="bundle-action">
+                                <a href="https://hotmart.com/" target="_blank" class="bundle-btn-small">
+                                    <h5 style="margin: 0; color: #1a1a3e;" data-en="Buy Now" data-es="Comprar Ahora">Comprar Ahora</h5>
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="bundle-card">
+                            <div class="bundle-info">
+                                <h3 class="gold-subheading" style="font-size: 1.6rem; margin-bottom: 5px !important;" data-en="Complete ICFES Bundle" data-es="Paquete Completo ICFES">Paquete Completo ICFES</h3>
+                                <p class="content-paragraph" style="margin-bottom: 15px;" data-en="All 4 Courses + Both Books + 4 Mock Exams" data-es="Los 4 Cursos + Ambos Libros + 4 Simulacros ICFES">Los 4 Cursos + Ambos Libros + 4 Simulacros ICFES</p>
+                                <h4 class="bundle-price">$800.000 COP</h4>
+                            </div>
+                            <div class="bundle-action">
+                                <a href="https://hotmart.com/" target="_blank" class="bundle-btn-small">
+                                    <h5 style="margin: 0; color: #1a1a3e;" data-en="Buy Now" data-es="Comprar Ahora">Comprar Ahora</h5>
+                                </a>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <p class="content-paragraph" data-en="Ready to give them a head start? Check out the bundles directly or contact us if you need guidance:" data-es="¿Listo para darles una ventaja real? Adquiera el paquete directamente o contáctenos si necesita orientación:">
+                        ¿Listo para darles una ventaja real? Adquiera el paquete directamente o contáctenos si necesita orientación:
+                    </p>
+
+                    <div class="contact-buttons">
+                        <a href="mailto:oxbridgeenglishcourses@gmail.com" class="btn-email">
+                            <i class="fa-regular fa-envelope"></i>
+                            <h5 style="margin: 0;" data-en="Email Us" data-es="Escríbanos por Correo">Escríbanos por Correo</h5>
+                        </a>
+                        <a href="https://wa.me/573133813833" target="_blank" class="btn-wa">
+                            <i class="fa-brands fa-whatsapp"></i>
+                            <h5 style="margin: 0;" data-en="WhatsApp Us" data-es="Escríbanos por WhatsApp">Escríbanos por WhatsApp</h5>
+                        </a>
+                    </div>
+                </div>
+            </section>
+
+            <div class="fade-in-content" style="max-width: 1000px; margin: 0 auto 40px auto;">
+                <div style="background: rgba(247, 244, 229, 0.95); padding: 40px; border-radius: 15px; display: flex; align-items: center; gap: 30px; box-shadow: 0 15px 35px rgba(0,0,0,0.3); border: 1px solid rgba(212, 175, 55, 0.4); flex-wrap: wrap; justify-content: center;">
+                    <img src="person_5.png" alt="Juan Sebastián Silva Cáceres" style="width: 120px; height: 120px; border-radius: 50%; object-fit: cover; box-shadow: 0 4px 15px rgba(0,0,0,0.2);">
+                    <div style="flex: 1; min-width: 300px; text-align: left;">
+                        <h4 style="color: #000000; font-size: 20px; font-weight: 500; line-height: 1.6; margin: 0 0 15px 0;"
+                            data-en='"Christopher is the best teacher I have ever met for learning English. He is a person with great values and a long track record in teaching. He uses educational strategies that make learning a second language easier, and moreover, he builds great confidence for holding conversations in English. I highly recommend his work as a teacher and invite anyone interested in learning English to choose him, whether for professional purposes (interviews, exams, etc.), traveling abroad, or improving listening, speaking, and writing skills."'
+                            data-es='"Christopher es el mejor docente que he podido conocer para aprender inglés, es una persona con grandes valores y una larga trayectoria en la docencia, tiene estrategias educativas que facilitan el aprendizaje de un segundo idioma y además de ello, genera gran seguridad para desarrollar conversaciones en inglés. Recomiendo totalmente su trabajo como docente e invito a las personas interesadas en aprender inglés a elegirlo, para temas laborales (Entrevistas, exámenes y demás), viaje a otro país o mejorar habilidades de listening, speaking, writing."'>
+                            "Christopher es el mejor docente que he podido conocer para aprender inglés, es una persona con grandes valores y una larga trayectoria en la docencia, tiene estrategias educativas que facilitan el aprendizaje de un segundo idioma y además de ello, genera gran seguridad para desarrollar conversaciones en inglés. Recomiendo totalmente su trabajo como docente e invito a las personas interesadas en aprender inglés a elegirlo, para temas laborales (Entrevistas, exámenes y demás), viaje a otro país o mejorar habilidades de listening, speaking, writing."
+                        </h4>
+                        <p style="color: #1a1a3e; margin: 0; font-weight: bold; font-size: 16px;">— Juan Sebastián Silva Cáceres</p>
+                        <p style="color: #666; margin: 5px 0 0 0; font-size: 14px; font-style: italic;" 
+                           data-en="Environmental Engineer" 
+                           data-es="Ingeniero Ambiental">
+                           Ingeniero Ambiental
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <section class="section-hero-box">
+                <h2 class="white-heading" data-en="Frequently Asked Questions" data-es="Preguntas Frecuentes">
+                    Preguntas Frecuentes
+                </h2>
+                
+                <div class="faq-list">
+                    <details>
+                        <summary data-en="My child has always struggled with English in school. Will this work?" data-es="Mi hijo(a) siempre ha odiado el inglés en el colegio. ¿Esto funcionará?">Mi hijo(a) siempre ha odiado el inglés en el colegio. ¿Esto funcionará?</summary>
+                        <p class="faq-answer" data-en="Yes. That is exactly why we designed this as a self-study program. We remove the anxiety, the fear of participating in front of classmates, and the pressure of school grades. They can study in a stress-free environment, making mistakes safely and building real confidence." data-es="Sí. Es exactamente por eso que diseñamos esto como un programa de autoestudio. Eliminamos la ansiedad, el miedo a participar frente a compañeros y la presión de las notas del colegio. Podrá estudiar en un entorno sin estrés, equivocándose de forma segura y construyendo confianza real.">
+                            Sí. Es exactamente por eso que diseñamos esto como un programa de autoestudio. Eliminamos la ansiedad, el miedo a participar frente a compañeros y la presión de las notas del colegio. Podrá estudiar en un entorno sin estrés, equivocándose de forma segura y construyendo confianza real.
+                        </p>
+                    </details>
+
+                    <details>
+                        <summary data-en="How do the mock exams work?" data-es="¿Cómo funcionan los simulacros?">¿Cómo funcionan los simulacros?</summary>
+                        <p class="faq-answer" data-en="The mock exams are hosted directly on the Hotmart platform as interactive test pages. They mimic the reading formats and question styles of the actual ICFES exam to train your child's reading speed and test-taking strategy." data-es="Los simulacros están alojados directamente en la plataforma de Hotmart como páginas de evaluación interactivas. Imitan los formatos de lectura y estilos de preguntas del examen ICFES real para entrenar la velocidad de lectura y la estrategia de su hijo(a).">
+                            Los simulacros están alojados directamente en la plataforma de Hotmart como páginas de evaluación interactivas. Imitan los formatos de lectura y estilos de preguntas del examen ICFES real para entrenar la velocidad de lectura y la estrategia de su hijo(a).
+                        </p>
+                    </details>
+
+                    <details>
+                        <summary data-en="Are there live classes or tutor check-ins?" data-es="¿Hay clases en vivo o seguimiento de un tutor?">¿Hay clases en vivo o seguimiento de un tutor?</summary>
+                        <p class="faq-answer" data-en="No. Once the bundle is purchased on Hotmart, the student has full, immediate access to all courses, books, and exams to study 100% autonomously. We will not interrupt their process, allowing them to fit the preparation around their school schedule." data-es="No. Una vez adquirido el paquete en Hotmart, el estudiante tiene acceso total e inmediato a todos los cursos, libros y exámenes para estudiar 100% de forma autónoma. No interrumpiremos su proceso, permitiéndole acomodar la preparación a su horario escolar.">
+                            No. Una vez adquirido el paquete en Hotmart, el estudiante tiene acceso total e inmediato a todos los cursos, libros y exámenes para estudiar 100% de forma autónoma. No interrumpiremos su proceso, permitiéndole acomodar la preparación a su horario escolar.
+                        </p>
+                    </details>
+
+                    <details>
+                        <summary data-en="How is the payment handled?" data-es="¿Cómo se realiza el pago?">¿Cómo se realiza el pago?</summary>
+                        <p class="faq-answer" data-en="All ICFES preparation bundles are sold exclusively through Hotmart, which guarantees a 100% secure transaction and immediate access to the materials using any credit/debit card or local payment methods." data-es="Todos los paquetes de preparación ICFES se venden exclusivamente a través de Hotmart, lo que garantiza una transacción 100% segura y acceso inmediato a los materiales usando cualquier tarjeta de crédito/débito o métodos de pago locales.">
+                            Todos los paquetes de preparación ICFES se venden exclusivamente a través de Hotmart, lo que garantiza una transacción 100% segura y acceso inmediato a los materiales usando cualquier tarjeta de crédito/débito o métodos de pago locales.
+                        </p>
+                    </details>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <footer class="main-footer" style="background-color: #1a1a3e;">
+        <div class="footer-content">
+            <div class="footer-social" style="display: flex; gap: 20px; justify-content: center; margin-bottom: 20px;">
+                <a href="https://www.instagram.com/cursosdeinglesoxbridge/" target="_blank" aria-label="Instagram" style="color: #DFDFD0;">
+                    <svg style="width: 18px; height: 18px;" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                </a>
+                <a href="https://www.facebook.com/profile.php?id=61564608544805" target="_blank" aria-label="Facebook" style="color: #DFDFD0;">
+                    <svg style="width: 18px; height: 18px;" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.04C6.5 2.04 2 6.53 2 12.06C2 17.06 5.66 21.21 10.44 21.96V14.96H7.9V12.06H10.44V9.85C10.44 7.34 11.93 5.96 14.22 5.96C15.31 5.96 16.45 6.15 16.45 6.15V8.62H15.19C13.95 8.62 13.56 9.39 13.56 10.18V12.06H16.34L15.89 14.96H13.56V21.96A10 10 0 0 0 22 12.06C22 6.53 17.5 2.04 12 2.04Z"/></svg>
+                </a>
+                <a href="https://www.linkedin.com/in/christopher-harris-13b678153/" target="_blank" aria-label="LinkedIn" style="color: #DFDFD0;">
+                    <svg style="width: 18px; height: 18px;" viewBox="0 0 24 24" fill="currentColor"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+                </a>
+            </div>
+            <p class="footer-text" style="display: flex; align-items: center; justify-content: center; gap: 15px; flex-wrap: wrap; padding-top: 20px; color: #DFDFD0;">
+                <span data-en="© 2026 by Oxbridge English" data-es="© 2026 por Oxbridge English">© 2026 by Oxbridge English</span>
+                <span style="color: #666;">|</span>
+                <a href="privacy.html" style="color: #DFDFD0; text-decoration: none; transition: color 0.3s;" onmouseover="this.style.color='#D4AF37'" onmouseout="this.style.color='#DFDFD0'">
+                    <span data-en="Privacy Policy" data-es="Política de Privacidad">Privacy Policy</span>
+                </a>
+                <span style="color: #666;">|</span>
+                <a href="terms.html" style="color: #DFDFD0; text-decoration: none; transition: color 0.3s;" onmouseover="this.style.color='#D4AF37'" onmouseout="this.style.color='#DFDFD0'">
+                    <span data-en="Terms & Conditions" data-es="Términos y Condiciones">Terms & Conditions</span>
+                </a>
+                <img src="logo_jpg_003.jpg" alt="Oxbridge English" style="height: 30px; width: auto; object-fit: contain;">
+            </p>
+        </div>
+    </footer>
+
+    <script src="script.js?v=3"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const dropdownToggle = document.getElementById('courses-dropdown-toggle');
+            if (dropdownToggle) {
+                dropdownToggle.addEventListener('click', (e) => {
+                    if (window.innerWidth <= 768) {
+                        e.preventDefault();
+                        dropdownToggle.parentElement.classList.toggle('active-mobile');
+                    }
+                });
+            }
+
+            const langOptions = document.querySelectorAll('.lang-option');
+            const elementsToTranslate = document.querySelectorAll('[data-en][data-es]');
+            const imagesToTranslate = document.querySelectorAll('img[data-src-en][data-src-es]');
+
+            langOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    const lang = this.getAttribute('data-lang');
+                    
+                    langOptions.forEach(opt => opt.classList.remove('active'));
+                    this.classList.add('active');
+
+                    // Swap Text
+                    elementsToTranslate.forEach(el => {
+                        const translation = el.getAttribute('data-' + lang);
+                        if (translation) {
+                            el.innerHTML = translation;
+                        }
+                    });
+
+                    // Swap Images
+                    imagesToTranslate.forEach(img => {
+                        const srcTrans = img.getAttribute('data-src-' + lang);
+                        if (srcTrans) {
+                            img.src = srcTrans;
+                        }
+                    });
+
+                    localStorage.setItem('preferredLanguage', lang);
+                    document.documentElement.lang = lang;
+                });
+            });
+
+            const savedLang = localStorage.getItem('preferredLanguage') || 'en';
+            const activeBtn = document.querySelector(`.lang-option[data-lang="${savedLang}"]`);
+            if (activeBtn) {
+                activeBtn.click();
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-BW4FK9RBTY"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-BW4FK9RBTY');
+    </script>
+    <title>Cursos de Inglés Online | Aprende Inglés Real - Oxbridge English</title>
+    <meta name="description" content="Descubre nuestros cursos de inglés interactivos paso a paso. Desde nivel principiante hasta intermedio. Aprende con profesor nativo, videos y ejercicios prácticos.">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+
+    <style>
+        /* =========================================
+           PAGE-SPECIFIC STYLES - INTERACTIVE COURSES
+           ========================================= */
+        body { background-color: transparent !important; }
+        .page-wrapper-transparent { min-height: 100vh; padding-bottom: 60px; }
+
+        .background-video {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            z-index: -2;
+            transform: translateX(-50%) translateY(-50%);
+            object-fit: cover;
+        }
+
+        /* --- HERO BANNER --- */
+        .page-hero {
+            position: relative;
+            /* Matched sizing from the 1-to-1 page. Added 12% padding to the right to act as the margin */
+            padding: 200px 12% 140px 20px; 
+            border-bottom: 2px solid #D4AF37;
+            background-color: #0d0d24;
+            background-image: url('blue_background_012.png');
+            background-size: cover;
+            background-position: top center;
+            
+            /* Flex settings to align the text block to the right */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-end; 
+        }
+
+        /* The text wrapper is now slightly narrower to allow it to visibly sit on the right */
+        .hero-text-wrapper {
+            max-width: 750px; 
+            text-align: center; 
+        }
+
+        .page-hero-title { color: #ffffff !important; margin-bottom: 20px !important; text-shadow: 0 2px 10px rgba(0,0,0,0.8); }
+        .page-hero-subtitle { color: #D4AF37 !important; margin-bottom: 40px !important; text-shadow: 0 2px 10px rgba(0,0,0,0.9); }
+        .hero-desc { color: rgba(255,255,255,0.95) !important; text-shadow: 0 2px 10px rgba(0,0,0,0.8); }
+
+        /* --- LAYOUTS --- */
+        .courses-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px; margin-top: 60px; }
+        .course-card { display: flex; flex-direction: column; border-radius: 15px; overflow: hidden; box-shadow: 0 15px 35px rgba(0,0,0,0.4); border: 1px solid rgba(212, 175, 55, 0.4); }
+        .course-image { width: 100%; height: 250px; object-fit: cover; }
+        .course-content { padding: 30px; flex-grow: 1; }
+        .course-title { color: #D4AF37 !important; margin-bottom: 20px !important; }
+        .course-features { list-style: none; padding: 0; margin: 0; }
+        .course-features li { position: relative; padding-left: 30px; margin-bottom: 15px; color: rgba(255,255,255,0.95); }
+        .course-features li::before { content: '✓'; position: absolute; left: 0; color: #D4AF37; font-weight: bold; }
+
+        .section-heading-dark { color: #1a1a3e !important; text-align: center; margin-top: 80px !important; margin-bottom: 50px !important; font-weight: 400; }
+        .section-dark { background-image: url('blue_background_001.jpg'); background-size: cover; background-position: center; border-radius: 15px; border: 1px solid rgba(212, 175, 55, 0.4); box-shadow: 0 15px 35px rgba(0,0,0,0.5); }
+
+        /* --- INFO BOXES --- */
+        .info-grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 25px; max-width: 1200px; margin: 0 auto; }
+        .sample-card-item { padding: 30px 20px; text-align: center; display: flex; flex-direction: column; justify-content: center; align-items: center; border-radius: 15px; background-image: url('blue_background_001.jpg'); background-size: cover; background-position: center; border: 1px solid rgba(212, 175, 55, 0.4); box-shadow: 0 10px 25px rgba(0,0,0,0.3); transition: transform 0.2s; }
+        .sample-card-item:hover { transform: translateY(-4px); }
+        .sample-text { color: rgba(255,255,255,0.95) !important; }
+
+        @media (max-width: 992px) {
+            /* Snaps everything back to the center for tablets and smaller screens */
+            .page-hero { 
+                align-items: center; 
+                padding-right: 20px; 
+            }
+            .info-grid-3 { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (max-width: 650px) {
+            .info-grid-3 { grid-template-columns: 1fr; }
+        }
+        .btn-text { color: #1a1a3e; }
+    </style>
+
+    <script>
+        function forceOpenMenu(event) {
+            event.preventDefault(); event.stopPropagation();
+            var nav = document.getElementById('nav-links');
+            if (nav.classList.contains('mobile-force-open')) { nav.classList.remove('mobile-force-open'); } 
+            else { nav.classList.add('mobile-force-open'); }
+        }
+    </script>
+</head>
+<body>
+    <video autoplay muted loop playsinline class="background-video">
+        <source src="girl_working_001.mp4" type="video/mp4">
+    </video>
+    <div style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(247, 244, 229, 0.9); z-index: -1; pointer-events: none;"></div>
+
+    <nav class="main-nav">
+        <div class="nav-container">
+            <button class="mobile-menu-toggle" id="mobile-toggle" onclick="forceOpenMenu(event)">☰</button>
+            <div class="logo">
+                <img src="ox-head-008.jpg" alt="Oxbridge English Logo">
+                <h4 data-en="Oxbridge English" data-es="Oxbridge English" style="color: #DFDFD0;">Oxbridge English</h4>
+            </div>
+            <ul class="nav-links" id="nav-links">
+                <li><a href="index.html" data-en="Home" data-es="Inicio">Home</a></li>
+                <li><a href="recommendations.html" data-en="About Us" data-es="Quiénes Somos">About Us</a></li>
+                <li class="dropdown">
+                    <a href="javascript:void(0);" class="active" id="courses-dropdown-toggle" data-en="Courses <i class='fa-solid fa-caret-down'></i>" data-es="Cursos <i class='fa-solid fa-caret-down'></i>">Courses <i class="fa-solid fa-caret-down"></i></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="interactive-courses.html" class="active" data-en="Interactive Courses" data-es="Cursos Interactivos">Interactive Courses</a></li>
+                        <li><a href="1-to-1-courses.html" data-en="1 to 1 Courses" data-es="Cursos 1 a 1">1 to 1 Courses</a></li>
+                        <li><a href="empresas.html" data-en="English for Companies" data-es="Inglés para Empresas">English for Companies</a></li>
+                        <li><a href="icfes.html" data-en="ICFES Preparation" data-es="Preparación ICFES">ICFES Preparation</a></li>
+                    </ul>
+                </li>
+                <li><a href="placement-test.html" data-en="Level Test" data-es="Test de Nivel">Level Test</a></li>
+                <li><a href="books.html" data-en="Books" data-es="Libros">Books</a></li>
+                <li><a href="audio.html" data-en="Audio" data-es="Audio">Audio</a></li>
+                <li><a href="translator.html" data-en="Translator" data-es="Traductor">Translator</a></li>
+                <li><a href="blog.html" data-en="Blog" data-es="Blog">Blog</a></li>
+                <li><a href="contact.html" data-en="Contact" data-es="Contacto">Contact</a></li>
+            </ul>
+            <div class="lang-toggle">
+                <button class="lang-option active" data-lang="en"><span class="flag">EN</span></button>
+                <button class="lang-option" data-lang="es"><span class="flag">ES</span></button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="page-wrapper-transparent">
+        
+        <header class="page-hero">
+            <div class="hero-text-wrapper">
+                <h1 class="page-hero-title" data-en="Interactive Courses" data-es="Cursos Interactivos">Interactive Courses</h1>
+                <h3 class="page-hero-subtitle" data-en="Start speaking and writing in English with confidence." data-es="Comience a hablar y escribir en inglés con confianza.">Start speaking and writing in English with confidence.</h3>
+                <p class="hero-desc" data-en="These interactive courses are designed for Spanish speakers and guide you through the foundations of English grammar with clear explanations, real-life examples, and practical activities you can apply in everyday situations." data-es="Estos cursos interactivos están diseñados para hispanohablantes y lo guían a través de los fundamentos de la gramática inglesa con explicaciones claras, ejemplos de la vida real y actividades prácticas que puede aplicar en situaciones cotidianas.">These interactive courses are designed for Spanish speakers and guide you through the foundations of English grammar with clear explanations, real-life examples, and practical activities you can apply in everyday situations.</p>
+            </div>
+        </header>
+
+        <main style="max-width: 1200px; margin: 40px auto; padding: 0 20px;">
+
+            <div class="fade-in-content" style="max-width: 1000px; margin: 60px auto;">
+                <div class="section-dark" style="padding: 40px; text-align: center;">
+                    <img id="learning-model-img" 
+                         src="learning%20model%20english%20008.png" 
+                         data-src-en="learning%20model%20english%20008.png" 
+                         data-src-es="learning%20model%20spanish%20008.png" 
+                         alt="Oxbridge English Learning Model" 
+                         style="max-width: 100%; height: auto; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.4);">
+                </div>
+            </div>
+
+            <div class="courses-grid">
+                <div class="course-card">
+                    <img src="course-1.jpg" alt="Course 1" class="course-image">
+                    <div class="course-content section-dark">
+                        <h3 class="course-title" data-en="Course 1" data-es="Curso 1">Course 1</h3>
+                        <ul class="course-features">
+                            <li data-en="Form correct sentences in English from the very first lesson." data-es="Forme oraciones correctas en inglés desde la primera lección.">Form correct sentences in English from the very first lesson.</li>
+                            <li data-en="Understand key A1-level grammar: present simple, articles, pronouns, and more." data-es="Comprenda la gramática clave de nivel A1: presente simple, artículos, pronombres y más.">Understand key A1-level grammar: present simple, articles, pronouns, and more.</li>
+                            <li data-en="Gain confidence speaking and writing for travel, work, or study." data-es="Gane confianza al hablar y escribir para viajar, trabajar o estudiar.">Gain confidence speaking and writing for travel, work, or study.</li>
+                            <li data-en="Practice with interactive exercises designed specifically for native Spanish speakers." data-es="Practique con ejercicios interactivos diseñados específicamente para hispanohablantes nativos.">Practice with interactive exercises designed specifically for native Spanish speakers.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="course-card">
+                    <img src="course-2.jpg" alt="Course 2" class="course-image">
+                    <div class="course-content section-dark">
+                        <h3 class="course-title" data-en="Course 2" data-es="Curso 2">Course 2</h3>
+                        <ul class="course-features">
+                            <li data-en="Reinforce vocabulary and structures from the previous course." data-es="Refuerce el vocabulario y las estructuras del curso anterior.">Reinforce vocabulary and structures from the previous course.</li>
+                            <li data-en="Use have/has got to express possession." data-es="Use have/has got para expresar posesión.">Use have/has got to express possession.</li>
+                            <li data-en="Use object pronouns correctly." data-es="Use pronombres de objeto correctamente.">Use object pronouns correctly.</li>
+                            <li data-en="Introduce and practice adverbs of frequency." data-es="Introduzca y practique adverbios de frecuencia.">Introduce and practice adverbs of frequency.</li>
+                            <li data-en="Understand and use prepositions of place and time." data-es="Comprenda y use preposiciones de lugar y tiempo.">Understand and use prepositions of place and time.</li>
+                            <li data-en="Describe environments using there is / there are." data-es="Describa entornos usando there is / there are.">Describe environments using there is / there are.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="fade-in-content" style="max-width: 900px; margin: 60px auto;">
+                <div class="section-dark" style="padding: 40px 30px; text-align: center;">
+                    <h3 style="margin-bottom: 15px; color: #D4AF37;" data-en="Not sure which course is for you?" data-es="¿No estás seguro de qué curso es para ti?">Not sure which course is for you?</h3>
+                    <p style="margin-bottom: 30px; color: #fff;" data-en="Try our level tests and find out exactly where to start." data-es="Prueba nuestros tests de nivel y descubre exactamente por dónde empezar.">Try our level tests and find out exactly where to start.</p>
+                    <div style="display: flex; gap: 20px; justify-content: center; flex-wrap: wrap;">
+                        <a href="placement-test.html" class="cta-button" style="padding: 15px 30px; text-decoration: none; background-color: #D4AF37; color: #1a1a3e; border: 1px solid #D4AF37;" data-en="Take Basic Test (A1-B1)" data-es="Prueba Básica (A1-B1)">Take Basic Test (A1-B1)</a>
+                        <a href="advanced-placement-test.html" class="cta-button" style="padding: 15px 30px; background-color: #28a745; border-color: #28a745; text-decoration: none; color: #fff;" data-en="Take Advanced Test (B1-C2)" data-es="Prueba Avanzada (B1-C2)">Take Advanced Test (B1-C2)</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="courses-grid">
+                <div class="course-card">
+                    <img src="course-3.jpg" alt="Course 3" class="course-image">
+                    <div class="course-content section-dark">
+                        <h3 class="course-title" data-en="Course 3" data-es="Curso 3">Course 3</h3>
+                        <ul class="course-features">
+                            <li data-en="Use the present continuous correctly to describe actions happening now." data-es="Use el presente continuo correctamente para describir acciones que ocurren ahora.">Use the present continuous correctly to describe actions happening now.</li>
+                            <li data-en="Express possibility or permission using can." data-es="Exprese posibilidad o permiso usando can.">Express possibility or permission using can.</li>
+                            <li data-en="Talk about rules and responsibilities using have to." data-es="Hable sobre reglas y responsabilidades usando have to.">Talk about rules and responsibilities using have to.</li>
+                            <li data-en="Avoid repetition using one and ones." data-es="Evite la repetición usando one y ones.">Avoid repetition using one and ones.</li>
+                            <li data-en="Introduce the past simple to describe past events or experiences." data-es="Introduzca el pasado simple para describir eventos o experiencias pasadas.">Introduce the past simple to describe past events or experiences.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="course-card">
+                    <img src="course-4.jpg" alt="Course 4" class="course-image">
+                    <div class="course-content section-dark">
+                        <h3 class="course-title" data-en="Course 4" data-es="Curso 4">Course 4</h3>
+                        <ul class="course-features">
+                            <li data-en="Understand and use future verb tenses correctly." data-es="Comprenda y use los tiempos verbales futuros correctamente.">Understand and use future verb tenses correctly.</li>
+                            <li data-en="Identify and apply the different uses of like in context." data-es="Identifique y aplique los diferentes usos de like en context.">Identify and apply the different uses of like in context.</li>
+                            <li data-en="Expand vocabulary to talk about plans, goals, and opinions." data-es="Amplíe el vocabulario para hablar sobre planes, objetivos y opiniones.">Expand vocabulary to talk about plans, goals, and opinions.</li>
+                            <li data-en="Improve fluency in conversations about the present, past, and future." data-es="Mejore la fluidez en conversaciones sobre el presente, pasado y futuro.">Improve fluency in conversations about the present, past, and future.</li>
+                            <li data-en="Prepare to successfully progress to the intermediate (B1) level." data-es="Prepárese para progresar con éxito al nivel intermedio (B1).">Prepare to successfully progress to the intermediate (B1) level.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div style="margin-top: 80px; padding: 0 20px;">
+                <h2 class="section-heading-dark" style="margin-top: 0 !important; margin-bottom: 50px !important;" data-en="Course Sample — Course 3, Page 6" data-es="Muestra del Curso — Curso 3, Página 6">Course Sample — Course 3, Page 6</h2>
+                
+                <div class="fade-in-content" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px; max-width: 1200px; margin: 0 auto;">
+                    <div class="section-dark" style="padding: 30px; box-shadow: 0 8px 30px rgba(0,0,0,0.12);">
+                        <h3 style="text-align: center; margin-bottom: 20px; color: #D4AF37;" data-en="Video Sample" data-es="Muestra de Video">Video Sample</h3>
+                        <video controls preload="metadata" style="width: 100%; display: block; background: #000; border-radius: 8px;">
+                            <source src="course_3_page_6_spanish_001.mp4" type="video/mp4">
+                            <p style="text-align: center; padding: 20px; color: #DFDFD0;">Your browser does not support the video tag.</p>
+                        </video>
+                        <p style="text-align: center; margin-top: 15px; color: #fff;" data-en="Watch a sample lesson from Course 3" data-es="Vea una lección de muestra del Curso 3">Watch a sample lesson from Course 3</p>
+                    </div>
+
+                    <div class="section-dark" style="padding: 30px; display: flex; flex-direction: column; justify-content: center; align-items: center; box-shadow: 0 8px 30px rgba(0,0,0,0.12);">
+                        <div style="font-size: 80px; margin-bottom: 20px; color: #DFDFD0; line-height: 1;">📄</div>
+                        <h3 style="text-align: center; margin-bottom: 20px; color: #D4AF37;" data-en="PDF Sample" data-es="Muestra en PDF">PDF Sample</h3>
+                        <p style="text-align: center; margin-bottom: 30px; color: #fff;" data-en="Download the same lesson in PDF format to see our course materials and teaching approach." data-es="Descargue la misma lección en formato PDF para ver nuestros materiales del curso y enfoque de enseñanza.">Download the same lesson in PDF format to see our course materials and teaching approach.</p>
+                        <a href="https://d0be5188-0a8d-410b-aa64-eec5cddefa15.filesusr.com/ugd/440d86_4712ffd9f7dd4bc9ae7518f6a0e88717.pdf" target="_blank" class="cta-button" style="color: #1a1a3e; background-color: #D4AF37; padding: 12px 25px; text-decoration: none; border-radius: 30px; font-weight: bold; border: none; box-shadow: 0 4px 10px rgba(0,0,0,0.3);" data-en="Download PDF Sample" data-es="Descargar Muestra PDF">Download PDF Sample</a>
+                    </div>
+                </div>
+            </div>
+
+            <h2 class="section-heading-dark" data-en="Enroll Now" data-es="Inscríbase Ahora">Enroll Now</h2>
+
+            <div class="fade-in-content section-dark" style="text-align: center; margin: 40px auto; max-width: 1000px; padding: 60px 40px;">
+                <img src="image_a8f9f7.png" alt="Hotmart" style="width: 100%; max-width: 260px; height: auto; margin-bottom: 30px; border-radius: 20px; box-shadow: 0 8px 20px rgba(0,0,0,0.4);">
+                
+                <h2 style="margin-bottom: 20px; color: #fff;" data-en="Start Learning Today" data-es="Comience a Aprender Hoy">Start Learning Today</h2>
+                <p style="margin-bottom: 40px; color: #fff;" data-en="Access our full curriculum, interactive video lessons, downloadable materials, and personalized support through our dedicated learning platform." data-es="Acceda a nuestro plan de estudios completo, lecciones en video interactivas, materiales descargables y soporte personalizado a través de nuestra plataforma de aprendizaje dedicada.">Access our full curriculum, interactive video lessons, downloadable materials, and personalized support through our dedicated learning platform.</p>
+                
+                <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 40px;">
+                    <div style="flex: 1; min-width: 300px;">
+                        <h3 style="margin-bottom: 15px; color: #D4AF37;" data-en="Special Bundle Offers" data-es="Ofertas de Paquetes Especiales">Special Bundle Offers</h3>
+                        <div style="display: flex; flex-direction: column; gap: 15px; align-items: center;">
+                            <a href="https://pay.hotmart.com/D105675031I" target="_blank" class="cta-button" style="color: #1a1a3e; width: 100%; padding: 18px 20px; background: linear-gradient(180deg, #e8c412 0%, #D4AF37 100%); border-radius: 30px; text-decoration: none; box-shadow: 0 6px 15px rgba(0,0,0,0.3); border:none;" data-en="All 4 Courses + 2 Free Books | COP 800.000" data-es="Los 4 Cursos + 2 Libros Gratis | COP 800.000">All 4 Courses + 2 Free Books | COP 800.000</a>
+                            <a href="https://pay.hotmart.com/C105674677C" target="_blank" class="cta-button" style="color: #1a1a3e; width: 100%; padding: 18px 20px; background: linear-gradient(180deg, #e8c412 0%, #D4AF37 100%); border-radius: 30px; text-decoration: none; box-shadow: 0 6px 15px rgba(0,0,0,0.3); border:none;" data-en="Courses 1 & 2 + Free Book | COP 450.000" data-es="Cursos 1 y 2 + Libro Gratis | COP 450.000">Courses 1 & 2 + Free Book | COP 450.000</a>
+                            <a href="https://pay.hotmart.com/E105674981F" target="_blank" class="cta-button" style="color: #1a1a3e; width: 100%; padding: 18px 20px; background: linear-gradient(180deg, #e8c412 0%, #D4AF37 100%); border-radius: 30px; text-decoration: none; box-shadow: 0 6px 15px rgba(0,0,0,0.3); border:none;" data-en="Courses 3 & 4 + Free Book | COP 450.000" data-es="Cursos 3 y 4 + Libro Gratis | COP 450.000">Courses 3 & 4 + Free Book | COP 450.000</a>
+                        </div>
+                        <p class="sub-text" style="text-align: left; margin-top: 20px;" data-en="*The included complimentary books are the original physical workbooks from which the course PDFs were developed. They are shipped directly to your door and are designed to be completed by hand as you progress through the interactive video lessons." data-es="*Los libros gratuitos incluidos son los cuadernos de trabajo físicos originales a partir de los cuales se desarrollaron los PDF del curso. Se envían directamente a su puerta y están diseñados para completarse a mano a medida que avanza en las lecciones en video interactivas.">*The included complimentary books are the original physical workbooks from which the course PDFs were developed. They are shipped directly to your door and are designed to be completed by hand as you progress through the interactive video lessons.</p>
+                    </div>
+
+                    <div style="flex: 1; min-width: 300px;">
+                        <h3 style="margin-bottom: 15px; color: #D4AF37;" data-en="Individual Courses" data-es="Cursos Individuales">Individual Courses</h3>
+                        <div style="display: flex; flex-direction: column; gap: 15px; align-items: center;">
+                            <a href="https://pay.hotmart.com/Q98329648Q" target="_blank" class="cta-button" style="width: 100%; padding: 18px 20px; background: rgba(255, 255, 255, 0.1); color: #D4AF37; border-radius: 30px; border: 1px solid #D4AF37; text-decoration: none; box-shadow: 0 6px 15px rgba(0,0,0,0.3);" data-en="Enroll in Course 1 | COP 250.000" data-es="Inscribirse en el Curso 1 | COP 250.000">Enroll in Course 1 | COP 250.000</a>
+                            <a href="https://pay.hotmart.com/L99614592W" target="_blank" class="cta-button" style="width: 100%; padding: 18px 20px; background: rgba(255, 255, 255, 0.1); color: #D4AF37; border-radius: 30px; border: 1px solid #D4AF37; text-decoration: none; box-shadow: 0 6px 15px rgba(0,0,0,0.3);" data-en="Enroll in Course 2 | COP 250.000" data-es="Inscribirse en el Curso 2 | COP 250.000">Enroll in Course 2 | COP 250.000</a>
+                            <a href="https://pay.hotmart.com/I99617798T" target="_blank" class="cta-button" style="width: 100%; padding: 18px 20px; background: rgba(255, 255, 255, 0.1); color: #D4AF37; border-radius: 30px; border: 1px solid #D4AF37; text-decoration: none; box-shadow: 0 6px 15px rgba(0,0,0,0.3);" data-en="Enroll in Course 3 | COP 250.000" data-es="Inscribirse en el Curso 3 | COP 250.000">Enroll in Course 3 | COP 250.000</a>
+                            <a href="https://pay.hotmart.com/B99622436U" target="_blank" class="cta-button" style="width: 100%; padding: 18px 20px; background: rgba(255, 255, 255, 0.1); color: #D4AF37; border-radius: 30px; border: 1px solid #D4AF37; text-decoration: none; box-shadow: 0 6px 15px rgba(0,0,0,0.3);" data-en="Enroll in Course 4 | COP 250.000" data-es="Inscribirse en el Curso 4 | COP 250.000">Enroll in Course 4 | COP 250.000</a>
+                        </div>
+                    </div>
+                </div>
+                <p style="margin-top: 40px; color: #fff;" data-en="You will be redirected to our secure Hotmart checkout platform." data-es="Será redirigido a nuestra plataforma de pago seguro de Hotmart.">You will be redirected to our secure Hotmart checkout platform.</p>
+            </div>
+
+            <div class="fade-in-content" style="max-width: 1000px; margin: 60px auto; padding: 0 20px;">
+                <div style="background: rgba(247, 244, 229, 0.95); padding: 40px; border-radius: 15px; display: flex; align-items: center; gap: 30px; box-shadow: 0 15px 35px rgba(0,0,0,0.3); border: 1px solid rgba(212, 175, 55, 0.4); flex-wrap: wrap; justify-content: center;">
+                    <img src="person_13.png" alt="Student Review" style="width: 120px; height: 120px; border-radius: 50%; object-fit: cover; box-shadow: 0 4px 15px rgba(0,0,0,0.2);">
+                    <div style="flex: 1; min-width: 300px; text-align: left;">
+                        <h4 style="color: #000000; font-size: 20px; font-weight: 500; line-height: 1.6; margin: 0 0 15px 0;"
+                            data-en='"I loved the fact that I could study when I wanted and from wherever I wanted, at my own pace and without distractions. I advanced much better than in a classroom environment. It&#39;s like having a personal tutor just for you."'
+                            data-es='"Me encantó el hecho de poder estudiar cuando quería y desde donde quería, a mi propio ritmo y sin distracciones. Avancé mucho mejor que en un ambiente de salón de clases. Es como tener un tutor personal solo para ti."'>
+                            "Me encantó el hecho de poder estudiar cuando quería y desde donde quería, a mi propio ritmo y sin distracciones. Avancé mucho mejor que en un ambiente de salón de clases. Es como tener un tutor personal solo para ti."
+                        </h4>
+                        <p style="color: #1a1a3e; margin: 0; font-weight: bold; font-size: 16px;">— Christian Camilo Gonzalez Betancourt</p>
+                    </div>
+                </div>
+            </div>
+
+            <h2 class="section-heading-dark" data-en="How It Works" data-es="Cómo Funciona">How It Works</h2>
+            <div class="info-grid-3">
+                <div class="sample-card-item">
+                    <div style="font-size: 48px; margin-bottom: 15px; line-height: 1;">1️⃣</div>
+                    <h3 style="margin-bottom: 10px; color: #D4AF37;" data-en="Secure Your Bundle" data-es="Asegure su Paquete">Secure Your Bundle</h3>
+                    <p class="sample-text" data-en="Register and get instant access via Hotmart." data-es="Regístrese y obtenga acceso inmediato vía Hotmart.">Register and get instant access via Hotmart.</p>
+                </div>
+                <div class="sample-card-item">
+                    <div style="font-size: 48px; margin-bottom: 15px; line-height: 1;">2️⃣</div>
+                    <h3 style="margin-bottom: 10px; color: #D4AF37;" data-en="Take the Level Test" data-es="Realice la Prueba">Take the Level Test</h3>
+                    <p class="sample-text" data-en="Score 100% on the basic test to unlock advanced modules." data-es="Obtenga 100% en la prueba básica para desbloquear módulos avanzados.">Score 100% on the basic test to unlock advanced modules.</p>
+                </div>
+                <div class="sample-card-item">
+                    <div style="font-size: 48px; margin-bottom: 15px; line-height: 1;">3️⃣</div>
+                    <h3 style="margin-bottom: 10px; color: #D4AF37;" data-en="Start Learning" data-es="Comience a Aprender">Start Learning</h3>
+                    <p class="sample-text" data-en="Learn at your own pace with interactive videos and your physical book." data-es="Aprenda a su propio ritmo con videos y su libro físico.">Learn at your own pace with interactive videos and your physical book.</p>
+                </div>
+            </div>
+
+            <h2 class="section-heading-dark" data-en="What You'll Get" data-es="Lo Que Obtendrá">What You'll Get</h2>
+            
+            <div class="info-grid-3">
+                <div class="sample-card-item">
+                    <div style="font-size: 48px; margin-bottom: 15px; line-height: 1;">🎥</div>
+                    <h3 style="margin-bottom: 10px; color: #D4AF37;" data-en="Video Lessons" data-es="Lecciones en Video">Video Lessons</h3>
+                    <p class="sample-text" data-en="Interactive virtual guide for each lesson" data-es="Guía virtual interactiva para cada lección">Interactive virtual guide for each lesson</p>
+                </div>
+                <div class="sample-card-item">
+                    <div style="font-size: 48px; margin-bottom: 15px; line-height: 1;">📄</div>
+                    <h3 style="margin-bottom: 10px; color: #D4AF37;" data-en="Downloadable PDFs" data-es="PDFs Descargables">Downloadable PDFs</h3>
+                    <p class="sample-text" data-en="Complete course materials and exercises" data-es="Materiales y ejercicios completos del curso">Complete course materials and exercises</p>
+                </div>
+                <div class="sample-card-item">
+                    <div style="font-size: 48px; margin-bottom: 15px; line-height: 1;">🎧</div>
+                    <h3 style="margin-bottom: 10px; color: #D4AF37;" data-en="Free Audio Content" data-es="Contenido de Audio Gratuito">Free Audio Content</h3>
+                    <p class="sample-text" data-en="Practice listening and pronunciation" data-es="Practique la escucha y la pronunciación">Practice listening and pronunciation</p>
+                </div>
+                <div class="sample-card-item">
+                    <div style="font-size: 48px; margin-bottom: 15px; line-height: 1;">⏰</div>
+                    <h3 style="margin-bottom: 10px; color: #D4AF37;" data-en="Learn at Your Pace" data-es="Aprenda a Su Ritmo">Learn at Your Pace</h3>
+                    <p class="sample-text" data-en="Study alone or in groups, anytime" data-es="Estudie solo o en grupos, en cualquier momento">Study alone or in groups, anytime</p>
+                </div>
+                <div class="sample-card-item">
+                    <div style="font-size: 48px; margin-bottom: 15px; line-height: 1;">✓</div>
+                    <h3 style="margin-bottom: 10px; color: #D4AF37;" data-en="Proven Method" data-es="Método Comprobado">Proven Method</h3>
+                    <p class="sample-text" data-en="Designed for Spanish speakers" data-es="Diseñado para hispanohablantes">Designed for Spanish speakers</p>
+                </div>
+                <div class="sample-card-item">
+                    <div style="font-size: 48px; margin-bottom: 15px; line-height: 1;">💬</div>
+                    <h3 style="margin-bottom: 10px; color: #D4AF37;" data-en="Platform Support" data-es="Soporte en la Plataforma">Platform Support</h3>
+                    <p class="sample-text" data-en="Get help throughout your learning journey" data-es="Obtenga ayuda durante todo su viaje de aprendizaje">Get help throughout your learning journey</p>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <footer class="main-footer" style="background-color: #1a1a3e;">
+        <div class="footer-content">
+            <div class="footer-social" style="display: flex; gap: 20px; justify-content: center; margin-bottom: 20px;">
+                <a href="https://www.instagram.com/cursosdeinglesoxbridge/" target="_blank" aria-label="Instagram" style="color: #DFDFD0;"><svg style="width: 18px; height: 18px;" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg></a>
+                <a href="https://www.facebook.com/profile.php?id=61564608544805" target="_blank" aria-label="Facebook" style="color: #DFDFD0;"><svg style="width: 18px; height: 18px;" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.04C6.5 2.04 2 6.53 2 12.06C2 17.06 5.66 21.21 10.44 21.96V14.96H7.9V12.06H10.44V9.85C10.44 7.34 11.93 5.96 14.22 5.96C15.31 5.96 16.45 6.15 16.45 6.15V8.62H15.19C13.95 8.62 13.56 9.39 13.56 10.18V12.06H16.34L15.89 14.96H13.56V21.96A10 10 0 0 0 22 12.06C22 6.53 17.5 2.04 12 2.04Z"/></svg></a>
+                <a href="https://www.linkedin.com/in/christopher-harris-13b678153/" target="_blank" aria-label="LinkedIn" style="color: #DFDFD0;"><svg style="width: 18px; height: 18px;" viewBox="0 0 24 24" fill="currentColor"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg></a>
+            </div>
+            <p class="footer-text" style="display: flex; align-items: center; justify-content: center; gap: 15px; flex-wrap: wrap; padding-top: 20px; color: #DFDFD0;">
+                <span data-en="© 2026 by Oxbridge English" data-es="© 2026 por Oxbridge English">© 2026 by Oxbridge English</span><span style="color: #666;">|</span>
+                <a href="privacy.html" style="color: #DFDFD0; text-decoration: none; transition: color 0.3s;" onmouseover="this.style.color='#D4AF37'" onmouseout="this.style.color='#DFDFD0'"><span data-en="Privacy Policy" data-es="Política de Privacidad">Privacy Policy</span></a><span style="color: #666;">|</span>
+                <a href="terms.html" style="color: #DFDFD0; text-decoration: none; transition: color 0.3s;" onmouseover="this.style.color='#D4AF37'" onmouseout="this.style.color='#DFDFD0'"><span data-en="Terms & Conditions" data-es="Términos y Condiciones">Terms & Conditions</span></a>
+                <img src="logo_jpg_003.jpg" alt="Oxbridge English" style="height: 30px; width: auto; object-fit: contain;">
+            </p>
+        </div>
+    </footer>
+
+    <script src="script.js?v=3"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const dropdownToggle = document.getElementById('courses-dropdown-toggle');
+            if (dropdownToggle) {
+                dropdownToggle.addEventListener('click', (e) => {
+                    if (window.innerWidth <= 768) { e.preventDefault(); dropdownToggle.parentElement.classList.toggle('active-mobile'); }
+                });
+            }
+
+            const langOptions = document.querySelectorAll('.lang-option');
+            const elementsToTranslate = document.querySelectorAll('[data-en][data-es]');
+            const imagesToTranslate = document.querySelectorAll('img[data-src-en][data-src-es]');
+
+            langOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    const lang = this.getAttribute('data-lang');
+                    
+                    langOptions.forEach(opt => opt.classList.remove('active'));
+                    this.classList.add('active');
+
+                    // Swap Text
+                    elementsToTranslate.forEach(el => {
+                        const translation = el.getAttribute('data-' + lang);
+                        if (translation) { el.innerHTML = translation; }
+                    });
+
+                    // Swap Images
+                    imagesToTranslate.forEach(img => {
+                        const srcTrans = img.getAttribute('data-src-' + lang);
+                        if (srcTrans) {
+                            img.src = srcTrans;
+                        }
+                    });
+
+                    localStorage.setItem('preferredLanguage', lang);
+                    document.documentElement.lang = lang;
+                });
+            });
+
+            // Load saved language on start
+            const savedLang = localStorage.getItem('preferredLanguage') || 'en';
+            const activeBtn = document.querySelector(`.lang-option[data-lang="${savedLang}"]`);
+            if (activeBtn) { activeBtn.click(); }
+        });
+    </script>
+</body>
+</html>
