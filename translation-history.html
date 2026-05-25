@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <!-- Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-BW4FK9RBTY"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
@@ -16,10 +15,8 @@
     <title>SmarTranslator History | Cursos de Inglés Oxbridge English</title>
     <meta name="robots" content="noindex, follow">
     
-    <!-- SEO & Meta: Canonical -->
     <link rel="canonical" href="https://oxbridge-english.com/translation-history.html">
 
-    <!-- Full Open Graph Suite -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://oxbridge-english.com/translation-history.html">
     <meta property="og:title" content="SmarTranslator History | Oxbridge English">
@@ -27,7 +24,6 @@
     <meta property="og:image" content="https://oxbridge-english.com/ox-head-008.jpg">
     <meta property="og:locale" content="en_US">
 
-    <!-- PWA / Apple App Capabilities -->
     <link rel="manifest" href="manifest.json">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -36,13 +32,10 @@
     <link rel="icon" type="image/png" href="https://oxbridge-english.com/favicon-192x192.png">
     <link rel="apple-touch-icon" href="https://oxbridge-english.com/favicon-192x192.png">
     
-    <!-- Asset Loading: Font Awesome 6.4.0 & Roboto -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
 
-    <!-- APP-SPECIFIC STYLES -->
     <style>
         :root {
             --gold: #D4AF37;
@@ -51,6 +44,43 @@
             --navy-light: #1a1a3e;
             --cream: #cdc89e;
             --text-navy: #1a1a3e;
+        }
+
+        /* --- GLOBAL TRANSITION & VISIBILITY FIXES --- */
+        html { background-color: #000000 !important; }
+        body { background-color: transparent !important; margin: 0; padding: 0; display: flex; flex-direction: column; min-height: 100vh; }
+
+        /* FIX: Contain the video and allow flex-grow for footer positioning */
+        .translator-page-wrapper {
+            position: relative;
+            overflow: hidden;
+            width: 100%;
+            padding: 80px 15px 60px; /* Base padding to clear header */
+            background: rgba(247, 244, 229, 0.90);
+            flex: 1 0 auto; /* Forces footer to bottom */
+        }
+
+        .contained-bg-video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        /* FIX: Add gap between nav and the hero box */
+        .translator-embed {
+            max-width: 900px;
+            margin: 40px auto 0 auto; /* Creates the gap below the header */
+            width: 100%;
+        }
+
+        .translator-container-inner {
+            border-radius: 15px;
+            padding: 30px 20px;
         }
 
         .app-nav-grid {
@@ -94,9 +124,12 @@
             color: #1a1a3e !important;
             box-shadow: 0 6px 15px rgba(212, 175, 55, 0.4);
         }
-        .app-nav-label {
+
+        /* Nav Labels H4 Fix */
+        h4.app-nav-label {
+            margin: 0;
             font-family: 'Roboto', sans-serif;
-            font-size: 12px;
+            font-size: 13px;
             font-weight: 500;
             color: #ffffff;
             text-transform: uppercase;
@@ -193,7 +226,7 @@
         .custom-confirm-overlay.active { opacity: 1; pointer-events: all; }
         .custom-confirm-box { background: #cdc89e; width: 90%; max-width: 400px; border-radius: 20px; padding: 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); transform: translateY(20px); transition: transform 0.3s; border: 2px solid #D4AF37; text-align: center; }
         .custom-confirm-overlay.active .custom-confirm-box { transform: translateY(0); }
-        .custom-confirm-title { color: #1a1a3e; font-size: 24px; font-weight: 700; margin-bottom: 15px; font-family: 'Work Sans', sans-serif; }
+        .custom-confirm-title { color: #1a1a3e; font-size: 24px; font-weight: 700; margin-bottom: 15px; font-family: 'Roboto', sans-serif; }
         .custom-confirm-msg { color: #4a4a6a; font-size: 17px; margin-bottom: 25px; line-height: 1.4; font-weight: 500; }
         .custom-confirm-actions { display: flex; gap: 12px; justify-content: center; flex-direction: column; }
         @media (min-width: 400px) { .custom-confirm-actions { flex-direction: row; } }
@@ -206,7 +239,7 @@
         @media (max-width: 480px) {
             .app-nav-grid { gap: 5px; }
             .app-nav-icon { width: 38px; height: 38px; font-size: 18px; }
-            .app-nav-label { font-size: 9px; letter-spacing: 0; }
+            h4.app-nav-label { font-size: 10px; letter-spacing: 0; }
             .history-panel { padding: 15px; }
         }
     </style>
@@ -214,26 +247,29 @@
 <body>
     <audio id="tts-player" type="audio/mpeg" style="display:none;"></audio>
 
-    <video autoplay muted loop playsinline class="background-video">
-        <source src="girl_working_001.mp4" type="video/mp4">
-    </video>
-
     <nav class="main-nav">
         <div class="nav-container">
-            <button class="mobile-menu-toggle">☰</button>
+            <button class="mobile-menu-toggle" id="mobile-toggle" onclick="forceOpenMenu(event)">☰</button>
             <div class="logo">
                 <img src="ox-head-008.jpg" alt="Oxbridge English Logo">
-                <h1 data-en="Oxbridge English" data-es="Oxbridge English">Oxbridge English</h1>
+                <h4 data-en="Oxbridge English" data-es="Oxbridge English" style="color: #DFDFD0; margin:0;">Oxbridge English</h4>
             </div>
-            <ul class="nav-links">
+            <ul class="nav-links" id="nav-links">
                 <li><a href="index.html" data-en="Home" data-es="Inicio">Home</a></li>
-                <li><a href="courses.html" data-en="Courses" data-es="Cursos">Courses</a></li>
-                <li><a href="enroll.html" data-en="Enroll" data-es="Inscribirse">Enroll</a></li>
+                <li><a href="recommendations.html" data-en="About Us" data-es="Quiénes Somos">About Us</a></li>
+                <li class="dropdown">
+                    <a href="javascript:void(0);" id="courses-dropdown-toggle" data-en="Courses <i class='fa-solid fa-caret-down'></i>" data-es="Cursos <i class='fa-solid fa-caret-down'></i>">Courses <i class="fa-solid fa-caret-down"></i></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="interactive-courses.html" data-en="Interactive Courses" data-es="Cursos Interactivos">Interactive Courses</a></li>
+                        <li><a href="1-to-1-courses.html" data-en="1 to 1 Courses" data-es="Cursos 1 a 1">1 to 1 Courses</a></li>
+                        <li><a href="empresas.html" data-en="English for Companies" data-es="Inglés para Empresas">English for Companies</a></li>
+                        <li><a href="icfes.html" data-en="ICFES Preparation" data-es="Preparación ICFES">ICFES Preparation</a></li>
+                    </ul>
+                </li>
+                <li><a href="placement-test.html" data-en="Level Test" data-es="Test de Nivel">Level Test</a></li>
                 <li><a href="books.html" data-en="Books" data-es="Libros">Books</a></li>
                 <li><a href="audio.html" data-en="Audio" data-es="Audio">Audio</a></li>
                 <li><a href="translator.html" class="active" data-en="Translator" data-es="Traductor">Translator</a></li>
-                <li><a href="placement-test.html" data-en="Level Test" data-es="Test de Nivel">Level Test</a></li>
-                <li><a href="recommendations.html" data-en="Recommendations" data-es="Recomendaciones">Recommendations</a></li>
                 <li><a href="blog.html" data-en="Blog" data-es="Blog">Blog</a></li>
                 <li><a href="contact.html" data-en="Contact" data-es="Contacto">Contact</a></li>
             </ul>
@@ -245,12 +281,15 @@
     </nav>
 
     <div class="translator-page-wrapper">
+        <video autoplay muted loop playsinline class="contained-bg-video">
+            <source src="girl_working_001.mp4" type="video/mp4">
+        </video>
+
         <div class="translator-embed">
-            <div class="translator-container-inner">
+            <div class="translator-container-inner section-dark">
             
             <div style="text-align: center; margin-bottom: 30px; display: flex; flex-direction: row; justify-content: center; flex-wrap: nowrap; gap: 12px; width: 100%; max-width: 600px; margin-left: auto; margin-right: auto; padding: 0 10px; box-sizing: border-box;">
     
-                <!-- 3D Metallic Golden Android Button -->
                 <a href="SmarTraductor.apk" 
                    download="SmarTraductor.apk"
                    style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; background: linear-gradient(to bottom, #fcecae 0%, #e8c412 25%, #c99b06 75%, #a37a00 100%); border: 1px solid #8a6600; color: #1a1a3e; padding: 12px 6px; border-radius: 16px; text-decoration: none; font-size: 13px; font-weight: 800; transition: all 0.2s ease; flex: 1; min-width: 0; box-shadow: inset 0 2px 2px rgba(255,255,255,0.8), inset 0 -4px 6px rgba(0,0,0,0.3), 0 6px 10px rgba(0,0,0,0.25), 0 2px 4px rgba(0,0,0,0.2); text-shadow: 0 1px 1px rgba(255,255,255,0.4);" 
@@ -262,7 +301,6 @@
                     <span data-en="Install Android App" data-es="Instalar App Android" style="text-align: center; line-height: 1.1;">Install Android App</span>
                 </a>
 
-                <!-- 3D Metallic Silver Apple Button -->
                 <button onclick="window.handlePwaInstall()" 
                    style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; background: linear-gradient(to bottom, #ffffff 0%, #e6e6e6 25%, #b3b3b3 75%, #8c8c8c 100%); border: 1px solid #666666; color: #1a1a3e; padding: 12px 6px; border-radius: 16px; text-decoration: none; font-size: 13px; font-weight: 800; cursor: pointer; transition: all 0.2s ease; flex: 1; min-width: 0; box-shadow: inset 0 2px 2px rgba(255,255,255,0.9), inset 0 -4px 6px rgba(0,0,0,0.3), 0 6px 10px rgba(0,0,0,0.25), 0 2px 4px rgba(0,0,0,0.2); text-shadow: 0 1px 1px rgba(255,255,255,0.6);" 
                    onmouseover="this.style.filter='brightness(1.1)'; this.style.transform='translateY(-2px)'" 
@@ -277,45 +315,42 @@
             <div class="app-nav-grid" id="app-nav-grid">
                 <a href="translation-history.html" class="app-nav-item active" id="nav-history">
                     <div class="app-nav-icon">🕐</div>
-                    <span class="app-nav-label" data-en="History" data-es="Historial">History</span>
+                    <h4 class="app-nav-label" data-en="History" data-es="Historial">Historial</h4>
                 </a>
                 <a href="translation-quiz.html" class="app-nav-item" id="nav-quiz">
                     <div class="app-nav-icon">🧠</div>
-                    <span class="app-nav-label" data-en="Test" data-es="Examen">Test</span>
+                    <h4 class="app-nav-label" data-en="Test" data-es="Examen">Examen</h4>
                 </a>
                 <a href="dictionary.html" class="app-nav-item" id="nav-dictionary">
                     <div class="app-nav-icon">📖</div>
-                    <span class="app-nav-label" data-en="Dict" data-es="Diccio">Dict</span>
+                    <h4 class="app-nav-label" data-en="Dict" data-es="Diccio">Diccio</h4>
                 </a>
                 <a href="#" onclick="window.handleLogin(); return false;" class="app-nav-item" id="nav-profile">
                     <div class="app-nav-icon" id="profile-icon">👤</div>
-                    <span class="app-nav-label" id="profile-label">Log In</span>
+                    <h4 class="app-nav-label" id="profile-label">Log In</h4>
                 </a>
                 <a href="translator.html" class="app-nav-item" id="nav-translator">
                     <div class="app-nav-icon">🔤</div>
-                    <span class="app-nav-label" data-en="Trans" data-es="Traduc">Trans</span>
+                    <h4 class="app-nav-label" data-en="Trans" data-es="Traduc">Traduc</h4>
                 </a>
             </div>
             
-            <h1 style="font-family: 'Work Sans', sans-serif; font-size: 48px; font-weight: 700; color: #e8c412; text-align: center; margin-bottom: 30px; letter-spacing: 1px;" 
-                id="page-title" data-en="History" data-es="Historial">History</h1>
+            <h1 style="font-family: 'Roboto', sans-serif; font-size: 48px; font-weight: 300; color: #D4AF37; text-align: center; margin-bottom: 30px; letter-spacing: 1px;" 
+                id="page-title" data-en="History" data-es="Historial">Historial</h1>
             
-            <!-- History Container -->
             <div class="history-panel">
                 <div class="history-header">
                     <button class="btn-delete" onclick="handleDelete()"><i class="fas fa-trash"></i> <span id="del-btn-text" data-en="Delete" data-es="Borrar">Delete</span></button>
                 </div>
 
                 <div class="history-list" id="history-list">
-                    <!-- History items injected here via JS -->
-                </div>
+                    </div>
             </div>
             
         </div>
     </div>
     </div>
 
-    <!-- Custom Beautiful Confirm Modal -->
     <div id="custom-confirm" class="custom-confirm-overlay">
         <div class="custom-confirm-box">
             <div id="custom-confirm-title" class="custom-confirm-title">Confirm</div>
@@ -329,28 +364,27 @@
 
     <div id="toast" class="toast"></div>
 
-    <!-- Footer High-Fidelity Update -->
-    <footer class="main-footer">
+    <footer class="main-footer" style="background-color: #1a1a3e;">
         <div class="footer-content">
-            <div class="footer-social">
-                <a href="https://www.instagram.com/cursosdeinglesoxbridge/" target="_blank" aria-label="Instagram">
-                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+            <div class="footer-social" style="display: flex; gap: 20px; justify-content: center; margin-bottom: 20px;">
+                <a href="https://www.instagram.com/cursosdeinglesoxbridge/" target="_blank" aria-label="Instagram" style="color: #DFDFD0;">
+                    <svg style="width: 18px; height: 18px;" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
                 </a>
-                <a href="https://www.facebook.com/profile.php?id=61564608544805" target="_blank" aria-label="Facebook">
-                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+                <a href="https://www.facebook.com/profile.php?id=61564608544805" target="_blank" aria-label="Facebook" style="color: #DFDFD0;">
+                    <svg style="width: 18px; height: 18px;" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.04C6.5 2.04 2 6.53 2 12.06C2 17.06 5.66 21.21 10.44 21.96V14.96H7.9V12.06H10.44V9.85C10.44 7.34 11.93 5.96 14.22 5.96C15.31 5.96 16.45 6.15 16.45 6.15V8.62H15.19C13.95 8.62 13.56 9.39 13.56 10.18V12.06H16.34L15.89 14.96H13.56V21.96A10 10 0 0 0 22 12.06C22 6.53 17.5 2.04 12 2.04Z"/></svg>
                 </a>
-                <a href="https://www.linkedin.com/in/christopher-harris-13b678153/" target="_blank" aria-label="LinkedIn">
-                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+                <a href="https://www.linkedin.com/in/christopher-harris-13b678153/" target="_blank" aria-label="LinkedIn" style="color: #DFDFD0;">
+                    <svg style="width: 18px; height: 18px;" viewBox="0 0 24 24" fill="currentColor"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
                 </a>
             </div>
-            <p class="footer-text" style="display: flex; align-items: center; justify-content: center; gap: 15px; flex-wrap: wrap; padding-top: 20px;">
-                <span data-en="© 2026 by Oxbridge English" data-es="© 2026 por Oxbridge English" style="color: #ffffff;">© 2026 by Oxbridge English</span>
+            <p class="footer-text" style="display: flex; align-items: center; justify-content: center; gap: 15px; flex-wrap: wrap; padding-top: 20px; color: #DFDFD0;">
+                <span data-en="© 2026 by Oxbridge English" data-es="© 2026 por Oxbridge English">© 2026 by Oxbridge English</span>
                 <span style="color: #666;">|</span>
-                <a href="privacy.html" style="color: #ffffff; text-decoration: none; transition: color 0.3s;" onmouseover="this.style.color='#D4AF37'" onmouseout="this.style.color='#ffffff'">
+                <a href="privacy.html" style="color: #DFDFD0; text-decoration: none; transition: color 0.3s;" onmouseover="this.style.color='#D4AF37'" onmouseout="this.style.color='#DFDFD0'">
                     <span data-en="Privacy Policy" data-es="Política de Privacidad">Privacy Policy</span>
                 </a>
                 <span style="color: #666;">|</span>
-                <a href="terms.html" style="color: #ffffff; text-decoration: none; transition: color 0.3s;" onmouseover="this.style.color='#D4AF37'" onmouseout="this.style.color='#ffffff'">
+                <a href="terms.html" style="color: #DFDFD0; text-decoration: none; transition: color 0.3s;" onmouseover="this.style.color='#D4AF37'" onmouseout="this.style.color='#DFDFD0'">
                     <span data-en="Terms & Conditions" data-es="Términos y Condiciones">Terms & Conditions</span>
                 </a>
                 <img src="logo_jpg_003.jpg" alt="Oxbridge English" style="height: 30px; width: auto; object-fit: contain;">
@@ -358,13 +392,31 @@
         </div>
     </footer>
 
-    <!-- Global Website Scripts -->
     <script src="script.js?v=3"></script>
     
-    <!-- Centralized Firebase SDK & Auth Listener -->
     <script type="module" src="firebase-auth.js"></script>
 
-    <!-- History Engine Logic -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const dropdownToggle = document.getElementById('courses-dropdown-toggle');
+            if (dropdownToggle) {
+                dropdownToggle.addEventListener('click', (e) => {
+                    if (window.innerWidth <= 768) {
+                        e.preventDefault();
+                        dropdownToggle.parentElement.classList.toggle('active-mobile');
+                    }
+                });
+            }
+        });
+        
+        function forceOpenMenu(event) {
+            event.preventDefault(); event.stopPropagation();
+            var nav = document.getElementById('nav-links');
+            if (nav.classList.contains('mobile-force-open')) { nav.classList.remove('mobile-force-open'); } 
+            else { nav.classList.add('mobile-force-open'); }
+        }
+    </script>
+
     <script>
         let uiLang = localStorage.getItem('preferredLanguage') || 'en';
 
