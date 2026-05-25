@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-BW4FK9RBTY"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-BW4FK9RBTY');
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>Inglés Corporativo | Oxbridge English</title>
+    <meta name="description" content="Eleva el nivel de comunicación de tu empresa con soluciones escalables de inglés interactivo y tutorías ejecutivas 1 a 1.">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    
+    <style>
+        /* =========================================
+           PAGE-SPECIFIC STYLES - EMPRESAS
+           ========================================= */
+        
+        body { background-color: transparent !important; }
+        .page-wrapper-transparent { min-height: 100vh; padding-bottom: 60px; }
+
+        .background-video {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            z-index: -2;
+            transform: translateX(-50%) translateY(-50%);
+            object-fit: cover;
+        }
+
+        /* --- HERO BANNER (MATCHES PREVIOUS PAGES) --- */
+        .page-hero {
+            position: relative;
+            /* Sizing matched to Interactive and 1-to-1 pages */
+            padding: 200px 12% 140px 20px; 
+            background-image: url('blue_background_011.jpg');
+            background-size: cover;
+            background-position: center; 
+            border-bottom: 2px solid #D4AF37;
+            
+            /* Flex settings to align the text block to the right */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-end;
+        }
+
+        .hero-text-wrapper {
+            max-width: 750px; 
+            text-align: center; 
+        }
+
+        .page-hero-title { color: #ffffff !important; margin-bottom: 20px !important; text-shadow: 0 2px 10px rgba(0,0,0,0.8); }
+        .page-hero-subtitle { color: #D4AF37 !important; margin-bottom: 40px !important; text-shadow: 0 2px 10px rgba(0,0,0,0.9); }
+
+        /* --- SECTION BOXES --- */
+        .section-hero-box {
+            background-image: url('blue_background_001.jpg');
+            background-size: cover;
+            background-position: center;
+            border-radius: 15px;
+            padding: 60px 40px;
+            border: 1px solid rgba(212, 175, 55, 0.4);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.6);
+            margin-bottom: 40px;
+        }
+
+        .white-heading { color: #ffffff !important; text-align: center; margin-bottom: 40px !important; text-shadow: 0 2px 10px rgba(0,0,0,0.8); }
+        .gold-subheading { color: #D4AF37 !important; margin-bottom: 15px !important; text-shadow: 0 1px 5px rgba(0,0,0,0.5); }
+        .content-paragraph { color: rgba(255,255,255,0.95) !important; text-shadow: 0 1px 5px rgba(0,0,0,0.5); margin-bottom: 20px; }
+
+        /* --- BENEFITS GRID --- */
+        .benefits-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; }
+        .benefit-item { padding: 20px; text-align: center; }
+        .benefit-icon { font-size: 2.5rem; color: #D4AF37; margin-bottom: 20px; text-shadow: 0 2px 10px rgba(0,0,0,0.5); }
+
+        /* --- PRICING --- */
+        .pricing-content { max-width: 850px; margin: 0 auto; text-align: center; }
+        
+        .intensity-list { display: flex; flex-direction: column; gap: 15px; margin: 40px 0; }
+        .intensity-item { display: flex; justify-content: space-between; align-items: center; background: rgba(255, 255, 255, 0.1); border: 1px solid #D4AF37; border-radius: 30px; padding: 15px 25px; box-shadow: 0 6px 15px rgba(0,0,0,0.3); transition: transform 0.2s, background 0.2s; }
+        .intensity-item:hover { background: rgba(255, 255, 255, 0.15); transform: translateY(-2px); }
+        .intensity-hours { font-size: 1.2rem; color: #D4AF37; text-align: left; flex: 1; text-shadow: 0 1px 5px rgba(0,0,0,0.5); }
+        .intensity-price { font-size: 1.25rem; color: #ffffff; text-align: right; flex: 1; text-shadow: 0 1px 5px rgba(0,0,0,0.5); }
+        
+        .payment-note { display: block; margin-top: 15px; margin-bottom: 30px; color: #D4AF37; text-shadow: 0 1px 5px rgba(0,0,0,0.5); }
+
+        /* --- BUTTONS --- */
+        .contact-buttons { display: flex; justify-content: center; gap: 20px; margin-top: 40px; flex-wrap: wrap; }
+        .btn-wa { background: rgba(37, 211, 102, 0.15) !important; color: #25D366 !important; border: 1px solid #25D366 !important; box-shadow: 0 6px 15px rgba(0,0,0,0.3) !important; text-decoration: none; display: inline-flex; align-items: center; justify-content: center; padding: 12px 28px; border-radius: 50px; gap: 8px; transition: all 0.3s; }
+        .btn-wa:hover { background: rgba(37, 211, 102, 0.25) !important; transform: translateY(-2px); }
+        .btn-email { background: rgba(255, 255, 255, 0.1) !important; color: #D4AF37 !important; border: 1px solid #D4AF37 !important; box-shadow: 0 6px 15px rgba(0,0,0,0.3) !important; text-decoration: none; display: inline-flex; align-items: center; justify-content: center; padding: 12px 28px; border-radius: 50px; gap: 8px; transition: all 0.3s; }
+        .btn-email:hover { background: rgba(255, 255, 255, 0.2) !important; transform: translateY(-2px); }
+
+        /* --- FAQ --- */
+        .faq-list { max-width: 850px; margin: 0 auto; }
+        details { margin-bottom: 5px; border-bottom: 1px solid rgba(212, 175, 55, 0.3); }
+        details:last-child { border-bottom: none; }
+        summary { padding: 20px 10px; cursor: pointer; color: #D4AF37 !important; display: flex; justify-content: space-between; align-items: center; list-style: none; text-shadow: 0 1px 5px rgba(0,0,0,0.5); margin: 0; font-size: 15px; font-weight: 300; }
+        summary::-webkit-details-marker { display: none; }
+        summary::after { content: '\f078'; font-family: 'Font Awesome 6 Free'; font-weight: 900 !important; font-size: 0.9rem; transition: transform 0.3s; }
+        details[open] summary::after { transform: rotate(180deg); }
+        .faq-answer { padding: 0 10px 25px 10px; color: rgba(255,255,255,0.95) !important; text-shadow: 0 1px 5px rgba(0,0,0,0.5); margin: 0; }
+
+        @media (max-width: 992px) {
+            .page-hero { align-items: center; padding-right: 20px; }
+        }
+        @media (max-width: 768px) {
+            .section-hero-box { padding: 40px 20px; }
+            .contact-buttons { flex-direction: column; }
+            .intensity-item { flex-direction: column; align-items: flex-start; gap: 8px; }
+            .intensity-price { text-align: left; }
+        }
+    </style>
+
+    <script>
+        function forceOpenMenu(event) {
+            event.preventDefault(); event.stopPropagation();
+            var nav = document.getElementById('nav-links');
+            if (nav.classList.contains('mobile-force-open')) { nav.classList.remove('mobile-force-open'); } 
+            else { nav.classList.add('mobile-force-open'); }
+        }
+    </script>
+</head>
+<body>
+
+    <video autoplay muted loop playsinline class="background-video">
+        <source src="girl_working_001.mp4" type="video/mp4">
+    </video>
+    <div style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(247, 244, 229, 0.9); z-index: -1; pointer-events: none;"></div>
+
+    <nav class="main-nav">
+        <div class="nav-container">
+            <button class="mobile-menu-toggle" id="mobile-toggle" onclick="forceOpenMenu(event)">☰</button>
+            
+            <div class="logo">
+                <img src="ox-head-008.jpg" alt="Oxbridge English Logo">
+                <h4 data-en="Oxbridge English" data-es="Oxbridge English" style="color: #DFDFD0;">Oxbridge English</h4>
+            </div>
+            
+            <ul class="nav-links" id="nav-links">
+                <li><a href="index.html" data-en="Home" data-es="Inicio">Home</a></li>
+                <li><a href="recommendations.html" data-en="About Us" data-es="Quiénes Somos">About Us</a></li>
+                <li class="dropdown">
+                    <a href="javascript:void(0);" id="courses-dropdown-toggle" data-en="Courses <i class='fa-solid fa-caret-down'></i>" data-es="Cursos <i class='fa-solid fa-caret-down'></i>">Courses <i class="fa-solid fa-caret-down"></i></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="interactive-courses.html" data-en="Interactive Courses" data-es="Cursos Interactivos">Interactive Courses</a></li>
+                        <li><a href="1-to-1-courses.html" data-en="1 to 1 Courses" data-es="Cursos 1 a 1">1 to 1 Courses</a></li>
+                        <li><a href="empresas.html" class="active" data-en="English for Companies" data-es="Inglés para Empresas">English for Companies</a></li>
+                        <li><a href="icfes.html" data-en="ICFES Preparation" data-es="Preparación ICFES">ICFES Preparation</a></li>
+                    </ul>
+                </li>
+                <li><a href="placement-test.html" data-en="Level Test" data-es="Test de Nivel">Level Test</a></li>
+                <li><a href="books.html" data-en="Books" data-es="Libros">Books</a></li>
+                <li><a href="audio.html" data-en="Audio" data-es="Audio">Audio</a></li>
+                <li><a href="translator.html" data-en="Translator" data-es="Traductor">Translator</a></li>
+                <li><a href="blog.html" data-en="Blog" data-es="Blog">Blog</a></li>
+                <li><a href="contact.html" data-en="Contact" data-es="Contacto">Contact</a></li>
+            </ul>
+            
+            <div class="lang-toggle">
+                <button class="lang-option active" data-lang="en"><span class="flag">EN</span></button>
+                <button class="lang-option" data-lang="es"><span class="flag">ES</span></button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="page-wrapper-transparent">
+        
+        <header class="page-hero">
+            <div class="hero-text-wrapper">
+                <h1 class="page-hero-title" data-en="Corporate English with Oxbridge" data-es="Inglés Corporativo con Oxbridge">
+                    Inglés Corporativo con Oxbridge
+                </h1>
+                <h3 class="page-hero-subtitle" data-en="Raise your entire team's communication level with a hybrid, scalable, and cost-effective solution." data-es="Eleva el nivel de comunicación de todo tu equipo con una solución híbrida, escalable y rentable.">
+                    Eleva el nivel de comunicación de todo tu equipo con una solución híbrida, escalable y rentable.
+                </h3>
+                <a href="#enroll" class="cta-button" style="border:none; text-decoration: none; display: inline-block;">
+                    <h5 style="margin: 0; color: #1a1a3e;" data-en="Request a Quote" data-es="Solicitar Presupuesto">Solicitar Presupuesto</h5>
+                </a>
+            </div>
+        </header>
+
+        <main style="max-width: 1200px; margin: 40px auto; padding: 0 20px;">
+            
+            <section class="section-hero-box">
+                <h2 class="white-heading" data-en="Why Train Your Team With Us?" data-es="¿Por qué capacitar a su equipo con nosotros?">
+                    ¿Por qué capacitar a su equipo con nosotros?
+                </h2>
+                
+                <div class="benefits-grid">
+                    <div class="benefit-item">
+                        <i class="fa-regular fa-comments benefit-icon"></i>
+                        <h3 class="gold-subheading" data-en="Essential Communication" data-es="Comunicación Esencial">Comunicación Esencial</h3>
+                        <p class="content-paragraph" data-en="We elevate your operational staff to a foundational level where they can handle emails, calls, and basic customer service in English without relying on external translators." data-es="Llevamos a todo su personal operativo a un nivel fundacional donde pueden manejar correos, llamadas y atención básica en inglés sin depender de traductores externos.">Llevamos a todo su personal operativo a un nivel fundacional donde pueden manejar correos, llamadas y atención básica en inglés sin depender de traductores externos.</p>
+                    </div>
+                    <div class="benefit-item">
+                        <i class="fa-solid fa-chart-line benefit-icon"></i>
+                        <h3 class="gold-subheading" data-en="Cost-Effective Scaling" data-es="Escalabilidad Rentable">Escalabilidad Rentable</h3>
+                        <p class="content-paragraph" data-en="Significant volume discounts allow you to train entire departments for a fraction of the cost of traditional language academies." data-es="Descuentos significativos por volumen que permiten capacitar a departamentos enteros por una fracción del costo de las academias tradicionales.">Descuentos significativos por volumen que permiten capacitar a departamentos enteros por una fracción del costo de las academias tradicionales.</p>
+                    </div>
+                    <div class="benefit-item">
+                        <i class="fa-solid fa-star benefit-icon"></i>
+                        <h3 class="gold-subheading" data-en="Executive Training" data-es="Capacitación Ejecutiva">Capacitación Ejecutiva</h3>
+                        <p class="content-paragraph" data-en="Private 1-to-1 live sessions reserved exclusively for managers or key personnel requiring advanced fluency for high-stakes negotiations and presentations." data-es="Clases privadas 1 a 1 reservadas exclusivamente para gerentes o personal clave que requiere fluidez avanzada para negociaciones y presentaciones.">Clases privadas 1 a 1 reservadas exclusivamente para gerentes o personal clave que requiere fluidez avanzada para negociaciones y presentaciones.</p>
+                    </div>
+                </div>
+            </section>
+
+            <div class="fade-in-content" style="max-width: 1000px; margin: 0 auto 40px auto;">
+                <div style="background: rgba(247, 244, 229, 0.95); padding: 40px; border-radius: 15px; display: flex; align-items: center; gap: 30px; box-shadow: 0 15px 35px rgba(0,0,0,0.3); border: 1px solid rgba(212, 175, 55, 0.4); flex-wrap: wrap; justify-content: center;">
+                    <img src="person_3.png" alt="Luis Urrea" style="width: 120px; height: 120px; border-radius: 50%; object-fit: cover; box-shadow: 0 4px 15px rgba(0,0,0,0.2);">
+                    <div style="flex: 1; min-width: 300px; text-align: left;">
+                        <h4 style="color: #000000; font-size: 20px; font-weight: 500; line-height: 1.6; margin: 0 0 15px 0;"
+                            data-en='"Highly recommended, he has many strategies for learning, gives you the confidence to speak, and provides recommendations for improvement. The focus we gave my learning was for job interviews, which allowed me to apply to companies abroad with good results."'
+                            data-es='"Super recomendado, tiene muchas estrategias para el aprendizaje, te da la confianza para hablar y te va dando recomendaciones para mejorar, el enfoque que le dimos a mi aprendizaje fue para entrevistas de trabajo, lo que me permitió aplicar en empresas del exterior, con buenos resultados."'>
+                            "Super recomendado, tiene muchas estrategias para el aprendizaje, te da la confianza para hablar y te va dando recomendaciones para mejorar, el enfoque que le dimos a mi aprendizaje fue para entrevistas de trabajo, lo que me permitió aplicar en empresas del exterior, con buenos resultados."
+                        </h4>
+                        <p style="color: #1a1a3e; margin: 0; font-weight: bold; font-size: 16px;">— Luis Urrea</p>
+                        <p style="color: #666; margin: 5px 0 0 0; font-size: 14px; font-style: italic;" 
+                           data-en="Software Engineer" 
+                           data-es="Ingeniero de Software">
+                           Ingeniero de Software
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <section class="section-hero-box">
+                <h2 class="white-heading" data-en="Our Corporate Strategy" data-es="Nuestra Estrategia Corporativa">
+                    Nuestra Estrategia Corporativa
+                </h2>
+                
+                <div class="benefits-grid">
+                    <div class="benefit-item" style="background: rgba(255, 255, 255, 0.1); border: 1px solid #D4AF37; border-radius: 30px; padding: 30px; box-shadow: 0 6px 15px rgba(0,0,0,0.3); transition: transform 0.2s, background 0.2s;" onmouseover="this.style.background='rgba(255, 255, 255, 0.15)';" onmouseout="this.style.background='rgba(255, 255, 255, 0.1)';">
+                        <i class="fa-solid fa-laptop-code benefit-icon"></i>
+                        <h3 class="gold-subheading" data-en="Phase 1: Interactive (All Staff)" data-es="Fase Interactiva (Todo el personal)">Fase Interactiva (Todo el personal)</h3>
+                        <p class="content-paragraph" data-en="Your entire team receives full access to our self-study platform, interactive courses, and AI tools. They study at their own pace, mastering the basics without interrupting the workday." data-es="Todo su equipo recibe acceso completo a nuestra plataforma de autoestudio, cursos interactivos y herramientas de IA. Estudiarán a su propio ritmo, dominando las bases sin interrumpir el horario laboral.">
+                            Todo su equipo recibe acceso completo a nuestra plataforma de autoestudio, cursos interactivos y herramientas de IA. Estudiarán a su propio ritmo, dominando las bases sin interrumpir el horario laboral.
+                        </p>
+                    </div>
+                    <div class="benefit-item" style="background: rgba(255, 255, 255, 0.1); border: 1px solid #D4AF37; border-radius: 30px; padding: 30px; box-shadow: 0 6px 15px rgba(0,0,0,0.3); transition: transform 0.2s, background 0.2s;" onmouseover="this.style.background='rgba(255, 255, 255, 0.15)';" onmouseout="this.style.background='rgba(255, 255, 255, 0.1)';">
+                        <i class="fa-solid fa-user-tie benefit-icon"></i>
+                        <h3 class="gold-subheading" data-en="Phase 2: Executive (Leaders & Managers)" data-es="Fase Ejecutiva (Líderes y Directivos)">Fase Ejecutiva (Líderes y Directivos)</h3>
+                        <p class="content-paragraph" data-en="Once the basics are mastered, or for employees in leadership positions, we integrate live 1-to-1 sessions to polish fluency, corporate pronunciation, and confidence in high-risk scenarios." data-es="Una vez dominadas las bases, o para empleados en posiciones de liderazgo, integramos sesiones 1 a 1 en vivo para pulir la fluidez, la pronunciación corporativa y la confianza en escenarios de alto riesgo.">
+                            Una vez dominadas las bases, o para empleados en posiciones de liderazgo, integramos sesiones 1 a 1 en vivo para pulir la fluidez, la pronunciación corporativa y la confianza en escenarios de alto riesgo.
+                        </p>
+                    </div>
+                </div>
+
+                <div style="margin-top: 50px; text-align: center;">
+                    <img src="graph%20spanish%20001.jpg" 
+                         data-src-en="graph%20english%20001.jpg" 
+                         data-src-es="graph%20spanish%20001.jpg" 
+                         alt="Corporate Strategy Graph" 
+                         style="max-width: 100%; height: auto; border-radius: 10px; box-shadow: 0 8px 25px rgba(0,0,0,0.5);">
+                </div>
+            </section>
+
+            <section id="enroll" class="section-hero-box">
+                <h2 class="white-heading" data-en="Corporate Plans & Volume Discounts" data-es="Planes Corporativos y Descuentos por Volumen">
+                    Planes Corporativos y Descuentos por Volumen
+                </h2>
+                    
+                <div class="pricing-content">
+                    <p class="content-paragraph" style="font-size: 1.1rem;" data-en="We design packages tailored to the size of your company. The more digital licenses you acquire for our platform, the greater the discount." data-es="Diseñamos el paquete a la medida del tamaño de su empresa. A mayor cantidad de licencias para nuestra plataforma digital, mayor es el descuento.">
+                        Diseñamos el paquete a la medida del tamaño de su empresa. A mayor cantidad de licencias para nuestra plataforma digital, mayor es el descuento.
+                    </p>
+
+                    <div class="intensity-list">
+                        <div class="intensity-item">
+                            <span class="intensity-hours" data-en="Small Teams (10 - 49 employees)" data-es="Equipos Pequeños (10 - 49 empleados)">Equipos Pequeños (10 - 49 empleados)</span>
+                            <span class="intensity-price" data-en="20% Off" data-es="20% Dcto.">20% Dcto.</span>
+                        </div>
+                        <div class="intensity-item">
+                            <span class="intensity-hours" data-en="Medium Enterprise (50 - 99 employees)" data-es="Mediana Empresa (50 - 99 empleados)">Mediana Empresa (50 - 99 empleados)</span>
+                            <span class="intensity-price" data-en="30% Off" data-es="30% Dcto.">30% Dcto.</span>
+                        </div>
+                        <div class="intensity-item">
+                            <span class="intensity-hours" data-en="Corporate Level (100+ employees)" data-es="Nivel Corporativo (100+ empleados)">Nivel Corporativo (100+ empleados)</span>
+                            <span class="intensity-price" data-en="45% Off" data-es="45% Dcto.">45% Dcto.</span>
+                        </div>
+                        <div class="intensity-item" style="border-color: #ffffff;">
+                            <span class="intensity-hours" style="color: #ffffff;" data-en="1-to-1 Executive Tutoring Blocks" data-es="Bloques de Tutoría 1 a 1 Ejecutivos">Bloques de Tutoría 1 a 1 Ejecutivos</span>
+                            <span class="intensity-price" style="color: #D4AF37;" data-en="Special Rates" data-es="Tarifas Especiales">Tarifas Especiales</span>
+                        </div>
+                    </div>
+
+                    <small class="payment-note" data-en="*International payments accepted via Bank Transfer, PayPal & Wise" data-es="*Pagos internacionales aceptados vía Transferencia Bancaria, PayPal y Wise">
+                        *Pagos internacionales aceptados vía Transferencia Bancaria, PayPal y Wise
+                    </small>
+
+                    <p class="content-paragraph" data-en="Every company's needs are unique. Contact us directly to structure an exact plan and manage your corporate billing:" data-es="Las necesidades de cada empresa son únicas. Contáctenos para estructurar un plan exacto y gestionar la facturación corporativa:">
+                        Las necesidades de cada empresa son únicas. Contáctenos para estructurar un plan exacto y gestionar la facturación corporativa:
+                    </p>
+
+                    <div class="contact-buttons">
+                        <a href="mailto:oxbridgeenglishcourses@gmail.com" class="btn-email">
+                            <i class="fa-regular fa-envelope"></i>
+                            <h5 style="margin: 0;" data-en="Email Us" data-es="Escríbanos por Correo">Escríbanos por Correo</h5>
+                        </a>
+                        <a href="https://wa.me/573133813833" target="_blank" class="btn-wa">
+                            <i class="fa-brands fa-whatsapp"></i>
+                            <h5 style="margin: 0;" data-en="WhatsApp Us" data-es="Escríbanos por WhatsApp">Escríbanos por WhatsApp</h5>
+                        </a>
+                    </div>
+                </div>
+            </section>
+
+            <div class="fade-in-content" style="max-width: 1000px; margin: 0 auto 40px auto;">
+                <div style="background: rgba(247, 244, 229, 0.95); padding: 40px; border-radius: 15px; display: flex; align-items: center; gap: 30px; box-shadow: 0 15px 35px rgba(0,0,0,0.3); border: 1px solid rgba(212, 175, 55, 0.4); flex-wrap: wrap; justify-content: center;">
+                    <img src="person_9.png" alt="Belman Jahir Rodríguez Niño" style="width: 120px; height: 120px; border-radius: 50%; object-fit: cover; box-shadow: 0 4px 15px rgba(0,0,0,0.2);">
+                    <div style="flex: 1; min-width: 300px; text-align: left;">
+                        <h4 style="color: #000000; font-size: 20px; font-weight: 500; line-height: 1.6; margin: 0 0 15px 0;"
+                            data-en='"Undoubtedly the best teacher I&#39;ve ever had. With a lot of charisma, his classes felt more like conversations with a friend rather than traditional classes. Thanks to him, I successfully passed my IELTS exam. My gratitude for the greatest teacher Christopher."'
+                            data-es='"Sin duda el mejor profesor que he tenido. Con mucho carisma, sus clases se sentían más como conversaciones con un amigo que como clases tradicionales. Gracias a él, aprobé con éxito mi examen IELTS. Mi gratitud para el gran profesor Christopher."'>
+                            "Sin duda el mejor profesor que he tenido. Con mucho carisma, sus clases se sentían más como conversaciones con un amigo que como clases tradicionales. Gracias a él, aprobé con éxito mi examen IELTS. Mi gratitud para el gran profesor Christopher."
+                        </h4>
+                        <p style="color: #1a1a3e; margin: 0; font-weight: bold; font-size: 16px;">— Belman Jahir Rodríguez Niño</p>
+                        <p style="color: #666; margin: 5px 0 0 0; font-size: 14px; font-style: italic;" 
+                           data-en="PhD(C). Engineer and Researcher in AI, Audio & Electronics" 
+                           data-es="PhD(C). Ingeniero e Investigador en IA, Audio y Electrónica">
+                           PhD(C). Ingeniero e Investigador en IA, Audio y Electrónica
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <section class="section-hero-box">
+                <h2 class="white-heading" data-en="Frequently Asked Questions" data-es="Preguntas Frecuentes">
+                    Preguntas Frecuentes
+                </h2>
+                
+                <div class="faq-list">
+                    <details>
+                        <summary data-en="How does corporate billing and payment work?" data-es="¿Cómo funciona la facturación y el pago corporativo?">¿Cómo funciona la facturación y el pago corporativo?</summary>
+                        <p class="faq-answer" data-en="We offer two secure payment methods. For direct payments, we generate a corporate invoice payable via Bank Transfer, Wise, or PayPal. If your company requires payment via corporate credit card, we will generate a customized, secure Hotmart checkout link specifically for your bulk package." data-es="Ofrecemos dos métodos de pago seguros. Para pagos directos, generamos una factura corporativa que puede pagarse mediante transferencia bancaria, Wise o PayPal. Si su empresa requiere el pago con tarjeta de crédito corporativa, generaremos un enlace de pago personalizado y seguro a través de Hotmart específicamente para su paquete corporativo.">
+                            Ofrecemos dos métodos de pago seguros. Para pagos directos, generamos una factura corporativa que puede pagarse mediante transferencia bancaria, Wise o PayPal. Si su empresa requiere el pago con tarjeta de crédito corporativa, generaremos un enlace de pago personalizado y seguro a través de Hotmart específicamente para su paquete corporativo.
+                        </p>
+                    </details>
+
+                    <details>
+                        <summary data-en="How do employees get access after payment?" data-es="¿Cómo obtienen acceso los empleados después del pago?">¿Cómo obtienen acceso los empleados después del pago?</summary>
+                        <p class="faq-answer" data-en="Once the payment is processed, simply send us a list of your employees' names and emails. We handle the bulk import into our platform, and every team member will automatically receive an email with their login credentials to start immediately." data-es="Una vez procesado el pago, simplemente envíenos una lista con los nombres y correos de sus empleados. Nosotros nos encargamos de la importación masiva en nuestra plataforma y cada miembro del equipo recibirá automáticamente un correo con sus credenciales de acceso para comenzar de inmediato.">
+                            Una vez procesado el pago, simplemente envíenos una lista con los nombres y correos de sus empleados. Nosotros nos encargamos de la importación masiva en nuestra plataforma y cada miembro del equipo recibirá automáticamente un correo con sus credenciales de acceso para comenzar de inmediato.
+                        </p>
+                    </details>
+
+                    <details>
+                        <summary data-en="Do you charge per user or is it a flat rate?" data-es="¿Cobran por usuario o es una tarifa plana?">¿Cobran por usuario o es una tarifa plana?</summary>
+                        <p class="faq-answer" data-en="We charge per license (per user) but apply significant volume discounts. The larger your team, the lower the cost per employee. We structure a hidden, custom offer based on the exact number of staff you wish to train." data-es="Cobramos por licencia (por usuario) pero aplicando descuentos significativos por volumen. Cuanto mayor sea su equipo, menor será el costo por empleado. Estructuramos una oferta oculta y personalizada basada en la cantidad exacta de personal que desea capacitar.">
+                            Cobramos por licencia (por usuario) pero aplicando descuentos significativos por volumen. Cuanto mayor sea su equipo, menor será el costo por empleado. Estructuramos una oferta oculta y personalizada basada en la cantidad exacta de personal que desea capacitar.
+                        </p>
+                    </details>
+
+                    <details>
+                        <summary data-en="How do we measure employee progress?" data-es="¿Cómo medimos el progreso de los empleados?">¿Cómo medimos el progreso de los empleados?</summary>
+                        <p class="faq-answer" data-en="We provide periodic progress reports detailing platform usage, completed modules, and test scores so management can ensure their training investment is being actively utilized." data-es="Proporcionamos informes de progreso periódicos que detallan el uso de la plataforma, los módulos completados y las puntuaciones de las pruebas para que la gerencia pueda asegurarse de que su inversión en capacitación se está utilizando activamente.">
+                            Proporcionamos informes de progreso periódicos que detallan el uso de la plataforma, los módulos completados y las puntuaciones de las pruebas para que la gerencia pueda asegurarse de que su inversión en capacitación se está utilizando activamente.
+                        </p>
+                    </details>
+
+                    <details>
+                        <summary data-en="Can we mix digital access with 1-to-1 classes?" data-es="¿Podemos mezclar acceso digital con clases 1 a 1?">¿Podemos mezclar acceso digital con clases 1 a 1?</summary>
+                        <p class="faq-answer" data-en="Yes, this is our recommended approach. You can purchase digital licenses for your entire staff and acquire specific blocks of 1-to-1 hours strictly for leadership or employees who frequently negotiate internationally." data-es="Sí, este es nuestro enfoque recomendado. Puede adquirir licencias digitales para todo su personal y comprar bloques específicos de horas 1 a 1 estrictamente para el liderazgo o empleados que negocian frecuentemente a nivel internacional.">
+                            Sí, este es nuestro enfoque recomendado. Puede adquirir licencias digitales para todo su personal y comprar bloques específicos de horas 1 a 1 estrictamente para el liderazgo o empleados que negocian frecuentemente a nivel internacional.
+                        </p>
+                    </details>
+
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <footer class="main-footer" style="background-color: #1a1a3e;">
+        <div class="footer-content">
+            <div class="footer-social" style="display: flex; gap: 20px; justify-content: center; margin-bottom: 20px;">
+                <a href="https://www.instagram.com/cursosdeinglesoxbridge/" target="_blank" aria-label="Instagram" style="color: #DFDFD0;">
+                    <svg style="width: 18px; height: 18px;" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                </a>
+                <a href="https://www.facebook.com/profile.php?id=61564608544805" target="_blank" aria-label="Facebook" style="color: #DFDFD0;">
+                    <svg style="width: 18px; height: 18px;" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.04C6.5 2.04 2 6.53 2 12.06C2 17.06 5.66 21.21 10.44 21.96V14.96H7.9V12.06H10.44V9.85C10.44 7.34 11.93 5.96 14.22 5.96C15.31 5.96 16.45 6.15 16.45 6.15V8.62H15.19C13.95 8.62 13.56 9.39 13.56 10.18V12.06H16.34L15.89 14.96H13.56V21.96A10 10 0 0 0 22 12.06C22 6.53 17.5 2.04 12 2.04Z"/></svg>
+                </a>
+                <a href="https://www.linkedin.com/in/christopher-harris-13b678153/" target="_blank" aria-label="LinkedIn" style="color: #DFDFD0;">
+                    <svg style="width: 18px; height: 18px;" viewBox="0 0 24 24" fill="currentColor"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+                </a>
+            </div>
+            <p class="footer-text" style="display: flex; align-items: center; justify-content: center; gap: 15px; flex-wrap: wrap; padding-top: 20px; color: #DFDFD0;">
+                <span data-en="© 2026 by Oxbridge English" data-es="© 2026 por Oxbridge English">© 2026 by Oxbridge English</span>
+                <span style="color: #666;">|</span>
+                <a href="privacy.html" style="color: #DFDFD0; text-decoration: none; transition: color 0.3s;" onmouseover="this.style.color='#D4AF37'" onmouseout="this.style.color='#DFDFD0'">
+                    <span data-en="Privacy Policy" data-es="Política de Privacidad">Privacy Policy</span>
+                </a>
+                <span style="color: #666;">|</span>
+                <a href="terms.html" style="color: #DFDFD0; text-decoration: none; transition: color 0.3s;" onmouseover="this.style.color='#D4AF37'" onmouseout="this.style.color='#DFDFD0'">
+                    <span data-en="Terms & Conditions" data-es="Términos y Condiciones">Terms & Conditions</span>
+                </a>
+                <img src="logo_jpg_003.jpg" alt="Oxbridge English" style="height: 30px; width: auto; object-fit: contain;">
+            </p>
+        </div>
+    </footer>
+
+    <script src="script.js?v=3"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const dropdownToggle = document.getElementById('courses-dropdown-toggle');
+            if (dropdownToggle) {
+                dropdownToggle.addEventListener('click', (e) => {
+                    if (window.innerWidth <= 768) {
+                        e.preventDefault();
+                        dropdownToggle.parentElement.classList.toggle('active-mobile');
+                    }
+                });
+            }
+
+            const langOptions = document.querySelectorAll('.lang-option');
+            const elementsToTranslate = document.querySelectorAll('[data-en][data-es]');
+            const imagesToTranslate = document.querySelectorAll('img[data-src-en][data-src-es]');
+
+            langOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    const lang = this.getAttribute('data-lang');
+                    
+                    langOptions.forEach(opt => opt.classList.remove('active'));
+                    this.classList.add('active');
+
+                    // Swap Text
+                    elementsToTranslate.forEach(el => {
+                        const translation = el.getAttribute('data-' + lang);
+                        if (translation) {
+                            el.innerHTML = translation;
+                        }
+                    });
+
+                    // Swap Images
+                    imagesToTranslate.forEach(img => {
+                        const srcTrans = img.getAttribute('data-src-' + lang);
+                        if (srcTrans) {
+                            img.src = srcTrans;
+                        }
+                    });
+
+                    localStorage.setItem('preferredLanguage', lang);
+                    document.documentElement.lang = lang;
+                });
+            });
+
+            const savedLang = localStorage.getItem('preferredLanguage') || 'en';
+            const activeBtn = document.querySelector(`.lang-option[data-lang="${savedLang}"]`);
+            if (activeBtn) {
+                activeBtn.click();
+            }
+        });
+    </script>
+</body>
+</html>

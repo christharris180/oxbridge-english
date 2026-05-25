@@ -1,10 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <!-- Google Analytics (G-BW4FK9RBTY) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-BW4FK9RBTY"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
@@ -13,6 +9,9 @@
       gtag('config', 'G-BW4FK9RBTY');
     </script>
 
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
     <title>Entre lo que oyes y lo que entiendes… vive tu cerebro | Oxbridge English</title>
     <meta name="description" content="Descubre el secreto invisible del inglés real y por qué tu cerebro procesa la escucha de forma diferente a como te enseñaron en la escuela.">
     <meta name="keywords" content="aprender ingles, listening, neurociencia, comprension auditiva, oxbridge english, ingles nativo">
@@ -31,29 +30,90 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="styles.css">
+
+    <style>
+        /* --- GLOBAL TRANSITION & VISIBILITY FIXES --- */
+        html { background-color: #000000 !important; }
+        body { 
+            background-color: transparent !important; 
+            margin: 0; 
+            padding: 0; 
+            display: flex; 
+            flex-direction: column; 
+            min-height: 100vh; 
+        }
+
+        .translator-page-wrapper {
+            position: relative;
+            overflow: hidden;
+            width: 100%;
+            padding: 80px 15px 60px;
+            background: rgba(247, 244, 229, 0.90);
+            flex: 1 0 auto;
+        }
+
+        .contained-bg-video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .blog-post-container {
+            max-width: 900px;
+            margin: 20px auto 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .article-content p,
+        .article-content ul,
+        .article-content li,
+        .article-content strong,
+        .article-content em {
+            color: #FDFBF5 !important;
+        }
+
+        @media (max-width: 768px) {
+            .article-content {
+                padding: 40px 30px !important;
+            }
+            .article-title {
+                font-size: 32px !important;
+            }
+        }
+    </style>
 </head>
 <body>
-    <video autoplay muted loop playsinline class="background-video">
-        <source src="girl_working_001.mp4" type="video/mp4">
-    </video>
 
-    <nav class="main-nav">
+    <nav class="main-nav" style="z-index: 100;">
         <div class="nav-container">
-            <button class="mobile-menu-toggle">☰</button>
+            <button class="mobile-menu-toggle" id="mobile-toggle" onclick="forceOpenMenu(event)">☰</button>
             <div class="logo">
                 <img src="ox-head-008.jpg" alt="Oxbridge English Logo">
-                <h1>Oxbridge English</h1>
+                <h4 data-en="Oxbridge English" data-es="Oxbridge English" style="color: #DFDFD0; margin:0;">Oxbridge English</h4>
             </div>
-            <ul class="nav-links">
+            <ul class="nav-links" id="nav-links">
                 <li><a href="index.html" data-en="Home" data-es="Inicio">Home</a></li>
-                <li><a href="courses.html" data-en="Courses" data-es="Cursos">Courses</a></li>
-                <li><a href="enroll.html" data-en="Enroll" data-es="Inscribirse">Enroll</a></li>
+                <li><a href="recommendations.html" data-en="About Us" data-es="Quiénes Somos">About Us</a></li>
+                <li class="dropdown">
+                    <a href="javascript:void(0);" id="courses-dropdown-toggle" data-en="Courses <i class='fa-solid fa-caret-down'></i>" data-es="Cursos <i class='fa-solid fa-caret-down'></i>">Courses <i class="fa-solid fa-caret-down"></i></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="interactive-courses.html" data-en="Interactive Courses" data-es="Cursos Interactivos">Interactive Courses</a></li>
+                        <li><a href="1-to-1-courses.html" data-en="1 to 1 Courses" data-es="Cursos 1 a 1">1 to 1 Courses</a></li>
+                        <li><a href="empresas.html" data-en="English for Companies" data-es="Inglés para Empresas">English for Companies</a></li>
+                        <li><a href="icfes.html" data-en="ICFES Preparation" data-es="Preparación ICFES">ICFES Preparation</a></li>
+                    </ul>
+                </li>
+                <li><a href="placement-test.html" data-en="Level Test" data-es="Test de Nivel">Level Test</a></li>
                 <li><a href="books.html" data-en="Books" data-es="Libros">Books</a></li>
                 <li><a href="audio.html" data-en="Audio" data-es="Audio">Audio</a></li>
                 <li><a href="translator.html" data-en="Translator" data-es="Traductor">Translator</a></li>
-                <li><a href="placement-test.html" data-en="Level Test" data-es="Test de Nivel">Level Test</a></li>
-                <li><a href="recommendations.html" data-en="Recommendations" data-es="Recomendaciones">Recommendations</a></li>
-                <li><a href="blog.html" class="active" data-en="Blog" data-es="Blog">Blog</a></li>
+                <li><a href="blog.html" class="active" data-en="Blog" data-es="Blog" style="color: #D4AF37 !important;">Blog</a></li>
                 <li><a href="contact.html" data-en="Contact" data-es="Contacto">Contact</a></li>
             </ul>
             <div class="lang-toggle">
@@ -63,24 +123,25 @@
         </div>
     </nav>
 
-    <div class="contact-container">
-        <div style="max-width: 900px; margin: 0 auto 20px auto;">
-            <a href="blog.html" class="trans-btn trans-btn-secondary" style="display: inline-flex; align-items: center; gap: 8px; text-decoration: none;">
-                <i class="fas fa-arrow-left"></i> <span data-en="Back to Blog" data-es="Volver al Blog">Volver al Blog</span>
-            </a>
-        </div>
+    <div class="translator-page-wrapper">
+        <video autoplay muted loop playsinline class="contained-bg-video">
+            <source src="girl_working_001.mp4" type="video/mp4">
+        </video>
 
-        <div style="background: url('blue_background_001.jpg'); background-size: cover; background-position: center; padding: 0; border-radius: 20px; box-shadow: 0 8px 24px rgba(0,0,0,0.15); max-width: 900px; margin: 0 auto; overflow: hidden;">
-            
-            <img src="blog-image-007.jpg" alt="Entre lo que oyes y lo que entiendes" style="width: 100%; height: auto; display: block;">
-            
-            <div style="padding: 60px 80px; color: white;">
-                <p style="color: #e8c412; font-size: 14px; margin: 0 0 10px 0;">Mayo 2026</p>
-                <h1 style="color: white; font-size: 42px; font-weight: 700; margin: 0 0 10px 0; line-height: 1.2;">Entre lo que oyes y lo que entiendes… vive tu cerebro</h1>
-                <h2 style="color: #cccccc; font-size: 24px; font-weight: 400; margin: 0 0 30px 0; line-height: 1.3;">El secreto invisible del inglés real</h2>
-                
-                <div style="color: white; line-height: 1.8; font-size: 18px;">
-                    <p><strong>“No entiendo a los nativos”: la verdad sobre escuchar y hablar inglés (y por qué estás aprendiendo mal)</strong></p>
+        <div class="blog-post-container">
+            <div style="margin-bottom: 20px;">
+                <a href="blog.html" class="trans-btn trans-btn-secondary" style="display: inline-flex; align-items: center; gap: 8px; text-decoration: none; background: #1a1a3e; color: #ffffff; padding: 10px 20px; border-radius: 20px;">
+                    <i class="fas fa-arrow-left"></i> <span data-en="Back to Blog" data-es="Volver al Blog">Volver al Blog</span>
+                </a>
+            </div>
+
+            <article style="background-color: #1a1a3e; background-image: url('blue_background_001.jpg'); background-size: cover; background-position: center; padding: 0; border-radius: 20px; box-shadow: 0 8px 30px rgba(0,0,0,0.3); overflow: hidden;">
+                <img src="blog-image-007.jpg" alt="Entre lo que oyes y lo que entiendes" style="width: 100%; height: 400px; object-fit: cover;">
+                <div class="article-content" style="padding: 60px 80px;">
+                    <p style="color: #e8c412 !important; font-size: 14px; margin: 0 0 10px 0; text-transform: uppercase; letter-spacing: 1px; font-weight: 600;">Mayo 2026</p>
+                    <h1 class="article-title" style="color: #e8c412; font-family: 'Roboto', sans-serif; font-size: 48px; font-weight: 700; margin: 0 0 30px 0; line-height: 1.2;">Entre lo que oyes y lo que entiendes… vive tu cerebro: El secreto invisible del inglés real</h1>
+                    <div style="line-height: 1.8; font-size: 18px; font-family: 'Roboto', sans-serif; font-weight: 300;">
+                    <p><strong style="font-weight: 500; font-size: 24px; display: block; margin: 30px 0 10px 0;">“No entiendo a los nativos”: la verdad sobre escuchar y hablar inglés (y por qué estás aprendiendo mal)</strong></p>
                     <p>“I understand everything… but when natives speak, I’m lost.”</p>
                     <p>Si has pensado esto, no estás solo. De hecho, es probablemente la queja más común entre estudiantes de nivel intermedio. Y aquí viene lo importante:</p>
                     <ul style="margin: 20px 0; padding-left: 25px;">
@@ -89,7 +150,7 @@
                     </ul>
                     <p>Para resolver esto de verdad, no necesitas más gramática. Necesitas entender cómo funciona tu cerebro cuando escucha y habla.</p>
 
-                    <h2 style="color: #e8c412; font-size: 32px; margin: 40px 0 20px 0;">🧠 El problema no es el inglés, es cómo funciona tu cerebro</h2>
+                    <h3 style="color: #e8c412; font-size: 32px; font-weight: 500; margin: 40px 0 20px 0;">🧠 El problema no es el inglés, es cómo funciona tu cerebro</h3>
                     <p>Los humanos no somos especialmente buenos oyendo. No tenemos:</p>
                     <ul style="margin: 20px 0; padding-left: 25px;">
                         <li>La vista de un águila</li>
@@ -98,72 +159,74 @@
                     </ul>
                     <p>Entonces… ¿cómo sobrevivimos?<br>👉 Con un cerebro que predice la realidad. Tu cerebro no espera a recibir toda la información. Construye una versión de lo que está pasando usando un poco de información real y mucha predicción.</p>
 
-                    <h2 style="color: #e8c412; font-size: 32px; margin: 40px 0 20px 0;">🎧 No escuchas todo… y nunca lo harás</h2>
+                    <h3 style="color: #e8c412; font-size: 32px; font-weight: 500; margin: 40px 0 20px 0;">🎧 No escuchas todo… y nunca lo harás</h3>
                     <p>Aquí está la clave que cambia todo:<br>👉 No escuchas cada palabra.<br>👉 Tu cerebro rellena los espacios.</p>
                     <p>Cuando alguien habla, tú no procesas cada sonido, cada sílaba o cada palabra. Procesas:<br>👉fragmentos + contexto + predicción<br>Y tu cerebro crea el significado completo.</p>
 
-                    <h2 style="color: #e8c412; font-size: 32px; margin: 40px 0 20px 0;">🗣️ ¿Qué pasa entre dos nativos?</h2>
+                    <h3 style="color: #e8c412; font-size: 32px; font-weight: 500; margin: 40px 0 20px 0;">🗣️ ¿Qué pasa entre dos nativos?</h3>
                     <p>Cuando dos nativos hablan: Reducen palabras, usan contracciones, eliminan sonidos y hablan rápido.</p>
                     <p>Ejemplo real: 👉 “What are you going to do?” Se convierte en: 👉 “Whatcha gonna do?” Pero el otro nativo entiende perfectamente. ¿Por qué? 👉 Porque su cerebro ya está entrenado para reconocer patrones, predecir estructuras y rellenar lo que falta.</p>
 
-                    <h2 style="color: #e8c412; font-size: 32px; margin: 40px 0 20px 0;">🧑‍🎓 ¿Qué pasa entre estudiantes?</h2>
+                    <h3 style="color: #e8c412; font-size: 32px; font-weight: 500; margin: 40px 0 20px 0;">🧑‍🎓 ¿Qué pasa entre estudiantes?</h3>
                     <p>Cuando dos estudiantes hablan pronuncian todo claramente, separan cada palabra y hablan más lento. El proceso es escuchar palabra por palabra, analizar, traducir y entender. 👉 Esto puede tomar varios segundos.</p>
 
-                    <h2 style="color: #e8c412; font-size: 32px; margin: 40px 0 20px 0;">😵 ¿Y cuando hablas con un nativo?</h2>
+                    <h3 style="color: #e8c412; font-size: 32px; font-weight: 500; margin: 40px 0 20px 0;">😵 ¿Y cuando hablas con un nativo?</h3>
                     <p>Tú estás en modo: 👉 “escuchar TODO”. El nativo está en modo: 👉 “decir lo suficiente”. Resultado: 👉 “No entiendo nada…” Porque estás esperando sonidos completos pero el nativo solo da pistas.</p>
 
-                    <h2 style="color: #e8c412; font-size: 32px; margin: 40px 0 20px 0;">💥 El gran error en el aprendizaje</h2>
+                    <h3 style="color: #e8c412; font-size: 32px; font-weight: 500; margin: 40px 0 20px 0;">💥 El gran error en el aprendizaje</h3>
                     <p>La mayoría de estudiantes aprende así: Mucha gramática, mucho vocabulario, poca escucha real, casi nada de habla natural. 👉 Están entrenando la mente consciente, pero el idioma real ocurre en el subconsciente.</p>
 
-                    <h2 style="color: #e8c412; font-size: 32px; margin: 40px 0 20px 0;">🔄 Entonces… ¿cómo se aprende de verdad?</h2>
+                    <h3 style="color: #e8c412; font-size: 32px; font-weight: 500; margin: 40px 0 20px 0;">🔄 Entonces… ¿cómo se aprende de verdad?</h3>
                     <p>Para entender nativos, necesitas entrenar tu sistema de predicción (subconsciente). Y eso solo ocurre con:</p>
                     <p><strong>🎧 1. Escuchar mucho (aunque no entiendas todo)</strong><br>Este es el punto más importante. No necesitas entender todo. Tu objetivo es: Captar palabras clave, entender la idea general y dejar que tu cerebro complete el resto.</p>
                     <p><strong>🧠 2. Confiar en el contexto</strong><br>Si escuchas: “Yesterday… meeting… client… problem… solution…” 👉 Ya sabes lo que pasó. No necesitas cada palabra.</p>
                     <p><strong>🗣️ 3. Hablar más (aunque cometas errores)</strong><br>Hablar entrena la escucha porque usas estructuras reales y entrenas tu “predicción interna”.</p>
 
-                    <h2 style="color: #e8c412; font-size: 32px; margin: 40px 0 20px 0;">🔁 Escuchar y hablar: un sistema conectado</h2>
+                    <h3 style="color: #e8c412; font-size: 32px; font-weight: 500; margin: 40px 0 20px 0;">🔁 Escuchar y hablar: un sistema conectado</h3>
                     <p>No son habilidades separadas. 👉 Son el mismo sistema. Cuando mejoras hablando, mejoras escuchando.</p>
 
-                    <h2 style="color: #e8c412; font-size: 32px; margin: 40px 0 20px 0;">⚠️ Lo que debes dejar de hacer / 💡 Lo que debes empezar a hacer</h2>
+                    <h3 style="color: #e8c412; font-size: 32px; font-weight: 500; margin: 40px 0 20px 0;">⚠️ Lo que debes dejar de hacer / 💡 Lo que debes empezar a hacer</h3>
                     <p>Evita intentar entender cada palabra o traducir todo en tu cabeza. En su lugar: Escucha sin parar el audio, acepta no entender todo, concéntrate en la idea general y habla en voz alta todos los días.</p>
 
-                    <h2 style="color: #e8c412; font-size: 32px; margin: 40px 0 20px 0;">🚀 El cambio de mentalidad</h2>
+                    <h3 style="color: #e8c412; font-size: 32px; font-weight: 500; margin: 40px 0 20px 0;">🚀 El cambio de mentalidad</h3>
                     <p>No estás fallando porque no escuchas todo; estás fallando porque crees que deberías hacerlo. Nadie escucha todo. Ni siquiera los nativos. El idioma no es precisión, es interpretación.</p>
 
-                    <h2 style="color: #e8c412; font-size: 32px; margin: 40px 0 20px 0;">🔚 Conclusión</h2>
+                    <h3 style="color: #e8c412; font-size: 32px; font-weight: 500; margin: 40px 0 20px 0;">🔚 Conclusión</h3>
                     <p>Si no entiendes a los nativos… no te preocupes. Escucha más, habla más, piensa menos y confía más en tu cerebro. Solo necesitas dejarlo trabajar.</p>
                 </div>
 
-                <div style="background: rgba(232, 196, 18, 0.2); border-left: 4px solid #e8c412; padding: 30px; margin-top: 50px; border-radius: 10px;">
-                    <h3 style="color: #e8c412; font-size: 24px; margin-bottom: 15px;">📈 Empieza hoy</h3>
-                    <p style="color: white; font-size: 18px; margin-bottom: 20px;">Si quieres entrenar tu escucha y memoria:</p>
-                    <a href="https://oxbridge-english.com/translator.html" class="trans-btn trans-btn-primary" style="display: inline-block; text-decoration: none;">Probar SmarTranslator</a>
+                    <div style="background: rgba(232, 196, 18, 0.15); border-left: 4px solid #e8c412; padding: 30px; margin: 50px 0 0 0; border-radius: 10px;">
+                        <h3 style="color: #e8c412; font-size: 24px; margin: 0 0 15px 0; font-weight: 500;">📈 Empieza hoy</h3>
+                        <p style="margin: 0 0 20px 0; font-size: 18px; font-weight: 300;">Si quieres entrenar tu escucha y memoria, utiliza herramientas que te ayuden a practicar vocabulario contextualizado y recordar lo que aprendes.</p>
+                        <a href="courses.html" class="trans-btn trans-btn-primary" style="display: inline-block; text-decoration: none; margin-right: 15px; background: #D4AF37; color: #1a1a3e !important; font-weight: bold; border-radius: 20px; padding: 10px 25px;">Ver Cursos</a>
+                        <a href="translator.html" class="trans-btn trans-btn-secondary" style="display: inline-block; text-decoration: none; background: #1a1a3e; color: #ffffff !important; font-weight: bold; border-radius: 20px; padding: 10px 25px; border: 2px solid #D4AF37;">Probar SmarTranslator</a>
+                    </div>
                 </div>
-            </div>
+            </article>
         </div>
     </div>
 
-    <footer class="main-footer">
+    <footer class="main-footer" style="background-color: #1a1a3e; z-index: 10; position: relative;">
         <div class="footer-content">
-            <div class="footer-social">
-                <a href="https://www.instagram.com/cursosdeinglesoxbridge/" target="_blank" aria-label="Instagram" style="color: #ffffff;">
-                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+            <div class="footer-social" style="display: flex; gap: 20px; justify-content: center; margin-bottom: 20px;">
+                <a href="https://www.instagram.com/cursosdeinglesoxbridge/" target="_blank" aria-label="Instagram" style="color: #DFDFD0;">
+                    <svg style="width: 18px; height: 18px;" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
                 </a>
-                <a href="https://www.facebook.com/profile.php?id=61564608544805" target="_blank" aria-label="Facebook" style="color: #ffffff;">
-                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+                <a href="https://www.facebook.com/profile.php?id=61564608544805" target="_blank" aria-label="Facebook" style="color: #DFDFD0;">
+                    <svg style="width: 18px; height: 18px;" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.04C6.5 2.04 2 6.53 2 12.06C2 17.06 5.66 21.21 10.44 21.96V14.96H7.9V12.06H10.44V9.85C10.44 7.34 11.93 5.96 14.22 5.96C15.31 5.96 16.45 6.15 16.45 6.15V8.62H15.19C13.95 8.62 13.56 9.39 13.56 10.18V12.06H16.34L15.89 14.96H13.56V21.96A10 10 0 0 0 22 12.06C22 6.53 17.5 2.04 12 2.04Z"/></svg>
                 </a>
-                <a href="https://www.linkedin.com/in/christopher-harris-13b678153/" target="_blank" aria-label="LinkedIn" style="color: #ffffff;">
-                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+                <a href="https://www.linkedin.com/in/christopher-harris-13b678153/" target="_blank" aria-label="LinkedIn" style="color: #DFDFD0;">
+                    <svg style="width: 18px; height: 18px;" viewBox="0 0 24 24" fill="currentColor"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
                 </a>
             </div>
-            <p class="footer-text" style="display: flex; align-items: center; justify-content: center; gap: 15px; flex-wrap: wrap; padding-top: 20px; color: #ffffff;">
+            <p class="footer-text" style="display: flex; align-items: center; justify-content: center; gap: 15px; flex-wrap: wrap; padding-top: 20px; color: #DFDFD0;">
                 <span data-en="© 2026 by Oxbridge English" data-es="© 2026 por Oxbridge English">© 2026 by Oxbridge English</span>
                 <span style="color: #666;">|</span>
-                <a href="privacy.html" style="color: #ffffff; text-decoration: none; transition: color 0.3s;" onmouseover="this.style.color='#D4AF37'" onmouseout="this.style.color='#ffffff'">
+                <a href="privacy.html" style="color: #DFDFD0; text-decoration: none; transition: color 0.3s;" onmouseover="this.style.color='#D4AF37'" onmouseout="this.style.color='#DFDFD0'">
                     <span data-en="Privacy Policy" data-es="Política de Privacidad">Privacy Policy</span>
                 </a>
                 <span style="color: #666;">|</span>
-                <a href="terms.html" style="color: #ffffff; text-decoration: none; transition: color 0.3s;" onmouseover="this.style.color='#D4AF37'" onmouseout="this.style.color='#ffffff'">
+                <a href="terms.html" style="color: #DFDFD0; text-decoration: none; transition: color 0.3s;" onmouseover="this.style.color='#D4AF37'" onmouseout="this.style.color='#DFDFD0'">
                     <span data-en="Terms & Conditions" data-es="Términos y Condiciones">Terms & Conditions</span>
                 </a>
                 <img src="logo_jpg_003.jpg" alt="Oxbridge English" style="height: 30px; width: auto; object-fit: contain;">
@@ -172,5 +235,26 @@
     </footer>
 
     <script src="script.js?v=3"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const dropdownToggle = document.getElementById('courses-dropdown-toggle');
+            if (dropdownToggle) {
+                dropdownToggle.addEventListener('click', (e) => {
+                    if (window.innerWidth <= 768) {
+                        e.preventDefault();
+                        dropdownToggle.parentElement.classList.toggle('active-mobile');
+                    }
+                });
+            }
+        });
+        
+        function forceOpenMenu(event) {
+            event.preventDefault(); event.stopPropagation();
+            var nav = document.getElementById('nav-links');
+            if (nav.classList.contains('mobile-force-open')) { nav.classList.remove('mobile-force-open'); } 
+            else { nav.classList.add('mobile-force-open'); }
+        }
+    </script>
 </body>
 </html>
