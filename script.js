@@ -1,10 +1,44 @@
 // ==========================================
+// GLOBAL PAGE FADE TRANSITION
+// ==========================================
+document.addEventListener('DOMContentLoaded', () => {
+    // 1. Add a tiny 50ms delay before fading in. 
+    // This forces the browser to register the black screen FIRST,
+    // ensuring it calculates the 0 to 1 opacity transition smoothly without snapping.
+    setTimeout(() => {
+        document.body.classList.add('fade-in');
+    }, 50);
+
+    // 2. Intercept link click commands for black transition effect
+    document.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', function(e) {
+            const href = this.getAttribute('href');
+            
+            // Skip checks for target blanks, script loops, anchor scrolls, or foreign cross-domains
+            if (!href || href.startsWith('#') || href.startsWith('javascript:') || this.hostname !== window.location.hostname || this.getAttribute('target') === '_blank') {
+                return;
+            }
+            
+            e.preventDefault();
+            const targetUrl = this.href;
+            
+            // Trigger absolute opacity reset to hide elements before canvas changes pages
+            document.body.classList.remove('fade-in');
+            
+            // Wait 450ms (50ms longer than the 400ms CSS transition) 
+            // to ensure the fade is 100% complete before changing the URL
+            setTimeout(() => {
+                window.location.href = targetUrl;
+            }, 450); 
+        });
+    });
+});
+
+// ==========================================
 // COOKIE CONSENT BANNER (For AdSense/GDPR)
 // ==========================================
-
 document.addEventListener('DOMContentLoaded', function() {
     
-    // Create the banner if consent hasn't been given yet
     if (!localStorage.getItem('cookieConsent')) {
         const banner = document.createElement('div');
         banner.id = 'cookie-banner';
@@ -32,7 +66,6 @@ document.addEventListener('DOMContentLoaded', function() {
         
         document.body.appendChild(banner);
         
-        // Add click event to dismiss and save consent
         document.getElementById('accept-cookies').addEventListener('click', function() {
             localStorage.setItem('cookieConsent', 'accepted');
             banner.style.display = 'none';
@@ -44,14 +77,9 @@ document.addEventListener('DOMContentLoaded', function() {
     // ==========================================
     
     const langOptions = document.querySelectorAll('.lang-toggle .lang-option');
-    
-    // Get saved language or default to English
     let currentLang = localStorage.getItem('preferredLanguage') || 'en';
-    
-    // Apply saved language on page load (this also translates the new cookie banner!)
     setLanguage(currentLang);
     
-    // Language option click handlers
     langOptions.forEach(option => {
         option.addEventListener('click', function() {
             const lang = this.getAttribute('data-lang');
@@ -62,9 +90,8 @@ document.addEventListener('DOMContentLoaded', function() {
     
     function setLanguage(lang) {
         currentLang = lang;
-        window.uiLang = lang; // Set globally so other scripts can read it instantly
+        window.uiLang = lang; 
         
-        // Update active state on flag buttons
         langOptions.forEach(option => {
             if (option.getAttribute('data-lang') === lang) {
                 option.classList.add('active');
@@ -73,7 +100,6 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
         
-        // Update all translatable elements - QUERY FRESH EVERY TIME
         document.querySelectorAll('[data-en][data-es]').forEach(element => {
             const translation = element.getAttribute(`data-${lang}`);
             if (translation) {
@@ -81,10 +107,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
         
-        // Update HTML lang attribute
         document.documentElement.lang = lang;
-
-        // Fire a custom event so specific page scripts know to update their dynamic text
         document.dispatchEvent(new CustomEvent('languageChanged', { detail: lang }));
     }
     
@@ -100,7 +123,6 @@ document.addEventListener('DOMContentLoaded', function() {
             navLinks.classList.toggle('active');
         });
         
-        // Close menu when clicking outside
         document.addEventListener('click', function(e) {
             if (!e.target.closest('.nav-container')) {
                 navLinks.classList.remove('active');
@@ -134,8 +156,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     navLinksAll.forEach(link => {
         const linkPage = link.getAttribute('href');
-        if (linkPage === currentPage || 
-            (currentPage === '' && linkPage === 'index.html')) {
+        if (linkPage === currentPage || (currentPage === '' && linkPage === 'index.html')) {
             link.classList.add('active');
         } else {
             link.classList.remove('active');
@@ -147,7 +168,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // ==========================================
     
     const track = document.getElementById('heroCarouselTrack');
-            
+                
     if (track) {
         let currentSlideIndex = 0;
         const slides = document.querySelectorAll('.hero-slide');
@@ -156,18 +177,14 @@ document.addEventListener('DOMContentLoaded', function() {
         let carouselTimer;
         let isTransitioning = false;
 
-        // Clone the first slide and append it to the end for the seamless infinite loop
         const firstSlideClone = slides[0].cloneNode(true);
         track.appendChild(firstSlideClone);
 
-        // SYNC NAV HIGHLIGHT FUNCTION
         function syncNavWithCarousel(slideIndex) {
-            // Remove the highlight from all navigation links first
             document.querySelectorAll('.nav-links a').forEach(link => {
                 link.classList.remove('nav-carousel-highlight');
             });
 
-            // Map the slide index (0 to 3) to the actual HTML page links
             const slideLinks = {
                 0: 'courses.html',
                 1: 'placement-test.html',
@@ -175,7 +192,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 3: 'blog.html'
             };
 
-            // Find the matching link and add the yellow highlight
             const targetHref = slideLinks[slideIndex];
             if (targetHref) {
                 const activeLink = document.querySelector(`.nav-links a[href="${targetHref}"]`);
@@ -187,30 +203,24 @@ document.addEventListener('DOMContentLoaded', function() {
 
         function updateCarousel(instant = false) {
             if (instant) {
-                // Instant snap (used invisibly behind the scenes)
                 track.style.transition = 'none';
             } else {
-                // Slower, smoother 1.2-second slide
                 track.style.transition = 'transform 1.2s ease-in-out';
             }
             
             track.style.transform = `translateX(-${currentSlideIndex * 100}%)`;
             
-            // Manage active dot state (accounting for the clone)
             let activeDotIndex = currentSlideIndex === totalOriginalSlides ? 0 : currentSlideIndex;
             dots.forEach(dot => dot.classList.remove('active'));
             if (dots[activeDotIndex]) {
                 dots[activeDotIndex].classList.add('active');
             }
             
-            // Update the navigation menu highlight based on the current slide
             syncNavWithCarousel(activeDotIndex);
         }
 
         window.goToSlide = function(index) {
-            // Prevent clicking dots during the fake loop transition
             if (isTransitioning) return;
-            
             currentSlideIndex = index;
             updateCarousel();
             resetTimer();
@@ -218,20 +228,14 @@ document.addEventListener('DOMContentLoaded', function() {
 
         function nextSlide() {
             if (isTransitioning) return;
-            
             currentSlideIndex++;
             updateCarousel();
             
-            // If we just slid to the cloned slide, we need to snap back to the start invisibly
             if (currentSlideIndex === totalOriginalSlides) {
                 isTransitioning = true;
-                
-                // Wait exactly the length of the CSS transition (1.2s = 1200ms)
                 setTimeout(() => {
                     currentSlideIndex = 0;
-                    updateCarousel(true); // true = instant snap without animation
-                    
-                    // Force browser reflow to register the instant snap before animating again
+                    updateCarousel(true);
                     track.offsetHeight; 
                     isTransitioning = false;
                 }, 1200); 
@@ -240,11 +244,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
         function resetTimer() {
             clearInterval(carouselTimer);
-            // Changed timing to 8 seconds (8000 milliseconds)
             carouselTimer = setInterval(nextSlide, 8000); 
         }
 
-        // Initialize carousel and light up the first navigation item
         syncNavWithCarousel(0);
         resetTimer();
     }
@@ -255,7 +257,6 @@ document.addEventListener('DOMContentLoaded', function() {
 // ==========================================
 window.deferredPrompt = null;
 
-// Catch the native install prompt (Android/Chrome/Edge) and hold it
 window.addEventListener('beforeinstallprompt', (e) => {
     e.preventDefault();
     window.deferredPrompt = e;
@@ -266,19 +267,16 @@ window.handlePwaInstall = function() {
     const uiLang = localStorage.getItem('preferredLanguage') || 'en';
 
     if (window.deferredPrompt) {
-        // Trigger the official native install popup
         window.deferredPrompt.prompt();
         window.deferredPrompt.userChoice.then((choiceResult) => {
             window.deferredPrompt = null;
         });
     } else if (isIOS) {
-        // Apple blocks native prompts. Show instructions instead.
         alert(uiLang === 'es' ? 
             'Para instalar en iPhone/iPad:\n\n1. Toca el botón de Compartir (el cuadrado con la flecha hacia arriba) en la parte inferior de Safari.\n2. Desliza hacia abajo y selecciona "Añadir a inicio".' : 
             'To install on iPhone/iPad:\n\n1. Tap the Share button (square with an upward arrow) at the bottom of Safari.\n2. Scroll down and select "Add to Home Screen".'
         );
     } else {
-        // Fallback for browsers that don't support the button
         alert(uiLang === 'es' ? 
             'Para instalar esta app, usa la opción "Añadir a la pantalla de inicio" en el menú de tu navegador (los tres puntos en la esquina superior).' : 
             'To install this app, use the "Add to Home screen" option in your browser menu (the three dots in the top corner).'
@@ -286,7 +284,6 @@ window.handlePwaInstall = function() {
     }
 };
 
-// Register a Service Worker to satisfy Chrome's PWA requirements
 if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('sw.js').catch(err => console.log('SW registration failed', err));
 }
