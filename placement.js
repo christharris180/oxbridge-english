@@ -77,7 +77,7 @@ function startTest() {
         ...shuffleArray(questionBank.level4).slice(0, 5)
     ];
 
-    document.getElementById('start-screen').style.display = 'none';
+    document.getElementById('start-screen').style.none = 'none';
     document.getElementById('quiz-screen').style.display = 'block';
     currentQ = 0;
     userScore = 0;
@@ -97,13 +97,11 @@ function loadQuestion() {
     const optionsContainer = document.getElementById('options-container');
     optionsContainer.innerHTML = ''; 
 
-    // Map options to objects before shuffling so we don't lose track of the correct answer
     let mappedOptions = qData.options.map((opt, index) => ({
         text: opt,
         isCorrect: index === qData.answer
     }));
 
-    // Randomize the order of options for every single question
     mappedOptions = shuffleArray(mappedOptions);
 
     mappedOptions.forEach((optObj) => {
@@ -158,7 +156,6 @@ function renderResultText(lang) {
 
     const percentage = (userScore / 60) * 100;
     
-    // Save this test's score to the browser session for anti-loop logic
     sessionStorage.setItem('basicPercentage', percentage);
 
     let enScore = `You scored ${userScore} out of 60 possible points.`;
@@ -194,10 +191,8 @@ function renderResultText(lang) {
         enReason = "You have a great level, but there was some hesitation with past structures. We recommend starting at Course 3 to consolidate and advance quickly.";
         esReason = "Tienes muy buen nivel, pero hubo dudas en estructuras pasadas. Te recomendamos empezar por el Curso 3 para consolidar y avanzar rápidamente.";
     } else {
-        // Highest Tier Logic
         const advPercentage = sessionStorage.getItem('advPercentage');
 
-        // LOOP BREAKER: If they already failed the advanced test, they are "A2 Complete"
         if (advPercentage !== null && parseFloat(advPercentage) <= 25) {
             enRec = "Your CEFR Level: A2 Complete";
             esRec = "Tu Nivel CEFR: A2 Completo";
@@ -207,7 +202,6 @@ function renderResultText(lang) {
             if (coursesBtn) coursesBtn.style.display = 'inline-block';
             if (advancedBtn) advancedBtn.style.display = 'none';
         } else {
-            // Standard Flow: Aced the basic, need to take the advanced
             enRec = "Advanced Evaluation Required";
             esRec = "Se Requiere Evaluación Avanzada";
             enReason = "You aced the basic questions! Because you scored so high, we cannot accurately place you yet. You must complete the Advanced Test to unlock your official CEFR level.";
@@ -217,7 +211,11 @@ function renderResultText(lang) {
             
             if (advancedBtn) {
                 advancedBtn.style.display = 'inline-block';
-                advancedBtn.textContent = lang === 'es' ? advancedBtn.getAttribute('data-es') : advancedBtn.getAttribute('data-en');
+                // FIX: Look specifically for the inner <h5> inside the anchor tag to read/write the labels
+                const innerHeading = advancedBtn.querySelector('h5');
+                if (innerHeading) {
+                    innerHeading.textContent = lang === 'es' ? innerHeading.getAttribute('data-es') : innerHeading.getAttribute('data-en');
+                }
             }
         }
     }

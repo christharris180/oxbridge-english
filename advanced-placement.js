@@ -98,13 +98,11 @@ function loadQuestion() {
     const optionsContainer = document.getElementById('options-container');
     optionsContainer.innerHTML = ''; 
 
-    // Map options to objects before shuffling
     let mappedOptions = qData.options.map((opt, index) => ({
         text: opt,
         isCorrect: index === qData.answer
     }));
 
-    // Randomize the order of the 5 options
     mappedOptions = shuffleArray(mappedOptions);
 
     mappedOptions.forEach((optObj) => {
@@ -160,7 +158,6 @@ function renderResultText(lang) {
 
     const percentage = (userScore / 60) * 100;
     
-    // Save this test's score to the browser session for anti-loop logic
     sessionStorage.setItem('advPercentage', percentage);
 
     let enScore = `You scored ${userScore} out of 60 possible points.`;
@@ -191,7 +188,15 @@ function renderResultText(lang) {
                 recTitle.setAttribute('data-es', "¿Listo para Dominar el Inglés?");
                 recTitle.textContent = lang === 'es' ? "¿Listo para Dominar el Inglés?" : "Ready to Master English?";
             }
-            if (contactBtn) contactBtn.style.display = 'inline-block';
+            
+            // DYNAMIC BUTTON CORRECTION FOR STUDYING WITH ME (1-to-1 classes)
+            if (contactBtn) {
+                contactBtn.style.display = 'inline-block';
+                contactBtn.setAttribute('href', '1-to-1-courses.html');
+                contactBtn.setAttribute('data-en', 'Contact Christopher Harris');
+                contactBtn.setAttribute('data-es', 'Contacta a Christopher Harris');
+                contactBtn.textContent = lang === 'es' ? 'Contacta a Christopher Harris' : 'Contact Christopher Harris';
+            }
             if (basicRedirectBtn) basicRedirectBtn.style.display = 'none';
 
         } else {
@@ -213,7 +218,7 @@ function renderResultText(lang) {
             }
         }
     } else {
-        // Standard advanced routing (Passing Scores)
+        // Standard advanced routing (Passing Scores - All point to studying with you)
         if (recTitle) {
             recTitle.setAttribute('data-en', "Ready to Master English?");
             recTitle.setAttribute('data-es', "¿Listo para Dominar el Inglés?");
@@ -234,8 +239,12 @@ function renderResultText(lang) {
             esRec = "Nivel CEFR: C2 (Nativo/Bilingüe)";
         }
         
+        // DYNAMIC BUTTON CORRECTION FOR STUDYING WITH ME (1-to-1 classes)
         if (contactBtn) {
-            contactBtn.textContent = lang === 'es' ? contactBtn.getAttribute('data-es') : contactBtn.getAttribute('data-en');
+            contactBtn.setAttribute('href', '1-to-1-courses.html');
+            contactBtn.setAttribute('data-en', 'Contact Christopher Harris');
+            contactBtn.setAttribute('data-es', 'Contacta a Christopher Harris');
+            contactBtn.textContent = lang === 'es' ? 'Contacta a Christopher Harris' : 'Contact Christopher Harris';
         }
     }
 

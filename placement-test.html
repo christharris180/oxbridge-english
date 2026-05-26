@@ -260,8 +260,9 @@
                         <p id="course-reason" class="content-paragraph"></p>
                         
                         <div style="display: flex; gap: 15px; justify-content: center; margin-top: 30px; flex-wrap: wrap;">
-                            <a href="courses.html" id="courses-btn" class="cta-button" style="background-color: #D4AF37;">
-                                <h5 style="margin: 0; color: #1a1a3e;" data-en="View Courses" data-es="Ver Cursos">Ver Cursos</h5>
+                            <!-- DYNAMIC ACTION CTA LINK ADJUSTED FOR THE STRUCTURAL CHANGES -->
+                            <a href="interactive-courses.html" id="courses-btn" class="cta-button" style="background-color: #D4AF37;">
+                                <h5 id="courses-btn-text" style="margin: 0; color: #1a1a3e;" data-en="View Courses" data-es="Ver Cursos">Ver Cursos</h5>
                             </a>
                             
                             <a href="advanced-placement-test.html" id="advanced-btn" class="cta-button" style="display: none; background: rgba(255, 255, 255, 0.1); border: 1px solid #D4AF37;">
@@ -336,6 +337,11 @@
 
                     localStorage.setItem('preferredLanguage', lang);
                     document.documentElement.lang = lang;
+                    
+                    // Re-evaluate localized recommendation text if results are active on language toggle
+                    if (typeof updateCtaLocalization === "function") {
+                        updateCtaLocalization(lang);
+                    }
                 });
             });
 
@@ -351,6 +357,45 @@
             var nav = document.getElementById('nav-links');
             if (nav.classList.contains('mobile-force-open')) { nav.classList.remove('mobile-force-open'); } 
             else { nav.classList.add('mobile-force-open'); }
+        }
+
+        /**
+         * Intercepts or appends to placement.js display results functionality 
+         * to automatically map outcomes to the restructured files.
+         * 
+         * Call this function inside placement.js final evaluation if necessary, 
+         * or let it evaluate the final visible state.
+         */
+        function adjustRecommendationCta(isTeacher1To1Outcome) {
+            const coursesBtn = document.getElementById('courses-btn');
+            const btnText = document.getElementById('courses-btn-text');
+            const currentLang = localStorage.getItem('preferredLanguage') || 'es';
+
+            if (!coursesBtn || !btnText) return;
+
+            if (isTeacher1To1Outcome) {
+                coursesBtn.setAttribute('href', '1-to-1-courses.html');
+                btnText.setAttribute('data-en', 'View 1-to-1 Courses');
+                btnText.setAttribute('data-es', 'Ver Cursos 1 a 1');
+            } else {
+                coursesBtn.setAttribute('href', 'interactive-courses.html');
+                btnText.setAttribute('data-en', 'View Courses');
+                btnText.setAttribute('data-es', 'Ver Cursos');
+            }
+
+            // Sync structural changes with the active language
+            const textToRender = btnText.getAttribute('data-' + currentLang);
+            if (textToRender) {
+                btnText.innerHTML = textToRender;
+            }
+        }
+
+        function updateCtaLocalization(lang) {
+            const btnText = document.getElementById('courses-btn-text');
+            if (btnText) {
+                const translation = btnText.getAttribute('data-' + lang);
+                if (translation) btnText.innerHTML = translation;
+            }
         }
     </script> 
 </body>
