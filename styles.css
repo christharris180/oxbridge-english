@@ -1006,7 +1006,8 @@ ul#nav-links {
     
     #nav-links a {
         display: block !important;
-        padding: 11px 15px !important; /* BALANCED MIDDLE GROUND: Set to 11px to sit nicely between 15px and 8px */
+        padding: 11px 15px !important; 
+        line-height: 1.2 !important; /* FORCED OVERRIDE: Compresses line height bounding boxes */
         font-size: 14px !important;
     }
     
@@ -1034,7 +1035,8 @@ ul#nav-links {
     }
 
     .dropdown-menu li a {
-        padding: 11px 15px 11px 30px !important; /* BALANCED MIDDLE GROUND: Aligned sub-items to match the clean 11px grid layout */
+        padding: 10px 15px 10px 30px !important; /* BALANCED MIDDLE GROUND: Set slightly smaller than the main cells */
+        line-height: 1.2 !important; /* FORCED OVERRIDE: Compresses sub-link text containers */
         color: #DFDFD0 !important; 
         background-color: transparent !important;
         display: block !important;
