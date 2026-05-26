@@ -934,7 +934,7 @@ ul#nav-links {
 @media (max-width: 768px) {
     
     body {
-        padding-top: 56px !important; /* Adjusts for the shorter mobile header */
+        padding-top: 56px !important; /* Adjusts for shorter mobile header */
     }
 
     /* Main Nav Adjustments - OVERFLOW FIX */
@@ -975,13 +975,13 @@ ul#nav-links {
         align-items: center !important;
     }
 
-    /* Force Mobile Menu to display properly - COMPACT FIXED FRAME */
+    /* Force Mobile Menu to display properly - COMPACT OPTIMIZED FRAME */
     ul#nav-links {
         display: none !important; 
         position: absolute !important;
         top: 100% !important;
         left: 0 !important;
-        width: 240px !important; /* Bounded width avoids cluttering small screens */
+        width: 240px !important; 
         background-color: #1a1a3e !important;
         flex-direction: column !important;
         padding: 5px 0 !important; 
@@ -1006,11 +1006,11 @@ ul#nav-links {
     
     #nav-links a {
         display: block !important;
-        padding: 8px 15px !important; /* Half height optimization */
+        padding: 11px 15px !important; /* BALANCED MIDDLE GROUND: Set to 11px to sit nicely between 15px and 8px */
         font-size: 14px !important;
     }
     
-    /* --- BULLETPROOF MOBILE DROPDOWN - TIGHTER NESTED ITEMS --- */
+    /* --- BULLETPROOF MOBILE DROPDOWN - OPTIMIZED CELL SPACING --- */
     .dropdown-menu {
         position: static !important;
         display: none !important;
@@ -1034,7 +1034,7 @@ ul#nav-links {
     }
 
     .dropdown-menu li a {
-        padding: 8px 15px 8px 30px !important; 
+        padding: 11px 15px 11px 30px !important; /* BALANCED MIDDLE GROUND: Aligned sub-items to match the clean 11px grid layout */
         color: #DFDFD0 !important; 
         background-color: transparent !important;
         display: block !important;
