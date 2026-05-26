@@ -988,6 +988,7 @@ ul#nav-links {
         box-shadow: 0 8px 20px rgba(0,0,0,0.5) !important;
         z-index: 99999 !important;
         border-radius: 0 0 10px 0 !important;
+        gap: 0 !important; /* FIX: Clears desktop horizontal spacing layout overflow */
     }
     
     ul#nav-links.mobile-force-open {
@@ -998,6 +999,8 @@ ul#nav-links {
         width: 100% !important;
         text-align: left !important;
         border-bottom: 1px solid rgba(255,255,255,0.08) !important;
+        margin: 0 !important;
+        padding: 0 !important;
     }
 
     #nav-links li:last-child {
@@ -1006,12 +1009,12 @@ ul#nav-links {
     
     #nav-links a {
         display: block !important;
-        padding: 11px 15px !important; 
-        line-height: 1.2 !important; /* FORCED OVERRIDE: Compresses line height bounding boxes */
+        padding: 11px 15px !important; /* Perfect middle ground height */
+        line-height: 1.2 !important; /* Closes inner box layout expansions */
         font-size: 14px !important;
     }
     
-    /* --- BULLETPROOF MOBILE DROPDOWN - OPTIMIZED CELL SPACING --- */
+    /* --- BULLETPROOF MOBILE DROPDOWN - SUB-CELL SPACING --- */
     .dropdown-menu {
         position: static !important;
         display: none !important;
@@ -1035,8 +1038,8 @@ ul#nav-links {
     }
 
     .dropdown-menu li a {
-        padding: 10px 15px 10px 30px !important; /* BALANCED MIDDLE GROUND: Set slightly smaller than the main cells */
-        line-height: 1.2 !important; /* FORCED OVERRIDE: Compresses sub-link text containers */
+        padding: 8px 15px 8px 30px !important; /* Keeps Cursos sub-items beautifully snug and slightly smaller than the main cells */
+        line-height: 1.2 !important; 
         color: #DFDFD0 !important; 
         background-color: transparent !important;
         display: block !important;
