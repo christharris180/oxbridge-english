@@ -73,6 +73,7 @@
         .course-card { display: flex; flex-direction: column; border-radius: 15px; overflow: hidden; box-shadow: 0 15px 35px rgba(0,0,0,0.4); border: 1px solid rgba(212, 175, 55, 0.4); }
         .course-image { width: 100%; height: 250px; object-fit: cover; }
         .course-content { padding: 30px; flex-grow: 1; }
+        .course-transparent-box { padding: 40px; text-align: center; } /* Target class name assigned to help refine inner container scales */
         .course-title { color: #D4AF37 !important; margin-bottom: 20px !important; }
         .course-features { list-style: none; padding: 0; margin: 0; }
         .course-features li { position: relative; padding-left: 30px; margin-bottom: 15px; color: rgba(255,255,255,0.95); }
@@ -108,6 +109,15 @@
                 background-size: 115% 115% !important; /* Tweaked from 100% to push edges out and zoom back safely */
                 padding: 100px 20px 60px 20px !important;
                 align-items: center !important;
+            }
+
+            /* EXPAND LEARNING MODEL GRAPHIC ON MOBILE */
+            .course-transparent-box {
+                padding: 15px 10px !important; /* Shrinks the inner margins of the outer box so the image safely expands sideways */
+            }
+            #learning-model-img {
+                width: 100% !important; /* Forces layout to stretch to maximum fluid borders inside the container */
+                border-radius: 6px !important;
             }
         }
     </style>
@@ -173,7 +183,7 @@
         <main style="max-width: 1200px; margin: 40px auto; padding: 0 20px;">
 
             <div class="fade-in-content" style="max-width: 1000px; margin: 60px auto;">
-                <div class="section-dark" style="padding: 40px; text-align: center;">
+                <div class="section-dark course-transparent-box">
                     <img id="learning-model-img" 
                          src="learning%20model%20english%20008.png" 
                          data-src-en="learning%20model%20english%20008.png" 
@@ -316,7 +326,7 @@
                         <h4 style="color: #000000; font-size: 20px; font-weight: 500; line-height: 1.6; margin: 0 0 15px 0;"
                             data-en='"I loved the fact that I could study when I wanted and from wherever I wanted, at my own pace and without distractions. I advanced much better than in a classroom environment. It&#39;s like having a personal tutor just for you."'
                             data-es='"Me encantó el hecho de poder estudiar cuando quería y desde donde quería, a mi propio ritmo y sin distracciones. Avancé mucho mejor que en un ambiente de salón de clases. Es como tener un tutor personal solo para ti."'>
-                            "Me encantó el hecho de poder estudiar cuando quería y desde donde quería, a mi propio ritmo y sin distracciones. Avancé mucho mejor que en un ambiente de salón de clases. Es como tener un tutor personal solo para ti."
+                            "I loved the fact that I could study when I wanted and from wherever I wanted, at my own pace and without distractions. I advanced much better than in a classroom environment. It&#39;s like having a personal tutor just for you."
                         </h4>
                         <p style="color: #1a1a3e; margin: 0; font-weight: bold; font-size: 16px;">— Christian Camilo Gonzalez Betancourt</p>
                     </div>
