@@ -155,8 +155,18 @@
             .page-hero {
                 background-image: url('icfes-mobile-background-001.png') !important;
                 background-position: right center !important; /* Forces the girl layout to sit snug on the right */
+                background-size: 115% 115% !important;        /* Applies standard site-wide zoom out framework */
                 padding: 150px 25px 100px 25px !important;    /* Provides clean padding spacing around text overlay */
                 align-items: center !important;
+            }
+
+            /* EXPAND LEARNING MODEL GRAPHIC ON MOBILE */
+            #icfes-model-container {
+                padding: 15px 10px !important; /* Compresses internal padding spaces so the picture scales wider */
+            }
+            #icfes-model-img {
+                width: 100% !important; /* Drives layout limits outward symmetrically */
+                border-radius: 6px !important;
             }
         }
     </style>
@@ -218,21 +228,22 @@
         <header class="page-hero">
             <div class="hero-text-wrapper">
                 <h1 class="page-hero-title" data-en="ICFES Saber 11 English Prep" data-es="Preparación Inglés ICFES Saber 11">
-                    Preparación Inglés ICFES Saber 11
+                    ICFES Saber 11 English Prep
                 </h1>
                 <h3 class="page-hero-subtitle" data-en="Secure your child's future. Overcome school frustration and master the most demanded skill in the job market with our interactive bundles." data-es="Asegure el futuro de su hijo(a). Supere la frustración del colegio y domine la habilidad más exigida por el mercado laboral con nuestros paquetes interactivos.">
-                    Asegure el futuro de su hijo(a). Supere la frustración del colegio y domine la habilidad más exigida por el mercado laboral con nuestros paquetes interactivos.
+                    Secure your child's future. Overcome school frustration and master the most demanded skill in the job market with our interactive bundles.
                 </h3>
                 <a href="#enroll" class="cta-button" style="border:none; text-decoration: none; display: inline-block;">
-                    <h5 style="margin: 0; color: #1a1a3e;" data-en="View Bundles" data-es="Ver Paquetes de Estudio">Ver Paquetes de Estudio</h5>
+                    <h5 style="margin: 0; color: #1a1a3e;" data-en="View Bundles" data-es="Ver Paquetes de Estudio">View Bundles</h5>
                 </a>
             </div>
         </header>
 
         <main style="max-width: 1200px; margin: 40px auto; padding: 0 20px;">
             
-            <section class="section-hero-box" style="text-align: center; padding: 40px;">
-                <img src="learning%20model%20spanish%20009.png" 
+            <section id="icfes-model-container" class="section-hero-box" style="text-align: center; padding: 40px;">
+                <img id="icfes-model-img"
+                     src="learning%20model%20spanish%20009.png" 
                      data-src-en="learning%20model%20english%20009.png" 
                      data-src-es="learning%20model%20spanish%20009.png" 
                      alt="Learning Model" 
@@ -241,24 +252,24 @@
 
             <section class="section-hero-box">
                 <h2 class="white-heading" data-en="Why Prepare Your Child With Us?" data-es="¿Por qué preparar a su hijo(a) con nosotros?">
-                    ¿Por qué preparar a su hijo(a) con nosotros?
+                    Why Prepare Your Child With Us?
                 </h2>
                 
                 <div class="benefits-grid">
                     <div class="benefit-item">
                         <i class="fa-solid fa-house-user benefit-icon"></i>
-                        <h3 class="gold-subheading" data-en="Learn Without Pressure" data-es="Aprender Sin Presión">Aprender Sin Presión</h3>
-                        <p class="content-paragraph" data-en="If your child has struggled with English in school, our platform offers a safe haven. They will study away from classroom stress, bad grades, and peer pressure, learning at their own pace." data-es="Si su hijo(a) ha tenido dificultades con el inglés en el colegio, nuestra plataforma es un refugio. Estudiará lejos del estrés del aula, las malas notas y la presión, aprendiendo a su propio ritmo.">Si su hijo(a) ha tenido dificultades con el inglés en el colegio, nuestra plataforma es un refugio. Estudiará lejos del estrés del aula, las malas notas y la presión, aprendiendo a su propio ritmo.</p>
+                        <h3 class="gold-subheading" data-en="Learn Without Pressure" data-es="Aprender Sin Presión">Learn Without Pressure</h3>
+                        <p class="content-paragraph" data-en="If your child has struggled with English in school, our platform offers a safe haven. They will study away from classroom stress, bad grades, and peer pressure, learning at their own pace." data-es="Si su hijo(a) ha tenido dificultades con el inglés en el colegio, nuestra plataforma es un refugio. Estudiará lejos del estrés del aula, las malas notas y la presión, aprendiendo a su propio ritmo.">If your child has struggled with English in school, our platform offers a safe haven. They will study away from classroom stress, bad grades, and peer pressure, learning at their own pace.</p>
                     </div>
                     <div class="benefit-item">
                         <i class="fa-solid fa-briefcase benefit-icon"></i>
-                        <h3 class="gold-subheading" data-en="The #1 Job Market Skill" data-es="La Habilidad #1 del Mercado">La Habilidad #1 del Mercado</h3>
-                        <p class="content-paragraph" data-en="Beyond the ICFES score, English is the absolute requirement for professional success today. Give them a real competitive advantage before they even step into university." data-es="Más allá del puntaje del ICFES, el inglés es hoy el requisito indispensable para el éxito profesional. Dele una ventaja competitiva real antes de que pise la universidad.">Más allá del puntaje del ICFES, el inglés es hoy el requisito indispensable para el éxito profesional. Dele una ventaja competitiva real antes de que pise la universidad.</p>
+                        <h3 class="gold-subheading" data-en="The #1 Job Market Skill" data-es="La Habilidad #1 del Mercado">The #1 Job Market Skill</h3>
+                        <p class="content-paragraph" data-en="Beyond the ICFES score, English is the absolute requirement for professional success today. Give them a real competitive advantage before they even step into university." data-es="Más allá del puntaje del ICFES, el inglés es hoy el requisito indispensable para el éxito profesional. Dele una ventaja competitiva real antes de que pise la universidad.">Beyond the ICFES score, English is the absolute requirement for professional success today. Give them a real competitive advantage before they even step into university.</p>
                     </div>
                     <div class="benefit-item">
                         <i class="fa-solid fa-file-signature benefit-icon"></i>
-                        <h3 class="gold-subheading" data-en="Exclusive Mock Exams" data-es="Simulacros Exclusivos">Simulacros Exclusivos</h3>
-                        <p class="content-paragraph" data-en="Our bundles include mock exams designed specifically around the ICFES format. They will practice reading comprehension exactly as it appears on the real test." data-es="Nuestros paquetes incluyen simulacros diseñados específicamente con el formato ICFES. Practicarán la comprensión de lectura exactamente como aparece en la prueba real.">Nuestros paquetes incluyen simulacros diseñados específicamente con el formato ICFES. Practicarán la comprensión de lectura exactamente como aparece en la prueba real.</p>
+                        <h3 class="gold-subheading" data-en="Exclusive Mock Exams" data-es="Simulacros Exclusivos">Exclusive Mock Exams</h3>
+                        <p class="content-paragraph" data-en="Our bundles include mock exams designed specifically around the ICFES format. They will practice reading comprehension exactly as it appears on the real test." data-es="Nuestros paquetes incluyen simulacros diseñados específicamente con el formato ICFES. Practicarán la comprensión de lectura exactamente como aparece en la prueba real.">Our bundles include mock exams designed specifically around the ICFES format. They will practice reading comprehension exactly as it appears on the real test.</p>
                     </div>
                 </div>
             </section>
@@ -270,13 +281,13 @@
                         <h4 style="color: #000000; font-size: 20px; font-weight: 500; line-height: 1.6; margin: 0 0 15px 0;"
                             data-en='"Christopher is the best teacher I have ever met for learning English. He is a person with great values and a long track record in teaching. He uses educational strategies that make learning a second language easier, and moreover, he builds great confidence for holding conversations in English. I highly recommend his work as a teacher and invite anyone interested in learning English to choose him, whether for professional purposes (interviews, exams, etc.), traveling abroad, or improving listening, speaking, and writing skills."'
                             data-es='"Christopher es el mejor docente que he podido conocer para aprender inglés, es una persona con grandes valores y una larga trayectoria en la docencia, tiene estrategias educativas que facilitan el aprendizaje de un segundo idioma y además de ello, genera gran seguridad para desarrollar conversaciones en inglés. Recomiendo totalmente su trabajo como docente e invito a las personas interesadas en aprender inglés a elegirlo, para temas laborales (Entrevistas, exámenes y demás), viaje a otro país o mejorar habilidades de listening, speaking, writing."'>
-                            "Christopher es el mejor docente que he podido conocer para aprender inglés, es una persona con grandes valores y una larga trayectoria en la docencia, tiene estrategias educativas que facilitan el aprendizaje de un segundo idioma y además de ello, genera gran seguridad para desarrollar conversaciones en inglés. Recomiendo totalmente su trabajo como docente e invito a las personas interesadas en aprender inglés a elegirlo, para temas laborales (Entrevistas, exámenes y demás), viaje a otro país o mejorar habilidades de listening, speaking, writing."
+                            "Christopher is the best teacher I have ever met for learning English. He is a person with great values and a long track record in teaching. He uses educational strategies that make learning a second language easier, and moreover, he builds great confidence for holding conversations in English. I highly recommend his work as a teacher and invite anyone interested in learning English to choose him, whether for professional purposes (interviews, exams, etc.), traveling abroad, or improving listening, speaking, and writing skills."
                         </h4>
                         <p style="color: #1a1a3e; margin: 0; font-weight: bold; font-size: 16px;">— Juan Sebastián Silva Cáceres</p>
                         <p style="color: #666; margin: 5px 0 0 0; font-size: 14px; font-style: italic;" 
                            data-en="Environmental Engineer" 
                            data-es="Ingeniero Ambiental">
-                             Ingeniero Ambiental
+                              Environmental Engineer
                         </p>
                     </div>
                 </div>
@@ -284,22 +295,22 @@
 
             <section class="section-hero-box">
                 <h2 class="white-heading" data-en="Our Preparation Methodology" data-es="Nuestra Metodología de Preparación">
-                    Nuestra Metodología de Preparación
+                    Our Preparation Methodology
                 </h2>
                 
                 <div class="benefits-grid">
                     <div class="benefit-item" style="background: rgba(255, 255, 255, 0.1); border: 1px solid #D4AF37; border-radius: 30px; padding: 30px; box-shadow: 0 6px 15px rgba(0,0,0,0.3); transition: transform 0.2s, background 0.2s;" onmouseover="this.style.background='rgba(255, 255, 255, 0.15)';" onmouseout="this.style.background='rgba(255, 255, 255, 0.1)';">
                         <i class="fa-solid fa-laptop-code benefit-icon"></i>
-                        <h3 class="gold-subheading" data-en="Phase 1: Autonomous Foundation" data-es="Fase 1: Construcción Autónoma">Fase 1: Construcción Autónoma</h3>
+                        <h3 class="gold-subheading" data-en="Phase 1: Autonomous Foundation" data-es="Fase 1: Construcción Autónoma">Phase 1: Autonomous Foundation</h3>
                         <p class="content-paragraph" data-en="We strongly recommend starting at least 6 months in advance. Your child will use our interactive courses to raise their baseline English level step by step, without the anxiety of a traditional classroom." data-es="Recomendamos iniciar con al menos 6 meses de anticipación. Su hijo(a) usará nuestros cursos interactivos para elevar su nivel base de inglés paso a paso, sin la ansiedad del salón de clases.">
-                            Recomendamos iniciar con al menos 6 meses de anticipación. Su hijo(a) usará nuestros cursos interactivos para elevar su nivel base de inglés paso a paso, sin la ansiedad del salón de clases.
+                            We strongly recommend starting at least 6 months in advance. Your child will use our interactive courses to raise their baseline English level step by step, without the anxiety of a traditional classroom.
                         </p>
                     </div>
                     <div class="benefit-item" style="background: rgba(255, 255, 255, 0.1); border: 1px solid #D4AF37; border-radius: 30px; padding: 30px; box-shadow: 0 6px 15px rgba(0,0,0,0.3); transition: transform 0.2s, background 0.2s;" onmouseover="this.style.background='rgba(255, 255, 255, 0.15)';" onmouseout="this.style.background='rgba(255, 255, 255, 0.1)';">
                         <i class="fa-solid fa-stopwatch benefit-icon"></i>
-                        <h3 class="gold-subheading" data-en="Phase 2: Test Format Practice" data-es="Fase 2: Práctica de Formato">Fase 2: Práctica de Formato</h3>
+                        <h3 class="gold-subheading" data-en="Phase 2: Test Format Practice" data-es="Fase 2: Práctica de Formato">Phase 2: Test Format Practice</h3>
                         <p class="content-paragraph" data-en="Once they have absorbed the grammar and vocabulary from the courses and books, they will transition to the mock exams on our platform, training their brain to solve ICFES-style questions." data-es="Una vez absorbida la gramática y el vocabulario de los cursos y libros, pasarán a resolver los simulacros en nuestra plataforma, entrenando su cerebro para resolver preguntas tipo ICFES.">
-                            Una vez absorbida la gramática y el vocabulario de los cursos y libros, pasarán a resolver los simulacros en nuestra plataforma, entrenando su cerebro para resolver preguntas tipo ICFES.
+                            Once they have absorbed the grammar and vocabulary from the courses and books, they will transition to the mock exams on our platform, training their brain to solve ICFES-style questions.
                         </p>
                     </div>
                 </div>
@@ -307,51 +318,51 @@
 
             <section id="enroll" class="section-hero-box">
                 <h2 class="white-heading" data-en="Preparation Bundles (via Hotmart)" data-es="Paquetes de Preparación (vía Hotmart)">
-                    Paquetes de Preparación (vía Hotmart)
+                    Preparation Bundles (via Hotmart)
                 </h2>
                 
                 <div class="pricing-content">
                     <p class="content-paragraph" style="font-size: 1.1rem;" data-en="We have structured our materials into comprehensive bundles hosted securely on Hotmart. Choose the level that fits your child's current needs." data-es="Hemos estructurado nuestros materiales en paquetes completos alojados de forma segura en Hotmart. Elija el nivel que se adapte a las necesidades de su hijo(a).">
-                        Hemos estructurado nuestros materiales en paquetes completos alojados de forma segura en Hotmart. Elija el nivel que se adapte a las necesidades de su hijo(a).
+                        We have structured our materials into comprehensive bundles hosted securely on Hotmart. Choose the level that fits your child's current needs.
                     </p>
 
                     <div class="bundles-list">
                         
                         <div class="bundle-card">
                             <div class="bundle-info">
-                                <h3 class="gold-subheading" style="font-size: 1.6rem; margin-bottom: 5px !important;" data-en="Basic Level Bundle" data-es="Paquete Nivel Básico">Paquete Nivel Básico</h3>
-                                <p class="content-paragraph" style="margin-bottom: 15px;" data-en="Courses 1 & 2 + Book 1 + 2 Mock Exams" data-es="Cursos 1 y 2 + Libro 1 + 2 Simulacros ICFES">Cursos 1 y 2 + Libro 1 + 2 Simulacros ICFES</p>
+                                <h3 class="gold-subheading" style="font-size: 1.6rem; margin-bottom: 5px !important;" data-en="Basic Level Bundle" data-es="Paquete Nivel Básico">Basic Level Bundle</h3>
+                                <p class="content-paragraph" style="margin-bottom: 15px;" data-en="Courses 1 & 2 + Book 1 + 2 Mock Exams" data-es="Cursos 1 y 2 + Libro 1 + 2 Simulacros ICFES">Courses 1 & 2 + Book 1 + 2 Mock Exams</p>
                                 <h4 class="bundle-price">$450.000 COP</h4>
                             </div>
                             <div class="bundle-action">
                                 <a href="https://pay.hotmart.com/X106057537B" target="_blank" class="bundle-btn-small">
-                                    <h5 style="margin: 0; color: #1a1a3e;" data-en="Buy Now" data-es="Comprar Ahora">Comprar Ahora</h5>
+                                    <h5 style="margin: 0; color: #1a1a3e;" data-en="Buy Now" data-es="Comprar Ahora">Buy Now</h5>
                                 </a>
                             </div>
                         </div>
 
                         <div class="bundle-card">
                             <div class="bundle-info">
-                                <h3 class="gold-subheading" style="font-size: 1.6rem; margin-bottom: 5px !important;" data-en="Intermediate Level Bundle" data-es="Paquete Nivel Intermedio">Paquete Nivel Intermedio</h3>
-                                <p class="content-paragraph" style="margin-bottom: 15px;" data-en="Courses 3 & 4 + Book 2 + 2 Mock Exams" data-es="Cursos 3 y 4 + Libro 2 + 2 Simulacros ICFES">Cursos 3 y 4 + Libro 2 + 2 Simulacros ICFES</p>
+                                <h3 class="gold-subheading" style="font-size: 1.6rem; margin-bottom: 5px !important;" data-en="Intermediate Level Bundle" data-es="Paquete Nivel Intermedio">Intermediate Level Bundle</h3>
+                                <p class="content-paragraph" style="margin-bottom: 15px;" data-en="Courses 3 & 4 + Book 2 + 2 Mock Exams" data-es="Cursos 3 y 4 + Libro 2 + 2 Simulacros ICFES">Courses 3 & 4 + Book 2 + 2 Mock Exams</p>
                                 <h4 class="bundle-price">$450.000 COP</h4>
                             </div>
                             <div class="bundle-action">
                                 <a href="https://pay.hotmart.com/F106057588V" target="_blank" class="bundle-btn-small">
-                                    <h5 style="margin: 0; color: #1a1a3e;" data-en="Buy Now" data-es="Comprar Ahora">Comprar Ahora</h5>
+                                    <h5 style="margin: 0; color: #1a1a3e;" data-en="Buy Now" data-es="Comprar Ahora">Buy Now</h5>
                                 </a>
                             </div>
                         </div>
 
                         <div class="bundle-card">
                             <div class="bundle-info">
-                                <h3 class="gold-subheading" style="font-size: 1.6rem; margin-bottom: 5px !important;" data-en="Complete ICFES Bundle" data-es="Paquete Completo ICFES">Paquete Completo ICFES</h3>
-                                <p class="content-paragraph" style="margin-bottom: 15px;" data-en="All 4 Courses + Both Books + 4 Mock Exams" data-es="Los 4 Cursos + Ambos Libros + 4 Simulacros ICFES">Los 4 Cursos + Ambos Libros + 4 Simulacros ICFES</p>
+                                <h3 class="gold-subheading" style="font-size: 1.6rem; margin-bottom: 5px !important;" data-en="Complete ICFES Bundle" data-es="Paquete Completo ICFES">Complete ICFES Bundle</h3>
+                                <p class="content-paragraph" style="margin-bottom: 15px;" data-en="All 4 Courses + Both Books + 4 Mock Exams" data-es="Los 4 Cursos + Ambos Libros + 4 Simulacros ICFES">All 4 Courses + Both Books + 4 Mock Exams</p>
                                 <h4 class="bundle-price">$800.000 COP</h4>
                             </div>
                             <div class="bundle-action">
                                 <a href="https://pay.hotmart.com/P106057665X" target="_blank" class="bundle-btn-small">
-                                    <h5 style="margin: 0; color: #1a1a3e;" data-en="Buy Now" data-es="Comprar Ahora">Comprar Ahora</h5>
+                                    <h5 style="margin: 0; color: #1a1a3e;" data-en="Buy Now" data-es="Comprar Ahora">Buy Now</h5>
                                 </a>
                             </div>
                         </div>
@@ -359,72 +370,53 @@
                     </div>
 
                     <p class="content-paragraph" data-en="Ready to give them a head start? Check out the bundles directly or contact us if you need guidance:" data-es="¿Listo para darles una ventaja real? Adquiera el paquete directamente o contáctenos si necesita orientación:">
-                        ¿Listo para darles una ventaja real? Adquiera el paquete directamente o contáctenos si necesita orientación:
+                        Ready to give them a head start? Check out the bundles directly or contact us if you need guidance:
                     </p>
 
                     <div class="contact-buttons">
                         <a href="mailto:oxbridgeenglishcourses@gmail.com" class="btn-email">
                             <i class="fa-regular fa-envelope"></i>
-                            <h5 style="margin: 0;" data-en="Email Us" data-es="Escríbanos por Correo">Escríbanos por Correo</h5>
+                            <h5 style="margin: 0; display: inline-block; padding-left: 5px;" data-en="Email Us" data-es="Escríbanos por Correo">Email Us</h5>
                         </a>
                         <a href="https://wa.me/573133813833" target="_blank" class="btn-wa">
                             <i class="fa-brands fa-whatsapp"></i>
-                            <h5 style="margin: 0;" data-en="WhatsApp Us" data-es="Escríbanos por WhatsApp">Escríbanos por WhatsApp</h5>
+                            <h5 style="margin: 0; display: inline-block; padding-left: 5px;" data-en="WhatsApp Us" data-es="Escríbanos por WhatsApp">WhatsApp Us</h5>
                         </a>
                     </div>
                 </div>
             </section>
 
-            <div class="fade-in-content" style="max-width: 1000px; margin: 0 auto 40px auto;">
-                <div style="background: rgba(247, 244, 229, 0.95); padding: 40px; border-radius: 15px; display: flex; align-items: center; gap: 30px; box-shadow: 0 15px 35px rgba(0,0,0,0.3); border: 1px solid rgba(212, 175, 55, 0.4); flex-wrap: wrap; justify-content: center;">
-                    <img src="person_5.png" alt="Juan Sebastián Silva Cáceres" style="width: 120px; height: 120px; border-radius: 50%; object-fit: cover; box-shadow: 0 4px 15px rgba(0,0,0,0.2);">
-                    <div style="flex: 1; min-width: 300px; text-align: left;">
-                        <h4 style="color: #000000; font-size: 20px; font-weight: 500; line-height: 1.6; margin: 0 0 15px 0;"
-                            data-en='"Christopher is the best teacher I have ever met for learning English. He is a person with great values and a long track record in teaching. He uses educational strategies that make learning a second language easier, and moreover, he builds great confidence for holding conversations in English. I highly recommend his work as a teacher and invite anyone interested in learning English to choose him, whether for professional purposes (interviews, exams, etc.), traveling abroad, or improving listening, speaking, and writing skills."'
-                            data-es='"Christopher es el mejor docente que he podido conocer para aprender inglés, es una person con grandes valores y una larga trayectoria en la docencia, tiene estrategias educativas que facilitan el aprendizaje de un segundo idioma y además de ello, genera gran seguridad para desarrollar conversaciones en inglés. Recomiendo totalmente su trabajo como docente e invito a las personas interesadas en aprender inglés a elegirlo, para temas laborales (Entrevistas, exámenes y demás), viaje a otro país o mejorar habilidades de listening, speaking, writing."'>
-                            "Christopher es el mejor docente que he podido conocer para aprender inglés, es una persona con grandes valores y una larga trayectoria en la docencia, tiene estrategias educativas que facilitan el aprendizaje de un segundo idioma y además de ello, genera gran seguridad para desarrollar conversaciones en inglés. Recomiendo totalmente su trabajo como docente e invito a las personas interesadas en aprender inglés a elegirlo, para temas laborales (Entrevistas, exámenes y demás), viaje a otro país o mejorar habilidades de listening, speaking, writing."
-                        </h4>
-                        <p style="color: #1a1a3e; margin: 0; font-weight: bold; font-size: 16px;">— Juan Sebastián Silva Cáceres</p>
-                        <p style="color: #666; margin: 5px 0 0 0; font-size: 14px; font-style: italic;" 
-                           data-en="Environmental Engineer" 
-                           data-es="Ingeniero Ambiental">
-                             Ingeniero Ambiental
-                        </p>
-                    </div>
-                </div>
-            </div>
-
             <section class="section-hero-box">
                 <h2 class="white-heading" data-en="Frequently Asked Questions" data-es="Preguntas Frecuentes">
-                    Preguntas Frecuentes
+                    Frequently Asked Questions
                 </h2>
                 
                 <div class="faq-list">
                     <details>
-                        <summary data-en="My child has always struggled with English in school. Will this work?" data-es="Mi hijo(a) siempre ha odiado el inglés en el colegio. ¿Esto funcionará?">Mi hijo(a) siempre ha odiado el inglés en el colegio. ¿Esto funcionará?</summary>
+                        <summary data-en="My child has always struggled with English in school. Will this work?" data-es="Mi hijo(a) siempre ha odiado el inglés en el colegio. ¿Esto funcionará?">My child has always struggled with English in school. Will this work?</summary>
                         <p class="faq-answer" data-en="Yes. That is exactly why we designed this as a self-study program. We remove the anxiety, the fear of participating in front of classmates, and the pressure of school grades. They can study in a stress-free environment, making mistakes safely and building real confidence." data-es="Sí. Es exactamente por eso que diseñamos esto como un programa de autoestudio. Eliminamos la ansiedad, el miedo a participar frente a compañeros y la presión de las notas del colegio. Podrá estudiar en un entorno sin estrés, equivocándose de forma segura y construyendo confianza real.">
-                            Sí. Es exactamente por eso que diseñamos esto como un programa de autoestudio. Eliminamos la ansiedad, el miedo a participar frente a compañeros y la presión de las notas del colegio. Podrá estudiar en un entorno sin estrés, equivocándose de forma segura y construyendo confianza real.
+                            Yes. That is exactly why we designed this as a self-study program. We remove the anxiety, the fear of participating in front of classmates, and the pressure of school grades. They can study in a stress-free environment, making mistakes safely and building real confidence.
                         </p>
                     </details>
 
                     <details>
-                        <summary data-en="How do the mock exams work?" data-es="¿Cómo funcionan los simulacros?">¿Cómo funcionan los simulacros?</summary>
+                        <summary data-en="How do the mock exams work?" data-es="¿Cómo funcionan los simulacros?">How do the mock exams work?</summary>
                         <p class="faq-answer" data-en="The mock exams are hosted directly on the Hotmart platform as interactive test pages. They mimic the reading formats and question styles of the actual ICFES exam to train your child's reading speed and test-taking strategy." data-es="Los simulacros están alojados directamente en la plataforma de Hotmart como páginas de evaluación interactivas. Imitan los formatos de lectura y estilos de preguntas del examen ICFES real para entrenar la velocidad de lectura y la estrategia de su hijo(a).">
-                            Los simulacros están alojados directamente en la plataforma de Hotmart como páginas de evaluación interactivas. Imitan los formatos de lectura y estilos de preguntas del examen ICFES real para entrenar la velocidad de lectura y la estrategia de su hijo(a).
+                            The mock exams are hosted directly on the Hotmart platform as interactive test pages. They mimic the reading formats and question styles of the actual ICFES exam to train your child's reading speed and test-taking strategy.
                         </p>
                     </details>
 
                     <details>
-                        <summary data-en="Are there live classes or tutor check-ins?" data-es="¿Hay clases en vivo o seguimiento de un tutor?">¿Hay clases en vivo o seguimiento de un tutor?</summary>
+                        <summary data-en="Are there live classes or tutor check-ins?" data-es="¿Hay clases en vivo o seguimiento de un tutor?">Are there live classes or tutor check-ins?</summary>
                         <p class="faq-answer" data-en="No. Once the bundle is purchased on Hotmart, the student has full, immediate access to all courses, books, and exams to study 100% autonomously. We will not interrupt their process, allowing them to fit the preparation around their school schedule." data-es="No. Una vez adquirido el paquete en Hotmart, el estudiante tiene acceso total e inmediato a todos los cursos, libros y exámenes para estudiar 100% de forma autónoma. No interrumpiremos su proceso, permitiéndole acomodar la preparación a su horario escolar.">
-                            No. Una vez adquirido el paquete en Hotmart, el estudiante tiene acceso total e inmediato a todos los cursos, libros y exámenes para estudiar 100% de forma autónoma. No interrumpiremos su proceso, permitiéndole acomodar la preparación a su horario escolar.
+                            No. Once the bundle is purchased on Hotmart, the student has full, immediate access to all courses, books, and exams to study 100% autonomously. We will not interrupt their process, allowing them to fit the preparation around their school schedule.
                         </p>
                     </details>
 
                     <details>
-                        <summary data-en="How is the payment handled?" data-es="¿Cómo se realiza el pago?">¿Cómo se realiza el pago?</summary>
+                        <summary data-en="How is the payment handled?" data-es="¿Cómo se realiza el pago?">How is the payment handled?</summary>
                         <p class="faq-answer" data-en="All ICFES preparation bundles are sold exclusively through Hotmart, which guarantees a 100% secure transaction and immediate access to the materials using any credit/debit card or local payment methods." data-es="Todos los paquetes de preparación ICFES se venden exclusivamente a través de Hotmart, lo que garantiza una transacción 100% segura y acceso inmediato a los materiales usando cualquier tarjeta de crédito/débito o métodos de pago locales.">
-                            Todos los paquetes de preparación ICFES se venden exclusivamente a través de Hotmart, lo que garantiza una transacción 100% segura y acceso inmediato a los materiales usando cualquier tarjeta de crédito/débito o métodos de pago locales.
+                            All ICFES preparation bundles are sold exclusively through Hotmart, which guarantees a 100% secure transaction and immediate access to the materials using any credit/debit card or local payment methods.
                         </p>
                     </details>
                 </div>
@@ -454,7 +446,7 @@
                 </a>
                 <span style="color: #666;">|</span>
                 <a href="terms.html" style="color: #DFDFD0; text-decoration: none; transition: color 0.3s;" onmouseover="this.style.color='#D4AF37'" onmouseout="this.style.color='#DFDFD0'">
-                    <span data-en="Terms & Conditions" data-es="Términos y Condiciones">Términos y Condiciones</span>
+                    <span data-en="Terms & Conditions" data-es="Términos y Condiciones">Terms & Conditions</span>
                 </a>
                 <img src="logo_jpg_003.jpg" alt="Oxbridge English" style="height: 30px; width: auto; object-fit: contain;">
             </p>
