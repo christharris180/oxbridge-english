@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-    <!-- CORE PAGES -->
     <url>
         <loc>https://oxbridge-english.com/</loc>
         <changefreq>weekly</changefreq>
@@ -27,7 +26,6 @@
         <priority>0.7</priority>
     </url>
 
-    <!-- PRODUCT & COURSE OFFERINGS -->
     <url>
         <loc>https://oxbridge-english.com/interactive-courses.html</loc>
         <changefreq>monthly</changefreq>
@@ -54,7 +52,6 @@
         <priority>0.7</priority>
     </url>
 
-    <!-- TRANSLATOR APPS & UTILITIES -->
     <url>
         <loc>https://oxbridge-english.com/translator.html</loc>
         <changefreq>monthly</changefreq>
@@ -76,7 +73,6 @@
         <priority>0.5</priority>
     </url>
 
-    <!-- TESTING PLATFORM -->
     <url>
         <loc>https://oxbridge-english.com/placement-test.html</loc>
         <changefreq>monthly</changefreq>
@@ -93,49 +89,18 @@
         <priority>0.5</priority>
     </url>
 
-    <!-- BLOG HUB & POSTS (001 - 010) -->
     <url>
         <loc>https://oxbridge-english.com/blog.html</loc>
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
     </url>
     <url>
-        <loc>https://oxbridge-english.com/blog-post-001.html</loc>
+        <loc>https://oxbridge-english.com/blog-post-011.html</loc>
         <changefreq>monthly</changefreq>
         <priority>0.6</priority>
     </url>
     <url>
-        <loc>https://oxbridge-english.com/blog-post-002.html</loc>
-        <changefreq>monthly</changefreq>
-        <priority>0.6</priority>
-    </url>
-    <url>
-        <loc>https://oxbridge-english.com/blog-post-003.html</loc>
-        <changefreq>monthly</changefreq>
-        <priority>0.6</priority>
-    </url>
-    <url>
-        <loc>https://oxbridge-english.com/blog-post-004.html</loc>
-        <changefreq>monthly</changefreq>
-        <priority>0.6</priority>
-    </url>
-    <url>
-        <loc>https://oxbridge-english.com/blog-post-005.html</loc>
-        <changefreq>monthly</changefreq>
-        <priority>0.6</priority>
-    </url>
-    <url>
-        <loc>https://oxbridge-english.com/blog-post-006.html</loc>
-        <changefreq>monthly</changefreq>
-        <priority>0.6</priority>
-    </url>
-    <url>
-        <loc>https://oxbridge-english.com/blog-post-007.html</loc>
-        <changefreq>monthly</changefreq>
-        <priority>0.6</priority>
-    </url>
-    <url>
-        <loc>https://oxbridge-english.com/blog-post-008.html</loc>
+        <loc>https://oxbridge-english.com/blog-post-010.html</loc>
         <changefreq>monthly</changefreq>
         <priority>0.6</priority>
     </url>
@@ -145,12 +110,26 @@
         <priority>0.6</priority>
     </url>
     <url>
-        <loc>https://oxbridge-english.com/blog-post-010.html</loc>
+        <loc>https://oxbridge-english.com/blog-post-004.html</loc>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+    </url>
+    <url>
+        <loc>https://oxbridge-english.com/blog-post-003.html</loc>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+    </url>
+    <url>
+        <loc>https://oxbridge-english.com/blog-post-002.html</loc>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+    </url>
+    <url>
+        <loc>https://oxbridge-english.com/blog-post-001.html</loc>
         <changefreq>monthly</changefreq>
         <priority>0.6</priority>
     </url>
 
-    <!-- LEGAL -->
     <url>
         <loc>https://oxbridge-english.com/privacy.html</loc>
         <changefreq>yearly</changefreq>
