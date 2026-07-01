@@ -94,6 +94,13 @@
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
     </url>
+
+    <!-- BLOG POSTS 001 through 014 -->
+    <url>
+        <loc>https://oxbridge-english.com/blog-post-014.html</loc>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+    </url>
     <url>
         <loc>https://oxbridge-english.com/blog-post-013.html</loc>
         <changefreq>monthly</changefreq>
@@ -116,6 +123,26 @@
     </url>
     <url>
         <loc>https://oxbridge-english.com/blog-post-009.html</loc>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+    </url>
+    <url>
+        <loc>https://oxbridge-english.com/blog-post-008.html</loc>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+    </url>
+    <url>
+        <loc>https://oxbridge-english.com/blog-post-007.html</loc>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+    </url>
+    <url>
+        <loc>https://oxbridge-english.com/blog-post-006.html</loc>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+    </url>
+    <url>
+        <loc>https://oxbridge-english.com/blog-post-005.html</loc>
         <changefreq>monthly</changefreq>
         <priority>0.6</priority>
     </url>
