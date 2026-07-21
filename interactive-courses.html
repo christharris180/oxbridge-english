@@ -102,6 +102,7 @@
         /* =========================================
            PAGE-SPECIFIC STYLES - INTERACTIVE COURSES
            ========================================= */
+        html { scroll-behavior: smooth; }
         body { background-color: transparent !important; }
         .page-wrapper-transparent { min-height: 100vh; padding-bottom: 60px; }
 
@@ -121,7 +122,6 @@
         /* --- HERO BANNER --- */
         .page-hero {
             position: relative;
-            /* Matched sizing from the 1-to-1 page. Added 12% padding to the right to act as the margin */
             padding: 200px 12% 140px 20px; 
             border-bottom: 2px solid #D4AF37;
             background-color: #0d0d24;
@@ -129,17 +129,18 @@
             background-size: cover;
             background-position: top center;
             
-            /* Flex settings to align the text block to the right */
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: flex-end; 
         }
 
-        /* The text wrapper is now slightly narrower to allow it to visibly sit on the right */
         .hero-text-wrapper {
             max-width: 750px; 
             text-align: center; 
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
         .page-hero-title { color: #ffffff !important; margin-bottom: 20px !important; text-shadow: 0 2px 10px rgba(0,0,0,0.8); }
@@ -151,7 +152,7 @@
         .course-card { display: flex; flex-direction: column; border-radius: 15px; overflow: hidden; box-shadow: 0 15px 35px rgba(0,0,0,0.4); border: 1px solid rgba(212, 175, 55, 0.4); }
         .course-image { width: 100%; height: 250px; object-fit: cover; }
         .course-content { padding: 30px; flex-grow: 1; }
-        .course-transparent-box { padding: 40px; text-align: center; } /* Target class name assigned to help refine inner container scales */
+        .course-transparent-box { padding: 40px; text-align: center; } 
         .course-title { color: #D4AF37 !important; margin-bottom: 20px !important; }
         .course-features { list-style: none; padding: 0; margin: 0; }
         .course-features li { position: relative; padding-left: 30px; margin-bottom: 15px; color: rgba(255,255,255,0.95); }
@@ -167,7 +168,6 @@
         .sample-text { color: rgba(255,255,255,0.95) !important; }
 
         @media (max-width: 992px) {
-            /* Snaps everything back to the center for tablets and smaller screens */
             .page-hero { 
                 align-items: center; 
                 padding-right: 20px; 
@@ -180,21 +180,19 @@
         .btn-text { color: #1a1a3e; }
 
         @media (max-width: 768px) {
-            /* ZOOM OUT ADJUSTMENT FOR CUSTOM MOBILE GRAPHIC */
             .page-hero {
                 background-image: url('interactive-mobile-background-001.png') !important;
                 background-position: right center !important;
-                background-size: 115% 115% !important; /* Tweaked from 100% to push edges out and zoom back safely */
+                background-size: 115% 115% !important; 
                 padding: 100px 20px 60px 20px !important;
                 align-items: center !important;
             }
 
-            /* EXPAND LEARNING MODEL GRAPHIC ON MOBILE */
             .course-transparent-box {
-                padding: 15px 10px !important; /* Shrinks the inner margins of the outer box so the image safely expands sideways */
+                padding: 15px 10px !important; 
             }
             #learning-model-img {
-                width: 100% !important; /* Forces layout to stretch to maximum fluid borders inside the container */
+                width: 100% !important; 
                 border-radius: 6px !important;
             }
         }
@@ -254,7 +252,9 @@
             <div class="hero-text-wrapper">
                 <h1 class="page-hero-title" data-en="Interactive Courses" data-es="Cursos Interactivos">Interactive Courses</h1>
                 <h3 class="page-hero-subtitle" data-en="Start speaking and writing in English with confidence." data-es="Comience a hablar y escribir en inglés con confianza.">Start speaking and writing in English with confidence.</h3>
-                <p class="hero-desc" data-en="These interactive courses are designed for Spanish speakers and guide you through the foundations of English grammar with clear explanations, real-life examples, and practical activities you can apply in everyday situations." data-es="Estos cursos interactivos están diseñados para hispanohablantes y lo guían a través de los fundamentos de la gramática inglesa con explicaciones claras, ejemplos de la vida real y actividades prácticas que puede aplicar en situaciones cotidianas.">These interactive courses are designed for Spanish speakers and guide you through the foundations of English grammar with clear explanations, real-life examples, and practical activities you can apply in everyday situations.</p>
+                <p class="hero-desc" data-en="These interactive courses are designed for Spanish speakers and guide you through the foundations of English grammar with clear explanations, real-life examples, and practical activities you can apply in everyday situations." data-es="Estos cursos interactivos están diseñados para hispanohablantes y lo guían a través de los fundamentos de la gramática inglesa con explicaciones claras, ejemplos de la vida real y actividades prácticas que puede aplicar en situaciones cotidianas.">Estos cursos interactivos están diseñados para hispanohablantes y lo guían a través de los fundamentos de la gramática inglesa con explicaciones claras, ejemplos de la vida real y actividades prácticas que puede aplicar en situaciones cotidianas.</p>
+                
+                <a href="#enroll-section" class="cta-button" style="margin-top: 30px; display: flex; flex-direction: column; justify-content: center; align-items: center; min-height: 75px; padding: 12px 30px; width: 100%; max-width: 500px; box-sizing: border-box; background: rgba(255, 255, 255, 0.1); color: #D4AF37; border-radius: 30px; border: 1px solid #D4AF37; text-decoration: none; box-shadow: 0 6px 15px rgba(0,0,0,0.3); line-height: 1.35; text-align: center; font-weight: 500;" data-en="Start Today<br><span style='font-size: 0.85em; opacity: 0.9; color: #ffffff;'>From only COP 20.833 per month</span>" data-es="Comience Hoy<br><span style='font-size: 0.85em; opacity: 0.9; color: #ffffff;'>Desde solo COP 20.833 al mes</span>">Start Today<br><span style="font-size: 0.85em; opacity: 0.9; color: #ffffff;">From only COP 20.833 per month</span></a>
             </div>
         </header>
 
@@ -280,7 +280,7 @@
                             <li data-en="Form correct sentences in English from the very first lesson." data-es="Forme oraciones correctas en inglés desde la primera lección.">Form correct sentences in English from the very first lesson.</li>
                             <li data-en="Understand key A1-level grammar: present simple, articles, pronouns, and more." data-es="Comprenda la gramática clave de nivel A1: presente simple, artículos, pronombres y más.">Understand key A1-level grammar: present simple, articles, pronouns, and more.</li>
                             <li data-en="Gain confidence speaking and writing for travel, work, or study." data-es="Gane confianza al hablar y escribir para viajar, trabajar o estudiar.">Gain confidence speaking and writing for travel, work, or study.</li>
-                            <li data-en="Practice with interactive exercises designed specifically for native Spanish speakers." data-es="Practique con ejercicios interactivos diseñados específicamente para hispanohablantes nativos.">Practice with interactive exercises designed specifically for native Spanish speakers.</li>
+                            <li data-en="Practice with interactive exercises designed specifically for native Spanish speakers." data-es="Practique con ejercicios interactivos diseñados específicamente para hispanohablantes nativos.">Practice with interactive exercises designed específicamente para hispanohablantes nativos.</li>
                         </ul>
                     </div>
                 </div>
@@ -291,8 +291,8 @@
                         <h3 class="course-title" data-en="Course 2" data-es="Curso 2">Course 2</h3>
                         <ul class="course-features">
                             <li data-en="Reinforce vocabulary and structures from the previous course." data-es="Refuerce el vocabulario y las estructuras del curso anterior.">Reinforce vocabulary and structures from the previous course.</li>
-                            <li data-en="Use have/has got to express possession." data-es="Use have/has got para expresar posesión.">Use have/has got to express possession.</li>
-                            <li data-en="Use object pronouns correctly." data-es="Use pronombres de objeto correctamente.">Use object pronouns correctly.</li>
+                            <li data-en="Use have/has got to express possession." data-es="Use have/has got para expresar posesión.">Use have/has got para expresar posesión.</li>
+                            <li data-en="Use object pronouns correctly." data-es="Use pronombres de objeto correctamente.">Use object pronouns correctamente.</li>
                             <li data-en="Introduce and practice adverbs of frequency." data-es="Introduzca y practique adverbios de frecuencia.">Introduce and practice adverbs of frequency.</li>
                             <li data-en="Understand and use prepositions of place and time." data-es="Comprenda y use preposiciones de lugar y tiempo.">Understand and use prepositions of place and time.</li>
                             <li data-en="Describe environments using there is / there are." data-es="Describa entornos usando there is / there are.">Describe environments using there is / there are.</li>
@@ -367,7 +367,7 @@
 
             <h2 class="section-heading-dark" data-en="Enroll Now" data-es="Inscríbase Ahora">Enroll Now</h2>
 
-            <div class="fade-in-content section-dark" style="text-align: center; margin: 40px auto; max-width: 1000px; padding: 60px 40px;">
+            <div id="enroll-section" class="fade-in-content section-dark" style="text-align: center; margin: 40px auto; max-width: 1000px; padding: 60px 40px;">
                 <img src="image_a8f9f7.png" alt="Hotmart" style="width: 100%; max-width: 260px; height: auto; margin-bottom: 30px; border-radius: 20px; box-shadow: 0 8px 20px rgba(0,0,0,0.4);">
                 
                 <h2 style="margin-bottom: 20px; color: #fff;" data-en="Start Learning Today" data-es="Comience a Aprender Hoy">Start Learning Today</h2>
@@ -377,9 +377,11 @@
                     <div style="flex: 1; min-width: 300px;">
                         <h3 style="margin-bottom: 15px; color: #D4AF37;" data-en="Special Bundle Offers" data-es="Ofertas de Paquetes Especiales">Special Bundle Offers</h3>
                         <div style="display: flex; flex-direction: column; gap: 15px; align-items: center;">
-                            <a href="https://pay.hotmart.com/D105675031I" target="_blank" class="cta-button" style="color: #1a1a3e; width: 100%; padding: 18px 20px; background: linear-gradient(180deg, #e8c412 0%, #D4AF37 100%); border-radius: 30px; text-decoration: none; box-shadow: 0 6px 15px rgba(0,0,0,0.3); border:none;" data-en="All 4 Courses + 2 Free Books | COP 800.000" data-es="Los 4 Cursos + 2 Libros Gratis | COP 800.000">All 4 Courses + 2 Free Books | COP 800.000</a>
-                            <a href="https://pay.hotmart.com/C105674677C" target="_blank" class="cta-button" style="color: #1a1a3e; width: 100%; padding: 18px 20px; background: linear-gradient(180deg, #e8c412 0%, #D4AF37 100%); border-radius: 30px; text-decoration: none; box-shadow: 0 6px 15px rgba(0,0,0,0.3); border:none;" data-en="Courses 1 & 2 + Free Book | COP 450.000" data-es="Cursos 1 y 2 + Libro Gratis | COP 450.000">Courses 1 & 2 + Free Book | COP 450.000</a>
-                            <a href="https://pay.hotmart.com/E105674981F" target="_blank" class="cta-button" style="color: #1a1a3e; width: 100%; padding: 18px 20px; background: linear-gradient(180deg, #e8c412 0%, #D4AF37 100%); border-radius: 30px; text-decoration: none; box-shadow: 0 6px 15px rgba(0,0,0,0.3); border:none;" data-en="Courses 3 & 4 + Free Book | COP 450.000" data-es="Cursos 3 y 4 + Libro Gratis | COP 450.000">Courses 3 & 4 + Free Book | COP 450.000</a>
+                            <a href="https://pay.hotmart.com/D105675031I" target="_blank" class="cta-button" style="color: #1a1a3e; width: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; min-height: 75px; padding: 12px 20px; box-sizing: border-box; background: linear-gradient(180deg, #e8c412 0%, #D4AF37 100%); border-radius: 30px; text-decoration: none; box-shadow: 0 6px 15px rgba(0,0,0,0.3); border:none; line-height: 1.35; text-align: center;" data-en="All 4 Courses + 2 Free Books - COP 800.000<br><span style='font-size: 0.85em; font-weight: 500; opacity: 0.9;'>From COP 67.000 per month with 12 installments</span>" data-es="Los 4 Cursos + 2 Libros Gratis - COP 800.000<br><span style='font-size: 0.85em; font-weight: 500; opacity: 0.9;'>Desde COP 67.000 al mes en 12 cuotas</span>">All 4 Courses + 2 Free Books - COP 800.000<br><span style="font-size: 0.85em; font-weight: 500; opacity: 0.9;">From COP 67.000 per month with 12 installments</span></a>
+                            
+                            <a href="https://pay.hotmart.com/C105674677C" target="_blank" class="cta-button" style="color: #1a1a3e; width: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; min-height: 75px; padding: 12px 20px; box-sizing: border-box; background: linear-gradient(180deg, #e8c412 0%, #D4AF37 100%); border-radius: 30px; text-decoration: none; box-shadow: 0 6px 15px rgba(0,0,0,0.3); border:none; line-height: 1.35; text-align: center;" data-en="Courses 1 & 2 + Free Book - COP 450.000<br><span style='font-size: 0.85em; font-weight: 500; opacity: 0.9;'>From COP 37.500 per month with 12 installments</span>" data-es="Cursos 1 y 2 + Libro Gratis - COP 450.000<br><span style='font-size: 0.85em; font-weight: 500; opacity: 0.9;'>Desde COP 37.500 al mes en 12 cuotas</span>">Courses 1 & 2 + Free Book - COP 450.000<br><span style="font-size: 0.85em; font-weight: 500; opacity: 0.9;">From COP 37.500 per month with 12 installments</span></a>
+                            
+                            <a href="https://pay.hotmart.com/E105674981F" target="_blank" class="cta-button" style="color: #1a1a3e; width: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; min-height: 75px; padding: 12px 20px; box-sizing: border-box; background: linear-gradient(180deg, #e8c412 0%, #D4AF37 100%); border-radius: 30px; text-decoration: none; box-shadow: 0 6px 15px rgba(0,0,0,0.3); border:none; line-height: 1.35; text-align: center;" data-en="Courses 3 & 4 + Free Book - COP 450.000<br><span style='font-size: 0.85em; font-weight: 500; opacity: 0.9;'>From COP 37.500 per month with 12 installments</span>" data-es="Cursos 3 y 4 + Libro Gratis - COP 450.000<br><span style='font-size: 0.85em; font-weight: 500; opacity: 0.9;'>Desde COP 37.500 al mes en 12 cuotas</span>">Courses 3 & 4 + Free Book - COP 450.000<br><span style="font-size: 0.85em; font-weight: 500; opacity: 0.9;">From COP 37.500 per month with 12 installments</span></a>
                         </div>
                         <p class="sub-text" style="text-align: left; margin-top: 20px;" data-en="*The included complimentary books are the original physical workbooks from which the course PDFs were developed. They are shipped directly to your door and are designed to be completed by hand as you progress through the interactive video lessons." data-es="*Los libros gratuitos incluidos son los cuadernos de trabajo físicos originales a partir de los cuales se desarrollaron los PDF del curso. Se envían directamente a su puerta y están diseñados para completarse a mano a medida que avanza en las lecciones en video interactivas.">*The included complimentary books are the original physical workbooks from which the course PDFs were developed. They are shipped directly to your door and are designed to be completed by hand as you progress through the interactive video lessons.</p>
                     </div>
@@ -387,10 +389,13 @@
                     <div style="flex: 1; min-width: 300px;">
                         <h3 style="margin-bottom: 15px; color: #D4AF37;" data-en="Individual Courses" data-es="Cursos Individuales">Individual Courses</h3>
                         <div style="display: flex; flex-direction: column; gap: 15px; align-items: center;">
-                            <a href="https://pay.hotmart.com/Q98329648Q" target="_blank" class="cta-button" style="width: 100%; padding: 18px 20px; background: rgba(255, 255, 255, 0.1); color: #D4AF37; border-radius: 30px; border: 1px solid #D4AF37; text-decoration: none; box-shadow: 0 6px 15px rgba(0,0,0,0.3);" data-en="Enroll in Course 1 | COP 250.000" data-es="Inscribirse en el Curso 1 | COP 250.000">Enroll in Course 1 | COP 250.000</a>
-                            <a href="https://pay.hotmart.com/L99614592W" target="_blank" class="cta-button" style="width: 100%; padding: 18px 20px; background: rgba(255, 255, 255, 0.1); color: #D4AF37; border-radius: 30px; border: 1px solid #D4AF37; text-decoration: none; box-shadow: 0 6px 15px rgba(0,0,0,0.3);" data-en="Enroll in Course 2 | COP 250.000" data-es="Inscribirse en el Curso 2 | COP 250.000">Enroll in Course 2 | COP 250.000</a>
-                            <a href="https://pay.hotmart.com/I99617798T" target="_blank" class="cta-button" style="width: 100%; padding: 18px 20px; background: rgba(255, 255, 255, 0.1); color: #D4AF37; border-radius: 30px; border: 1px solid #D4AF37; text-decoration: none; box-shadow: 0 6px 15px rgba(0,0,0,0.3);" data-en="Enroll in Course 3 | COP 250.000" data-es="Inscribirse en el Curso 3 | COP 250.000">Enroll in Course 3 | COP 250.000</a>
-                            <a href="https://pay.hotmart.com/B99622436U" target="_blank" class="cta-button" style="width: 100%; padding: 18px 20px; background: rgba(255, 255, 255, 0.1); color: #D4AF37; border-radius: 30px; border: 1px solid #D4AF37; text-decoration: none; box-shadow: 0 6px 15px rgba(0,0,0,0.3);" data-en="Enroll in Course 4 | COP 250.000" data-es="Inscribirse en el Curso 4 | COP 250.000">Enroll in Course 4 | COP 250.000</a>
+                            <a href="https://pay.hotmart.com/Q98329648Q" target="_blank" class="cta-button" style="width: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; min-height: 75px; padding: 12px 20px; box-sizing: border-box; background: rgba(255, 255, 255, 0.1); color: #D4AF37; border-radius: 30px; border: 1px solid #D4AF37; text-decoration: none; box-shadow: 0 6px 15px rgba(0,0,0,0.3); line-height: 1.35; text-align: center;" data-en="Enroll in Course 1 - COP 250.000<br><span style='font-size: 0.85em; opacity: 0.9; color: #ffffff;'>From COP 20.833 per month with 12 installments</span>" data-es="Inscribirse en el Curso 1 - COP 250.000<br><span style='font-size: 0.85em; opacity: 0.9; color: #ffffff;'>Desde COP 20.833 al mes en 12 cuotas</span>">Enroll in Course 1 - COP 250.000<br><span style="font-size: 0.85em; opacity: 0.9; color: #ffffff;">From COP 20.833 per month with 12 installments</span></a>
+                            
+                            <a href="https://pay.hotmart.com/L99614592W" target="_blank" class="cta-button" style="width: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; min-height: 75px; padding: 12px 20px; box-sizing: border-box; background: rgba(255, 255, 255, 0.1); color: #D4AF37; border-radius: 30px; border: 1px solid #D4AF37; text-decoration: none; box-shadow: 0 6px 15px rgba(0,0,0,0.3); line-height: 1.35; text-align: center;" data-en="Enroll in Course 2 - COP 250.000<br><span style='font-size: 0.85em; opacity: 0.9; color: #ffffff;'>From COP 20.833 per month with 12 installments</span>" data-es="Inscribirse en el Curso 2 - COP 250.000<br><span style='font-size: 0.85em; opacity: 0.9; color: #ffffff;'>Desde COP 20.833 al mes en 12 cuotas</span>">Enroll in Course 2 - COP 250.000<br><span style="font-size: 0.85em; opacity: 0.9; color: #ffffff;">From COP 20.833 per month with 12 installments</span></a>
+                            
+                            <a href="https://pay.hotmart.com/I99617798T" target="_blank" class="cta-button" style="width: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; min-height: 75px; padding: 12px 20px; box-sizing: border-box; background: rgba(255, 255, 255, 0.1); color: #D4AF37; border-radius: 30px; border: 1px solid #D4AF37; text-decoration: none; box-shadow: 0 6px 15px rgba(0,0,0,0.3); line-height: 1.35; text-align: center;" data-en="Enroll in Course 3 - COP 250.000<br><span style='font-size: 0.85em; opacity: 0.9; color: #ffffff;'>From COP 20.833 per month with 12 installments</span>" data-es="Inscribirse en el Curso 3 - COP 250.000<br><span style='font-size: 0.85em; opacity: 0.9; color: #ffffff;'>Desde COP 20.833 al mes en 12 cuotas</span>">Enroll in Course 3 - COP 250.000<br><span style="font-size: 0.85em; opacity: 0.9; color: #ffffff;">From COP 20.833 per month with 12 installments</span></a>
+                            
+                            <a href="https://pay.hotmart.com/B99622436U" target="_blank" class="cta-button" style="width: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; min-height: 75px; padding: 12px 20px; box-sizing: border-box; background: rgba(255, 255, 255, 0.1); color: #D4AF37; border-radius: 30px; border: 1px solid #D4AF37; text-decoration: none; box-shadow: 0 6px 15px rgba(0,0,0,0.3); line-height: 1.35; text-align: center;" data-en="Enroll in Course 4 - COP 250.000<br><span style='font-size: 0.85em; opacity: 0.9; color: #ffffff;'>From COP 20.833 per month with 12 installments</span>" data-es="Inscribirse en el Curso 4 - COP 250.000<br><span style='font-size: 0.85em; opacity: 0.9; color: #ffffff;'>Desde COP 20.833 al mes en 12 cuotas</span>">Enroll in Course 4 - COP 250.000<br><span style="font-size: 0.85em; opacity: 0.9; color: #ffffff;">From COP 20.833 per month with 12 installments</span></a>
                         </div>
                     </div>
                 </div>
