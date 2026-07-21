@@ -1,0 +1,19 @@
+# Oxbridge English
+
+> Oxbridge English is an online language-learning platform providing structured English courses, interactive grammar tools, translation resources, and educational content.
+
+## Core Services & Courses
+- [Course Directory](https://oxbridge-english.com/courses): Interactive directory of English learning modules, course bundles, and structured lessons.
+- [Placement Test](https://oxbridge-english.com/placement-test): Online English proficiency assessment for new students.
+- [Translation Tool](https://oxbridge-english.com/translator): Quick English-Spanish translation and language practice tools.
+
+## Resources & Content
+- [Blog & Articles](https://oxbridge-english.com/blog): Educational articles, language guides, and regional/environmental readings.
+- [Grammar Exercises](https://oxbridge-english.com/grammar): Interactive exercises and practice modules.
+
+## Contact & Platform Info
+- [Contact Us](https://oxbridge-english.com/contact): Get in touch for course inquiries and support.
+- [About Oxbridge English](https://oxbridge-english.com/about): Information about our methodology and teaching team.
+
+## Optional Full Context
+- [Full Site Map](https://oxbridge-english.com/sitemap.xml): Complete list of indexed URLs.
