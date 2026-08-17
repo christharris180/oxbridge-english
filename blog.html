@@ -148,7 +148,26 @@
                 
                 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px;">
 
-                <!-- BLOG POST 016 - NEW (TOP) -->
+                <!-- BLOG POST 017 - NEW (TOP) -->
+                <a href="blog-post-017.html" style="text-decoration: none; display: block;">
+                    <div class="recommendation-item" style="background: rgba(247, 244, 229, 0.95); padding: 0; border-radius: 15px; overflow: hidden; transition: transform 0.3s ease, box-shadow 0.3s ease;" onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 12px 24px rgba(0,0,0,0.2)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'">
+                        <img src="blog-image-017.jpg" alt="What Colombia Has Taught Me About Being Human" style="width: 100%; height: 180px; object-fit: cover;">
+                        <div style="padding: 18px;">
+                            <h3 data-en="What Colombia Has Taught Me About Being Human" data-es="Lo que Colombia me ha enseñado sobre ser humano" style="color: #1a1a3e; margin: 0 0 10px 0; font-size: 18px; font-weight: 600;">What Colombia Has Taught Me About Being Human</h3>
+                            <p data-en="Sixteen years in Colombia: reflections on rules, compassion, democracy, and what successful societies actually mean." data-es="Dieciséis años en Colombia: reflexiones sobre reglas, compasión, democracia y lo que realmente significa una sociedad exitosa." style="color: #666; line-height: 1.6; margin: 0 0 14px 0; font-size: 13px;">
+                                Sixteen years in Colombia: reflections on rules, compassion, democracy, and what successful societies actually mean.
+                            </p>
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <span class="trans-btn trans-btn-primary" style="display: inline-block; padding: 8px 18px; font-size: 13px; text-decoration: none; background: #D4AF37; color: #1a1a3e; font-weight: bold; border-radius: 20px;">
+                                    <span data-en="Read More" data-es="Leer Más">Read More</span>
+                                </span>
+                                <span data-en="August 2026" data-es="Agosto 2026" style="color: #999; font-size: 14px; font-weight: 500;">August 2026</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- BLOG POST 016 -->
                 <a href="blog-post-016.html" style="text-decoration: none; display: block;">
                     <div class="recommendation-item" style="background: rgba(247, 244, 229, 0.95); padding: 0; border-radius: 15px; overflow: hidden; transition: transform 0.3s ease, box-shadow 0.3s ease;" onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 12px 24px rgba(0,0,0,0.2)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'">
                         <img src="blog-image-016.jpg" alt="Stop Beating Yourself Up: The Most Dangerous Voice You Hear Every Day" style="width: 100%; height: 180px; object-fit: cover;">
@@ -491,7 +510,12 @@
         document.addEventListener('DOMContentLoaded', () => {
             const dropdownToggle = document.getElementById('courses-dropdown-toggle');
             if (dropdownToggle) {
-                dropdownToggle.parentElement.classList.toggle('active-mobile');
+                dropdownToggle.addEventListener('click', (e) => {
+                    if (window.innerWidth <= 768) {
+                        e.preventDefault();
+                        dropdownToggle.parentElement.classList.toggle('active-mobile');
+                    }
+                });
             }
         });
         
