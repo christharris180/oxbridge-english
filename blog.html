@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1240851381143604" crossorigin="anonymous"></script>
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-BW4FK9RBTY"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
@@ -582,6 +583,20 @@
             if (nav.classList.contains('mobile-force-open')) { nav.classList.remove('mobile-force-open'); } 
             else { nav.classList.add('mobile-force-open'); }
         }
+    </script><!-- Existing content and footer -->
+
+    <script>
+        window.addEventListener('pageshow', (event) => {
+            if (event.persisted) {
+                document.body.style.opacity = '1';
+                document.body.classList.remove('fade-out', 'page-unloading');
+
+                const video = document.querySelector('.contained-bg-video');
+                if (video) {
+                    video.play().catch(() => {});
+                }
+            }
+        });
     </script>
 </body>
 </html>
