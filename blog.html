@@ -98,10 +98,10 @@
                 
                 <!-- LEFT COLUMN: Featured Post -->
                 <div class="featured-post-area">
-                    <a id="featured-link" href="blog-post-020.html" style="text-decoration: none; display: block;">
-                        <img id="featured-image" src="blog-image-020-english.png" alt="Featured Post" class="featured-img">
-                        <h2 id="featured-title" class="featured-title" data-en="The Exponential Curve: Why We Always Think We Are Here" data-es="La curva exponencial: Por qué siempre creemos que estamos aquí">The Exponential Curve: Why We Always Think We Are Here</h2>
-                        <p id="featured-desc" class="featured-desc" data-en="An exploration of why every generation believes it's living through the most rapid period of change..." data-es="Una exploración de por qué cada generación cree que vive el momento de mayor cambio...">An exploration of why every generation believes it's living through the most rapid period of change...</p>
+                    <a id="featured-link" href="blog-post-021.html" style="text-decoration: none; display: block;">
+                        <img id="featured-image" src="blog-image-021.jpg" alt="Featured Post" class="featured-img">
+                        <h2 id="featured-title" class="featured-title" data-en="The New Boss Doesn't Sleep, Doesn't Forget, and Doesn't Care About Your Excuses" data-es="El nuevo jefe no duerme, no olvida y no le importan tus excusas">The New Boss Doesn't Sleep, Doesn't Forget, and Doesn't Care About Your Excuses</h2>
+                        <p id="featured-desc" class="featured-desc" data-en="Discover how algorithmic management is reshaping workplace culture, performance evaluations, and the psychological contract between workers and employers." data-es="Descubre cómo la gestión algorítmica está transformando la cultura laboral, la evaluación del desempeño y el contrato psicológico entre trabajadores y empleadores.">Discover how algorithmic management is reshaping workplace culture, performance evaluations, and the psychological contract between workers and employers.</p>
                         <div class="featured-meta">
                             <span id="featured-date" data-en="September 2026" data-es="Septiembre 2026">September 2026</span>
                             <span class="read-more-btn" data-en="Read Full Article →" data-es="Leer Artículo Completo →">Read Full Article →</span>
@@ -142,7 +142,7 @@
                 </a>
                 <span style="color: #666;">|</span>
                 <a href="terms.html" style="color: #DFDFD0; text-decoration: none; transition: color 0.3s;" onmouseover="this.style.color='#D4AF37'" onmouseout="this.style.color='#DFDFD0'">
-                    <span data-en="Terms & Conditions" data-es="Términos y Condiciones">Terms & Conditions</span>
+                    <span data-en="Terms & Conditions" data-es="Términos y Condiciones">Términos y Condiciones</span>
                 </a>
                 <img src="logo_jpg_003.jpg" alt="Oxbridge English" style="height: 30px; width: auto; object-fit: contain;">
             </p>
@@ -179,6 +179,7 @@
             
             // 1. Array containing all your blog post data (with English and Spanish assets)
             const posts = [
+                { id: '021', titleEn: 'The New Boss Doesn\'t Sleep, Doesn\'t Forget, and Doesn\'t Care About Your Excuses', titleEs: 'El nuevo jefe no duerme, no olvida y no le importan tus excusas', imageEn: 'blog-image-021.jpg', imageEs: 'blog-image-021.jpg', dateEn: 'September 2026', dateEs: 'Septiembre 2026', descEn: 'Discover how algorithmic management is reshaping workplace culture, performance evaluations, and the psychological contract between workers and employers.', descEs: 'Descubre cómo la gestión algorítmica está transformando la cultura laboral, la evaluación del desempeño y el contrato psicológico entre trabajadores y empleadores.' },
                 { id: '020', titleEn: 'The Exponential Curve: Why We Always Think We Are Here', titleEs: 'La curva exponencial: Por qué siempre creemos que estamos aquí', imageEn: 'blog-image-020-english.png', imageEs: 'blog-image-020-spanish.png', dateEn: 'September 2026', dateEs: 'Septiembre 2026', descEn: 'An exploration of why every generation believes it\'s living through the most rapid period of change...', descEs: 'Una exploración de por qué cada generación cree que vive el momento de mayor cambio...' },
                 { id: '019', titleEn: 'Why You Should Learn English Alone Before You Learn It With a Teacher', titleEs: 'Por qué deberías aprender inglés solo antes de aprenderlo con un profesor', imageEn: 'blog-image-019.jpg', imageEs: 'blog-image-spanish-019.jpg', dateEn: 'September 2026', dateEs: 'Septiembre 2026', descEn: 'Why building foundational skills independently maximizes the value of personalized instruction...', descEs: 'Por qué construir habilidades básicas de forma independiente maximiza el valor de las clases personalizadas...' },
                 { id: '018', titleEn: 'Are We Planning Our Own Death? The Uncomfortable Future of Medicine', titleEs: '¿Estamos planeando nuestra propia muerte? El incómodo futuro de la medicina', imageEn: 'blog-image-018.png', imageEs: 'blog-image-spanish-018.png', dateEn: 'September 2026', dateEs: 'Septiembre 2026', descEn: 'An exploration of placebo and nocebo effects, epigenetics, and how societal expectations shape our health.', descEs: 'Una exploración sobre los efectos placebo y nocebo, la epigenética y cómo las expectativas sociales moldean nuestra salud.' },
@@ -225,7 +226,7 @@
                 }
             });
 
-            let currentPostId = '020'; // Track the currently featured post ID
+            let currentPostId = '021'; // Track the currently featured post ID
 
             const listContainer = document.getElementById('post-list-container');
             const featuredLink = document.getElementById('featured-link');
@@ -311,7 +312,7 @@
 
             // 5. Initialize
             renderSidebar();
-            loadPost('020'); // Load the first post by default
+            loadPost('021'); // Load the first post by default
 
         });
     </script>
