@@ -98,12 +98,12 @@
                 
                 <!-- LEFT COLUMN: Featured Post -->
                 <div class="featured-post-area">
-                    <a id="featured-link" href="blog-post-021.html" style="text-decoration: none; display: block;">
-                        <img id="featured-image" src="blog-image-021.jpg" alt="Featured Post" class="featured-img">
-                        <h2 id="featured-title" class="featured-title" data-en="The New Boss Doesn't Sleep, Doesn't Forget, and Doesn't Care About Your Excuses" data-es="El nuevo jefe no duerme, no olvida y no le importan tus excusas">The New Boss Doesn't Sleep, Doesn't Forget, and Doesn't Care About Your Excuses</h2>
-                        <p id="featured-desc" class="featured-desc" data-en="Discover how algorithmic management is reshaping workplace culture, performance evaluations, and the psychological contract between workers and employers." data-es="Descubre cómo la gestión algorítmica está transformando la cultura laboral, la evaluación del desempeño y el contrato psicológico entre trabajadores y empleadores.">Discover how algorithmic management is reshaping workplace culture, performance evaluations, and the psychological contract between workers and employers.</p>
+                    <a id="featured-link" href="blog-post-022.html" style="text-decoration: none; display: block;">
+                        <img id="featured-image" src="blog-image-english-022.png" alt="Featured Post" class="featured-img">
+                        <h2 id="featured-title" class="featured-title" data-en="To Give or Not to Give, That is the Question" data-es="Dar o No Dar, esa es la Cuestión">To Give or Not to Give, That is the Question</h2>
+                        <p id="featured-desc" class="featured-desc" data-en="An exploration of the six stages of giving, behavioural incentives, dependency, and the uncomfortable moral questions behind individual and societal generosity." data-es="Una exploración de las seis etapas de dar, los incentivos conductuales, la dependencia y las incómodas preguntas morales tras la generosidad individual y social.">An exploration of the six stages of giving, behavioural incentives, dependency, and the uncomfortable moral questions behind individual and societal generosity.</p>
                         <div class="featured-meta">
-                            <span id="featured-date" data-en="September 2026" data-es="Septiembre 2026">September 2026</span>
+                            <span id="featured-date" data-en="October 2026" data-es="Octubre 2026">October 2026</span>
                             <span class="read-more-btn" data-en="Read Full Article →" data-es="Leer Artículo Completo →">Read Full Article →</span>
                         </div>
                     </a>
@@ -179,6 +179,7 @@
             
             // 1. Array containing all your blog post data (with English and Spanish assets)
             const posts = [
+                { id: '022', titleEn: 'To Give or Not to Give, That is the Question', titleEs: 'Dar o No Dar, esa es la Cuestión', imageEn: 'blog-image-english-022.png', imageEs: 'blog-image-spanish-022.png', dateEn: 'October 2026', dateEs: 'Octubre 2026', descEn: 'An exploration of the six stages of giving, behavioural incentives, dependency, and the uncomfortable moral questions behind individual and societal generosity.', descEs: 'Una exploración de las seis etapas de dar, los incentivos conductuales, la dependencia y las incómodas preguntas morales tras la generosidad individual y social.' },
                 { id: '021', titleEn: 'The New Boss Doesn\'t Sleep, Doesn\'t Forget, and Doesn\'t Care About Your Excuses', titleEs: 'El nuevo jefe no duerme, no olvida y no le importan tus excusas', imageEn: 'blog-image-021.jpg', imageEs: 'blog-image-021.jpg', dateEn: 'September 2026', dateEs: 'Septiembre 2026', descEn: 'Discover how algorithmic management is reshaping workplace culture, performance evaluations, and the psychological contract between workers and employers.', descEs: 'Descubre cómo la gestión algorítmica está transformando la cultura laboral, la evaluación del desempeño y el contrato psicológico entre trabajadores y empleadores.' },
                 { id: '020', titleEn: 'The Exponential Curve: Why We Always Think We Are Here', titleEs: 'La curva exponencial: Por qué siempre creemos que estamos aquí', imageEn: 'blog-image-020-english.png', imageEs: 'blog-image-020-spanish.png', dateEn: 'September 2026', dateEs: 'Septiembre 2026', descEn: 'An exploration of why every generation believes it\'s living through the most rapid period of change...', descEs: 'Una exploración de por qué cada generación cree que vive el momento de mayor cambio...' },
                 { id: '019', titleEn: 'Why You Should Learn English Alone Before You Learn It With a Teacher', titleEs: 'Por qué deberías aprender inglés solo antes de aprenderlo con un profesor', imageEn: 'blog-image-019.jpg', imageEs: 'blog-image-spanish-019.jpg', dateEn: 'September 2026', dateEs: 'Septiembre 2026', descEn: 'Why building foundational skills independently maximizes the value of personalized instruction...', descEs: 'Por qué construir habilidades básicas de forma independiente maximiza el valor de las clases personalizadas...' },
@@ -226,7 +227,7 @@
                 }
             });
 
-            let currentPostId = '021'; // Track the currently featured post ID
+            let currentPostId = '022'; // Track the currently featured post ID
 
             const listContainer = document.getElementById('post-list-container');
             const featuredLink = document.getElementById('featured-link');
@@ -312,7 +313,7 @@
 
             // 5. Initialize
             renderSidebar();
-            loadPost('021'); // Load the first post by default
+            loadPost('022'); // Load the first post by default
 
         });
     </script>
