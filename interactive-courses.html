@@ -298,7 +298,20 @@
                 <h3 class="page-hero-subtitle" data-en="Start speaking and writing in English with confidence." data-es="Comience a hablar y escribir en inglés con confianza.">Start speaking and writing in English with confidence.</h3>
                 <p class="hero-desc" data-en="These interactive courses are designed for Spanish speakers and guide you through the foundations of English grammar with clear explanations, real-life examples, and practical activities you can apply in everyday situations." data-es="Estos cursos interactivos están diseñados para hispanohablantes y lo guían a través de los fundamentos de la gramática inglesa con explicaciones claras, ejemplos de la vida real y actividades prácticas que puede aplicar en situaciones cotidianas.">Estos cursos interactivos están diseñados para hispanohablantes y lo guían a través de los fundamentos de la gramática inglesa con explicaciones claras, ejemplos de la vida real y actividades prácticas que puede aplicar en situaciones cotidianas.</p>
                 
-                <a href="#enroll-section" class="cta-button" style="margin-top: 30px; display: flex; flex-direction: column; justify-content: center; align-items: center; min-height: 75px; padding: 12px 30px; width: 100%; max-width: 500px; box-sizing: border-box; background: rgba(255, 255, 255, 0.1); color: #D4AF37; border-radius: 30px; border: 1px solid #D4AF37; text-decoration: none; box-shadow: 0 6px 15px rgba(0,0,0,0.3); line-height: 1.35; text-align: center; font-weight: 500;" data-en="Start Today<br><span style='font-size: 0.85em; opacity: 0.9; color: #ffffff;'>From only COP 20.833 per month</span>" data-es="Comience Hoy<br><span style='font-size: 0.85em; opacity: 0.9; color: #ffffff;'>Desde solo COP 20.833 al mes</span>">Start Today<br><span style="font-size: 0.85em; opacity: 0.9; color: #ffffff;">From only COP 20.833 per month</span></a>
+                <!-- Dual Buttons Container -->
+                <div style="margin-top: 30px; display: flex; gap: 15px; width: 100%; max-width: 650px; justify-content: center; flex-wrap: wrap;">
+                    
+                    <!-- See How It Works Button (Left) -->
+                    <button type="button" onclick="openHowItWorksModal(); return false;" class="cta-button" style="flex: 1; min-width: 250px; display: flex; flex-direction: column; justify-content: center; align-items: center; min-height: 75px; padding: 12px 20px; box-sizing: border-box; background: #D4AF37; color: #1a1a3e; border-radius: 30px; border: 1px solid #D4AF37; text-decoration: none; box-shadow: 0 6px 15px rgba(0,0,0,0.3); line-height: 1.35; text-align: center; font-weight: bold; cursor: pointer;" data-en="See How It Works<br><span style='font-size: 0.85em; opacity: 0.9; font-weight: normal; color: #1a1a3e;'>Watch 30s video guide</span>" data-es="Ver Cómo Funciona<br><span style='font-size: 0.85em; opacity: 0.9; font-weight: normal; color: #1a1a3e;'>Mira el video de 30s</span>">
+                        See How It Works<br><span style="font-size: 0.85em; opacity: 0.9; font-weight: normal; color: #1a1a3e;">Watch 30s video guide</span>
+                    </button>
+
+                    <!-- Start Today Button (Right) -->
+                    <a href="#enroll-section" class="cta-button" style="flex: 1; min-width: 250px; display: flex; flex-direction: column; justify-content: center; align-items: center; min-height: 75px; padding: 12px 20px; box-sizing: border-box; background: rgba(255, 255, 255, 0.1); color: #D4AF37; border-radius: 30px; border: 1px solid #D4AF37; text-decoration: none; box-shadow: 0 6px 15px rgba(0,0,0,0.3); line-height: 1.35; text-align: center; font-weight: 500;" data-en="Start Today<br><span style='font-size: 0.85em; opacity: 0.9; color: #ffffff;'>From only COP 20.833 per month</span>" data-es="Comience Hoy<br><span style='font-size: 0.85em; opacity: 0.9; color: #ffffff;'>Desde solo COP 20.833 al mes</span>">
+                        Start Today<br><span style="font-size: 0.85em; opacity: 0.9; color: #ffffff;">From only COP 20.833 per month</span>
+                    </a>
+
+                </div>
             </div>
         </header>
 
@@ -335,10 +348,10 @@
                         <h3 class="course-title" data-en="Course 2" data-es="Curso 2">Course 2</h3>
                         <ul class="course-features">
                             <li data-en="Reinforce vocabulary and structures from the previous course." data-es="Refuerce el vocabulario y las estructuras del curso anterior.">Reinforce vocabulary and structures from the previous course.</li>
-                            <li data-en="Use have/has got to express possession." data-es="Use have/has got para expresar posesión.">Use have/has got para expresar posesión.</li>
+                            <li data-en="Use have/has got to express possession." data-es="Use have/has got para expresar posesión.">Use have/has got to express possession.</li>
                             <li data-en="Use object pronouns correctly." data-es="Use pronombres de objeto correctamente.">Use object pronouns correctly.</li>
                             <li data-en="Introduce and practice adverbs of frequency." data-es="Introduzca y practique adverbios de frecuencia.">Introduce and practice adverbs of frequency.</li>
-                            <li data-en="Understand and use prepositions of place and time." data-es="Comprenda y use preposiciones de lugar y tiempo.">Comprenda y use preposiciones de lugar y tiempo.</li>
+                            <li data-en="Understand and use prepositions of place and time." data-es="Comprenda y use preposiciones de lugar y tiempo.">Understand and use prepositions of place and time.</li>
                             <li data-en="Describe environments using there is / there are." data-es="Describa entornos usando there is / there are.">Describe environments using there is / there are.</li>
                         </ul>
                     </div>
@@ -578,6 +591,19 @@
         </main>
     </div>
 
+    <!-- How It Works Video Modal Pop-Up (Optimized for Vertical Video) -->
+    <div id="videoModal" style="display: none; position: fixed; z-index: 9999; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); align-items: center; justify-content: center; padding: 20px; box-sizing: border-box;">
+        <div style="position: relative; background: #0d0d24; padding: 30px 20px 20px 20px; border-radius: 12px; border: 1px solid #D4AF37; box-shadow: 0 10px 30px rgba(0,0,0,0.5); text-align: center; max-width: 95%;">
+            <span onclick="closeHowItWorksModal()" style="position: absolute; top: 10px; right: 20px; color: #fff; font-size: 35px; cursor: pointer; z-index: 10; line-height: 1;" title="Close">&times;</span>
+            <h3 style="color: #D4AF37; margin-bottom: 15px;" data-en="How Oxbridge English Works" data-es="Cómo Funciona Oxbridge English">How Oxbridge English Works</h3>
+            <!-- Constrained max-height and auto width for vertical 9:16 video -->
+            <video id="modalVideo" controls style="max-height: 72vh; width: auto; max-width: 100%; border-radius: 8px; display: block; margin: 0 auto; background: #000;">
+                <source src="how it works video 002.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+        </div>
+    </div>
+
     <footer class="main-footer" style="background-color: #1a1a3e;">
         <div class="footer-content">
             <div class="footer-social" style="display: flex; gap: 20px; justify-content: center; margin-bottom: 20px;">
@@ -609,6 +635,28 @@
     <script src="script.js?v=3"></script>
 
     <script>
+        // Modal Control Functions for How It Works Video
+        function openHowItWorksModal() {
+            var modal = document.getElementById('videoModal');
+            var vid = document.getElementById('modalVideo');
+            modal.style.display = 'flex';
+            vid.play();
+        }
+        function closeHowItWorksModal() {
+            var modal = document.getElementById('videoModal');
+            var vid = document.getElementById('modalVideo');
+            modal.style.display = 'none';
+            vid.pause();
+            vid.currentTime = 0;
+        }
+        // Close modal when clicking outside the video content box
+        window.onclick = function(event) {
+            var modal = document.getElementById('videoModal');
+            if (event.target == modal) {
+                closeHowItWorksModal();
+            }
+        }
+
         document.addEventListener('DOMContentLoaded', () => {
             const dropdownToggle = document.getElementById('courses-dropdown-toggle');
             if (dropdownToggle) {
